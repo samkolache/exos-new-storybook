@@ -8,11 +8,19 @@
 $dcfc-primitives: (
   "ink-900":    #3A3F4A, // from setup doc (btn-primary)
   "ink-950":    #1C1F26, // Figma: button primary gradient end
+  "ink-1000":   #0F1219, // Figma: icon button glyph
   "blue-600":   #2F6FE4, // from setup doc
   "blue-500":   #438AF5, // from setup doc (action blue / info)
+  "blue-500-a15": rgba(67, 138, 245, 0.15), // Figma: progress button pending bg
+  "blue-500-a75": rgba(67, 138, 245, 0.75), // Figma: progress button pending badge
   "orange-500": #F28C28, // from setup doc (attention / warning)
+  "yellow-300-a15": rgba(255, 216, 77, 0.15), // Figma: progress button in-progress bg
+  "yellow-700": #B38626, // Figma: yellow-50, progress button in-progress badge
   "violet-400": #8B6CF0,
+  "violet-900-a08": rgba(48, 36, 120, 0.08), // Figma: icon button shadow
   "green-500":  #1E9E5A,
+  "green-500-a40": rgba(39, 178, 112, 0.40), // Figma: progress button complete border
+  "green-600":  #1E9E6A, // Figma: progress button complete bg
   "red-500":    #D93B3B,
   "red-600":    #D2463B, // Figma: button destructive
   "grey-100":   #F5F6F8,
@@ -22,8 +30,13 @@ $dcfc-primitives: (
   "grey-600":   #6B7280,
   "grey-800":   #3A3A3A, // Figma: gray-80
   "white":      #FFFFFF,
+  "white-a20":  rgba(255, 255, 255, 0.20), // Figma: icon button glass bg
   "white-a28":  rgba(255, 255, 255, 0.28), // Figma: button primary border
   "white-a30":  rgba(255, 255, 255, 0.30), // Figma: button primary inner highlight
+  "white-a35":  rgba(255, 255, 255, 0.35), // Figma: progress button complete badge
+  "white-a40":  rgba(255, 255, 255, 0.40), // Figma: progress button border
+  "white-a75":  rgba(255, 255, 255, 0.75), // Figma: icon button bg
+  "white-a90":  rgba(255, 255, 255, 0.90), // Figma: icon button border
   "grey-a15":   rgba(172, 172, 172, 0.15), // Figma: button secondary border
 ) !default;
 

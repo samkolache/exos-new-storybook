@@ -1,0 +1,51 @@
+import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Variation } from '../../../../.storybook/blocks/Variation';
+import * as ButtonStories from './button.stories';
+
+<Meta of={ButtonStories} />
+
+<Title />
+
+<Subtitle>Buttons let users take an action, such as confirming, cancelling or removing something.</Subtitle>
+
+## Demo
+
+<Canvas of={ButtonStories.Primary} />
+
+## Usage
+
+Use a button for actions on the current page. Use a link to navigate somewhere else.
+
+```html
+<app-button label="Confirm" (clicked)="save()" />
+```
+
+## Variations
+
+<Variation title="Variant" of={ButtonStories.Variants}>
+
+Set how much a button stands out with the `variant` input:
+
+- `primary` is the main action in a view. Use one per view.
+- `secondary` is for supporting actions next to a primary, like "Answer later".
+- `destructive` is for actions that delete or remove something.
+
+</Variation>
+
+<Variation title="Ghost" of={ButtonStories.GhostVariants}>
+
+Add `[ghost]="true"` to any variant to get a text-only button. It is the same size as the filled one, so the two line up in a row. Use it for low-emphasis actions, like a "Cancel" next to a filled "Confirm".
+
+</Variation>
+
+<Variation title="Disabled" of={ButtonStories.DisabledVariants}>
+
+Use the `disabled` input when an action is not available yet. Every variant uses the same grey disabled look. Ghost buttons stay text-only, with grey text.
+
+</Variation>
+
+## API
+
+Change the inputs below to update the demo at the top of the page.
+
+<Controls of={ButtonStories.Primary} />
