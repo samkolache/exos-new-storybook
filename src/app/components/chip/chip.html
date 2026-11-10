@@ -1,0 +1,45 @@
+<ng-template #chipTemplate let-chip>
+  <button
+    type="button"
+    [class]="classesOf(chip)"
+    [attr.role]="type() === 'single' ? 'radio' : 'checkbox'"
+    [attr.aria-checked]="chip.selected"
+    [attr.data-state]="stateOf(chip)"
+    [disabled]="chip.disabled"
+    (click)="click(chip)"
+  >
+    @if (type() === 'multi') {
+      <span class="chip-checkbox" aria-hidden="true">
+        @if (chip.selected && !chip.disabled) {
+          <img src="icons/pcr/checkbox-check.svg" width="12" height="12" alt="" />
+        }
+      </span>
+    }
+    <!-- Single chips show a check only when picked by the user, not when AI-suggested. -->
+    @if (type() === 'single' && stateOf(chip) === 'selected') {
+      <img src="icons/pcr/chip-check.svg" width="12" height="12" alt="" />
+    }
+    @if (chip.icon === 'records') {
+      <img src="icons/pcr/records.svg" width="12" height="12" alt="" />
+    }
+    {{ chip.label }}
+    @if (chip.suggested && !chip.disabled) {
+      <img src="icons/pcr/chip-sparkle.svg" width="10" height="10" alt="(AI suggested)" />
+    }
+  </button>
+</ng-template>
+
+@if (isGroup()) {
+  <div
+    class="chip-group"
+    [attr.role]="type() === 'single' ? 'radiogroup' : 'group'"
+    [attr.aria-label]="groupLabel() || null"
+    [attr.aria-labelledby]="labelledBy()"
+  >
+    @for (chip of chips(); track chip.option!.value) {
+      <ng-container [ngTemplateOutlet]="chipTemplate" [ngTemplateOutletContext]="{ $implicit: chip }" />
+    }
+  </div>
+} @else {
+  <ng-container [ngTemplateOutlet]="chipTemplate" [ngTemplateOutletContext]="{ $implicit: chips()[0] }" />
+}

@@ -8,12 +8,19 @@
 $dcfc-primitives: (
   "ink-900":    #3A3F4A, // from setup doc (btn-primary)
   "ink-950":    #1C1F26, // Figma: button primary gradient end
+  "ink-975":    #0F121A, // from Figma PCR (headings, values)
   "ink-1000":   #0F1219, // Figma: icon button glyph
+  "ink-800":    #3A4150, // from Figma tag (neutral text)
   "blue-600":   #2F6FE4, // from setup doc
   "blue-500":   #438AF5, // from setup doc (action blue / info)
   "blue-500-a15": rgba(67, 138, 245, 0.15), // Figma: progress button pending bg
   "blue-500-a75": rgba(67, 138, 245, 0.75), // Figma: progress button pending badge
+  "blue-50":    #EDF5FF, // from pcr-demo (selected row)
+  "blue-25":    #EEF3FB, // from Figma tag (waiting fill)
   "orange-500": #F28C28, // from setup doc (attention / warning)
+  "orange-800": #8A5200, // from Figma PCR (attention text)
+  "orange-700": #9A5B00, // from Figma tag (attention text)
+  "orange-50":  #FFF1DC, // from Figma PCR (attention icon well)
   "yellow-300-a15": rgba(255, 216, 77, 0.15), // Figma: progress button in-progress bg
   "yellow-700": #B38626, // Figma: yellow-50, progress button in-progress badge
   "violet-400": #8B6CF0,
@@ -23,12 +30,22 @@ $dcfc-primitives: (
   "green-600":  #1E9E6A, // Figma: progress button complete bg
   "red-500":    #D93B3B,
   "red-600":    #D2463B, // Figma: button destructive
+  "grey-50":    #F4F6FA, // from pcr-demo (filled field well)
+  "grey-75":    #F6F8FB, // from Figma chip (disabled fill)
   "grey-100":   #F5F6F8,
-  "grey-200":   #E6EAF1, // Figma: button disabled bg
+  "grey-110":   #F2F4F8, // from Figma tag (neutral fill)
+  "grey-125":   #EEF1F6, // from Figma chip (disabled border)
+  "grey-150":   #DCE3EE, // from Figma chip (border)
+  "grey-200":   #E6EAF1, // Figma: button disabled bg, PCR row dividers
+  "grey-250":   #D5DBE5, // from Figma PCR (chip border)
   "grey-300":   #D5D8DE,
-  "grey-400":   #98A1B2, // Figma: button disabled text
+  "grey-350":   #B8C2D3, // from Figma chip (checkbox border)
+  "grey-400":   #98A1B2, // Figma: button disabled text, chip disabled text
+  "grey-500":   #8C95A6, // from pcr-demo (placeholder)
   "grey-600":   #6B7280,
+  "slate-600":  #5B6475, // from Figma PCR (row labels, icons)
   "grey-800":   #3A3A3A, // Figma: gray-80
+  "grey-900":   #262626, // from Figma chip (selected text, gray-90)
   "white":      #FFFFFF,
   "white-a20":  rgba(255, 255, 255, 0.20), // Figma: icon button glass bg
   "white-a28":  rgba(255, 255, 255, 0.28), // Figma: button primary border

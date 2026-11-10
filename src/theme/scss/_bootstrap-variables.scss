@@ -13,3 +13,32 @@ $body-bg:         dcfc-color("background-page");
 $link-color:      dcfc-color("text-link");
 $border-color:    dcfc-color("border-default");
 $secondary-color: dcfc-color("text-secondary");
+
+// Forms: pcr-demo fields (14px corners, 1.5px border, blue focus).
+$focus-ring-blue: rgba(dcfc-color("border-focus"), 0.2);
+
+$input-border-width:        1.5px;
+$input-border-color:        dcfc-color("border-default");
+$input-border-radius:       14px;
+$input-border-radius-sm:    10px;
+$input-border-radius-lg:    16px;
+$input-padding-x:           1rem;
+$input-placeholder-color:   dcfc-color("text-placeholder");
+$input-focus-border-color:  dcfc-color("border-focus");
+$input-focus-box-shadow:    0 0 0 0.25rem $focus-ring-blue;
+$form-select-focus-box-shadow: 0 0 0 0.25rem $focus-ring-blue;
+
+// Radios and checkboxes: selected state is action blue, not the ink primary.
+$form-check-input-border:              1.5px solid dcfc-color("border-default");
+$form-check-input-checked-bg-color:    dcfc-color("control-selected");
+$form-check-input-checked-border-color: dcfc-color("control-selected");
+$form-check-input-focus-border:        dcfc-color("border-focus");
+$form-check-input-focus-box-shadow:    0 0 0 0.25rem $focus-ring-blue;
+
+// Dropdown menus: pcr-demo list rows (soft blue selected row).
+$dropdown-border-radius:        16px;
+$dropdown-border-color:         dcfc-color("border-default");
+$dropdown-link-active-bg:       dcfc-color("background-selected");
+$dropdown-link-active-color:    dcfc-color("text-primary");
+$dropdown-padding-y:            0.375rem;
+$dropdown-item-padding-y:       0.5rem;

@@ -1,0 +1,86 @@
+<section [class]="cardClasses()" [attr.aria-labelledby]="titleId">
+  <div class="dropdown-card-head">
+    <button
+      type="button"
+      class="dropdown-card-toggle"
+      [attr.aria-expanded]="expanded()"
+      [attr.aria-controls]="bodyId"
+      (click)="toggle()"
+    >
+      <span class="dropdown-card-title-wrap">
+        <span class="dropdown-card-title" [id]="titleId">{{ title() }}</span>
+        @if (!expanded() && summaryText()) {
+          <span class="dropdown-card-summary" [class.attention]="status() === 'attention'">
+            @if (status() === 'attention') {
+              <img src="icons/pcr/status-dot.svg" width="7" height="7" alt="" />
+            }
+            {{ summaryText() }}
+          </span>
+        }
+      </span>
+      <img [src]="expanded() ? 'icons/pcr/chevron-up.svg' : 'icons/pcr/chevron-down.svg'" width="14" height="14" alt="" />
+    </button>
+    @if (expanded() && actionLabel()) {
+      <button type="button" class="dropdown-card-action" (click)="action.emit()">{{ actionLabel() }}</button>
+    }
+  </div>
+
+  <div class="dropdown-card-collapse">
+    <div class="dropdown-card-body" [id]="bodyId" [inert]="!expanded()">
+      @if (rows().length) {
+        <ul class="dropdown-card-list" [class.before-question]="!!question()">
+          @for (row of rows(); track row.label) {
+            <li class="dropdown-card-row">
+              <span class="dropdown-card-row-label">{{ row.label }}</span>
+              <span class="dropdown-card-row-value">{{ row.value }}</span>
+            </li>
+          }
+        </ul>
+      }
+
+      @if (question(); as q) {
+        <div class="dropdown-card-question">
+          <div class="dropdown-card-question-main">
+            <span class="dropdown-card-question-icon">
+              <img src="icons/pcr/attention.svg" width="12" height="12" alt="" />
+            </span>
+            <div class="dropdown-card-question-content">
+              <p class="dropdown-card-question-text" [id]="bodyId + '-question'">{{ q.text }}</p>
+              @if (q.hint) {
+                <p class="dropdown-card-question-hint">{{ q.hint }}</p>
+              }
+              <app-chip
+                [options]="q.choices"
+                [type]="q.type ?? 'single'"
+                [labelledBy]="bodyId + '-question'"
+                [(value)]="answer"
+              />
+            </div>
+          </div>
+          <div class="dropdown-card-confirm-row">
+            <p class="dropdown-card-confirm-prompt">{{ q.prompt }}</p>
+            <button type="button" class="dropdown-card-confirm" [disabled]="!hasAnswer()" (click)="confirm()">
+              {{ confirmLabel() }}
+            </button>
+          </div>
+        </div>
+      }
+
+      @if (editPlaceholder()) {
+        <div class="dropdown-card-edit">
+          <input
+            #edit
+            type="text"
+            class="dropdown-card-edit-input"
+            [placeholder]="editPlaceholder()"
+            [attr.aria-label]="'Edit ' + title()"
+            (keydown.enter)="submitEdit(edit)"
+          />
+          <button type="button" class="dropdown-card-mic" aria-label="Dictate an edit" (click)="micClicked.emit()">
+            <img src="icons/pcr/mic.svg" width="18" height="18" alt="" />
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</section>

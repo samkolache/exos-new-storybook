@@ -1,0 +1,134 @@
+<ng-template #control>
+  @if (isTextarea()) {
+    <textarea
+      #field
+      [id]="inputId()"
+      [class]="controlClasses()"
+      [rows]="rows()"
+      [placeholder]="floatingLabel() ? placeholder() || label() : placeholder()"
+      [value]="value()"
+      [disabled]="isDisabled()"
+      [readOnly]="readonly()"
+      [required]="required()"
+      [attr.maxlength]="maxLength()"
+      [attr.name]="name()"
+      [attr.autocomplete]="autocomplete()"
+      [attr.aria-label]="label() ? null : placeholder() || null"
+      [attr.aria-invalid]="state() === 'invalid' || null"
+      [attr.aria-describedby]="describedBy()"
+      (input)="onInput($event)"
+      (blur)="onBlur($event)"
+    ></textarea>
+  } @else {
+    <input
+      #field
+      [id]="inputId()"
+      [type]="nativeType()"
+      [class]="controlClasses()"
+      [placeholder]="floatingLabel() ? placeholder() || label() : placeholder()"
+      [value]="value()"
+      [disabled]="isDisabled()"
+      [readOnly]="readonly()"
+      [required]="required()"
+      [attr.maxlength]="maxLength()"
+      [attr.name]="name()"
+      [attr.autocomplete]="autocomplete()"
+      [attr.aria-label]="label() ? null : placeholder() || null"
+      [attr.aria-invalid]="state() === 'invalid' || null"
+      [attr.aria-describedby]="describedBy()"
+      (input)="onInput($event)"
+      (blur)="onBlur($event)"
+    />
+  }
+</ng-template>
+
+<ng-template #labelText>
+  {{ label() }}
+  @if (required()) {
+    <span class="text-danger" aria-hidden="true">*</span>
+  }
+</ng-template>
+
+<!-- The field itself: plain, or floating with its label. -->
+<ng-template #fieldBlock>
+  @if (floatingLabel()) {
+    <div class="form-floating">
+      <ng-container [ngTemplateOutlet]="control" />
+      <label [for]="inputId()"><ng-container [ngTemplateOutlet]="labelText" /></label>
+    </div>
+  } @else {
+    <ng-container [ngTemplateOutlet]="control" />
+  }
+</ng-template>
+
+@if (label() && !floatingLabel()) {
+  <label class="form-label" [for]="inputId()"><ng-container [ngTemplateOutlet]="labelText" /></label>
+}
+
+@if (hasGroup()) {
+  <div [class]="groupClasses()">
+    @if (prefix()) {
+      <span class="input-group-text">{{ prefix() }}</span>
+    }
+    <ng-container [ngTemplateOutlet]="control" />
+    @if (suffix()) {
+      <span class="input-group-text">{{ suffix() }}</span>
+    }
+  </div>
+} @else if (useWrap()) {
+  <div [class]="wrapClasses()">
+    @if (hasLeading()) {
+      <svg class="form-control-leading" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <circle cx="7" cy="7" r="4.75" />
+        <path d="M10.5 10.5L14 14" stroke-linecap="round" />
+      </svg>
+    }
+    <ng-container [ngTemplateOutlet]="fieldBlock" />
+    @if (trailingSlots()) {
+      <div class="form-control-actions">
+        @if (showClear()) {
+          <button type="button" class="form-control-action" aria-label="Clear" (click)="clear()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+              <path d="M3.5 3.5l7 7M10.5 3.5l-7 7" />
+            </svg>
+          </button>
+        }
+        @if (showReveal()) {
+          <button
+            type="button"
+            class="form-control-action"
+            [attr.aria-label]="revealed() ? 'Hide password' : 'Show password'"
+            [attr.aria-pressed]="revealed()"
+            (click)="toggleReveal()"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8Z" />
+              <circle cx="8" cy="8" r="2" />
+              @if (revealed()) {
+                <path d="M2.5 13.5l11-11" />
+              }
+            </svg>
+          </button>
+        }
+      </div>
+    }
+  </div>
+} @else {
+  <ng-container [ngTemplateOutlet]="fieldBlock" />
+}
+
+@if (showFeedback()) {
+  <div [id]="feedbackId()" class="d-block" [class]="state() === 'valid' ? 'valid-feedback' : 'invalid-feedback'">
+    {{ feedback() }}
+  </div>
+}
+@if (helpText() || counter()) {
+  <div class="form-field-footer">
+    @if (helpText()) {
+      <div [id]="helpId()" class="form-text">{{ helpText() }}</div>
+    }
+    @if (counter()) {
+      <div [id]="countId()" class="form-text form-field-count">{{ counter() }}</div>
+    }
+  </div>
+}

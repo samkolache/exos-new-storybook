@@ -1,0 +1,82 @@
+// Tag: Figma "Review / Source tag" (967:7676). Small read-only label.
+// Colours come from the Figma source variants:
+//   neutral   Property records, Order, Final check
+//   blue      AI (Photos, Voice)
+//   attention Client note, Needs input, Conflict
+//   info      Waiting on photo
+//   disabled  Skipped, System
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px 3px 7px;
+  border-radius: 999px;
+  background-color: var(--color-background-tag-neutral);
+  font-family: "Geist", var(--bs-body-font-family);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 14px;
+  color: var(--color-text-tag-neutral);
+  white-space: nowrap;
+  vertical-align: middle;
+
+  > img {
+    flex-shrink: 0;
+  }
+
+  // No icon: even padding.
+  &.tag-text-only {
+    padding-left: 9px;
+  }
+}
+
+// Sizes. md is the Figma tag; sm and lg scale around it.
+.tag-sm {
+  gap: 3px;
+  padding: 2px 7px 2px 5px;
+  font-size: 10px;
+  line-height: 12px;
+
+  &.tag-text-only {
+    padding-left: 7px;
+  }
+}
+
+.tag-lg {
+  gap: 5px;
+  padding: 5px 11px 5px 9px;
+  font-size: 13px;
+  line-height: 16px;
+
+  &.tag-text-only {
+    padding-left: 11px;
+  }
+}
+
+.tag-blue {
+  background-color: var(--color-background-selected);
+  color: var(--color-text-tag);
+}
+
+.tag-attention {
+  background-color: var(--color-background-attention);
+  color: var(--color-text-tag-attention);
+}
+
+.tag-info {
+  background-color: var(--color-background-tag-info);
+  color: var(--color-text-link);
+}
+
+// Wins over any colour.
+.tag.tag-disabled {
+  background-color: var(--color-background-tag-neutral);
+  color: var(--color-text-label);
+
+  // Coloured icons go grey too (Skipped / System icons are already grey).
+  > img {
+    filter: grayscale(1);
+    opacity: 0.8;
+  }
+}

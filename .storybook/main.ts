@@ -10,6 +10,8 @@ const config: StorybookConfig = {
     '@storybook/addon-onboarding',
   ],
   framework: '@storybook/angular-vite',
+  // Same static files the app serves (icons/pcr/*.svg).
+  staticDirs: ['../public'],
   // Bootstrap 5.3.2 predates Dart Sass's module-system deprecations.
   viteFinal: async (config) => {
     config.css ??= {};

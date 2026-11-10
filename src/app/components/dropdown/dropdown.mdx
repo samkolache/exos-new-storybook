@@ -1,0 +1,74 @@
+import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Variation } from '../../../../.storybook/blocks/Variation';
+import * as DropdownStories from './dropdown.stories';
+
+<Meta of={DropdownStories} />
+
+<Title />
+
+<Subtitle>A button that opens a menu of actions, like editing, moving or deleting something.</Subtitle>
+
+## Demo
+
+<Canvas of={DropdownStories.Default} />
+
+## Usage
+
+Use a dropdown to group related actions behind one button. To let people pick a value in a form, use a [Select](?path=/docs/components-forms-select--docs) instead.
+
+```html
+<app-dropdown label="Photo actions" [items]="items" (itemSelected)="run($event.value)" />
+```
+
+```ts
+items: DropdownItem[] = [
+  { type: 'header', label: 'Photo' },
+  { label: 'Edit photo', value: 'edit' },
+  { type: 'divider' },
+  { label: 'Delete photo', value: 'delete' },
+];
+```
+
+It opens on click or with ↓/↑, moves between items with the arrow keys and Home/End, and closes on Escape, Tab or a click outside.
+
+## Variations
+
+<Variation title="Variant" of={DropdownStories.Variants}>
+
+The toggle is a [Button](?path=/docs/components-button--docs), so it takes the same `variant` (`primary`, `secondary`, `destructive`) and `ghost` inputs.
+
+</Variation>
+
+<Variation title="Items" of={DropdownStories.Open}>
+
+Each entry in `items` is one of:
+
+- an action: `{ label, value }`, optionally `active: true` or `disabled: true`
+- a section heading: `{ type: 'header', label }`
+- a line between groups: `{ type: 'divider' }`
+
+</Variation>
+
+<Variation title="Alignment" of={DropdownStories.AlignEnd}>
+
+`align="end"` lines the menu up with the right edge of the button. Use it when the button sits at the right of the screen.
+
+</Variation>
+
+<Variation title="Direction" of={DropdownStories.Dropup}>
+
+`direction` opens the menu `down` (default), `up`, `start` or `end`. Open it upwards when the button is near the bottom of the screen.
+
+</Variation>
+
+<Variation title="Dark" of={DropdownStories.Dark}>
+
+`[dark]="true"` gives the menu a dark background, for dark surfaces.
+
+</Variation>
+
+## API
+
+Change the inputs below to update the demo at the top of the page.
+
+<Controls of={DropdownStories.Default} />

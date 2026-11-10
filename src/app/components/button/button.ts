@@ -8,6 +8,13 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
   destructive: 'btn-danger',
 };
 
+/** Button classes; shared with components that render their own <button> (e.g. the dropdown toggle). */
+export function buttonClasses(variant: ButtonVariant, ghost = false): string[] {
+  const cls = ['btn', VARIANT_CLASS[variant]];
+  if (ghost) cls.push('btn-ghost');
+  return cls;
+}
+
 @Component({
   selector: 'app-button',
   templateUrl: './button.html',
@@ -22,7 +29,5 @@ export class ButtonComponent {
 
   readonly clicked = output<MouseEvent>();
 
-  protected readonly classes = computed(
-    () => `btn ${VARIANT_CLASS[this.variant()]}${this.ghost() ? ' btn-ghost' : ''}`,
-  );
+  protected readonly classes = computed(() => buttonClasses(this.variant(), this.ghost()).join(' '));
 }

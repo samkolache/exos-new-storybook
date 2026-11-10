@@ -1,0 +1,290 @@
+// Dropdown card: Figma "PCR" › Form view › "Property · collapsed / answered" (792:3633, 792:3659, 792:3668)
+// and "Card · Property" with an open question (792:3017).
+
+.dropdown-card {
+  // Geist is the PCR typeface; scoped here so the rest of the theme is unchanged.
+  font-family: "Geist", var(--bs-body-font-family);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  border-radius: 20px;
+  background-color: var(--color-background-page);
+  filter: drop-shadow(0 10px 14px rgba(15, 18, 26, 0.1));
+
+  &.expanded {
+    padding-bottom: 12px;
+  }
+}
+
+// Head: the whole row toggles; "Edit all" sits on top of it.
+.dropdown-card-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-card-toggle {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 0 16px;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+
+  > img {
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+}
+
+.dropdown-card-title-wrap {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+
+  .dropdown-card.has-action.expanded & {
+    padding-right: 72px; // keeps long titles clear of "Edit all"
+  }
+}
+
+.dropdown-card-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--color-text-heading);
+}
+
+.dropdown-card-summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-text-placeholder);
+  white-space: nowrap;
+
+  &.attention {
+    color: var(--color-text-attention);
+  }
+}
+
+.dropdown-card-action {
+  position: absolute;
+  top: 50%;
+  right: 48px; // 16px padding + 14px chevron + 18px gap
+  transform: translateY(-50%);
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  color: var(--color-text-link);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Body: grows open with a grid-rows transition.
+.dropdown-card-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+
+  .dropdown-card.expanded & {
+    grid-template-rows: 1fr;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.dropdown-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  overflow: hidden;
+
+  .dropdown-card.expanded & {
+    padding-top: 12px;
+  }
+}
+
+.dropdown-card-list {
+  margin: 0;
+  padding: 0 16px;
+  list-style: none;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.dropdown-card-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border-divider);
+
+  .dropdown-card-list.before-question > &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.dropdown-card-row-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--color-text-label);
+}
+
+.dropdown-card-row-value {
+  flex-shrink: 0;
+  font-weight: 500;
+  color: var(--color-text-heading);
+  white-space: nowrap;
+}
+
+// Open question ("1 needs you").
+.dropdown-card-question {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px 16px;
+  background-color: var(--surface-attention-zone);
+}
+
+.dropdown-card-question-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.dropdown-card-question-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  background-color: var(--color-background-attention);
+}
+
+.dropdown-card-question-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.dropdown-card-question-text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--color-text-heading);
+}
+
+.dropdown-card-question-hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-text-label);
+}
+
+.dropdown-card-confirm-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown-card-confirm-prompt {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-text-placeholder);
+}
+
+.dropdown-card-confirm {
+  flex-shrink: 0;
+  height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 17px;
+  background-image: linear-gradient(to bottom, #3a3f4a, #1c1f26);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 16px;
+  color: var(--color-text-inverse);
+  transition: transform 0.15s;
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+// "Edit by typing or speaking…"
+.dropdown-card-edit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 12px;
+}
+
+.dropdown-card-edit-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-text-heading);
+  outline: none;
+
+  &::placeholder {
+    color: var(--color-text-placeholder);
+  }
+}
+
+.dropdown-card-mic {
+  display: flex;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
