@@ -1,0 +1,65 @@
+import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Variation } from '../../../../.storybook/blocks/Variation';
+import * as RadioGroupStories from './radio-group.stories';
+
+<Meta of={RadioGroupStories} />
+
+<Title />
+
+<Subtitle>A set of options where people pick exactly one.</Subtitle>
+
+## Demo
+
+<Canvas of={RadioGroupStories.Default} />
+
+## Usage
+
+Use a radio group when people should see every option before choosing. For a long list, use a [Select](?path=/docs/components-forms-select--docs). For short answers in a row, use a [Chip](?path=/docs/components-chip--docs).
+
+```html
+<app-radio-group label="Section" [options]="sections" [(value)]="section" />
+```
+
+```ts
+sections: RadioOption[] = [
+  { label: 'Interior', value: 'interior' },
+  { label: 'Exterior', value: 'exterior', description: 'Front, rear and sides' },
+];
+```
+
+It works with `[(value)]`, `ngModel` and reactive forms.
+
+## Variations
+
+<Variation title="Appearance" of={RadioGroupStories.Appearances}>
+
+Set the look with the `appearance` input:
+
+- `default` is a plain Bootstrap radio list.
+- `card` turns each option into a selectable card. Use it when options need more room or a description.
+
+</Variation>
+
+<Variation title="Cards" of={RadioGroupStories.CardsShowcase}>
+
+Add a `description` to an option for a second line of detail. The picked card gets a blue border.
+
+</Variation>
+
+<Variation title="Layout" of={RadioGroupStories.LayoutShowcase}>
+
+Options stack by default. `[inline]="true"` puts them side by side. `[reverse]="true"` puts the radio after its label.
+
+</Variation>
+
+<Variation title="States" of={RadioGroupStories.StatesShowcase}>
+
+Set `state="invalid"` with a `feedback` message when nothing is picked. Use the `disabled` input for the whole group, or `disabled: true` on a single option.
+
+</Variation>
+
+## API
+
+Change the inputs below to update the demo at the top of the page.
+
+<Controls of={RadioGroupStories.Default} />

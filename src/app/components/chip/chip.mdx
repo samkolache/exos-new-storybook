@@ -1,0 +1,72 @@
+import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Variation } from '../../../../.storybook/blocks/Variation';
+import * as ChipStories from './chip.stories';
+
+<Meta of={ChipStories} />
+
+<Title />
+
+<Subtitle>Chips let people pick an answer from a short set of options.</Subtitle>
+
+## Demo
+
+<Canvas of={ChipStories.GroupSingle} />
+
+## Usage
+
+Pass `options` to show a row of chips and bind the answer with `[(value)]`. It also works with `ngModel` and reactive forms.
+
+```html
+<app-chip groupLabel="Interior condition" [options]="options" [(value)]="condition" />
+```
+
+```ts
+options: ChipOption[] = [
+  { label: 'Good', value: 'good' },
+  { label: 'Average', value: 'average', suggested: true },
+  { label: 'Fair', value: 'fair' },
+];
+```
+
+Without `options` it is a single chip you can toggle: `<app-chip label="Fair" [(selected)]="picked" />`.
+
+## Variations
+
+<Variation title="Type" of={ChipStories.Types}>
+
+Set how many answers people can pick with the `type` input:
+
+- `single` (default) picks one. `value` is a string. A picked chip shows a check.
+- `multi` picks any number. `value` is a string array, kept in option order. Each chip shows a checkbox.
+
+</Variation>
+
+<Variation title="States" of={ChipStories.AllStates}>
+
+Every chip in the Figma component set: default, AI suggested, selected and disabled, for both types.
+
+</Variation>
+
+<Variation title="AI suggested" of={ChipStories.SuggestedShowcase}>
+
+Add `suggested: true` to an option the AI picked. It shows a sparkle. While it is still picked, it has no check, so people can tell the AI's answer from their own.
+
+</Variation>
+
+<Variation title="Icon" of={ChipStories.IconShowcase}>
+
+Add `icon: 'records'` to an option to show where the answer came from.
+
+</Variation>
+
+<Variation title="Disabled" of={ChipStories.DisabledShowcase}>
+
+Add `disabled: true` to an option to grey out one chip, or use the `disabled` input to grey out the whole group.
+
+</Variation>
+
+## API
+
+Change the inputs below to update the demo at the top of the page.
+
+<Controls of={ChipStories.GroupSingle} />

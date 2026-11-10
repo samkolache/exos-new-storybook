@@ -2,11 +2,16 @@ import type { Meta, StoryObj } from '@storybook/angular-vite';
 import { moduleMetadata } from '@storybook/angular-vite';
 import { fn } from 'storybook/test';
 import { ButtonComponent } from './button';
+import { propsSource } from '../shared/story-source';
+
+/** Component defaults: the code panel only prints props that differ. */
+const DEFAULTS = { label: 'Button', variant: 'primary', ghost: false, disabled: false, type: 'button' };
 
 const meta: Meta<ButtonComponent> = {
   title: 'Components/Button',
   component: ButtonComponent,
   decorators: [moduleMetadata({ imports: [ButtonComponent] })],
+  parameters: { docs: { source: { transform: propsSource('app-button', DEFAULTS) } } },
   argTypes: {
     classes: { table: { disable: true } },
     variant: { control: 'inline-radio', options: ['primary', 'secondary', 'destructive'] },

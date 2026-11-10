@@ -1,0 +1,213 @@
+// pcr-demo field variants layered on Bootstrap's .form-control / .form-select.
+// Components read tokens through CSS variables (scoped to .exos-theme-dcfc).
+
+// Filled: grey well with no border until focus (pcr-demo search field).
+.form-field-filled {
+  background-color: var(--color-background-field);
+  border-color: transparent;
+
+  &:focus {
+    background-color: var(--color-background-page);
+    border-color: var(--color-border-focus);
+  }
+}
+
+// Pill: fully rounded (pcr-demo detail field).
+.form-field-pill {
+  border-radius: 50rem;
+  padding-left: 1.25rem;
+}
+
+// Native select still showing its placeholder option reads like an input placeholder.
+.form-select-placeholder {
+  color: var(--color-text-placeholder);
+
+  option {
+    color: var(--bs-body-color);
+  }
+}
+
+// Field wrapper: leading icon and trailing buttons (clear, show password) inside the field.
+.form-control-wrap {
+  position: relative;
+
+  > .form-control-leading {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    z-index: 4;
+    transform: translateY(-50%);
+    color: var(--color-text-secondary);
+    pointer-events: none;
+  }
+
+  &.has-leading .form-control {
+    padding-left: 2.625rem;
+  }
+
+  &.has-trailing-1 .form-control {
+    padding-right: 2.75rem;
+  }
+
+  &.has-trailing-2 .form-control {
+    padding-right: 4.75rem;
+  }
+
+  // Trailing buttons take the spot of Bootstrap's validation icon.
+  &[class*="has-trailing"] .form-control:is(.is-valid, .is-invalid) {
+    background-image: none;
+  }
+
+  // Multi-line: pin icon and buttons to the first line instead of the middle.
+  &.is-textarea {
+    > .form-control-leading,
+    > .form-control-actions {
+      top: 0.75rem;
+      transform: none;
+    }
+  }
+}
+
+.form-control-actions {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  z-index: 4;
+  display: flex;
+  gap: 0.125rem;
+  transform: translateY(-50%);
+}
+
+.form-control-action {
+  display: inline-flex;
+  padding: 0.375rem;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--color-text-label);
+  line-height: 0;
+
+  &:hover {
+    background-color: var(--color-background-subtle);
+    color: var(--color-text-heading);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 1px;
+  }
+
+  .form-control-wrap-sm & {
+    padding: 0.25rem;
+  }
+}
+
+// Textarea
+textarea.form-control {
+  min-height: auto;
+  resize: vertical;
+
+  &.form-control-autosize {
+    resize: none;
+  }
+
+  // Pill corners don't suit several lines.
+  &.form-field-pill {
+    border-radius: 20px;
+  }
+}
+
+// Bootstrap fixes floating textareas to one line; let rows decide.
+.form-floating > textarea.form-control {
+  height: auto;
+}
+
+// Help text on the left, character count on the right.
+.form-field-footer {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.form-field-count {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+// Radio cards: one selectable row per option (pcr-demo "Can't access the property?").
+.radio-card-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &.radio-card-group-inline {
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    > .radio-card {
+      flex: 1 1 12rem;
+    }
+  }
+}
+
+.radio-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.9375rem 1rem;
+  border: 1.5px solid var(--color-border-default);
+  border-radius: 20px;
+  background-color: var(--color-background-page);
+  box-shadow: 0 4px 20px rgba(48, 36, 120, 0.04);
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+
+  .form-check-input {
+    float: none;
+    flex-shrink: 0;
+    margin: 0.125rem 0 0;
+  }
+
+  &:hover:not(.disabled) {
+    background-color: var(--color-background-subtle);
+  }
+
+  &.active {
+    border-color: var(--color-control-selected);
+    background-color: var(--color-background-page);
+    box-shadow: 0 4px 20px rgba(48, 36, 120, 0.08);
+
+    .radio-card-title {
+      font-weight: 600;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.is-invalid {
+    border-color: var(--bs-form-invalid-border-color);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.radio-card-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.radio-card-title {
+  font-weight: 500;
+}
+
+.radio-card-description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}

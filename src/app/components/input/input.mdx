@@ -1,0 +1,76 @@
+import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Variation } from '../../../../.storybook/blocks/Variation';
+import * as InputStories from './input.stories';
+
+<Meta of={InputStories} />
+
+<Title />
+
+<Subtitle>Text fields let people type an answer, from a single word to several paragraphs.</Subtitle>
+
+## Demo
+
+<Canvas of={InputStories.Default} />
+
+## Usage
+
+Use an input for free text. If people should pick from a known list, use a [Select](?path=/docs/components-forms-select--docs), [Radio Group](?path=/docs/components-forms-radio-group--docs) or [Chip](?path=/docs/components-chip--docs) instead.
+
+```html
+<app-input label="Room name" placeholder="e.g. Sunroom" [(value)]="name" />
+```
+
+It works with `[(value)]`, `ngModel` and reactive forms.
+
+## Variations
+
+<Variation title="Appearance" of={InputStories.Appearances}>
+
+Set the look with the `appearance` input:
+
+- `outline` (default) for most forms.
+- `filled` for search fields. Add `icon="search"` for the magnifier.
+- `pill` for short, casual fields like "Add a detail".
+
+</Variation>
+
+<Variation title="Labels and help" of={InputStories.LabelsShowcase}>
+
+- `label` sits above the field. `[required]="true"` adds a red asterisk.
+- `helpText` adds a hint under the field.
+- `[floatingLabel]="true"` puts the label inside the field, where it moves up as you type.
+- `prefix` and `suffix` add fixed text like `$` or `.00`.
+
+</Variation>
+
+<Variation title="Text area" of={InputStories.TextareaShowcase}>
+
+Set `type="textarea"` for several lines. `rows` sets the height. Add `[autoResize]="true"` to grow it as people type, up to `maxRows`.
+
+</Variation>
+
+<Variation title="Count, clear and password" of={InputStories.ExtrasShowcase}>
+
+- `maxLength` with `[showCount]="true"` shows a count like "12 / 40" under the field.
+- `[clearable]="true"` adds a × button once there is text.
+- Password fields always get a show/hide button.
+
+</Variation>
+
+<Variation title="Size" of={InputStories.Sizes}>
+
+Use the `size` input: `sm`, `md` (default) or `lg`.
+
+</Variation>
+
+<Variation title="States" of={InputStories.States}>
+
+Set `state` to `valid` or `invalid` and add a `feedback` message. Use `disabled` when the field can't be changed yet, and `readonly` to show a value people can copy but not edit.
+
+</Variation>
+
+## API
+
+Change the inputs below to update the demo at the top of the page.
+
+<Controls of={InputStories.Default} />

@@ -1,0 +1,49 @@
+<ng-template #control>
+  <select
+    [id]="selectId()"
+    [class]="selectClasses()"
+    [disabled]="isDisabled()"
+    [required]="required()"
+    [attr.aria-invalid]="state() === 'invalid' || null"
+    [attr.aria-describedby]="describedBy()"
+    (change)="onSelect($event)"
+    (blur)="onBlur($event)"
+  >
+    @if (placeholder()) {
+      <option value="" disabled [selected]="!value()">{{ placeholder() }}</option>
+    }
+    @for (option of options(); track option.value) {
+      <option [value]="option.value" [disabled]="option.disabled" [selected]="option.value === value()">
+        {{ option.label }}
+      </option>
+    }
+  </select>
+</ng-template>
+
+<ng-template #labelText>
+  {{ label() }}
+  @if (required()) {
+    <span class="text-danger" aria-hidden="true">*</span>
+  }
+</ng-template>
+
+@if (floatingLabel()) {
+  <div class="form-floating">
+    <ng-container [ngTemplateOutlet]="control" />
+    <label [for]="selectId()"><ng-container [ngTemplateOutlet]="labelText" /></label>
+  </div>
+} @else {
+  @if (label()) {
+    <label class="form-label" [for]="selectId()"><ng-container [ngTemplateOutlet]="labelText" /></label>
+  }
+  <ng-container [ngTemplateOutlet]="control" />
+}
+
+@if (showFeedback()) {
+  <div [id]="feedbackId()" class="d-block" [class]="state() === 'valid' ? 'valid-feedback' : 'invalid-feedback'">
+    {{ feedback() }}
+  </div>
+}
+@if (helpText()) {
+  <div [id]="helpId()" class="form-text">{{ helpText() }}</div>
+}

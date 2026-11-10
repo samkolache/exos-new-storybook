@@ -1,0 +1,51 @@
+<div [class]="wrapperClass()">
+  <button
+    #toggleRef
+    type="button"
+    [class]="toggleClasses()"
+    [disabled]="disabled()"
+    aria-haspopup="menu"
+    [attr.aria-expanded]="open()"
+    [attr.aria-controls]="menuId"
+    (click)="toggle()"
+  >
+    {{ label() }}
+  </button>
+
+  <!-- data-bs-popper="static" makes Bootstrap's CSS place the menu, so no Popper is needed. -->
+  <ul
+    [id]="menuId"
+    role="menu"
+    [class]="menuClasses()"
+    data-bs-popper="static"
+    [attr.data-bs-theme]="dark() ? 'dark' : null"
+  >
+    @for (item of items(); track $index) {
+      @switch (item.type ?? 'item') {
+        @case ('header') {
+          <li role="presentation"><h6 class="dropdown-header">{{ item.label }}</h6></li>
+        }
+        @case ('divider') {
+          <li role="separator"><hr class="dropdown-divider" /></li>
+        }
+        @default {
+          <li role="none">
+            <button
+              #menuItem
+              type="button"
+              role="menuitem"
+              tabindex="-1"
+              class="dropdown-item"
+              [class.active]="item.active"
+              [attr.aria-current]="item.active || null"
+              [disabled]="item.disabled"
+              (click)="select(item)"
+            >
+              {{ item.label }}
+            </button>
+          </li>
+        }
+      }
+    }
+  </ul>
+</div>

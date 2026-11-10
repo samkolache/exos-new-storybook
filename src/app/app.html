@@ -10,4 +10,25 @@
   </div>
 
   <p>Primary clicked: <strong>{{ clicks() }}</strong> times</p>
+
+  <h2 class="h4 mt-5 mb-3">Forms</h2>
+  <div class="d-flex flex-column gap-3" style="max-width: 26rem">
+    <app-input label="Room name" placeholder="e.g. Sunroom" [(value)]="room" />
+    <app-input placeholder="Search or type a new view" appearance="filled" icon="search" />
+    <app-select label="Move photo to" [options]="rooms" [(value)]="view" />
+    <app-radio-group label="Section" appearance="card" [options]="sections" [(value)]="section" />
+    <div class="d-flex flex-wrap gap-2">
+      <app-tag label="Photos" [ai]="true" />
+      <app-tag label="From property records" icon="records" />
+      <app-tag label="Needs your input" color="attention" icon="dot" />
+      <app-tag label="Skipped" icon="skip" [disabled]="true" />
+    </div>
+    <app-chip groupLabel="Interior condition" [options]="conditions" [(value)]="condition" />
+    <app-dropdown-card title="Property" [rows]="property" />
+    <app-dropdown label="Photo actions" variant="secondary" [items]="actions" (itemSelected)="lastAction.set($event.label ?? '')" />
+  </div>
+  <p class="mt-3 mb-0">
+    Room: <strong>{{ room() || '—' }}</strong> · View: <strong>{{ view() || '—' }}</strong> ·
+    Section: <strong>{{ section() }}</strong> · Last action: <strong>{{ lastAction() || '—' }}</strong>
+  </p>
 </main>

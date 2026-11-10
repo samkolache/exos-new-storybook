@@ -1,0 +1,65 @@
+import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Variation } from '../../../../.storybook/blocks/Variation';
+import * as SelectStories from './select.stories';
+
+<Meta of={SelectStories} />
+
+<Title />
+
+<Subtitle>A dropdown list for picking one value in a form.</Subtitle>
+
+## Demo
+
+<Canvas of={SelectStories.Default} />
+
+## Usage
+
+Use a select when there are more options than fit comfortably on screen. For a few options people should see at once, use a [Radio Group](?path=/docs/components-forms-radio-group--docs) or [Chip](?path=/docs/components-chip--docs). For a menu of actions, use a [Dropdown](?path=/docs/components-dropdown--docs).
+
+```html
+<app-select label="Room" [options]="rooms" [(value)]="room" />
+```
+
+```ts
+rooms: SelectOption[] = [
+  { label: 'Living room', value: 'living' },
+  { label: 'Kitchen', value: 'kitchen' },
+  { label: 'Basement', value: 'basement', disabled: true },
+];
+```
+
+It works with `[(value)]`, `ngModel` and reactive forms.
+
+## Variations
+
+<Variation title="Appearance" of={SelectStories.Appearances}>
+
+The same looks as [Input](?path=/docs/components-forms-input--docs): `outline` (default), `filled` and `pill`.
+
+</Variation>
+
+<Variation title="Placeholder and label" of={SelectStories.PlaceholderShowcase}>
+
+- `placeholder` shows grey text until something is picked. It can't be picked itself. Set it to `''` to hide it.
+- Set `value` to start with an option picked.
+- `[floatingLabel]="true"` puts the label inside the field.
+
+</Variation>
+
+<Variation title="Size" of={SelectStories.Sizes}>
+
+Use the `size` input: `sm`, `md` (default) or `lg`.
+
+</Variation>
+
+<Variation title="States" of={SelectStories.StatesShowcase}>
+
+Add `helpText` for a hint. Set `state="invalid"` with a `feedback` message when nothing valid is picked. Use `disabled` when the choice isn't available yet.
+
+</Variation>
+
+## API
+
+Change the inputs below to update the demo at the top of the page.
+
+<Controls of={SelectStories.Default} />

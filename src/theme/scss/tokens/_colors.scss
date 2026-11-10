@@ -11,6 +11,14 @@ $dcfc-colors: (
   "text-disabled":     "grey-400",
   "icon-default":      "ink-1000",
   "text-link":         "blue-600",
+  "text-placeholder":  "grey-500",
+  "text-heading":      "ink-975",
+  "text-label":        "slate-600",
+  "text-attention":    "orange-800",
+  "text-selected":     "grey-900",
+  "text-tag":          "grey-800",
+  "text-tag-neutral":  "ink-800",
+  "text-tag-attention": "orange-700",
   "action-primary":    "ink-900",
   "action-primary-end": "ink-950",
   "action-secondary":  "blue-500",
@@ -32,6 +40,12 @@ $dcfc-colors: (
   "background-glass":  "white-a75",
   "fill-glass":        "white-a35",
   "background-glass-inverse": "white-a20",
+  "background-field":  "grey-50",
+  "background-selected": "blue-50",
+  "background-attention": "orange-50",
+  "background-disabled": "grey-75",
+  "background-tag-neutral": "grey-110",
+  "background-tag-info": "blue-25",
   "border-default":    "grey-300",
   "border-subtle":     "grey-a15",
   "border-inverse-subtle": "white-a28",
@@ -40,6 +54,14 @@ $dcfc-colors: (
   "border-glass-strong": "white-a90",
   "border-glass-inverse": "white-a35",
   "shadow-elevated":   "violet-900-a08",
+  "border-focus":      "blue-500",
+  "border-divider":    "grey-200",
+  "border-control":    "grey-250",
+  "border-chip":       "grey-150",
+  "border-checkbox":   "grey-350",
+  "border-disabled":   "grey-125",
+  "status-attention":  "orange-500",
+  "control-selected":  "blue-500",
   "chart-1":           "violet-400",
 ) !default;
 
@@ -48,6 +70,7 @@ $dcfc-surfaces: (
   "overlay":  rgba(58, 63, 74, 0.5),
   "hover":    rgba(58, 63, 74, 0.08),
   "pressed":  rgba(58, 63, 74, 0.16),
+  "attention-zone": rgba(255, 242, 228, 0.33), // from Figma PCR (question block)
 ) !default;
 
 @function dcfc-color($name) {

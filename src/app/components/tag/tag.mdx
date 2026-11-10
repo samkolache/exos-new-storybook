@@ -1,0 +1,70 @@
+import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Variation } from '../../../../.storybook/blocks/Variation';
+import * as TagStories from './tag.stories';
+
+<Meta of={TagStories} />
+
+<Title />
+
+<Subtitle>Small labels that show the status or source of something, like where an answer came from.</Subtitle>
+
+## Demo
+
+<Canvas of={TagStories.WithIcon} />
+
+## Usage
+
+Tags are read-only. If people should click or pick something, use a [Chip](?path=/docs/components-chip--docs) or [Button](?path=/docs/components-button--docs) instead.
+
+```html
+<app-tag label="From order" icon="calendar" />
+```
+
+## Variations
+
+<Variation title="Color" of={TagStories.Colors}>
+
+Set the `color` input to match the meaning:
+
+- `neutral` (default) for plain facts, like "From order".
+- `blue` for AI. Usually set with `ai` instead (see below).
+- `attention` for things that need someone, like "Needs your input".
+- `info` for things in progress, like "Waiting on photo".
+
+</Variation>
+
+<Variation title="Icon" of={TagStories.Icons}>
+
+Add an `icon` to make the tag quicker to scan. Leave it out (`none`, the default) for text-only tags.
+
+</Variation>
+
+<Variation title="AI" of={TagStories.ExampleAITags}>
+
+Add `[ai]="true"` when the AI produced the answer. The tag turns blue with a sparkle. Pass an `icon` to replace the sparkle, like `icon="voice"` for voice notes.
+
+</Variation>
+
+<Variation title="Disabled" of={TagStories.ExampleDisabledTags}>
+
+Add `[disabled]="true"` for things nobody needs to act on, like skipped steps. It greys out the tag and its icon, whatever the color.
+
+</Variation>
+
+<Variation title="Size" of={TagStories.Sizes}>
+
+Use the `size` input: `sm`, `md` (default) or `lg`.
+
+</Variation>
+
+<Variation title="Figma source tags" of={TagStories.ExampleFigmaSourceTags}>
+
+The full "Review / Source tag" set from Figma, built from these inputs. Show the code to copy any of them.
+
+</Variation>
+
+## API
+
+Change the inputs below to update the demo at the top of the page.
+
+<Controls of={TagStories.WithIcon} />
