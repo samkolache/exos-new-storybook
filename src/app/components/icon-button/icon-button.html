@@ -1,0 +1,9 @@
+<button
+  [class]="classes()"
+  [type]="type()"
+  [disabled]="disabled()"
+  [attr.aria-label]="label()"
+  (click)="clicked.emit($event)"
+>
+  <svg [lucideIcon]="icon()" [size]="iconSpec().size" [strokeWidth]="iconSpec().stroke"></svg>
+</button>

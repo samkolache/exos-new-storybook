@@ -1,0 +1,24 @@
+/* Docs-page layout only (Storybook chrome, not part of the theme). */
+
+.exos-docs-variation {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 32px;
+  align-items: start;
+  margin: 48px 0;
+}
+
+.exos-docs-variation__text > h3 {
+  margin-top: 0;
+}
+
+.exos-docs-variation__example > .sbdocs-preview {
+  margin-top: 0;
+}
+
+@media (max-width: 900px) {
+  .exos-docs-variation {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+}

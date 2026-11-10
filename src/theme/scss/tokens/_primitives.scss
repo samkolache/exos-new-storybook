@@ -1,22 +1,37 @@
-// Layer 1: raw colors. Never used directly by components.
-//
-// TODO: PLACEHOLDER. Replace this file with
-// Exos.DesignSystem/src/ExosThemeDCFC/src/scss/tokens/_primitives.scss.
-// Only the values marked "from setup doc" are confirmed; the token names
-// below may not match PwC's names.
 
 $dcfc-primitives: (
-  "ink-900":    #3A3F4A, // from setup doc (btn-primary)
-  "blue-600":   #2F6FE4, // from setup doc
-  "blue-500":   #438AF5, // from setup doc (action blue / info)
-  "orange-500": #F28C28, // from setup doc (attention / warning)
+  "ink-900":    #3A3F4A,
+  "ink-950":    #1C1F26,
+  "ink-1000":   #0F1219,
+  "blue-600":   #2F6FE4,
+  "blue-500":   #438AF5,
+  "blue-500-a15": rgba(67, 138, 245, 0.15),
+  "blue-500-a75": rgba(67, 138, 245, 0.75),
+  "orange-500": #F28C28,
+  "yellow-300-a15": rgba(255, 216, 77, 0.15),
+  "yellow-700": #B38626,
   "violet-400": #8B6CF0,
+  "violet-900-a08": rgba(48, 36, 120, 0.08),
   "green-500":  #1E9E5A,
+  "green-500-a40": rgba(39, 178, 112, 0.40),
+  "green-600":  #1E9E6A,
   "red-500":    #D93B3B,
+  "red-600":    #D2463B,
   "grey-100":   #F5F6F8,
+  "grey-200":   #E6EAF1,
   "grey-300":   #D5D8DE,
+  "grey-400":   #98A1B2,
   "grey-600":   #6B7280,
+  "grey-800":   #3A3A3A,
   "white":      #FFFFFF,
+  "white-a20":  rgba(255, 255, 255, 0.20),
+  "white-a28":  rgba(255, 255, 255, 0.28),
+  "white-a30":  rgba(255, 255, 255, 0.30),
+  "white-a35":  rgba(255, 255, 255, 0.35),
+  "white-a40":  rgba(255, 255, 255, 0.40),
+  "white-a75":  rgba(255, 255, 255, 0.75),
+  "white-a90":  rgba(255, 255, 255, 0.90),
+  "grey-a15":   rgba(172, 172, 172, 0.15),
 ) !default;
 
 @function dcfc-primitive($name) {

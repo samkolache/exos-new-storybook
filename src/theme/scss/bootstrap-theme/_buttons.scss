@@ -1,0 +1,232 @@
+// Button overrides. Figma: Sams-Vibe › Button (node 732:36490).
+// Drives Bootstrap .btn through its --bs-btn-* variables; colors from var(--color-*) only.
+// Hover/active currently mirror the resting state (interaction states to be specced).
+
+.btn {
+  --bs-btn-padding-x: 1.1875rem; // 19px + 1px border = 20px
+  --bs-btn-padding-y: 0;
+  --bs-btn-font-size: 0.875rem; // 14px
+  --bs-btn-font-weight: 700;
+  --bs-btn-line-height: 1.125rem; // 18px
+  --bs-btn-border-width: 1px;
+  --bs-btn-border-color: transparent;
+  --bs-btn-border-radius: 23px;
+  --bs-btn-disabled-opacity: 1;
+  --bs-btn-disabled-bg: var(--color-action-disabled);
+  --bs-btn-disabled-color: var(--color-text-disabled);
+  --bs-btn-disabled-border-color: transparent;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  --bs-btn-color: var(--color-text-inverse);
+  --bs-btn-bg: var(--color-action-primary);
+  --bs-btn-border-color: var(--color-border-inverse-subtle);
+  --bs-btn-hover-color: var(--color-text-inverse);
+  --bs-btn-hover-bg: var(--color-action-primary);
+  --bs-btn-hover-border-color: var(--color-border-inverse-subtle);
+  --bs-btn-active-color: var(--color-text-inverse);
+  --bs-btn-active-bg: var(--color-action-primary);
+  --bs-btn-active-border-color: var(--color-border-inverse-subtle);
+
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-action-primary),
+    var(--color-action-primary-end)
+  );
+  box-shadow: inset 0 1px 0 0 var(--color-highlight-inset);
+}
+
+.btn-secondary {
+  --bs-btn-color: var(--color-text-neutral);
+  --bs-btn-bg: var(--color-action-neutral);
+  --bs-btn-border-color: var(--color-border-subtle);
+  --bs-btn-font-weight: 600;
+  --bs-btn-hover-color: var(--color-text-neutral);
+  --bs-btn-hover-bg: var(--color-action-neutral);
+  --bs-btn-hover-border-color: var(--color-border-subtle);
+  --bs-btn-active-color: var(--color-text-neutral);
+  --bs-btn-active-bg: var(--color-action-neutral);
+  --bs-btn-active-border-color: var(--color-border-subtle);
+}
+
+.btn-danger {
+  --bs-btn-color: var(--color-text-inverse);
+  --bs-btn-bg: var(--color-action-destructive);
+  --bs-btn-hover-color: var(--color-text-inverse);
+  --bs-btn-hover-bg: var(--color-action-destructive);
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-active-color: var(--color-text-inverse);
+  --bs-btn-active-bg: var(--color-action-destructive);
+  --bs-btn-active-border-color: transparent;
+}
+
+// Figma "Disabled": one look regardless of variant.
+.btn:disabled {
+  --bs-btn-font-weight: 700;
+  background-image: none;
+  box-shadow: none;
+}
+
+// Ghost (text) buttons: add .btn-ghost to any variant. Same size, no fill/border/shadow,
+// text takes the variant's color.
+.btn-ghost {
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: transparent;
+  --bs-btn-hover-bg: transparent;
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-active-bg: transparent;
+  --bs-btn-active-border-color: transparent;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: transparent;
+
+  background-image: none;
+  box-shadow: none;
+
+  &.btn-primary {
+    --bs-btn-color: var(--color-action-primary);
+    --bs-btn-hover-color: var(--color-action-primary);
+    --bs-btn-active-color: var(--color-action-primary);
+  }
+
+  &.btn-secondary {
+    --bs-btn-color: var(--color-text-neutral);
+    --bs-btn-hover-color: var(--color-text-neutral);
+    --bs-btn-active-color: var(--color-text-neutral);
+  }
+
+  &.btn-danger {
+    --bs-btn-color: var(--color-action-destructive);
+    --bs-btn-hover-color: var(--color-action-destructive);
+    --bs-btn-active-color: var(--color-action-destructive);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Icon button. 40px circle. .btn-icon is shape only; color comes from a skin class:
+//   .btn-icon-light  frosted white (Figma 732:23897)
+//   .btn-icon-glass  translucent white for dark/photo backgrounds (Figma 732:22413)
+//   .btn-icon-ghost  no background or border, icon only
+//   .btn-primary     same as the primary button
+
+.btn-icon {
+  --bs-btn-padding-x: 0;
+  --bs-btn-padding-y: 0;
+  --bs-btn-border-radius: 50%;
+
+  width: 40px;
+  height: 40px;
+}
+
+.btn-icon-light {
+  --bs-btn-color: var(--color-icon-default);
+  --bs-btn-bg: var(--color-background-glass);
+  --bs-btn-border-color: var(--color-border-glass-strong);
+  --bs-btn-hover-color: var(--color-icon-default);
+  --bs-btn-hover-bg: var(--color-background-glass);
+  --bs-btn-hover-border-color: var(--color-border-glass-strong);
+  --bs-btn-active-color: var(--color-icon-default);
+  --bs-btn-active-bg: var(--color-background-glass);
+  --bs-btn-active-border-color: var(--color-border-glass-strong);
+
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 24px 0 var(--color-shadow-elevated);
+}
+
+.btn-icon-ghost {
+  --bs-btn-color: var(--color-icon-default);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: transparent;
+  --bs-btn-hover-color: var(--color-icon-default);
+  --bs-btn-hover-bg: transparent;
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-active-color: var(--color-icon-default);
+  --bs-btn-active-bg: transparent;
+  --bs-btn-active-border-color: transparent;
+}
+
+.btn-icon-glass {
+  --bs-btn-color: var(--color-text-inverse);
+  --bs-btn-bg: var(--color-background-glass-inverse);
+  --bs-btn-border-color: var(--color-border-glass-inverse);
+  --bs-btn-hover-color: var(--color-text-inverse);
+  --bs-btn-hover-bg: var(--color-background-glass-inverse);
+  --bs-btn-hover-border-color: var(--color-border-glass-inverse);
+  --bs-btn-active-color: var(--color-text-inverse);
+  --bs-btn-active-bg: var(--color-background-glass-inverse);
+  --bs-btn-active-border-color: var(--color-border-glass-inverse);
+}
+
+// ---------------------------------------------------------------------------
+// Progress button. Figma: nodes 732:19369 (pending), 732:20039 (progress),
+// 732:26611 (complete). Translucent pill with a count badge, label and arrow.
+
+.btn-progress {
+  --bs-btn-padding-x: 0.75rem; // 12px + 1px border = 13px
+  --bs-btn-padding-y: 0.5rem;  // 8px
+  --bs-btn-font-size: 0.75rem; // 12px
+  --bs-btn-font-weight: 600;
+  --bs-btn-line-height: 1rem; // 16px (Geist "normal")
+  --bs-btn-border-radius: 999px;
+  --bs-btn-color: var(--color-text-inverse);
+  --bs-btn-border-color: var(--color-border-glass);
+  --bs-btn-hover-color: var(--color-text-inverse);
+  --bs-btn-hover-border-color: var(--color-border-glass);
+  --bs-btn-active-color: var(--color-text-inverse);
+  --bs-btn-active-border-color: var(--color-border-glass);
+  --btn-progress-badge-bg: transparent;
+
+  height: auto;
+  gap: 12px;
+  backdrop-filter: blur(10px);
+
+  .badge {
+    --bs-badge-padding-x: 6px;
+    --bs-badge-padding-y: 4px;
+    --bs-badge-font-size: 0.625rem; // 10px
+    --bs-badge-font-weight: 500;
+    --bs-badge-color: var(--color-text-inverse);
+    --bs-badge-border-radius: 10px;
+    line-height: 13px; // Geist "normal" at 10px
+    background-color: var(--btn-progress-badge-bg);
+  }
+
+  // Lucide draws the arrow inside a 24px grid; trim the padding so the
+  // visible 9.33px glyph sits where Figma puts it.
+  svg {
+    margin: -3.333px;
+  }
+}
+
+.btn-progress-pending {
+  --bs-btn-bg: var(--color-status-pending-subtle);
+  --bs-btn-hover-bg: var(--color-status-pending-subtle);
+  --bs-btn-active-bg: var(--color-status-pending-subtle);
+  --btn-progress-badge-bg: var(--color-status-pending);
+}
+
+.btn-progress-progress {
+  --bs-btn-bg: var(--color-status-progress-subtle);
+  --bs-btn-hover-bg: var(--color-status-progress-subtle);
+  --bs-btn-active-bg: var(--color-status-progress-subtle);
+  --btn-progress-badge-bg: var(--color-status-progress);
+}
+
+.btn-progress-complete {
+  --bs-btn-bg: var(--color-status-complete);
+  --bs-btn-border-color: var(--color-status-complete-border);
+  --bs-btn-hover-bg: var(--color-status-complete);
+  --bs-btn-hover-border-color: var(--color-status-complete-border);
+  --bs-btn-active-bg: var(--color-status-complete);
+  --bs-btn-active-border-color: var(--color-status-complete-border);
+  --btn-progress-badge-bg: var(--color-fill-glass);
+
+  .badge {
+    --bs-badge-padding-x: 5px;
+  }
+}

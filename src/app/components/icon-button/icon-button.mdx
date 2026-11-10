@@ -1,0 +1,56 @@
+import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Variation } from '../../../../.storybook/blocks/Variation';
+import * as IconButtonStories from './icon-button.stories';
+
+<Meta of={IconButtonStories} />
+
+<Title />
+
+<Subtitle>A round button with only an icon, for common actions like back, next and close.</Subtitle>
+
+## Demo
+
+<Canvas of={IconButtonStories.Default} />
+
+## Usage
+
+Use an icon button when the icon alone makes the action clear. If it might not be clear, use a [Button](?path=/docs/components-button--docs) with a label.
+
+```ts
+import { LucideChevronLeft } from '@lucide/angular';
+```
+
+```html
+<app-icon-button [icon]="LucideChevronLeft" label="Back" (clicked)="goBack()" />
+```
+
+## Variations
+
+<Variation title="Variant" of={IconButtonStories.Variants}>
+
+Set the look with the `variant` input:
+
+- `light` (default) is frosted white with a soft shadow.
+- `primary` matches the primary [Button](?path=/docs/components-button--docs): dark fill, white icon.
+- `ghost` has no background or border, just the icon. Use it where a filled circle would be too heavy.
+- `glass` is see-through white with a white icon, for dark or photo backgrounds. Its icon is smaller (14px).
+
+</Variation>
+
+<Variation title="Icon" of={IconButtonStories.Icons}>
+
+Pass any [Lucide](https://lucide.dev/icons/) icon to the `icon` input. Icons render at 18px (14px for `glass`).
+
+</Variation>
+
+<Variation title="Accessible label" of={IconButtonStories.AccessibleLabel}>
+
+The button has no visible text, so `label` is required. Screen readers announce it as the button's name, so describe the action ("Back"), not the icon ("Chevron").
+
+</Variation>
+
+## API
+
+Change the inputs below to update the demo at the top of the page.
+
+<Controls of={IconButtonStories.Default} />

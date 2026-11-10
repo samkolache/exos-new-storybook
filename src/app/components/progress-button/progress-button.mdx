@@ -1,0 +1,39 @@
+import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Variation } from '../../../../.storybook/blocks/Variation';
+import * as ProgressButtonStories from './progress-button.stories';
+
+<Meta of={ProgressButtonStories} />
+
+<Title />
+
+<Subtitle>A pill button that opens a set of items and shows how many of them are done.</Subtitle>
+
+## Demo
+
+<Canvas of={ProgressButtonStories.Pending} />
+
+## Usage
+
+Use it to take people to a list of tasks, like reviewing every part of an interior. It is built for dark surfaces: the fill is see-through and the text is white.
+
+```html
+<app-progress-button label="Review interior" [completed]="3" [total]="8" (clicked)="open()" />
+```
+
+## Variations
+
+<Variation title="Status" of={ProgressButtonStories.Statuses}>
+
+The colour follows `completed` and `total`. You don't set it yourself:
+
+- **Pending** (blue): nothing done yet, `completed` is 0.
+- **In progress** (yellow): some done.
+- **Complete** (green): `completed` equals `total`.
+
+</Variation>
+
+## API
+
+Change the inputs below to update the demo at the top of the page.
+
+<Controls of={ProgressButtonStories.Pending} />

@@ -1,0 +1,6 @@
+<button [type]="type()" [class]="classes()" [disabled]="disabled()" (click)="clicked.emit($event)">
+  <span class="badge">{{ completed() }}/{{ total() }}</span>
+  {{ label() }}
+  <!-- Figma arrow is 9.33px of path inside the 24px Lucide grid (14 units) → 16px icon; 2.25 stroke renders as Figma's 1.5px. -->
+  <svg lucideArrowRight [size]="16" [strokeWidth]="2.25"></svg>
+</button>
