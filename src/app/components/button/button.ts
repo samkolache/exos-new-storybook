@@ -11,7 +11,6 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
 @Component({
   selector: 'app-button',
   templateUrl: './button.html',
-  styleUrl: './button.scss',
 })
 export class ButtonComponent {
   readonly label = input<string>('Button');
