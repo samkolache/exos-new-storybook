@@ -1,0 +1,74 @@
+// Figma: Sams-Vibe › Button (node 732:36490).
+// Bootstrap .btn driven through its --bs-btn-* variables; colors from var(--color-*) only.
+// Hover/active currently mirror the resting state (interaction states to be specced).
+
+.btn {
+  --bs-btn-padding-x: 1.1875rem; // 19px + 1px border = 20px
+  --bs-btn-padding-y: 0;
+  --bs-btn-font-size: 0.875rem; // 14px
+  --bs-btn-font-weight: 700;
+  --bs-btn-line-height: 1.125rem; // 18px
+  --bs-btn-border-width: 1px;
+  --bs-btn-border-color: transparent;
+  --bs-btn-border-radius: 23px;
+  --bs-btn-disabled-opacity: 1;
+  --bs-btn-disabled-bg: var(--color-action-disabled);
+  --bs-btn-disabled-color: var(--color-text-disabled);
+  --bs-btn-disabled-border-color: transparent;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  --bs-btn-color: var(--color-text-inverse);
+  --bs-btn-bg: var(--color-action-primary);
+  --bs-btn-border-color: var(--color-border-inverse-subtle);
+  --bs-btn-hover-color: var(--color-text-inverse);
+  --bs-btn-hover-bg: var(--color-action-primary);
+  --bs-btn-hover-border-color: var(--color-border-inverse-subtle);
+  --bs-btn-active-color: var(--color-text-inverse);
+  --bs-btn-active-bg: var(--color-action-primary);
+  --bs-btn-active-border-color: var(--color-border-inverse-subtle);
+
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-action-primary),
+    var(--color-action-primary-end)
+  );
+  box-shadow: inset 0 1px 0 0 var(--color-highlight-inset);
+}
+
+.btn-secondary {
+  --bs-btn-color: var(--color-text-neutral);
+  --bs-btn-bg: var(--color-action-neutral);
+  --bs-btn-border-color: var(--color-border-subtle);
+  --bs-btn-font-weight: 600;
+  --bs-btn-hover-color: var(--color-text-neutral);
+  --bs-btn-hover-bg: var(--color-action-neutral);
+  --bs-btn-hover-border-color: var(--color-border-subtle);
+  --bs-btn-active-color: var(--color-text-neutral);
+  --bs-btn-active-bg: var(--color-action-neutral);
+  --bs-btn-active-border-color: var(--color-border-subtle);
+}
+
+.btn-danger {
+  --bs-btn-color: var(--color-text-inverse);
+  --bs-btn-bg: var(--color-action-destructive);
+  --bs-btn-hover-color: var(--color-text-inverse);
+  --bs-btn-hover-bg: var(--color-action-destructive);
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-active-color: var(--color-text-inverse);
+  --bs-btn-active-bg: var(--color-action-destructive);
+  --bs-btn-active-border-color: transparent;
+}
+
+// Figma "Disabled": one look regardless of variant.
+.btn:disabled {
+  --bs-btn-font-weight: 700;
+  background-image: none;
+  box-shadow: none;
+}

@@ -7,18 +7,12 @@ const meta: Meta<ButtonComponent> = {
   component: ButtonComponent,
   tags: ['autodocs'],
   argTypes: {
-    variant: {
-      control: 'select',
-      options: ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'link'],
-    },
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    variant: { control: 'inline-radio', options: ['primary', 'secondary', 'destructive'] },
     type: { control: 'inline-radio', options: ['button', 'submit', 'reset'] },
   },
   args: {
-    label: 'Button',
+    label: 'Confirm',
     variant: 'primary',
-    size: 'md',
-    outline: false,
     disabled: false,
     clicked: fn(),
   },
@@ -28,8 +22,6 @@ export default meta;
 type Story = StoryObj<ButtonComponent>;
 
 export const Primary: Story = {};
-export const Secondary: Story = { args: { variant: 'secondary' } };
-export const Outline: Story = { args: { outline: true } };
-export const Large: Story = { args: { size: 'lg' } };
-export const Small: Story = { args: { size: 'sm' } };
+export const Secondary: Story = { args: { variant: 'secondary', label: 'Answer later' } };
+export const Destructive: Story = { args: { variant: 'destructive', label: 'Remove' } };
 export const Disabled: Story = { args: { disabled: true } };
