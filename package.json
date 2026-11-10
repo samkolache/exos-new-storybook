@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "storybook": "ng run exos-new-storybook:storybook",
+    "build-storybook": "ng run exos-new-storybook:build-storybook"
   },
   "private": true,
   "packageManager": "npm@11.16.0",
@@ -17,6 +19,8 @@
     "@angular/forms": "^22.2.0",
     "@angular/platform-browser": "^22.2.0",
     "@angular/router": "^22.2.0",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "5.3.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -27,6 +31,23 @@
     "jsdom": "^30.0.0",
     "prettier": "^3.8.1",
     "typescript": "~6.0.2",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.0",
+    "storybook": "^10.6.7",
+    "@storybook/angular-vite": "^10.6.7",
+    "@chromatic-com/storybook": "latest",
+    "@storybook/addon-vitest": "^10.6.7",
+    "@storybook/addon-a11y": "^10.6.7",
+    "@storybook/addon-docs": "^10.6.7",
+    "@storybook/addon-onboarding": "^10.6.7",
+    "@types/node": "^22.12.0",
+    "@angular-devkit/build-angular": "^22.2.0",
+    "@angular-devkit/architect": "^0.2202.0",
+    "@angular-devkit/core": "^22.2.0",
+    "@angular/animations": "^22.2.0",
+    "@analogjs/vite-plugin-angular": "^2.7.3",
+    "vite": "latest",
+    "@vitest/browser-playwright": "5.1.0",
+    "@vitest/coverage-v8": "5.1.0",
+    "playwright": "latest"
   }
 }
