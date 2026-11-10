@@ -1,0 +1,70 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Hero, LinkPill, CardGrid, StartCard } from '../../.storybook/blocks/Landing';
+
+<Meta title="Welcome" />
+
+<Hero
+  title={<>Exos <em>design system</em></>}
+  subtitle="Angular and Bootstrap components for building Exos inspection experiences."
+>
+  <LinkPill href="https://www.figma.com/design/cGHaRKYbOk3ZMdGTCgQ7mA/Untitled" icon="figma">Figma</LinkPill>
+  <LinkPill href="/?path=/docs/catalog--docs" icon="catalog">Catalog</LinkPill>
+</Hero>
+
+## Start here
+
+<CardGrid>
+  <StartCard title="Catalog" icon="catalog" href="/?path=/docs/catalog--docs" cta="Browse catalog">
+    Every component on one page, with a live preview of each.
+  </StartCard>
+  <StartCard title="Components" icon="components" href="/?path=/docs/components-button--docs" cta="View components">
+    Usage, variations and copy-ready code for each building block.
+  </StartCard>
+  <StartCard title="Patterns" icon="patterns">
+    Common screens and flows built from components, like forms and report sections.
+  </StartCard>
+  <StartCard title="Figma" icon="figma" href="https://www.figma.com/design/cGHaRKYbOk3ZMdGTCgQ7mA/Untitled" cta="Open in Figma">
+    The PCR source designs these components are built from.
+  </StartCard>
+</CardGrid>
+
+## Use a component
+
+Components are standalone. Import the one you need and use it in your template:
+
+```ts
+import { Component } from '@angular/core';
+import { ChipComponent, ChipOption } from './components/chip/chip';
+
+@Component({
+  selector: 'app-example',
+  imports: [ChipComponent],
+  template: `<app-chip groupLabel="Interior condition" [options]="options" [(value)]="condition" />`,
+})
+export class ExampleComponent {
+  options: ChipOption[] = [
+    { label: 'Good', value: 'good' },
+    { label: 'Average', value: 'average', suggested: true },
+    { label: 'Fair', value: 'fair' },
+  ];
+  condition = 'average';
+}
+```
+
+Every docs page has **Show code** under each example. It gives you a complete component like this one, and it follows the controls, so you can set things up in the demo and copy the result.
+
+## Theme
+
+The styles come from one entry point, `src/styles.scss`, which compiles Bootstrap 5.3 with the Exos tokens. The tokens' CSS variables are scoped to the `exos-theme-dcfc` class, so put it on a parent element (the app puts it on `<body>`):
+
+```html
+<body class="exos-theme-dcfc">
+  <app-root></app-root>
+</body>
+```
+
+Colors live in `src/theme/scss/tokens/`: raw values in `_primitives.scss` and their meanings (like `text-heading` or `border-focus`) in `_colors.scss`. Components only use the meanings.
+
+## Built with
+
+Angular 22 · Bootstrap 5.3 (SCSS) · Storybook 10 · Geist

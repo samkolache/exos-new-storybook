@@ -9,6 +9,12 @@ const preview: Preview = {
   ],
   parameters: {
     layout: 'fullscreen',
+    // Sidebar: Welcome and Catalog first, then the components.
+    options: {
+      storySort: {
+        order: ['Welcome', 'Catalog', 'Components', ['Button', 'IconButton', 'ProgressButton', 'Dropdown', 'Forms', '*'], 'Examples'],
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

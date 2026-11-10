@@ -1,4 +1,5 @@
 // Tag: Figma "Review / Source tag" (967:7676). Small read-only label.
+// Prefixed (exos-tag) because Storybook's code highlighter uses a plain `tag` class.
 // Colours come from the Figma source variants:
 //   neutral   Property records, Order, Final check
 //   blue      AI (Photos, Voice)
@@ -6,7 +7,7 @@
 //   info      Waiting on photo
 //   disabled  Skipped, System
 
-.tag {
+.exos-tag {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -26,51 +27,51 @@
   }
 
   // No icon: even padding.
-  &.tag-text-only {
+  &.exos-tag-text-only {
     padding-left: 9px;
   }
 }
 
 // Sizes. md is the Figma tag; sm and lg scale around it.
-.tag-sm {
+.exos-tag-sm {
   gap: 3px;
   padding: 2px 7px 2px 5px;
   font-size: 10px;
   line-height: 12px;
 
-  &.tag-text-only {
+  &.exos-tag-text-only {
     padding-left: 7px;
   }
 }
 
-.tag-lg {
+.exos-tag-lg {
   gap: 5px;
   padding: 5px 11px 5px 9px;
   font-size: 13px;
   line-height: 16px;
 
-  &.tag-text-only {
+  &.exos-tag-text-only {
     padding-left: 11px;
   }
 }
 
-.tag-blue {
+.exos-tag-blue {
   background-color: var(--color-background-selected);
   color: var(--color-text-tag);
 }
 
-.tag-attention {
+.exos-tag-attention {
   background-color: var(--color-background-attention);
   color: var(--color-text-tag-attention);
 }
 
-.tag-info {
+.exos-tag-info {
   background-color: var(--color-background-tag-info);
   color: var(--color-text-link);
 }
 
 // Wins over any colour.
-.tag.tag-disabled {
+.exos-tag.exos-tag-disabled {
   background-color: var(--color-background-tag-neutral);
   color: var(--color-text-label);
 

@@ -77,10 +77,10 @@ export class TagComponent {
 
   protected readonly classes = computed(() => {
     const color = this.ai() ? 'blue' : this.color();
-    const cls = ['tag', `tag-${color}`];
-    if (this.size() !== 'md') cls.push(`tag-${this.size()}`);
-    if (this.disabled()) cls.push('tag-disabled');
-    if (this.resolvedIcon() === 'none') cls.push('tag-text-only');
+    const cls = ['exos-tag', `exos-tag-${color}`];
+    if (this.size() !== 'md') cls.push(`exos-tag-${this.size()}`);
+    if (this.disabled()) cls.push('exos-tag-disabled');
+    if (this.resolvedIcon() === 'none') cls.push('exos-tag-text-only');
     return cls.join(' ');
   });
 }

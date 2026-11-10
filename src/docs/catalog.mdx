@@ -1,0 +1,93 @@
+import { Meta, Title } from '@storybook/addon-docs/blocks';
+import { Catalog } from '../../.storybook/blocks/Landing';
+import * as ButtonStories from '../app/components/button/button.stories';
+import * as IconButtonStories from '../app/components/icon-button/icon-button.stories';
+import * as ProgressButtonStories from '../app/components/progress-button/progress-button.stories';
+import * as DropdownStories from '../app/components/dropdown/dropdown.stories';
+import * as InputStories from '../app/components/input/input.stories';
+import * as SelectStories from '../app/components/select/select.stories';
+import * as RadioGroupStories from '../app/components/radio-group/radio-group.stories';
+import * as ChipStories from '../app/components/chip/chip.stories';
+import * as TagStories from '../app/components/tag/tag.stories';
+import * as DropdownCardStories from '../app/components/dropdown-card/dropdown-card.stories';
+
+<Meta title="Catalog" />
+
+# Catalog
+
+Every Exos component with a live preview. Click one to open its docs.
+
+<Catalog
+  items={[
+    {
+      group: 'Actions',
+      name: 'Button',
+      description: 'Lets people take an action, such as confirming, cancelling or removing something.',
+      docs: 'components-button--docs',
+      of: ButtonStories.Primary,
+    },
+    {
+      group: 'Actions',
+      name: 'IconButton',
+      description: 'A round button with only an icon, for actions like back, next and close.',
+      docs: 'components-iconbutton--docs',
+      of: IconButtonStories.Default,
+    },
+    {
+      group: 'Actions',
+      name: 'ProgressButton',
+      description: 'A pill button that opens a set of items and shows how many are done.',
+      docs: 'components-progressbutton--docs',
+      of: ProgressButtonStories.InProgress,
+    },
+    {
+      group: 'Actions',
+      name: 'Dropdown',
+      description: 'A button that opens a menu of actions, like editing or deleting something.',
+      docs: 'components-dropdown--docs',
+      of: DropdownStories.Default,
+    },
+    {
+      group: 'Forms',
+      name: 'Input',
+      description: 'Lets people type an answer, from a single word to several paragraphs.',
+      docs: 'components-forms-input--docs',
+      of: InputStories.Default,
+    },
+    {
+      group: 'Forms',
+      name: 'Select',
+      description: 'A dropdown list for picking one value in a form.',
+      docs: 'components-forms-select--docs',
+      of: SelectStories.Default,
+    },
+    {
+      group: 'Forms',
+      name: 'Radio Group',
+      description: 'A set of options where people pick exactly one.',
+      docs: 'components-forms-radio-group--docs',
+      of: RadioGroupStories.Inline,
+    },
+    {
+      group: 'Forms',
+      name: 'Chip',
+      description: 'Lets people pick one or more answers from a short set of options.',
+      docs: 'components-chip--docs',
+      of: ChipStories.GroupSingle,
+    },
+    {
+      group: 'Display',
+      name: 'Tag',
+      description: 'A small label that shows the status or source of something.',
+      docs: 'components-tag--docs',
+      of: TagStories.ExampleAITags,
+    },
+    {
+      group: 'Display',
+      name: 'Dropdown Card',
+      description: 'A collapsible section that summarises answers and opens to show them.',
+      docs: 'components-dropdown-card--docs',
+      of: DropdownCardStories.CollapsedNeedsYou,
+    },
+  ]}
+/>

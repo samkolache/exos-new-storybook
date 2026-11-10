@@ -1,0 +1,344 @@
+/* Welcome and Catalog pages (Storybook chrome, not part of the theme). */
+
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+
+.exos-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 440px;
+  margin: 0 0 40px;
+  padding: 64px 24px;
+  border-radius: 28px;
+  background: radial-gradient(90% 80% at 50% 40%, #eef4ff 0%, #f8faff 55%, #ffffff 100%);
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Everything in the hero speaks Geist, like the PCR screens (docs default to Nunito Sans). */
+.sbdocs .exos-hero,
+.sbdocs .exos-hero * {
+  font-family: "Geist", "Nunito Sans", sans-serif;
+}
+
+.exos-hero__shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.exos-hero__shape {
+  position: absolute;
+  object-fit: contain;
+  transform: rotate(var(--tilt));
+  animation: exos-float 7s ease-in-out infinite;
+}
+
+@keyframes exos-float {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt)); }
+  50% { transform: translateY(-10px) rotate(calc(var(--tilt) + 8deg)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exos-hero__shape { animation: none; }
+}
+
+.sbdocs h1.exos-hero__title {
+  position: relative;
+  max-width: 640px;
+  margin: 0;
+  border: 0;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #0f121a;
+}
+
+.exos-hero__title em {
+  font-style: normal;
+  background: linear-gradient(90deg, #438af5, #8b6cf0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sbdocs .exos-hero__subtitle {
+  position: relative;
+  max-width: 480px;
+  margin: 16px 0 0;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #5b6475;
+}
+
+.exos-hero__links {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+/* On small screens: fewer, smaller shapes, moved into bands above and below the text. */
+@media (max-width: 700px) {
+  .exos-hero { min-height: 0; padding: 112px 20px 120px; }
+  .exos-hero__shape {
+    top: var(--phone-top) !important;
+    left: var(--phone-left) !important;
+    scale: 0.7;
+  }
+  .exos-hero__shape--wide-only { display: none; }
+}
+
+/* ── Pills and cards ──────────────────────────────────────────────────── */
+
+.sbdocs a.exos-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid #e6eaf1;
+  border-radius: 999px;
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0f121a;
+  text-decoration: none;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.sbdocs a.exos-pill:hover {
+  border-color: #c9d0db;
+  background: #f4f6fa;
+}
+
+/* ── Start here ───────────────────────────────────────────────────────── */
+
+.exos-start {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 20px 0 48px;
+}
+
+.sbdocs .exos-start__card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #e6eaf1;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #0f121a;
+  text-decoration: none;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.sbdocs a.exos-start__card:hover {
+  border-color: #b8c2d3;
+}
+
+.sbdocs a.exos-start__card:hover .exos-start__cta {
+  text-decoration: underline;
+}
+
+.sbdocs a.exos-start__card:focus-visible {
+  outline: 2px solid #438af5;
+  outline-offset: 2px;
+}
+
+.sbdocs .exos-start__card .exos-start__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  background: #f4f6fa;
+  color: #0f121a;
+}
+
+.sbdocs .exos-start__card .exos-start__title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.sbdocs .exos-start__card .exos-start__body {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #5b6475;
+}
+
+.sbdocs .exos-start__card .exos-start__cta {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2f6fe4;
+}
+
+.sbdocs .exos-start__card--soon .exos-start__icon,
+.sbdocs .exos-start__card--soon .exos-start__title {
+  color: #8c95a6;
+}
+
+.sbdocs .exos-start__card--soon .exos-start__cta {
+  color: #8c95a6;
+}
+
+/* ── Catalog ──────────────────────────────────────────────────────────── */
+
+.exos-catalog {
+  margin-top: 8px;
+}
+
+.exos-catalog__search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border: 1px solid #d5dbe5;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #8c95a6;
+}
+
+.exos-catalog__search:focus-within {
+  border-color: #438af5;
+  box-shadow: 0 0 0 4px rgba(67, 138, 245, 0.15);
+}
+
+.exos-catalog__search input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  border: 0;
+  background: none;
+  font-size: 15px;
+  color: #0f121a;
+  outline: none;
+}
+
+.sbdocs .exos-catalog__count {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: #8c95a6;
+}
+
+.exos-catalog__group {
+  margin-top: 32px;
+}
+
+.sbdocs .exos-catalog__group-title {
+  margin: 0 0 16px;
+  padding: 0;
+  border: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5b6475;
+}
+
+.exos-catalog__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 28px 20px;
+}
+
+.exos-catalog__item {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.exos-catalog__preview {
+  position: relative;
+  display: block;
+  height: 160px;
+  border: 1px solid #e6eaf1;
+  border-radius: 12px;
+  background: #ffffff;
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.exos-catalog__preview:hover {
+  border-color: #438af5;
+  box-shadow: 0 8px 24px rgba(15, 18, 26, 0.08);
+}
+
+/* Centre the live preview and keep it from taking clicks (the card is the link). */
+.exos-catalog__stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.exos-catalog__stage > * {
+  width: 100%;
+  margin: 0 !important;
+}
+
+.exos-catalog__cover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Centre each preview inside its box. */
+.exos-catalog__stage .exos-theme-dcfc {
+  width: 100%;
+  text-align: center;
+}
+
+.exos-catalog__stage :is(.d-flex, .chip-group) {
+  justify-content: center;
+}
+
+.exos-catalog__stage :is(app-input, app-select, app-radio-group, app-dropdown-card) {
+  text-align: left;
+}
+
+.exos-catalog__stage .docs-story,
+.exos-catalog__stage .sb-story {
+  margin: 0;
+  background: none;
+}
+
+.sbdocs a.exos-catalog__name {
+  margin-top: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2f6fe4;
+  text-decoration: none;
+}
+
+.sbdocs a.exos-catalog__name:hover {
+  text-decoration: underline;
+}
+
+.sbdocs .exos-catalog__description {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #5b6475;
+}
+
+.sbdocs .exos-catalog__empty {
+  margin: 32px 0;
+  color: #5b6475;
+}
+
+@media (max-width: 600px) {
+  .sbdocs h1.exos-hero__title { font-size: 42px; }
+}
