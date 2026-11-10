@@ -1,0 +1,11 @@
+// DCFC theme entry point. The only file the app (and Storybook) imports.
+// Mirrors Exos.DesignSystem/src/ExosThemeDCFC/src/main.scss — keep in sync.
+
+// 1. Tokens
+@import "scss/tokens/primitives";     // Layer 1: raw values
+@import "scss/tokens/colors";         // Layer 2: semantic aliases
+@import "scss/tokens/css-variables";  // emits --primitive-*, --color-*, --surface-*
+
+// 2. Bootstrap
+@import "scss/bootstrap-variables";   // DCFC → Bootstrap mapping
+@import "scss/bootstrap-theme";       // Bootstrap 5 + overrides

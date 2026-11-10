@@ -1,8 +1,14 @@
 import type { Preview } from '@storybook/angular-vite';
+import { componentWrapperDecorator } from '@storybook/angular-vite';
 import '../src/styles.scss';
 
 const preview: Preview = {
+  // The theme's CSS variables are scoped to .exos-theme-dcfc, so every story renders inside it.
+  decorators: [
+    componentWrapperDecorator((story) => `<div class="exos-theme-dcfc p-3">${story}</div>`),
+  ],
   parameters: {
+    layout: 'fullscreen',
     controls: {
       matchers: {
         color: /(background|color)$/i,

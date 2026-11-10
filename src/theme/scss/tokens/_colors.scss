@@ -1,0 +1,35 @@
+// Layer 2: semantic names → primitives (by name).
+//
+// TODO: PLACEHOLDER. Replace with
+// Exos.DesignSystem/src/ExosThemeDCFC/src/scss/tokens/_colors.scss.
+
+$dcfc-colors: (
+  "text-primary":      "ink-900",
+  "text-secondary":    "grey-600",
+  "text-inverse":      "white",
+  "text-link":         "blue-600",
+  "action-primary":    "ink-900",
+  "action-secondary":  "blue-500",
+  "status-info":       "blue-500",
+  "status-warning":    "orange-500",
+  "status-success":    "green-500",
+  "status-danger":     "red-500",
+  "background-page":   "white",
+  "background-subtle": "grey-100",
+  "border-default":    "grey-300",
+  "chart-1":           "violet-400",
+) !default;
+
+// Translucent values that have no primitive.
+$dcfc-surfaces: (
+  "overlay":  rgba(58, 63, 74, 0.5),
+  "hover":    rgba(58, 63, 74, 0.08),
+  "pressed":  rgba(58, 63, 74, 0.16),
+) !default;
+
+@function dcfc-color($name) {
+  @if not map-has-key($dcfc-colors, $name) {
+    @error "Unknown DCFC color `#{$name}`.";
+  }
+  @return dcfc-primitive(map-get($dcfc-colors, $name));
+}

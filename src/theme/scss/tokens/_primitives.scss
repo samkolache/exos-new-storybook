@@ -1,0 +1,27 @@
+// Layer 1: raw colors. Never used directly by components.
+//
+// TODO: PLACEHOLDER. Replace this file with
+// Exos.DesignSystem/src/ExosThemeDCFC/src/scss/tokens/_primitives.scss.
+// Only the values marked "from setup doc" are confirmed; the token names
+// below may not match PwC's names.
+
+$dcfc-primitives: (
+  "ink-900":    #3A3F4A, // from setup doc (btn-primary)
+  "blue-600":   #2F6FE4, // from setup doc
+  "blue-500":   #438AF5, // from setup doc (action blue / info)
+  "orange-500": #F28C28, // from setup doc (attention / warning)
+  "violet-400": #8B6CF0,
+  "green-500":  #1E9E5A,
+  "red-500":    #D93B3B,
+  "grey-100":   #F5F6F8,
+  "grey-300":   #D5D8DE,
+  "grey-600":   #6B7280,
+  "white":      #FFFFFF,
+) !default;
+
+@function dcfc-primitive($name) {
+  @if not map-has-key($dcfc-primitives, $name) {
+    @error "Unknown DCFC primitive `#{$name}`.";
+  }
+  @return map-get($dcfc-primitives, $name);
+}

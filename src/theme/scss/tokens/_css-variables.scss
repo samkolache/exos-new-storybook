@@ -1,0 +1,14 @@
+// Emits the tokens as CSS custom properties: the public API for components.
+// Scoped to .exos-theme-dcfc (not :root) — see DCFC-THEME-SETUP.md §6.
+
+@at-root .exos-theme-dcfc {
+  @each $name, $value in $dcfc-primitives {
+    --primitive-#{$name}: #{$value};
+  }
+  @each $name, $primitive in $dcfc-colors {
+    --color-#{$name}: var(--primitive-#{$primitive});
+  }
+  @each $name, $value in $dcfc-surfaces {
+    --surface-#{$name}: #{$value};
+  }
+}

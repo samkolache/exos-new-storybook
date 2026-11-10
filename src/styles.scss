@@ -1,4 +1,2 @@
-// Bootstrap 5.3.2 via Sass — override variables before the import
-// $primary: #0d6efd;
-
-@import 'bootstrap/scss/bootstrap';
+// App global styles: the DCFC theme, nothing else.
+@import "theme/main";

@@ -1,0 +1,15 @@
+// The only place tokens are translated into Bootstrap terms.
+// No !default here on purpose (see DCFC-THEME-SETUP.md §5, rule 5).
+
+$primary:   dcfc-color("action-primary");
+$secondary: dcfc-color("action-secondary");
+$success:   dcfc-color("status-success");
+$info:      dcfc-color("status-info");      // gap: PwC has no info color yet
+$warning:   dcfc-color("status-warning");   // gap: mapped to attention orange
+$danger:    dcfc-color("status-danger");
+
+$body-color:      dcfc-color("text-primary");
+$body-bg:         dcfc-color("background-page");
+$link-color:      dcfc-color("text-link");
+$border-color:    dcfc-color("border-default");
+$secondary-color: dcfc-color("text-secondary");
