@@ -17,6 +17,10 @@ import starBlue from './assets/report-ai.svg';
 import starGreen from './assets/submit-spark.svg';
 import starPurple from './assets/icon-kicker-sparkle.svg';
 import aiSparkle from './assets/icon-ai-sparkle.svg';
+// Backdrop: the perspective grid from the PCR check-in screen, and the halftone dots from MBA.
+import heroGrid from './assets/hero-grid.svg';
+import halftoneWarm from './assets/halftone-warm.webp';
+import halftoneSide from './assets/halftone-side.webp';
 
 /**
  * Where each shape floats: position (% of the hero), size (px), tilt and timing.
@@ -36,35 +40,65 @@ const SHAPES: { src: string; top: number; left: number; size: number; rotate: nu
   { src: moons, top: 78, left: 70, size: 34, rotate: -18, delay: 1.6 },
 ];
 
-/** Welcome hero: centred title and links with the PCR shapes and stars floating around. */
-export const Hero = ({ title, subtitle, children }: { title: React.ReactNode; subtitle: string; children?: React.ReactNode }) => (
-  <header className="exos-hero exos-theme-dcfc">
-    <div className="exos-hero__shapes" aria-hidden="true">
-      {SHAPES.map((shape, i) => (
-        <img
-          key={i}
-          className={`exos-hero__shape${shape.phone ? '' : ' exos-hero__shape--wide-only'}`}
-          src={shape.src}
-          alt=""
-          style={{
-            top: `${shape.top}%`,
-            left: `${shape.left}%`,
-            width: shape.size,
-            height: shape.size,
-            animationDelay: `${shape.delay}s`,
-            ['--tilt' as string]: `${shape.rotate}deg`,
-            ['--phone-top' as string]: shape.phone ? `${shape.phone[0]}%` : undefined,
-            ['--phone-left' as string]: shape.phone ? `${shape.phone[1]}%` : undefined,
-          }}
-        />
-      ))}
-    </div>
+/**
+ * Welcome hero: full width, with a perspective grid floor, halftone dots and the PCR shapes
+ * floating (and drifting a little with the pointer). Title, subtitle and links in the middle.
+ */
+export const Hero = ({ title, subtitle, children }: { title: React.ReactNode; subtitle: string; children?: React.ReactNode }) => {
+  const hero = useRef<HTMLElement>(null);
+  // Depth: shapes drift a little with the pointer, the bigger ones more. Mouse only, not on reduce motion.
+  const onMove = (e: React.PointerEvent) => {
+    if (e.pointerType !== 'mouse' || !hero.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const r = hero.current.getBoundingClientRect();
+    hero.current.style.setProperty('--px', `${((e.clientX - r.left) / r.width - 0.5) * 2}`);
+    hero.current.style.setProperty('--py', `${((e.clientY - r.top) / r.height - 0.5) * 2}`);
+  };
+  const reset = () => {
+    hero.current?.style.setProperty('--px', '0');
+    hero.current?.style.setProperty('--py', '0');
+  };
+  return (
+    <header ref={hero} className="exos-hero exos-theme-dcfc" onPointerMove={onMove} onPointerLeave={reset}>
+      <div className="exos-hero__backdrop" aria-hidden="true">
+        <img className="exos-hero__halftone exos-hero__halftone--warm" src={halftoneWarm} alt="" />
+        <img className="exos-hero__halftone exos-hero__halftone--side" src={halftoneSide} alt="" />
+        <div className="exos-hero__floor">
+          <img src={heroGrid} alt="" />
+          <img src={heroGrid} alt="" />
+        </div>
+      </div>
 
-    <h1 className="exos-hero__title">{title}</h1>
-    <p className="exos-hero__subtitle">{subtitle}</p>
-    {children && <div className="exos-hero__links">{children}</div>}
-  </header>
-);
+      <div className="exos-hero__shapes" aria-hidden="true">
+        {SHAPES.map((shape, i) => (
+          <span
+            key={i}
+            className={`exos-hero__drift${shape.phone ? '' : ' exos-hero__shape--wide-only'}`}
+            style={{
+              top: `${shape.top}%`,
+              left: `${shape.left}%`,
+              ['--depth' as string]: `${shape.size / 4}px`,
+              ['--phone-top' as string]: shape.phone ? `${shape.phone[0]}%` : undefined,
+              ['--phone-left' as string]: shape.phone ? `${shape.phone[1]}%` : undefined,
+            }}
+          >
+            <img
+              className="exos-hero__shape"
+              src={shape.src}
+              alt=""
+              style={{ width: shape.size, height: shape.size, animationDelay: `${shape.delay}s`, ['--tilt' as string]: `${shape.rotate}deg` }}
+            />
+          </span>
+        ))}
+      </div>
+
+      <div className="exos-hero__content">
+        <h1 className="exos-hero__title">{title}</h1>
+        <p className="exos-hero__subtitle">{subtitle}</p>
+        {children && <div className="exos-hero__links">{children}</div>}
+      </div>
+    </header>
+  );
+};
 
 const ICONS: Record<string, React.ReactNode> = {
   github: (
@@ -72,13 +106,10 @@ const ICONS: Record<string, React.ReactNode> = {
       <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.22 2.2.82a7.6 7.6 0 014 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0016 8c0-4.42-3.58-8-8-8z" />
     </svg>
   ),
-  figma: (
-    <svg width="16" height="16" viewBox="0 0 38 57" aria-hidden="true">
-      <path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1119 0 9.5 9.5 0 01-19 0z" />
-      <path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 019.5 38H19v9.5a9.5 9.5 0 11-19 0z" />
-      <path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 100-19H19z" />
-      <path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 009.5 19H19V0H9.5A9.5 9.5 0 000 9.5z" />
-      <path fill="#A259FF" d="M0 28.5A9.5 9.5 0 009.5 38H19V19H9.5A9.5 9.5 0 000 28.5z" />
+  foundations: (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" aria-hidden="true">
+      <rect x="1.75" y="1.75" width="12.5" height="12.5" rx="1.75" />
+      <path d="M6 1.75v12.5M10 1.75v12.5" />
     </svg>
   ),
   catalog: (
@@ -91,11 +122,11 @@ const ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-/** Small rounded link with an icon (GitHub, Figma, Catalog…). */
-export const LinkPill = ({ href, icon, children }: { href: string; icon?: keyof typeof ICONS; children: React.ReactNode }) => {
+/** Small rounded link with an icon (Catalog, Foundations…). */
+export const LinkPill = ({ href, icon, primary = false, children }: { href: string; icon?: keyof typeof ICONS; primary?: boolean; children: React.ReactNode }) => {
   const external = /^https?:/.test(href);
   return (
-    <a className="exos-pill" href={href} target={external ? '_blank' : '_top'} rel={external ? 'noreferrer' : undefined}>
+    <a className={`exos-pill${primary ? ' exos-pill--primary' : ''}`} href={href} target={external ? '_blank' : '_top'} rel={external ? 'noreferrer' : undefined}>
       {icon && ICONS[icon]}
       {children}
     </a>
@@ -127,12 +158,11 @@ const START_ICONS: Record<string, React.ReactNode> = {
       <path d="M2.75 7.25h14.5M8.25 7.25v10" />
     </svg>
   ),
-  // Pen nib: the design source.
-  figma: (
+  // Ruler and columns: the grid and spacing everything sits on.
+  foundations: (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" aria-hidden="true">
-      <path d="M10 2.75l5 6.5-5 8-5-8 5-6.5z" />
-      <path d="M10 2.75v7.25" />
-      <circle cx="10" cy="11.25" r="1.25" />
+      <rect x="2.75" y="2.75" width="14.5" height="14.5" rx="2" />
+      <path d="M7.5 2.75v14.5M12.5 2.75v14.5" />
     </svg>
   ),
 };

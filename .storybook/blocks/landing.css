@@ -2,19 +2,26 @@
 
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 
+/* Full width: out of the docs column to both edges, and up to the top of the page. */
+.sbdocs-wrapper:has(.exos-hero) { overflow-x: clip; }
+
 .exos-hero {
+  --px: 0;
+  --py: 0;
   position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 440px;
-  margin: 0 0 40px;
-  padding: 64px 24px;
-  border-radius: 28px;
-  background: radial-gradient(90% 80% at 50% 40%, #eef4ff 0%, #f8faff 55%, #ffffff 100%);
+  width: 100vw;
+  min-height: min(720px, 88vh);
+  margin: -4rem 0 56px calc(50% - 50vw);
+  padding: 96px 24px 140px;
+  background:
+    radial-gradient(60% 55% at 50% 38%, #ffffff 0%, rgba(255, 255, 255, 0.85) 40%, transparent 75%),
+    linear-gradient(180deg, #f7f9ff 0%, #f1f5ff 55%, #e9f0ff 100%);
   text-align: center;
   overflow: hidden;
+  isolation: isolate;
 }
 
 /* Everything in the hero speaks Geist, like the PCR screens (docs default to Nunito Sans). */
@@ -23,14 +30,76 @@
   font-family: "Geist", "Nunito Sans", sans-serif;
 }
 
+/* ── Backdrop: halftone dots and a perspective grid floor ── */
+
+.exos-hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.exos-hero__halftone {
+  position: absolute;
+  max-width: none;
+}
+
+.exos-hero__halftone--warm {
+  top: -6%;
+  left: -4%;
+  width: min(1100px, 80vw);
+  opacity: 0.55;
+  transform: translate(calc(var(--px) * -10px), calc(var(--py) * -10px));
+  transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.exos-hero__halftone--side {
+  top: -4%;
+  right: -2%;
+  height: 112%;
+  opacity: 0.4;
+  transform: translate(calc(var(--px) * -6px), calc(var(--py) * -6px));
+  transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* The PCR grid, twice side by side, tipped back into a floor that fades toward the title. */
+.exos-hero__floor {
+  position: absolute;
+  left: 50%;
+  bottom: -18%;
+  display: flex;
+  width: 140%;
+  transform: translateX(-50%) perspective(900px) rotateX(48deg);
+  transform-origin: 50% 100%;
+  -webkit-mask-image: linear-gradient(0deg, #000 30%, transparent 85%);
+  mask-image: linear-gradient(0deg, #000 30%, transparent 85%);
+}
+
+.exos-hero__floor img {
+  flex: 1;
+  width: 50%;
+  height: auto;
+}
+
+.exos-hero__floor img + img { transform: scaleX(-1); }
+
+/* ── Shapes ── */
+
 .exos-hero__shapes {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.exos-hero__shape {
+/* Each shape drifts with the pointer by its depth, and floats on its own. */
+.exos-hero__drift {
   position: absolute;
+  transform: translate(calc(var(--px) * var(--depth) * -1), calc(var(--py) * var(--depth) * -1));
+  transition: transform 0.6s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.exos-hero__shape {
+  display: block;
   object-fit: contain;
   transform: rotate(var(--tilt));
   animation: exos-float 7s ease-in-out infinite;
@@ -43,17 +112,26 @@
 
 @media (prefers-reduced-motion: reduce) {
   .exos-hero__shape { animation: none; }
+  .exos-hero__drift, .exos-hero__halftone { transition: none; transform: none; }
+}
+
+/* ── Text ── */
+
+.exos-hero__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 860px;
 }
 
 .sbdocs h1.exos-hero__title {
-  position: relative;
-  max-width: 640px;
   margin: 0;
   border: 0;
-  font-size: 60px;
+  font-size: clamp(44px, 7.4vw, 92px);
   font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  line-height: 1;
+  letter-spacing: -0.04em;
   color: #0f121a;
 }
 
@@ -66,32 +144,33 @@
 }
 
 .sbdocs .exos-hero__subtitle {
-  position: relative;
-  max-width: 480px;
-  margin: 16px 0 0;
-  font-size: 18px;
+  max-width: 580px;
+  margin: 24px 0 0;
+  font-size: clamp(17px, 1.6vw, 20px);
   line-height: 1.5;
-  color: #5b6475;
+  color: #4a5262;
+  text-wrap: balance;
 }
 
-.exos-hero__links {
-  position: relative;
+.sbdocs .exos-hero__links {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
-  margin-top: 28px;
+  gap: 12px;
+  margin: 36px 0 0;
 }
 
 /* On small screens: fewer, smaller shapes, moved into bands above and below the text. */
 @media (max-width: 700px) {
-  .exos-hero { min-height: 0; padding: 112px 20px 120px; }
-  .exos-hero__shape {
+  .exos-hero { min-height: 0; padding: 120px 20px 150px; }
+  .exos-hero__drift {
     top: var(--phone-top) !important;
     left: var(--phone-left) !important;
     scale: 0.7;
   }
   .exos-hero__shape--wide-only { display: none; }
+  .exos-hero__halftone--side { opacity: 0.25; }
+  .exos-hero__floor { width: 260%; bottom: -10%; }
 }
 
 /* ── Pills and cards ──────────────────────────────────────────────────── */
@@ -100,20 +179,39 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 7px 14px;
-  border: 1px solid #e6eaf1;
+  height: 44px;
+  padding: 0 20px;
+  border: 1px solid #e0e5ee;
   border-radius: 999px;
   background: #ffffff;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   color: #0f121a;
   text-decoration: none;
-  transition: background-color 0.15s, border-color 0.15s;
+  transition: background-color 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s;
 }
 
 .sbdocs a.exos-pill:hover {
   border-color: #c9d0db;
   background: #f4f6fa;
+}
+
+.sbdocs a.exos-pill--primary {
+  border-color: #0f121a;
+  background: #0f121a;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 18, 26, 0.18);
+}
+
+.sbdocs a.exos-pill--primary:hover {
+  border-color: #0f121a;
+  background: #262b36;
+  transform: translateY(-1px);
+}
+
+.sbdocs a.exos-pill:focus-visible {
+  outline: 2px solid #438af5;
+  outline-offset: 3px;
 }
 
 /* ── Start here ───────────────────────────────────────────────────────── */

@@ -5,10 +5,10 @@ import { Hero, LinkPill, CardGrid, StartCard } from '../../.storybook/blocks/Lan
 
 <Hero
   title={<>Exos <em>design system</em></>}
-  subtitle="Angular and Bootstrap components for building Exos inspection experiences."
+  subtitle="Components, patterns and guidelines for building Exos inspection apps, on a phone or at a desk."
 >
-  <LinkPill href="https://www.figma.com/design/cGHaRKYbOk3ZMdGTCgQ7mA/Untitled" icon="figma">Figma</LinkPill>
-  <LinkPill href="/?path=/docs/catalog--docs" icon="catalog">Catalog</LinkPill>
+  <LinkPill href="/?path=/docs/catalog--docs" icon="catalog" primary>Browse catalog</LinkPill>
+  <LinkPill href="/?path=/docs/foundations-grid--docs" icon="foundations">Foundations</LinkPill>
 </Hero>
 
 ## Start here
@@ -17,14 +17,14 @@ import { Hero, LinkPill, CardGrid, StartCard } from '../../.storybook/blocks/Lan
   <StartCard title="Catalog" icon="catalog" href="/?path=/docs/catalog--docs" cta="Browse catalog">
     Every component on one page, with a live preview of each.
   </StartCard>
+  <StartCard title="Foundations" icon="foundations" href="/?path=/docs/foundations-grid--docs" cta="View foundations">
+    The grid, spacing, and how everything changes between phone and web.
+  </StartCard>
   <StartCard title="Components" icon="components" href="/?path=/docs/components-button--docs" cta="View components">
     Usage, variations and copy-ready code for each building block.
   </StartCard>
-  <StartCard title="Patterns" icon="patterns">
-    Common screens and flows built from components, like forms and report sections.
-  </StartCard>
-  <StartCard title="Figma" icon="figma" href="https://www.figma.com/design/cGHaRKYbOk3ZMdGTCgQ7mA/Untitled" cta="Open in Figma">
-    The PCR source designs these components are built from.
+  <StartCard title="Patterns" icon="patterns" href="/?path=/docs/patterns-forms--docs" cta="View patterns">
+    How components work together: forms, loading, empty states and messages.
   </StartCard>
 </CardGrid>
 
