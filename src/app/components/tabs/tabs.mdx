@@ -20,16 +20,14 @@ import * as TabsStories from './tabs.stories';
 **Use tabs** to split related content into views people switch between, without leaving the page:
 
 - Parts of one thing, like an order's summary, items and history.
-- Views of the same data, like day, week and month.
-
 **Don't use them** for steps people go through in order, or for content people need to compare side by side.
 
 ### Compared with look-alikes
 
 | Component | Shows | Use it for |
 |---|---|---|
-| **Tabs (line)** | One section at a time | Parts of one thing, over a section |
-| **Tabs (segmented)** | One view at a time | A compact switch between views of the same data |
+| **Tabs** | One section at a time | Parts of one thing, over a section |
+| [Segmented control](?path=/docs/components-segmented-control--docs) | One view at a time | A compact switch between 2–5 views of the same content, like day, week and month |
 | [Accordion](?path=/docs/components-accordion--docs) | Any number, stacked | Sections people scan and open, often on phones |
 | [Radio group](?path=/docs/components-forms-radio-group--docs) | Nothing changes until sent | Picking an answer in a form |
 
@@ -49,13 +47,9 @@ import * as TabsStories from './tabs.stories';
 
 <DeviceVariation title="Line" of={TabsStories.VarLine}>
 
-The default. Tabs over a section, with a bar under the picked one. Put each tab's content in `<app-tab-panel value="…">` inside `app-tabs`.
+Tabs over a section, with a bar under the picked one. Put each tab's content in `<app-tab-panel value="…">` inside `app-tabs`.
 
-</DeviceVariation>
-
-<DeviceVariation title="Segmented" of={TabsStories.VarSegmented}>
-
-`variant="segmented"`: a compact switch between views of the same data, like day, week and month. 2 to 5 short segments. Often used without panels: listen to `value` and change the view.
+For a compact, pill-shaped switch between views, use the [Segmented control](?path=/docs/components-segmented-control--docs).
 
 </DeviceVariation>
 
@@ -64,12 +58,6 @@ The default. Tabs over a section, with a bar under the picked one. Put each tab'
 <DeviceVariation title="Count" of={TabsStories.ModCount}>
 
 Add `count` to an item for a number after its label, like 3 items.
-
-</DeviceVariation>
-
-<DeviceVariation title="Full width" of={TabsStories.ModFullWidth}>
-
-`[fullWidth]="true"` stretches segmented tabs across their container. On phones they're always full width.
 
 </DeviceVariation>
 
@@ -86,7 +74,6 @@ Add `disabled: true` to an item that has nothing yet. Arrow keys skip it. Hiding
 | Line tab height | 40px | 48px |
 | Line tab padding | 14px each side | 14px |
 | Picked bar | 2px, blue | 2px |
-| Segmented height | 32px, inside a 3px track | 44px; full width |
 | Text | 15px, medium; picked semibold | Same |
 | Too many to fit | Scroll sideways | Scroll sideways |
 
@@ -94,13 +81,10 @@ Add `disabled: true` to an item that has nothing yet. Arrow keys skip it. Hiding
 
 - **One or two words per tab,** nouns: "Summary", "Shipping". Sentence case.
 - **Order by use:** most used first.
-- **Segmented:** 2 to 5 options of about the same length.
 
 <DoDont>
   <Guideline type="do" of={TabsStories.DoShortLabels}>use short, parallel labels.</Guideline>
-  <Guideline type="dont" of={TabsStories.DontLongLabels}>write sentences in tabs.</Guideline>
-  <Guideline type="do" of={TabsStories.DoFewSegments}>keep segmented tabs to 2 to 5.</Guideline>
-  <Guideline type="dont" of={TabsStories.DontManySegments}>squeeze many options into segments. Use line tabs.</Guideline>
+  <Guideline type="dont" of={TabsStories.DontLongLabels}>write long phrases in tabs.</Guideline>
 </DoDont>
 
 ## Behavior
@@ -118,7 +102,6 @@ Add `disabled: true` to an item that has nothing yet. Arrow keys skip it. Hiding
 | | Mobile (below 672px) | Web (672px and up) |
 |---|---|---|
 | Line tabs | 48px tall; scroll sideways if they don't fit | 40px tall |
-| Segmented | Full width, 44px segments | As wide as its content |
 | Many sections | Consider an [Accordion](?path=/docs/components-accordion--docs) instead | Tabs |
 | Hover | None | Text darkens |
 
@@ -157,7 +140,7 @@ For the second tab in the live demo, a screen reader reads:
     { name: '--color-text-heading', use: 'Picked tab' },
     { name: '--color-text-label', use: 'Other tabs' },
     { name: '--color-border-divider', use: 'Line under the tabs' },
-    { name: '--color-background-subtle', use: 'Segmented track, count' },
+    { name: '--color-background-subtle', use: 'Count' },
   ]}
 />
 
@@ -165,6 +148,7 @@ For the second tab in the live demo, a screen reader reads:
 
 <Related
   items={[
+    { title: 'Segmented control', text: 'Switch between views of the same content', href: '/?path=/docs/components-segmented-control--docs' },
     { title: 'Accordion', text: 'Stacked sections', href: '/?path=/docs/components-accordion--docs' },
     { title: 'Radio group', text: 'Picking an answer in a form', href: '/?path=/docs/components-forms-radio-group--docs' },
     { title: 'Chip', text: 'Picking short answers', href: '/?path=/docs/components-chip--docs' },
@@ -173,4 +157,5 @@ For the second tab in the live demo, a screen reader reads:
 
 ### Changelog
 
+- **Nov 12, 2026:** the segmented variant moved to its own component, [Segmented control](?path=/docs/components-segmented-control--docs).
 - **Nov 11, 2026:** first version: line and segmented, counts, disabled tabs.

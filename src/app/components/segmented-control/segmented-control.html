@@ -1,0 +1,35 @@
+<div
+  [class]="trackClasses()"
+  role="tablist"
+  [attr.aria-label]="label() || null"
+  [style.--exos-segment-count]="items().length"
+  [style.--exos-segment-index]="currentIndex()"
+>
+  @if (currentIndex() >= 0) {
+    <span class="exos-segmented-thumb" aria-hidden="true"></span>
+  }
+  @for (item of items(); track item.value; let i = $index) {
+    <button
+      #segment
+      type="button"
+      role="tab"
+      class="exos-segment"
+      [attr.aria-selected]="current() === item.value"
+      [attr.aria-controls]="item.controls || null"
+      [attr.tabindex]="current() === item.value ? 0 : -1"
+      [disabled]="isDisabled(item)"
+      (click)="select(item)"
+      (keydown)="onKeydown($event, i)"
+    >
+      <span class="exos-segment-label">{{ item.label }}</span>
+      @if (item.count !== undefined && item.count !== '') {
+        @if (item.countLabel) {
+          <span class="exos-segment-count" aria-hidden="true">{{ item.count }}</span>
+          <span class="visually-hidden">, {{ item.countLabel }}</span>
+        } @else {
+          <span class="exos-segment-count">{{ item.count }}</span>
+        }
+      }
+    </button>
+  }
+</div>

@@ -17,6 +17,7 @@ import * as ModalStories from '../app/components/modal/modal.stories';
 import * as TooltipStories from '../app/components/tooltip/tooltip.stories';
 import * as LoadingStories from '../app/components/loading/loading.stories';
 import * as TabsStories from '../app/components/tabs/tabs.stories';
+import * as SegmentedStories from '../app/components/segmented-control/segmented-control.stories';
 import * as AccordionStories from '../app/components/accordion/accordion.stories';
 import * as NumberStories from '../app/components/number-input/number-input.stories';
 import * as DateStories from '../app/components/date-picker/date-picker.stories';
@@ -133,7 +134,14 @@ Every Exos component with a live preview. Click one to open its docs.
       name: 'Tabs',
       description: 'Switch between views of the same page, one at a time.',
       docs: 'components-tabs--docs',
-      of: TabsStories.Segmented,
+      of: TabsStories.Default,
+    },
+    {
+      group: 'Navigation',
+      name: 'Segmented control',
+      description: 'Switch between 2 to 5 views of the same content, like exterior and interior photos.',
+      docs: 'components-segmented-control--docs',
+      of: SegmentedStories.Subtle,
     },
     {
       group: 'Navigation',

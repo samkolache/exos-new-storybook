@@ -232,7 +232,7 @@ export const SizeSpecs = ({
       ['Corner radius', ...cs.map((c) => radius(c.borderTopLeftRadius))],
     ];
     // Inputs have no icon gap: their icons sit in the padding.
-    if (element !== 'input') table.push(['Gap (icon to text)', ...cs.map((c) => px(c.columnGap))]);
+    if (element !== 'input' && cs.every((c) => !Number.isNaN(parseFloat(c.columnGap)))) table.push(['Gap (icon to text)', ...cs.map((c) => px(c.columnGap))]);
     if (group) {
       const g = getComputedStyle(group);
       table.push(['Gap between chips', ...els.map(() => px(g.columnGap))]);
@@ -241,7 +241,7 @@ export const SizeSpecs = ({
   }, []);
   return (
     <div className="exos-specs">
-      <div ref={host} className="exos-theme-dcfc exos-specs__samples" aria-hidden="true">
+      <div ref={host} className="exos-theme-dcfc exos-specs__samples sb-unstyled" aria-hidden="true">
         {sizes.map((s) =>
           element === 'input' ? (
             <input key={s.label} data-sample className={`${baseClass} ${s.className}`.trim()} defaultValue={sample} readOnly tabIndex={-1} />

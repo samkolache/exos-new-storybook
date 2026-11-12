@@ -1,0 +1,249 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import {
+  PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
+  ScreenReader, Related, SizeSpecs, TokenTable,
+} from '../../../../.storybook/blocks/Guidelines';
+import * as SegmentedStories from './segmented-control.stories';
+
+<Meta of={SegmentedStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>A segmented control lets people switch between 2 to 5 views of the same content, one at a time.</Subtitle>
+
+## Live demo
+
+A photo gallery that switches between its sections, on a phone and on the web. Pick a segment: the photo and the thumb under the picked segment change together.
+
+<DeviceCanvas of={SegmentedStories.MobileExample} webOf={SegmentedStories.WebExample} defaultDevice="mobile" />
+
+## When to use
+
+**Use a segmented control** to switch the view of what's already on screen:
+
+- Sections of one collection, like exterior and interior photos.
+- Ranges of the same data, like day, week and month.
+- Ways to show the same list, like a list or a map.
+
+**Don't use it** for actions (use buttons), for answers in a form (use a radio group or chips), or for more than 5 options.
+
+### Compared with look-alikes
+
+| Component | People | Use it for |
+|---|---|---|
+| **Segmented control** | Switch the view, right away | 2 to 5 views of the same content |
+| [Tabs](?path=/docs/components-tabs--docs) | Switch between sections of a page | Parts of one thing, like an order's summary and history; any number |
+| [Radio group](?path=/docs/components-forms-radio-group--docs) | Pick an answer that's sent later | Answers in a form |
+| [Chip](?path=/docs/components-chip--docs) | Pick one or several short answers | Answers and filters |
+
+If nothing on screen changes when people pick, it's an answer, not a view: use a radio group or chips.
+
+## Anatomy
+
+<DeviceCanvas of={SegmentedStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Track** | Always. A pill holding the segments. |
+| 2 | **Thumb** | Always, under the picked segment. It slides when the pick changes. |
+| 3 | **Segment label** | Each item. One or two words. |
+| 4 | **Count** | The item has `count`, like 9/12. |
+
+## Variants
+
+Two variants, picked by what's behind the control.
+
+<DeviceVariation title="Contrast" of={SegmentedStories.VarContrast}>
+
+The default: a white track with a dark thumb. It stands out over photos, maps and busy screens, like at the bottom of a gallery.
+
+- No `appearance` needed.
+- Floats on a soft shadow, so it reads over any background.
+
+</DeviceVariation>
+
+<DeviceVariation title="Subtle" of={SegmentedStories.VarSubtle}>
+
+A grey track with a white thumb. Quieter, for inside cards, panels and toolbars where the contrast look would compete with the content.
+
+- `appearance="subtle"`.
+
+</DeviceVariation>
+
+## Size
+
+<DeviceVariation title="Small, medium, large" of={SegmentedStories.Switchable} sizeSwitch>
+
+Use the switch in the toolbar. Only `size` changes in the code.
+
+- **Small** (`sm`, 32px): dense web screens like toolbars and table headers.
+- **Medium** (`md`, 40px, default): most screens. Lines up with medium inputs and buttons.
+- **Large** (`lg`, 48px, 16px text): over photos and media, like a gallery.
+
+Every size has a 4px track and 16px of padding on each side of a segment. On phones every segment is at least **44px** tall and the control is full width. Switch the toolbar to Mobile to see it.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Count" of={SegmentedStories.ModCount}>
+
+Add `count` to an item for short text after its label, like a total (`12`) or progress (`'4/6'`).
+
+Add `countLabel` to say what the count means to screen readers, like `'4 of 6 photos'`. Otherwise "4/6" is read as "4 slash 6".
+
+</DeviceVariation>
+
+<DeviceVariation title="Full width" of={SegmentedStories.ModFullWidth}>
+
+`[fullWidth]="true"` stretches the control across its container; segments stay equal. On phones it's always full width.
+
+</DeviceVariation>
+
+<DeviceVariation title="Disabled segment" of={SegmentedStories.ModDisabledSegment}>
+
+Add `disabled: true` to an item with nothing to show yet, like a floor plan that hasn't been uploaded. Arrow keys skip it. If it will never have content, leave it out.
+
+</DeviceVariation>
+
+## Specs
+
+Read from the theme, so these values always match the code. These are the web sizes; on phones, segments are at least 44px tall. Each segment also has 16px of padding on each side and 8px between its label and count.
+
+<SizeSpecs
+  element="span"
+  baseClass="exos-segmented exos-segmented-contrast"
+  labelClass="exos-segment"
+  sample="Interior"
+  sizes={[
+    { label: 'Small', className: 'exos-segmented-sm' },
+    { label: 'Medium', className: '' },
+    { label: 'Large', className: 'exos-segmented-lg' },
+  ]}
+/>
+
+## Content
+
+- **One or two words per segment,** nouns, in sentence case: "Exterior", "Week".
+- **Parallel labels** of about the same length. Segments are always equal widths, so the longest label sets the width.
+- **2 to 5 segments.** More than 5 won't fit on a phone.
+- **Counts are short:** a number, or progress like 4/6.
+
+<DoDont>
+  <Guideline type="do" of={SegmentedStories.DoShortLabels}>use one or two words per segment.</Guideline>
+  <Guideline type="dont" of={SegmentedStories.DontLongLabels}>write phrases. They're cut off on phones.</Guideline>
+  <Guideline type="do" of={SegmentedStories.DoFewSegments}>offer 2 to 5 segments.</Guideline>
+  <Guideline type="dont" of={SegmentedStories.DontManySegments}>squeeze in more. Use tabs or a select.</Guideline>
+  <Guideline type="do" of={SegmentedStories.DoViews}>switch between views of the same content.</Guideline>
+  <Guideline type="dont" of={SegmentedStories.DontActions}>use segments for actions. Use buttons.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="All states" of={SegmentedStories.AllStates} noCode>
+
+Both variants, with a disabled segment and fully disabled.
+
+- **Picked:** on the thumb. Always exactly one.
+- **Not picked:** on the track. On web, hovering darkens it (and fills it, on contrast).
+- **Focused:** a blue ring, from the keyboard only.
+- **Disabled segment:** grey text, skipped by the arrow keys.
+- **Disabled control:** every segment grey and the thumb turns grey. Explain nearby why.
+
+</DeviceVariation>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> | Into the control, on the picked segment. One Tab stop for the whole control |
+| <kbd>←</kbd> <kbd>→</kbd> | Previous or next segment, and picks it; skips disabled ones; wraps around |
+| <kbd>Home</kbd> / <kbd>End</kbd> | First or last segment |
+
+### Picking
+
+- **The view changes right away:** there's nothing to confirm. Listen to `value` (or `valueChange`) and change the view.
+- **The thumb slides** to the picked segment in 240ms. With reduce motion turned on, it moves without sliding.
+- **Keep the pick** when people come back to the screen, so they don't have to pick again.
+
+### Mobile and web
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs) for the rules every component follows.
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Width | Full width | As wide as its segments, or full width with `fullWidth` |
+| Height | Segments at least 44px | 32, 40 or 48px |
+| Segments | Equal widths | Equal widths |
+| Hover | None | Text darkens; contrast segments fill grey |
+
+### Edge cases
+
+<SpecimenGrid>
+  <Specimen of={SegmentedStories.EdgeLongLabel}>**Long label:** cut off with "…"; the count always shows. Shorten the label.</Specimen>
+</SpecimenGrid>
+
+## Accessibility
+
+For the Exterior segment in the playground, a screen reader reads:
+
+<ScreenReader name="Exterior, 4 of 6 photos" role="tab" state="not selected" position="1 of 2" group="Photos" />
+
+- **Roles:** `tablist` and `tab`, as in Carbon's content switcher. Set `controls` on an item to point it at the region it shows.
+- **Name the control** with `label`, like "Photos".
+- **Counts** are read with `countLabel` when the short form isn't clear out loud.
+- **Colour is never the only signal:** the picked segment sits on the thumb, and screen readers hear "selected".
+- **Contrast:** labels and counts pass 4.5:1 on both tracks and the thumb.
+- **Checked automatically:** every story runs an accessibility scan in the tests, plus size, keyboard, click and disabled tests.
+
+## Code
+
+The Variants, Size and Modifiers examples above each have their code.
+
+### API
+
+<Controls of={SegmentedStories.Default} />
+
+### Theming
+
+Segmented controls read these CSS variables from `.exos-theme-dcfc`. Override them there to theme every control.
+
+<TokenTable
+  tokens={[
+    { name: '--color-background-page', use: 'Track: contrast; thumb: subtle' },
+    { name: '--color-background-subtle', use: 'Track: subtle; hover: contrast' },
+    { name: '--color-action-primary', use: 'Thumb: contrast (gradient start)' },
+    { name: '--color-action-primary-end', use: 'Thumb: contrast (gradient end)' },
+    { name: '--color-shadow-elevated', use: 'Track shadow: contrast; thumb shadow: subtle' },
+    { name: '--color-text-primary', use: 'Label: contrast' },
+    { name: '--color-text-secondary', use: 'Count: contrast' },
+    { name: '--color-text-inverse', use: 'Picked label: contrast' },
+    { name: '--color-text-inverse-secondary', use: 'Picked count: contrast' },
+    { name: '--color-text-label', use: 'Label and count: subtle' },
+    { name: '--color-text-heading', use: 'Picked label: subtle; hover' },
+    { name: '--color-text-disabled', use: 'Disabled segments' },
+    { name: '--color-action-disabled', use: 'Thumb: disabled control' },
+    { name: '--color-border-focus', use: 'Focus ring' },
+    { name: '--exos-touch-target-min', use: 'Segment height on phones' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Tabs', text: 'Sections of a page', href: '/?path=/docs/components-tabs--docs' },
+    { title: 'Radio group', text: 'Answers in a form', href: '/?path=/docs/components-forms-radio-group--docs' },
+    { title: 'Chip', text: 'Short answers and filters', href: '/?path=/docs/components-chip--docs' },
+    { title: 'Button', text: 'Actions', href: '/?path=/docs/components-button--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 12, 2026:** first version: contrast and subtle, three sizes, counts, sliding thumb. Replaces the segmented variant of Tabs.

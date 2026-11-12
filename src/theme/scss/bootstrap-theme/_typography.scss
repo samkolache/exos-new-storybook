@@ -1,0 +1,9 @@
+// Headings: Bootstrap gives every heading $headings-font-family (Raleway).
+// Only h1 and h2 keep it; from h3 down, headings use the body font (Geist).
+
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  font-family: var(--bs-body-font-family); // global, so it also works outside .exos-theme-dcfc
+}

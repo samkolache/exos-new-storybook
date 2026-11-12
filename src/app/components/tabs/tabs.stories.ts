@@ -11,12 +11,6 @@ const ORDER: TabItem[] = [
   { label: 'History', value: 'history' },
 ];
 
-const VIEWS: TabItem[] = [
-  { label: 'Day', value: 'day' },
-  { label: 'Week', value: 'week' },
-  { label: 'Month', value: 'month' },
-];
-
 const MANY: TabItem[] = [
   { label: 'Summary', value: 'summary' },
   { label: 'Items', value: 'items' },
@@ -28,7 +22,7 @@ const MANY: TabItem[] = [
 ];
 
 /** Component defaults: the code panel only prints props that differ. */
-const DEFAULTS = { items: [], value: '', label: '', variant: 'line', fullWidth: false };
+const DEFAULTS = { items: [], value: '', label: '' };
 
 const PANELS = `
   <app-tab-panel value="summary"><p class="mb-0">Order 1042 · placed Nov 11 · $86.40</p></app-tab-panel>
@@ -63,18 +57,11 @@ const meta: Meta<TabsComponent> = {
     valueChange: { action: 'valueChange', table: { category: 'outputs' } },
     items: { description: '`{ label, value, disabled?, count? }`.' },
     label: { description: 'Names the tab list for screen readers, like "Order details".' },
-    variant: {
-      control: 'inline-radio',
-      options: ['line', 'segmented'],
-      description: 'line: tabs over a section · segmented: a compact switch between views of the same data.',
-      table: { defaultValue: { summary: 'line' } },
-    },
-    fullWidth: { description: 'Segmented only: stretch across the width. Always full width on phones.' },
   },
-  args: { items: ORDER, value: 'summary', label: 'Order details', variant: 'line', fullWidth: false },
+  args: { items: ORDER, value: 'summary', label: 'Order details' },
   render: (args) => ({
     props: args,
-    template: `<app-tabs [items]="items" [(value)]="value" [label]="label" [variant]="variant" [fullWidth]="fullWidth">${PANELS}</app-tabs>`,
+    template: `<app-tabs [items]="items" [(value)]="value" [label]="label">${PANELS}</app-tabs>`,
   }),
 };
 
@@ -84,15 +71,6 @@ type Story = StoryObj<TabsComponent>;
 // Playgrounds (sidebar)
 
 export const Default: Story = { name: 'Tabs' };
-const SEGMENTED_RENDER: Story['render'] = (args) => ({
-  props: args,
-  template: `<app-tabs [items]="items" [(value)]="value" [label]="label" [variant]="variant" [fullWidth]="fullWidth" />`,
-});
-
-export const Segmented: Story = {
-  args: { items: VIEWS, value: 'week', label: 'Calendar view', variant: 'segmented' },
-  render: SEGMENTED_RENDER,
-};
 
 // Docs: live demo
 
@@ -121,9 +99,7 @@ export const Anatomy: Story = {
 // Docs: one decision each
 
 export const VarLine: Story = { tags: ['!dev'] };
-export const VarSegmented: Story = { tags: ['!dev'], args: { items: VIEWS, value: 'week', label: 'Calendar view', variant: 'segmented' }, render: SEGMENTED_RENDER };
 export const ModCount: Story = { tags: ['!dev'], args: { value: 'items' } };
-export const ModFullWidth: Story = { tags: ['!dev'], args: { items: VIEWS, value: 'week', label: 'Calendar view', variant: 'segmented', fullWidth: true }, render: SEGMENTED_RENDER };
 export const ModDisabled: Story = {
   tags: ['!dev'],
   args: {
@@ -138,23 +114,18 @@ export const ModDisabled: Story = {
 
 // Docs: Do / Don't
 
-export const DoShortLabels: Story = { tags: ['!dev'], args: { items: VIEWS, value: 'week', label: 'Calendar view', variant: 'segmented' }, render: SEGMENTED_RENDER };
+export const DoShortLabels: Story = { tags: ['!dev'] };
 export const DontLongLabels: Story = {
   tags: ['!dev'],
-  render: SEGMENTED_RENDER,
   args: {
     items: [
-      { label: 'Show today’s orders', value: 'day' },
-      { label: 'Show this week’s orders', value: 'week' },
-      { label: 'Show all orders', value: 'all' },
+      { label: 'Order summary', value: 'summary' },
+      { label: 'Items in this order', value: 'items' },
+      { label: 'Shipping details', value: 'shipping' },
     ],
-    value: 'week',
-    label: 'Orders',
-    variant: 'segmented',
   },
+  render: (args) => ({ props: args, template: `<app-tabs [items]="items" [(value)]="value" [label]="label">${PANELS}</app-tabs>` }),
 };
-export const DoFewSegments: Story = { tags: ['!dev'], args: { items: VIEWS, value: 'week', label: 'Calendar view', variant: 'segmented' }, render: SEGMENTED_RENDER };
-export const DontManySegments: Story = { tags: ['!dev'], args: { items: MANY, value: 'items', label: 'Order', variant: 'segmented' }, render: SEGMENTED_RENDER };
 
 // Docs: edge cases
 

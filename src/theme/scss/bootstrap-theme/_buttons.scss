@@ -1,16 +1,31 @@
 // Button overrides. Figma: Sams-Vibe › Button (node 732:36490).
 // Drives Bootstrap .btn through its --bs-btn-* variables; colors from var(--color-*) only.
 // Hover/active currently mirror the resting state (interaction states to be specced).
+//
+// Structure follows IBM Carbon (sizes, padding, spacing); touch sizes follow Apple HIG:
+//   .btn-sm 32px · .btn (md) 40px · .btn-lg 48px, 16px ($spacing-05) side padding,
+//   14px label. On phones every size is at least 44px tall.
+// Heights are minimums: long labels wrap onto a second line instead of being cut off.
+
+.btn,
+.btn-sm,
+.btn-lg {
+  // Padding-y = (height - 18px line - 2px border) / 2, so one line is exactly the height.
+  --exos-btn-height: 2.5rem; // 40px
+  --bs-btn-padding-x: calc(var(--exos-spacing-05, 16px) - 1px); // 16px with the border
+  --bs-btn-padding-y: calc((var(--exos-btn-height) - 1.125rem - 2px) / 2);
+  --bs-btn-font-size: 0.875rem; // 14px
+  --bs-btn-line-height: 1.125rem; // 18px
+  --bs-btn-border-radius: calc(var(--exos-btn-height) / 2); // pill at one line
+}
+
+.btn-sm { --exos-btn-height: 2rem; }  // 32px
+.btn-lg { --exos-btn-height: 3rem; }  // 48px
 
 .btn {
-  --bs-btn-padding-x: 1.1875rem; // 19px + 1px border = 20px
-  --bs-btn-padding-y: 0;
-  --bs-btn-font-size: 0.875rem; // 14px
   --bs-btn-font-weight: 700;
-  --bs-btn-line-height: 1.125rem; // 18px
   --bs-btn-border-width: 1px;
   --bs-btn-border-color: transparent;
-  --bs-btn-border-radius: 23px;
   --bs-btn-disabled-opacity: 1;
   --bs-btn-disabled-bg: var(--color-action-disabled);
   --bs-btn-disabled-color: var(--color-text-disabled);
@@ -19,8 +34,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 46px;
-  white-space: nowrap;
+  gap: var(--exos-spacing-03, 8px); // icon to label
+  min-height: var(--exos-btn-height);
+  max-width: 20rem; // Carbon: buttons never grow past 320px
+  text-wrap: balance;
 }
 
 .btn-primary {
@@ -119,6 +136,8 @@
   --bs-btn-padding-y: 0;
   --bs-btn-border-radius: 50%;
 
+  min-height: 0;
+
   width: 40px;
   height: 40px;
 }
@@ -182,6 +201,8 @@
   --btn-progress-badge-bg: transparent;
 
   height: auto;
+  min-height: 0;
+  max-width: none;
   gap: 12px;
   backdrop-filter: blur(10px);
 
@@ -228,5 +249,41 @@
 
   .badge {
     --bs-badge-padding-x: 5px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Button set: 2 or 3 related actions. Carbon: 16px between buttons, same size,
+// primary on the outside (last in the markup, so it sits on the right).
+// Phones: buttons stack full width with the primary on top, in thumb reach.
+
+.btn-set {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--exos-spacing-05, 16px);
+}
+
+.btn-set-end { justify-content: flex-end; }
+
+// Phones (below md): 44px minimum tap target at every size (Apple HIG).
+@include media-breakpoint-down(md) {
+  .btn:not(.btn-icon):not(.btn-progress) {
+    min-height: max(var(--exos-btn-height), var(--exos-touch-target-min, 44px));
+    --bs-btn-border-radius: calc(max(var(--exos-btn-height), var(--exos-touch-target-min, 44px)) / 2);
+  }
+
+  .btn-set {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: var(--exos-spacing-04, 12px);
+
+    > app-button,
+    > app-button .btn,
+    > .btn {
+      display: flex;
+      width: 100%;
+      max-width: none;
+    }
   }
 }

@@ -1,0 +1,122 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
+import * as Stories from './typography.stories';
+
+<Meta of={Stories} />
+
+<PageNav />
+
+# Typography
+
+Exos uses two typefaces. **Raleway** is for page and section titles (h1 and h2). **Geist** is for everything else, including h3 and smaller headings.
+
+## Live demo
+
+A page that uses every level. Switch between Mobile and Web: the large headings scale down on phones, but body text stays at 16px.
+
+<DeviceCanvas of={Stories.InUse} webOf={Stories.InUse} defaultDevice="mobile" noCode />
+
+## Typefaces
+
+| Typeface | Used for | Why |
+|---|---|---|
+| **Raleway** | `h1`, `h2`, `.h1`, `.h2` | Gives page and section titles their own voice. Only used at large sizes, where it reads well. |
+| **Geist** | `h3`–`h6`, body, labels, buttons, fields | Clear at small sizes, so it works for text, labels and data. |
+
+**The switch is at h3.** Anything smaller than a section title is part of the content, so it's set in the same typeface as the content.
+
+The font follows the **look**, not the tag: `<h2 class="h5">` is set in Geist, because it looks like an h5.
+
+## Type scale
+
+Read from the theme, so these values always match the code. Switch between Mobile and Web to see the sizes change.
+
+<DeviceCanvas of={Stories.Scale} webOf={Stories.Scale} defaultDevice="web" noCode />
+
+### Mobile and web
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs) for the rules every component follows.
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| h1–h4 | Smaller, and scale with the screen width | Scale up to full size at 1200px |
+| h5, h6 | Same size | Same size |
+| Body | 16px, which also stops phones zooming in on fields | 16px |
+| Small | 14px | 14px |
+
+## Content
+
+- **Sentence case** for every heading: "Open claims", not "Open Claims".
+- **Keep headings short,** ideally one line on a phone. Put the detail in the text below.
+- **No full stop** at the end of a heading.
+- **Don't set text in capitals** for emphasis: it's harder to read.
+
+<DoDont>
+  <Guideline type="do" of={Stories.DoHeadingFont}>use Raleway only for h1 and h2. Everything below is Geist.</Guideline>
+  <Guideline type="dont" of={Stories.DontHeadingFont}>set small headings or body text in Raleway.</Guideline>
+  <Guideline type="do" of={Stories.DoLevels}>pick the tag for the structure, and the class for the size.</Guideline>
+  <Guideline type="dont" of={Stories.DontLevels}>skip heading levels to get a smaller size.</Guideline>
+  <Guideline type="do" of={Stories.DoSentenceCase}>write headings in sentence case.</Guideline>
+  <Guideline type="dont" of={Stories.DontTitleCase}>use Title Case or capitals.</Guideline>
+</DoDont>
+
+## Accessibility
+
+- **Headings follow the page structure.** One `h1` per page, then `h2`, `h3` and so on, without skipping levels. Screen reader users jump from heading to heading, so the levels are how they find their way. Use the `.h1`–`.h6` classes to change the size.
+- **Sizes are in rem,** so text gets bigger when people change their browser or phone text size.
+- **Body text is 16px** and never smaller than 14px (`small`).
+- **Contrast:** keep text at 4.5:1 or more against its background, and large headings at 3:1 or more (WCAG AA). The `--color-text-*` tokens are for text; don't use the lighter status or border colours.
+- **No light weights:** the lightest weight is 400, so thin strokes don't disappear on low-quality screens.
+- **Checked automatically:** every typography story runs an accessibility scan in the tests, and a test checks which headings use which font.
+
+## Code
+
+### Usage
+
+Use plain HTML and Bootstrap classes. The theme sets the font.
+
+```html
+<h1>Your claims</h1>            <!-- Raleway -->
+<h2>Open claims</h2>            <!-- Raleway -->
+<h3>Claim 4821</h3>             <!-- Geist -->
+<h2 class="h5">Delivery</h2>    <!-- An h2 for structure that looks like an h5: Geist -->
+<p class="small">Updated 2 days ago</p>
+```
+
+In component styles, use the tokens instead of naming a font:
+
+```css
+.summary-title {
+  font-family: var(--font-heading);
+}
+```
+
+### Theming
+
+Typography reads these CSS variables. The `--font-*` variables are on `.exos-theme-dcfc`, and Bootstrap's `--bs-*` variables are on `:root`.
+
+<TokenTable
+  tokens={[
+    { name: '--font-heading', use: 'h1 and h2 (Raleway)' },
+    { name: '--font-body', use: 'Everything else (Geist)' },
+    { name: '--bs-body-font-family', use: 'Body font, set from --font-body' },
+    { name: '--bs-body-font-size', use: 'Body text size' },
+    { name: '--bs-body-line-height', use: 'Body line height' },
+    { name: '--bs-body-color', use: 'Text colour' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Spacing', text: 'Space between headings and text', href: '/?path=/docs/foundations-spacing--docs' },
+    { title: 'Mobile and web', text: 'Everything that changes at 672px', href: '/?path=/docs/foundations-mobile-and-web--docs' },
+    { title: 'Grid', text: 'Columns, margins and line length', href: '/?path=/docs/foundations-grid--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 12, 2026:** first version. Raleway for h1 and h2, Geist for h3 and everything below.

@@ -11,4 +11,6 @@
   @each $name, $value in $dcfc-surfaces {
     --surface-#{$name}: #{$value};
   }
+  --font-heading: #{$dcfc-font-heading};
+  --font-body: #{$dcfc-font-body};
 }

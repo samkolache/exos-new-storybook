@@ -4,6 +4,7 @@
 // 1. Tokens
 @import "scss/tokens/primitives";     // Layer 1: raw values
 @import "scss/tokens/colors";         // Layer 2: semantic aliases
+@import "scss/tokens/typography";     // font families
 @import "scss/tokens/css-variables";  // emits --primitive-*, --color-*, --surface-*
 @import "scss/tokens/layout";         // breakpoints, grid, spacing
 

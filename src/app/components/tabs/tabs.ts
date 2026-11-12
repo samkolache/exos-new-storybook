@@ -9,9 +9,6 @@ export interface TabItem {
   count?: number;
 }
 
-/** line: tabs over a section · segmented: a compact switch between views of the same thing. */
-export type TabsVariant = 'line' | 'segmented';
-
 /**
  * Tabs: switch between views of the same page, one at a time.
  *
@@ -21,6 +18,7 @@ export type TabsVariant = 'line' | 'segmented';
  *   </app-tabs>
  *
  * Arrow keys move between tabs and show them; Tab moves into the panel.
+ * For a compact switch between views of the same content, use app-segmented-control.
  */
 @Component({
   selector: 'app-tabs',
@@ -32,13 +30,10 @@ export class TabsComponent {
   readonly value = model('');
   /** Names the tab list for screen readers, like "Order details". */
   readonly label = input('');
-  readonly variant = input<TabsVariant>('line');
-  /** Segmented only: stretch across the full width. Always full width on phones. */
-  readonly fullWidth = input(false);
 
   readonly baseId = uniqueId('tabs');
   private readonly buttons = viewChildren<ElementRef<HTMLButtonElement>>('tab');
-  /** Segmented tabs often switch a view with no panels; tabs point only at panels that exist. */
+  /** Tabs point only at panels that exist. */
   private readonly panels = contentChildren(forwardRef(() => TabPanelComponent));
 
   protected controlsOf(value: string): string | null {
@@ -51,11 +46,7 @@ export class TabsComponent {
     return items.find((i) => i.value === this.value() && !i.disabled)?.value ?? items.find((i) => !i.disabled)?.value ?? '';
   });
 
-  protected readonly listClasses = computed(() => {
-    const cls = ['exos-tabs', `exos-tabs-${this.variant()}`];
-    if (this.fullWidth()) cls.push('exos-tabs-full');
-    return cls.join(' ');
-  });
+  protected readonly listClasses = 'exos-tabs exos-tabs-line';
 
   tabId(value: string): string {
     return `${this.baseId}-tab-${value}`;

@@ -16,6 +16,11 @@ $danger:    dcfc-color("status-danger");
 $grid-breakpoints:    $exos-breakpoints;
 $enable-grid-classes: false;
 
+// Typography: Geist body, Raleway headings (h3 and smaller go back to Geist in bootstrap-theme/_typography).
+$font-family-sans-serif: $dcfc-font-body;
+$headings-font-family:   $dcfc-font-heading;
+$display-font-family:    $dcfc-font-heading;
+
 $body-color:     dcfc-color("text-primary");
 $body-bg:         dcfc-color("background-page");
 $link-color:      dcfc-color("text-link");

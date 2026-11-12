@@ -1,51 +1,247 @@
-import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
-import { Variation } from '../../../../.storybook/blocks/Variation';
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import {
+  PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
+  ScreenReader, Related, SizeSpecs, TokenTable,
+} from '../../../../.storybook/blocks/Guidelines';
 import * as ButtonStories from './button.stories';
 
 <Meta of={ButtonStories} />
 
+<PageNav />
+
 <Title />
 
-<Subtitle>Buttons let users take an action, such as confirming, cancelling or removing something.</Subtitle>
+<Subtitle>Buttons let people take an action, like saving, sending or deleting something.</Subtitle>
 
-## Demo
+## Live demo
 
-<Canvas of={ButtonStories.Primary} />
+The same form actions on a phone and on the web. Switch the device in the toolbar: on a phone the buttons stack, with the main one on top.
 
-## Usage
+<DeviceCanvas of={ButtonStories.MobileExample} webOf={ButtonStories.WebExample} defaultDevice="mobile" />
 
-Use a button for actions on the current page. Use a link to navigate somewhere else.
+## When to use
 
-```html
-<app-button label="Confirm" (clicked)="save()" />
-```
+**Use a button** for an action on the current page:
 
-## Variations
+- Sending or saving a form.
+- Opening a modal or starting a task.
+- Confirming or deleting something.
 
-<Variation title="Variant" of={ButtonStories.Variants}>
+### Compared with look-alikes
 
-Set how much a button stands out with the `variant` input:
+| Component | People | Use it for |
+|---|---|---|
+| **Button** | Take an action | Saving, sending, deleting, opening |
+| [Link](?path=/docs/components-link--docs) | Go somewhere | Another page, or a spot on this one |
+| [Icon button](?path=/docs/components-iconbutton--docs) | Take a well-known action | Back, close, next, where the icon is clear on its own |
+| [Dropdown](?path=/docs/components-dropdown--docs) | Pick one of several actions | More than 3 actions in one place |
 
-- `primary` is the main action in a view. Use one per view.
-- `secondary` is for supporting actions next to a primary, like "Answer later".
-- `destructive` is for actions that delete or remove something.
+If it goes to another page, use a link, even if it looks important.
 
-</Variation>
+## Anatomy
 
-<Variation title="Ghost" of={ButtonStories.GhostVariants}>
+<DeviceCanvas of={ButtonStories.Anatomy} noCode />
 
-Add `[ghost]="true"` to any variant to get a text-only button. It is the same size as the filled one, so the two line up in a row. Use it for low-emphasis actions, like a "Cancel" next to a filled "Confirm".
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Container** | Always. Its fill and border come from the variant; ghost buttons have none. |
+| 2 | **Label** | Always. A verb and a noun, like "Save changes". |
 
-</Variation>
+## Variants
 
-<Variation title="Disabled" of={ButtonStories.DisabledVariants}>
+Three variants, picked by what the action does and how much it matters.
 
-Use the `disabled` input when an action is not available yet. Every variant uses the same grey disabled look. Ghost buttons stay text-only, with grey text.
+<DeviceVariation title="Primary" of={ButtonStories.VarPrimary}>
 
-</Variation>
+The main action in a view, like "Save changes" or "Send".
 
-## API
+- The default, so no `variant` is needed.
+- **One per view.** If two actions look equally important, people have to stop and think.
 
-Change the inputs below to update the demo at the top of the page.
+</DeviceVariation>
+
+<DeviceVariation title="Secondary" of={ButtonStories.VarSecondary}>
+
+Supporting actions next to a primary, like "Cancel" or "Save draft".
+
+- `variant="secondary"`.
+- Use as many as you need, but keep a set to 3 buttons at most.
+
+</DeviceVariation>
+
+<DeviceVariation title="Destructive" of={ButtonStories.VarDestructive}>
+
+Actions that delete or remove something and can't easily be undone.
+
+- `variant="destructive"`.
+- Say what is deleted: "Delete address", not "Delete". Ask people to confirm first if the loss is big.
+
+</DeviceVariation>
+
+## Size
+
+<DeviceVariation title="Small, medium, large" of={ButtonStories.Switchable} sizeSwitch>
+
+Use the switch in the toolbar. Only `size` changes in the code.
+
+- **Small** (`sm`, 32px): dense web screens like tables, toolbars and filters.
+- **Medium** (`md`, 40px): next to medium inputs, so they line up.
+- **Large** (`lg`, 48px, default): most actions, like form and modal buttons.
+
+Every size has 16px of padding on each side and a 14px label. On phones every size is at least **44px** tall, so it's easy to tap. Switch the toolbar to Mobile to see it.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Ghost" of={ButtonStories.ModGhost}>
+
+Add `[ghost]="true"` to any variant for a text-only button, with no fill or border. Use it for low-emphasis actions, like "Skip for now" or "Back". It's the same size as the filled one, so the two line up in a row.
+
+</DeviceVariation>
+
+<DeviceVariation title="Submit" of={ButtonStories.ModSubmit}>
+
+Add `type="submit"` to the button that sends a form, so <kbd>Enter</kbd> in a field sends it too. Every other button stays `type="button"` (the default), so it never sends the form by accident.
+
+</DeviceVariation>
+
+<DeviceVariation title="Button set" of={ButtonStories.ModSet}>
+
+Put 2 or 3 related buttons in a `<div class="btn-set">`:
+
+- **16px** between buttons on web, **12px** when they stack on phones.
+- **Primary last** in the code, so it sits on the outside (right). Add `btn-set-end` to align the set to the right, as in modals and at the end of forms.
+- **On phones** the buttons stack at full width, with the primary on top.
+- Keep every button in a set the same size.
+
+</DeviceVariation>
+
+## Specs
+
+Read from the theme, so these values always match the code. These are the web sizes; on phones, buttons are at least 44px tall.
+
+<SizeSpecs
+  element="button"
+  baseClass="btn btn-primary"
+  labelClass="btn-label"
+  sample="Save changes"
+  sizes={[
+    { label: 'Small', className: 'btn-sm' },
+    { label: 'Medium', className: '' },
+    { label: 'Large', className: 'btn-lg' },
+  ]}
+/>
+
+## Content
+
+- **Labels are a verb and a noun**, in sentence case: "Save changes", "Delete address". One word is fine when the context is clear, like "Cancel".
+- **Say what happens,** not "OK", "Yes" or "Submit".
+- **Keep labels short.** A long label wraps onto a second line; it's never cut off.
+
+<DoDont>
+  <Guideline type="do" of={ButtonStories.DoVerbNoun}>say exactly what the button does.</Guideline>
+  <Guideline type="dont" of={ButtonStories.DontVague}>write vague labels like "OK".</Guideline>
+  <Guideline type="do" of={ButtonStories.DoOnePrimary}>use one primary button per view.</Guideline>
+  <Guideline type="dont" of={ButtonStories.DontManyPrimary}>put two primary buttons side by side.</Guideline>
+  <Guideline type="do" of={ButtonStories.DoSameSize}>keep buttons in a set the same size.</Guideline>
+  <Guideline type="dont" of={ButtonStories.DontMixSizes}>mix sizes in one set.</Guideline>
+  <Guideline type="do" of={ButtonStories.DoFewActions}>offer 2 or 3 actions at most.</Guideline>
+  <Guideline type="dont" of={ButtonStories.DontTooMany}>line up 4 or more. Move the extras into a dropdown.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="All states" of={ButtonStories.AllStates} noCode>
+
+Every variant, filled and ghost, enabled and disabled.
+
+- **Enabled:** ready to use.
+- **Disabled:** can't be used yet, and is skipped by <kbd>Tab</kbd>. Every variant turns the same grey. Explain nearby why, or leave the button on and say what's missing when people press it.
+
+</DeviceVariation>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> / <kbd>Shift</kbd> <kbd>Tab</kbd> | Next or previous button (disabled buttons are skipped) |
+| <kbd>Enter</kbd> or <kbd>Space</kbd> | Presses the button |
+| <kbd>Enter</kbd> in a field | Presses the form's `type="submit"` button |
+
+### Mobile and web
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs) for the rules every component follows.
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Height | At least 44px, at every size | 32, 40 or 48px |
+| Button sets | Stacked, full width, primary on top | In a row, 16px apart, primary on the right |
+| Width | Full width in a set | Fits the label, up to 320px |
+| Hover | None | Pointer cursor |
+
+### Edge cases
+
+<SpecimenGrid>
+  <Specimen of={ButtonStories.EdgeLongLabel}>**Long label:** wraps onto a second line, and the button grows taller. Shorten it if you can.</Specimen>
+  <Specimen of={ButtonStories.EdgeNarrow}>**Narrow space:** buttons in a set wrap onto the next row, still 16px apart.</Specimen>
+</SpecimenGrid>
+
+## Accessibility
+
+For the button in the playground, a screen reader reads:
+
+<ScreenReader name="Save changes" role="button" state="" />
+
+- **Native `<button>`,** so <kbd>Enter</kbd>, <kbd>Space</kbd> and focus work with no extra code.
+- **The label is the name.** Don't add an `aria-label` that says something different from what's on screen.
+- **Disabled buttons** use the native `disabled`, so they're skipped by <kbd>Tab</kbd> and announced as dimmed.
+- **Tap targets** are at least 44 × 44px on phones.
+- **Checked automatically:** every button story runs an accessibility scan in the tests.
+
+## Code
+
+The Variants, Size and Modifiers examples above each have their code. This section covers the rest.
+
+### API
 
 <Controls of={ButtonStories.Primary} />
+
+### Theming
+
+Buttons read these CSS variables from `.exos-theme-dcfc`. Override them there to theme every button.
+
+<TokenTable
+  tokens={[
+    { name: '--color-action-primary', use: 'Fill: primary (gradient start), text: primary ghost' },
+    { name: '--color-action-primary-end', use: 'Fill: primary (gradient end)' },
+    { name: '--color-action-neutral', use: 'Fill: secondary' },
+    { name: '--color-action-destructive', use: 'Fill: destructive, text: destructive ghost' },
+    { name: '--color-action-disabled', use: 'Fill: disabled' },
+    { name: '--color-text-inverse', use: 'Label: primary and destructive' },
+    { name: '--color-text-neutral', use: 'Label: secondary' },
+    { name: '--color-text-disabled', use: 'Label: disabled' },
+    { name: '--color-border-subtle', use: 'Border: secondary' },
+    { name: '--exos-spacing-05', use: 'Side padding and space between buttons in a set' },
+    { name: '--exos-touch-target-min', use: 'Height on phones' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Link', text: 'Go to another page', href: '/?path=/docs/components-link--docs' },
+    { title: 'Icon button', text: 'Well-known actions with only an icon', href: '/?path=/docs/components-iconbutton--docs' },
+    { title: 'Dropdown', text: 'Several actions in one place', href: '/?path=/docs/components-dropdown--docs' },
+    { title: 'Spacing', text: 'The spacing scale buttons use', href: '/?path=/docs/foundations-spacing--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 12, 2026:** sizes and spacing from IBM Carbon: `size` (32 / 40 / 48px, `lg` by default), 16px side padding, `btn-set` with 16px between buttons; 44px on phones; long labels wrap.
+- **Earlier:** first version, with primary, secondary, destructive, ghost and disabled.

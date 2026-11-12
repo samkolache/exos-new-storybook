@@ -1,6 +1,9 @@
 // Compiles Bootstrap with the DCFC mapping, then component overrides.
 @import "bootstrap/scss/bootstrap";
 
+// Typography
+@import "bootstrap-theme/typography";
+
 // Layout
 @import "bootstrap-theme/grid";
 

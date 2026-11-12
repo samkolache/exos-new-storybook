@@ -1,4 +1,4 @@
-<div [class]="listClasses()" role="tablist" [attr.aria-label]="label() || null">
+<div [class]="listClasses" role="tablist" [attr.aria-label]="label() || null">
   @for (item of items(); track item.value; let i = $index) {
     <button
       #tab

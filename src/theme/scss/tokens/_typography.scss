@@ -1,0 +1,7 @@
+// Typography tokens: font families.
+//
+// Raleway for the big headings (display, h1, h2); Geist for everything else,
+// including h3–h6. Both are loaded from Google Fonts (index.html, preview-head.html).
+
+$dcfc-font-heading: "Raleway", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$dcfc-font-body:    "Geist", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
