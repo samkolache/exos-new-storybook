@@ -50,10 +50,10 @@
     ]
   },
   "components-accordion--spec-drawing/web--size-sm": {
-    "w": 665,
-    "h": 153,
+    "w": 664,
+    "h": 164,
     "labels": [
-      "33px tall row",
+      "37px tall row",
       "14px title",
       "16px arrow",
       "4px left and right"
@@ -153,34 +153,34 @@
     ]
   },
   "components-chip--spec-drawing/web--size-lg": {
-    "w": 460,
+    "w": 464,
     "h": 214,
     "labels": [
       "40px tall",
       "14px text",
-      "6px apart",
+      "8px apart",
       "11px top and bottom",
       "16px left and right"
     ]
   },
   "components-chip--spec-drawing/web--size-md": {
-    "w": 420,
+    "w": 424,
     "h": 198,
     "labels": [
       "32px tall",
       "13px text",
-      "6px apart",
+      "8px apart",
       "7px top and bottom",
       "12px left and right"
     ]
   },
   "components-chip--spec-drawing/web--size-sm": {
-    "w": 394,
+    "w": 398,
     "h": 182,
     "labels": [
       "24px tall",
       "12px text",
-      "6px apart",
+      "8px apart",
       "3px top and bottom",
       "10px left and right"
     ]
@@ -205,9 +205,9 @@
   },
   "components-forms-checkbox--spec-drawing/mobile--default": {
     "w": 357,
-    "h": 205,
+    "h": 214,
     "labels": [
-      "44px tall row",
+      "48px tall row",
       "16px box",
       "8px to label",
       "16px text"
@@ -393,19 +393,19 @@
   },
   "components-forms-file-uploader--spec-drawing/mobile--default": {
     "w": 375,
-    "h": 218,
+    "h": 222,
     "labels": [
       "44px tall buttons",
-      "50px per file"
+      "54px per file"
     ]
   },
   "components-forms-file-uploader--spec-drawing/web--default": {
     "w": 512,
-    "h": 275,
+    "h": 279,
     "labels": [
       "128px tall drop area",
       "16px text",
-      "50px per file"
+      "54px per file"
     ]
   },
   "components-forms-input--spec-drawing/mobile--note-error_size-lg": {
@@ -746,9 +746,9 @@
   },
   "components-forms-radio-group--spec-drawing/mobile--default": {
     "w": 352,
-    "h": 205,
+    "h": 214,
     "labels": [
-      "44px tall row",
+      "48px tall row",
       "16px circle",
       "8px to label",
       "16px text"
@@ -1061,9 +1061,9 @@
       "32px close button",
       "1px line above the buttons",
       "1px line under the header",
-      "Header: 16px top, 12px bottom · 20px left, 16px right",
-      "Body: 12px top, 20px bottom · 20px sides",
-      "Footer: 12px top, 20px bottom · 20px sides"
+      "Header: 16px top, 12px bottom · 16px sides",
+      "Body: 12px top, 16px bottom · 16px sides",
+      "Footer: 12px top, 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/mobile--align-end_header-divider_kind-none": {
@@ -1074,8 +1074,8 @@
       "20px title",
       "32px close button",
       "1px line under the header",
-      "Header: 16px top, 12px bottom · 20px left, 16px right",
-      "Body: 12px top, 20px bottom · 20px sides"
+      "Header: 16px top, 12px bottom · 16px sides",
+      "Body: 12px top, 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/mobile--align-end_header-divider_kind-plain": {
@@ -1086,9 +1086,9 @@
       "20px title",
       "32px close button",
       "1px line under the header",
-      "Header: 16px top, 12px bottom · 20px left, 16px right",
-      "Body: 12px top, 20px bottom · 20px sides",
-      "Footer: 20px bottom · 20px sides"
+      "Header: 16px top, 12px bottom · 16px sides",
+      "Body: 12px top, 16px bottom · 16px sides",
+      "Footer: 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/mobile--align-end_header-plain_kind-bar": {
@@ -1099,9 +1099,9 @@
       "20px title",
       "32px close button",
       "1px line above the buttons",
-      "Header: 16px top, 8px bottom · 20px left, 16px right",
-      "Body: 8px top, 20px bottom · 20px sides",
-      "Footer: 12px top, 20px bottom · 20px sides"
+      "Header: 16px top, 8px bottom · 16px sides",
+      "Body: 8px top, 16px bottom · 16px sides",
+      "Footer: 12px top, 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/mobile--align-end_header-plain_kind-none": {
@@ -1111,8 +1111,8 @@
       "16px corners",
       "20px title",
       "32px close button",
-      "Header: 16px top, 8px bottom · 20px left, 16px right",
-      "Body: 8px top, 20px bottom · 20px sides"
+      "Header: 16px top, 8px bottom · 16px sides",
+      "Body: 8px top, 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/mobile--align-end_header-plain_kind-plain": {
@@ -1122,9 +1122,9 @@
       "16px corners",
       "20px title",
       "32px close button",
-      "Header: 16px top, 8px bottom · 20px left, 16px right",
-      "Body: 8px top, 20px bottom · 20px sides",
-      "Footer: 20px bottom · 20px sides"
+      "Header: 16px top, 8px bottom · 16px sides",
+      "Body: 8px top, 16px bottom · 16px sides",
+      "Footer: 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/mobile--align-start_header-divider_kind-bar": {
@@ -1136,9 +1136,9 @@
       "32px close button",
       "1px line above the buttons",
       "1px line under the header",
-      "Header: 16px top, 12px bottom · 20px left, 16px right",
-      "Body: 12px top, 20px bottom · 20px sides",
-      "Footer: 12px top, 20px bottom · 20px sides"
+      "Header: 16px top, 12px bottom · 16px sides",
+      "Body: 12px top, 16px bottom · 16px sides",
+      "Footer: 12px top, 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/mobile--align-start_header-divider_kind-none": {
@@ -1149,8 +1149,8 @@
       "20px title",
       "32px close button",
       "1px line under the header",
-      "Header: 16px top, 12px bottom · 20px left, 16px right",
-      "Body: 12px top, 20px bottom · 20px sides"
+      "Header: 16px top, 12px bottom · 16px sides",
+      "Body: 12px top, 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/mobile--align-start_header-divider_kind-plain": {
@@ -1161,9 +1161,9 @@
       "20px title",
       "32px close button",
       "1px line under the header",
-      "Header: 16px top, 12px bottom · 20px left, 16px right",
-      "Body: 12px top, 20px bottom · 20px sides",
-      "Footer: 20px bottom · 20px sides"
+      "Header: 16px top, 12px bottom · 16px sides",
+      "Body: 12px top, 16px bottom · 16px sides",
+      "Footer: 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/mobile--align-start_header-plain_kind-bar": {
@@ -1174,9 +1174,9 @@
       "20px title",
       "32px close button",
       "1px line above the buttons",
-      "Header: 16px top, 8px bottom · 20px left, 16px right",
-      "Body: 8px top, 20px bottom · 20px sides",
-      "Footer: 12px top, 20px bottom · 20px sides"
+      "Header: 16px top, 8px bottom · 16px sides",
+      "Body: 8px top, 16px bottom · 16px sides",
+      "Footer: 12px top, 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/mobile--align-start_header-plain_kind-none": {
@@ -1186,8 +1186,8 @@
       "16px corners",
       "20px title",
       "32px close button",
-      "Header: 16px top, 8px bottom · 20px left, 16px right",
-      "Body: 8px top, 20px bottom · 20px sides"
+      "Header: 16px top, 8px bottom · 16px sides",
+      "Body: 8px top, 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/mobile--align-start_header-plain_kind-plain": {
@@ -1197,14 +1197,14 @@
       "16px corners",
       "20px title",
       "32px close button",
-      "Header: 16px top, 8px bottom · 20px left, 16px right",
-      "Body: 8px top, 20px bottom · 20px sides",
-      "Footer: 20px bottom · 20px sides"
+      "Header: 16px top, 8px bottom · 16px sides",
+      "Body: 8px top, 16px bottom · 16px sides",
+      "Footer: 16px bottom · 16px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-end_header-divider_kind-bar": {
     "w": 661,
-    "h": 351,
+    "h": 355,
     "labels": [
       "16px corners",
       "20px title",
@@ -1212,78 +1212,78 @@
       "1px line above the buttons",
       "1px line under the header",
       "12px between buttons",
-      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Header: 24px top, 16px bottom · 24px left, 16px right",
       "Body: 16px top, 24px bottom · 24px sides",
       "Footer: 16px top, 24px bottom · 24px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-end_header-divider_kind-none": {
     "w": 661,
-    "h": 237,
+    "h": 241,
     "labels": [
       "16px corners",
       "20px title",
       "32px close button",
       "1px line under the header",
-      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Header: 24px top, 16px bottom · 24px left, 16px right",
       "Body: 16px top, 24px bottom · 24px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-end_header-divider_kind-plain": {
     "w": 661,
-    "h": 334,
+    "h": 338,
     "labels": [
       "16px corners",
       "20px title",
       "32px close button",
       "1px line under the header",
       "12px between buttons",
-      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Header: 24px top, 16px bottom · 24px left, 16px right",
       "Body: 16px top, 24px bottom · 24px sides",
       "Footer: 24px bottom · 24px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-end_header-plain_kind-bar": {
     "w": 661,
-    "h": 313,
+    "h": 317,
     "labels": [
       "16px corners",
       "20px title",
       "32px close button",
       "1px line above the buttons",
       "12px between buttons",
-      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Header: 24px top, 8px bottom · 24px left, 16px right",
       "Body: 8px top, 24px bottom · 24px sides",
       "Footer: 16px top, 24px bottom · 24px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-end_header-plain_kind-none": {
     "w": 661,
-    "h": 199,
+    "h": 203,
     "labels": [
       "16px corners",
       "20px title",
       "32px close button",
-      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Header: 24px top, 8px bottom · 24px left, 16px right",
       "Body: 8px top, 24px bottom · 24px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-end_header-plain_kind-plain": {
     "w": 661,
-    "h": 296,
+    "h": 300,
     "labels": [
       "16px corners",
       "20px title",
       "32px close button",
       "12px between buttons",
-      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Header: 24px top, 8px bottom · 24px left, 16px right",
       "Body: 8px top, 24px bottom · 24px sides",
       "Footer: 24px bottom · 24px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-start_header-divider_kind-bar": {
     "w": 661,
-    "h": 377,
+    "h": 381,
     "labels": [
       "16px corners",
       "20px title",
@@ -1291,94 +1291,94 @@
       "1px line above the buttons",
       "1px line under the header",
       "12px between buttons",
-      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Header: 24px top, 16px bottom · 24px left, 16px right",
       "Body: 16px top, 24px bottom · 24px sides",
       "Footer: 16px top, 24px bottom · 24px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-start_header-divider_kind-none": {
     "w": 661,
-    "h": 237,
+    "h": 241,
     "labels": [
       "16px corners",
       "20px title",
       "32px close button",
       "1px line under the header",
-      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Header: 24px top, 16px bottom · 24px left, 16px right",
       "Body: 16px top, 24px bottom · 24px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-start_header-divider_kind-plain": {
     "w": 661,
-    "h": 334,
+    "h": 338,
     "labels": [
       "16px corners",
       "20px title",
       "32px close button",
       "1px line under the header",
       "12px between buttons",
-      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Header: 24px top, 16px bottom · 24px left, 16px right",
       "Body: 16px top, 24px bottom · 24px sides",
       "Footer: 24px bottom · 24px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-start_header-plain_kind-bar": {
     "w": 661,
-    "h": 339,
+    "h": 343,
     "labels": [
       "16px corners",
       "20px title",
       "32px close button",
       "1px line above the buttons",
       "12px between buttons",
-      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Header: 24px top, 8px bottom · 24px left, 16px right",
       "Body: 8px top, 24px bottom · 24px sides",
       "Footer: 16px top, 24px bottom · 24px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-start_header-plain_kind-none": {
     "w": 661,
-    "h": 199,
+    "h": 203,
     "labels": [
       "16px corners",
       "20px title",
       "32px close button",
-      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Header: 24px top, 8px bottom · 24px left, 16px right",
       "Body: 8px top, 24px bottom · 24px sides"
     ]
   },
   "components-modal--spec-drawing/web--align-start_header-plain_kind-plain": {
     "w": 661,
-    "h": 296,
+    "h": 300,
     "labels": [
       "16px corners",
       "20px title",
       "32px close button",
       "12px between buttons",
-      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Header: 24px top, 8px bottom · 24px left, 16px right",
       "Body: 8px top, 24px bottom · 24px sides",
       "Footer: 24px bottom · 24px sides"
     ]
   },
   "components-notification--spec-drawing/mobile--default": {
     "w": 353,
-    "h": 179,
+    "h": 183,
     "labels": [
       "20px icon",
       "14px text",
       "28px close button",
-      "14px top and bottom",
+      "16px top and bottom",
       "16px on the left"
     ]
   },
   "components-notification--spec-drawing/web--default": {
     "w": 523,
-    "h": 179,
+    "h": 183,
     "labels": [
       "20px icon",
       "14px text",
       "28px close button",
-      "14px top and bottom",
+      "16px top and bottom",
       "16px on the left"
     ]
   },
@@ -1410,16 +1410,16 @@
     "labels": [
       "48px tall",
       "15px text",
-      "14px left and right"
+      "16px left and right"
     ]
   },
   "components-tabs--spec-drawing/web--default": {
-    "w": 615,
+    "w": 613,
     "h": 136,
     "labels": [
       "40px tall",
       "15px text",
-      "14px left and right"
+      "16px left and right"
     ]
   },
   "components-tag--spec-drawing/mobile--size-lg": {
@@ -1463,13 +1463,13 @@
     ]
   },
   "components-tag--spec-drawing/web--size-md": {
-    "w": 304,
+    "w": 311,
     "h": 156,
     "labels": [
       "20px tall",
       "11px text",
       "3px top and bottom",
-      "9px left and right"
+      "11px left and right"
     ]
   },
   "components-tag--spec-drawing/web--size-sm": {
@@ -1483,25 +1483,25 @@
     ]
   },
   "components-tooltip--spec-drawing/mobile--default": {
-    "w": 224,
-    "h": 217,
+    "w": 228,
+    "h": 224,
     "labels": [
       "13px text",
-      "6px corners",
+      "8px corners",
       "8px caret",
-      "6px top and bottom",
-      "10px left and right"
+      "8px top and bottom",
+      "12px left and right"
     ]
   },
   "components-tooltip--spec-drawing/web--default": {
-    "w": 223,
-    "h": 217,
+    "w": 229,
+    "h": 224,
     "labels": [
       "13px text",
-      "6px corners",
+      "8px corners",
       "8px caret",
-      "6px top and bottom",
-      "10px left and right"
+      "8px top and bottom",
+      "12px left and right"
     ]
   }
 }
