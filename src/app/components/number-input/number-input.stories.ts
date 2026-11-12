@@ -5,6 +5,8 @@ import { AnatomyComponent } from '../shared/anatomy';
 import { fieldColumn } from '../shared/story-decorators';
 import { storySource } from '../shared/story-source';
 import { NumberInputComponent } from './number-input';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 /** Component defaults: the code panel only prints props that differ. */
 const DEFAULTS = {
@@ -187,4 +189,31 @@ export const TestReactiveForm: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Increase Guests' }));
     await expect(canvas.getByText('Form value: 3')).toBeInTheDocument();
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: 'input', side: 'right', label: '{v} tall' },
+  { kind: 'style', target: 'input', prop: 'font-size', side: 'top', label: '{v} text' },
+  { kind: 'size', target: '.exos-number-step', side: 'top', label: '{v} wide button' },
+  { kind: 'padding', target: 'input', label: '{v} top and bottom', labelSides: '{v} on the left' },
+  { kind: 'gap', from: '.form-label', to: '.exos-number', side: 'right', label: '{v} label to field' },
+  { kind: 'gap', from: '.exos-number', to: '.form-text', side: 'right', label: '{v} to help text' },
+  { kind: 'gap', from: '.exos-number', to: '.invalid-feedback', side: 'right', label: '{v} to error' },
+  { kind: 'style', target: '.form-text', prop: 'font-size', side: 'bottom', label: '{v} help text, grey' },
+  { kind: 'style', target: '.invalid-feedback', prop: 'font-size', side: 'bottom', label: '{v} error text, red' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { fullWidth: true, controls: { disable: true }, example: true, specs: { sizes: true, switches: [{ arg: 'note', label: 'Message', initial: 'help', options: [{ value: 'help', label: 'Help text', short: 'Help' }, { value: 'error', label: 'Error', short: 'Error' }] }] } },
+  args: { size: 'md', note: 'help' } as Story['args'],
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS },
+    template: `<app-redline [marks]="marks" [scale]="1.3" [room]="150" [key]="false"><div style="width: min(18rem, calc(100vw - 200px))"><app-number-input label="Quantity" [value]="2" [size]="size" [helpText]="note === 'help' ? 'Up to 10 per order.' : ''" [state]="note === 'error' ? 'invalid' : 'none'" [feedback]="note === 'error' ? 'Enter a number from 1 to 10.' : ''" /></div></app-redline>`,
+  }),
 };

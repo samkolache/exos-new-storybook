@@ -1,5 +1,6 @@
 // Chip: Figma "Review / Option chip" (967:7731).
 // type Single | Multi  ×  state Default | AI suggested | Selected | Disabled.
+// Variants: selectable (button), removable (span + cross button), readonly (span).
 
 .chip {
   display: inline-flex;
@@ -24,8 +25,9 @@
   }
 
   // Hover only where there is a pointer (web); touch screens skip it.
+  // Only selectable chips (buttons) react; removable chips light up their cross instead.
   @media (hover: hover) {
-    &:hover:not(:disabled):not(.selected) {
+    &:is(button):hover:not(:disabled):not(.selected) {
       background-color: var(--color-background-subtle);
     }
   }
@@ -42,9 +44,77 @@
     color: var(--color-text-selected);
   }
 
-  &:disabled {
+  &:disabled,
+  &.chip-disabled {
     border-color: var(--color-border-disabled);
     background-color: var(--color-background-disabled);
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// Disabled but picked: the single check turns grey with the label.
+.chip-picked-disabled > img:not(.chip-icon) {
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+
+// Icons dim with the label when the chip is disabled.
+.chip:disabled > .chip-icon,
+.chip-disabled > .chip-icon {
+  opacity: 0.5;
+}
+
+// Read-only: same look, nothing to press.
+.chip-readonly {
+  cursor: default;
+}
+
+// Removable: the cross sits close to the edge, inside the chip's height.
+.chip-removable {
+  padding-right: 6px;
+  cursor: default;
+}
+
+.chip-remove {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin: -2px 0 -2px -2px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--color-text-label);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+
+  > svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  @media (hover: hover) {
+    &:hover:not(:disabled) {
+      background-color: var(--color-background-subtle);
+      color: var(--color-text-heading);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 0;
+  }
+
+  &:disabled {
     color: var(--color-text-disabled);
     cursor: not-allowed;
   }
@@ -73,7 +143,10 @@
   line-height: 16px;
 
   &.chip-multi { padding-left: 8px; }
+  &.chip-removable { padding-right: 4px; }
   > img { width: 10px; height: 10px; }
+  .chip-remove { width: 16px; height: 16px; margin: 0 0 0 -2px; }
+  .chip-remove > svg { width: 10px; height: 10px; }
   .chip-checkbox { width: 12px; height: 12px; border-radius: 3px; }
   .chip-checkbox > img { width: 10px; height: 10px; }
 }
@@ -85,7 +158,10 @@
   line-height: 16px;
 
   &.chip-multi { padding-left: 14px; }
+  &.chip-removable { padding-right: 8px; }
   > img { width: 14px; height: 14px; }
+  .chip-remove { width: 24px; height: 24px; margin: -4px 0 -4px -2px; }
+  .chip-remove > svg { width: 14px; height: 14px; }
   .chip-checkbox { width: 16px; height: 16px; }
   .chip-checkbox > img { width: 14px; height: 14px; }
 }
@@ -116,6 +192,12 @@
     border-color: var(--color-border-chip);
     background-color: var(--color-background-page);
   }
+
+  // Disabled but picked: a grey filled checkbox, so the answer stays visible.
+  .chip.chip-picked-disabled & {
+    border-color: var(--color-text-disabled);
+    background-color: var(--color-text-disabled);
+  }
 }
 
 .chip-group {
@@ -124,49 +206,92 @@
   gap: 6px;
 }
 
-// Mobile (below md): the chip keeps its 32px Figma look, but its tap area
-// grows to the 44px touch target, and rows get more space so tap areas don't overlap.
-// Tablet and web keep the 32px target and 6px gaps.
-@include media-breakpoint-down(md) {
-  .chip {
-    position: relative;
-
-    // Exactly 44px tall, centred on the chip (borders included).
-    &::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: -1px;
-      left: -1px;
-      height: var(--exos-touch-target-min, 44px);
-      transform: translateY(-50%);
-    }
-  }
-
-  // Rows are spaced so 44px tap areas meet but don't overlap, whatever the chip size.
-  .chip-group { row-gap: calc(var(--exos-touch-target-min, 44px) - 32px); }
-  .chip-group-sm { row-gap: calc(var(--exos-touch-target-min, 44px) - 24px); }
-  .chip-group-lg { row-gap: calc(var(--exos-touch-target-min, 44px) - 40px); }
-}
-
-// Phones, on top of the 44px tap area above:
-// - About 12pt between controls with a border, so a tap lands on the intended chip.
-// - Long labels wrap instead of truncating: touch screens have no hover to show the tooltip.
-//   A 20px radius keeps one-line chips fully round at every size.
+// Phones (below md): a larger, touch-friendly scale on a 4px grid. Heights stay 24 / 32 / 40px.
+//   sm 24px · 12/16 type · 8px sides  · 14px icons and checkbox · 12px radius
+//   md 32px · 14/20 type · 12px sides · 16px icons and checkbox · 16px radius
+//   lg 40px · 16/22 type · 12px sides · 16px icons and checkbox · 20px radius
+// Radius is half the height, so one-line chips are pills and wrapped ones stay neat.
+// Long labels wrap instead of truncating: touch screens have no hover to show the tooltip.
 @include media-breakpoint-down(md) {
   .chip-group {
-    column-gap: 12px;
+    gap: 8px;
   }
 
   .chip {
-    border-radius: 20px;
+    position: relative;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 20px;
     text-align: left;
     white-space: normal;
+
+    > .chip-icon { width: 16px; height: 16px; }
+    .chip-checkbox { width: 16px; height: 16px; }
+    .chip-checkbox > img { width: 14px; height: 14px; }
+
+    &.chip-multi { padding-left: 10px; }
+    &.chip-removable { padding-right: 6px; }
+  }
+
+  .chip-sm {
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 16px;
+
+    > .chip-icon { width: 14px; height: 14px; }
+    .chip-checkbox { width: 14px; height: 14px; border-radius: 4px; }
+    .chip-checkbox > img { width: 12px; height: 12px; }
+
+    &.chip-multi { padding-left: 6px; }
+    &.chip-removable { padding-right: 2px; }
+  }
+
+  .chip-lg {
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 16px;
+    line-height: 22px;
+
+    &.chip-multi { padding-left: 10px; }
+    &.chip-removable { padding-right: 6px; }
   }
 
   .chip-label {
     overflow: visible;
     text-overflow: clip;
-    overflow-wrap: anywhere;
+    // break-word, not anywhere: only splits a word wider than the space, so chips never shrink to one letter per line.
+    overflow-wrap: break-word;
+  }
+
+  // Tap area: the chip plus half the 8px gap on every side, so neighbours' areas
+  // meet exactly and a tap between two chips always lands on one of them.
+  button.chip::after {
+    content: "";
+    position: absolute;
+    inset: -5px; // 4px (half the gap) + the 1px border
+  }
+
+  // The cross is a real 24 x 24px button at every size, even though its icon is smaller.
+  .chip .chip-remove {
+    width: 24px;
+    height: 24px;
+    margin: -2px 0 -2px -4px;
+
+    > svg { width: 14px; height: 14px; }
+  }
+
+  .chip-sm .chip-remove {
+    margin: -4px 0 -4px -2px;
+
+    > svg { width: 12px; height: 12px; }
+  }
+
+  .chip-lg .chip-remove {
+    margin: -1px 0 -1px -4px;
   }
 }

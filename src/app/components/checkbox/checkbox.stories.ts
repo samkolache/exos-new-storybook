@@ -5,6 +5,8 @@ import { fieldColumn } from '../shared/story-decorators';
 import { AnatomyComponent } from '../shared/anatomy';
 import { storySource } from '../shared/story-source';
 import { CheckboxComponent, CheckboxOption } from './checkbox';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 const TOPPINGS: CheckboxOption[] = [
   { label: 'Cheese', value: 'cheese' },
@@ -400,4 +402,25 @@ export const TestReactiveForm: Story = {
     await userEvent.click(canvas.getByRole('checkbox', { name: 'I agree to the terms' }));
     await expect(canvas.getByText('Form value: true')).toBeInTheDocument();
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: '.exos-check', side: 'right', label: '{v} tall row' },
+  { kind: 'size', target: '.exos-check .form-check-input', side: 'top', label: '{v} box' },
+  { kind: 'distance', from: { target: '.exos-check .form-check-input', edge: 'right' }, to: { target: '.exos-check .exos-check-label', edge: 'left' }, side: 'bottom', label: '{v} to label' },
+  { kind: 'style', target: '.exos-check .exos-check-label', prop: 'font-size', side: 'top', label: '{v} text' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { fullWidth: true, controls: { disable: true }, example: true, specs: { sizes: false, switches: [] } },
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS, options: TOPPINGS.slice(0, 2) },
+    template: `<app-redline [marks]="marks" [scale]="1.6" [key]="false"><div style="width: 14rem"><app-checkbox [options]="options" /></div></app-redline>`,
+  }),
 };

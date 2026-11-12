@@ -1,0 +1,1507 @@
+{
+  "components-accordion--spec-drawing/mobile--size-lg": {
+    "w": 374,
+    "h": 148,
+    "labels": [
+      "44px tall row",
+      "16px title",
+      "16px arrow",
+      "4px left and right"
+    ]
+  },
+  "components-accordion--spec-drawing/mobile--size-md": {
+    "w": 374,
+    "h": 148,
+    "labels": [
+      "44px tall row",
+      "16px title",
+      "16px arrow",
+      "4px left and right"
+    ]
+  },
+  "components-accordion--spec-drawing/mobile--size-sm": {
+    "w": 374,
+    "h": 148,
+    "labels": [
+      "44px tall row",
+      "14px title",
+      "16px arrow",
+      "4px left and right"
+    ]
+  },
+  "components-accordion--spec-drawing/web--size-lg": {
+    "w": 665,
+    "h": 195,
+    "labels": [
+      "48px tall row",
+      "16px title",
+      "16px arrow",
+      "4px left and right"
+    ]
+  },
+  "components-accordion--spec-drawing/web--size-md": {
+    "w": 665,
+    "h": 172,
+    "labels": [
+      "40px tall row",
+      "16px title",
+      "16px arrow",
+      "4px left and right"
+    ]
+  },
+  "components-accordion--spec-drawing/web--size-sm": {
+    "w": 665,
+    "h": 153,
+    "labels": [
+      "33px tall row",
+      "14px title",
+      "16px arrow",
+      "4px left and right"
+    ]
+  },
+  "components-button--spec-drawing/mobile--size-lg": {
+    "w": 347,
+    "h": 203,
+    "labels": [
+      "48px tall",
+      "14px text",
+      "14px top and bottom",
+      "15px left and right"
+    ]
+  },
+  "components-button--spec-drawing/mobile--size-md": {
+    "w": 347,
+    "h": 194,
+    "labels": [
+      "44px tall",
+      "14px text",
+      "10px top and bottom",
+      "15px left and right"
+    ]
+  },
+  "components-button--spec-drawing/mobile--size-sm": {
+    "w": 347,
+    "h": 194,
+    "labels": [
+      "44px tall",
+      "14px text",
+      "6px top and bottom",
+      "15px left and right"
+    ]
+  },
+  "components-button--spec-drawing/web--size-lg": {
+    "w": 401,
+    "h": 204,
+    "labels": [
+      "48px tall",
+      "14px text",
+      "14px top and bottom",
+      "15px left and right"
+    ]
+  },
+  "components-button--spec-drawing/web--size-md": {
+    "w": 401,
+    "h": 188,
+    "labels": [
+      "40px tall",
+      "14px text",
+      "10px top and bottom",
+      "15px left and right"
+    ]
+  },
+  "components-button--spec-drawing/web--size-sm": {
+    "w": 400,
+    "h": 172,
+    "labels": [
+      "32px tall",
+      "14px text",
+      "6px top and bottom",
+      "15px left and right"
+    ]
+  },
+  "components-chip--spec-drawing/mobile--size-lg": {
+    "w": 347,
+    "h": 198,
+    "labels": [
+      "40px tall",
+      "16px text",
+      "8px apart",
+      "8px top and bottom",
+      "12px left and right"
+    ]
+  },
+  "components-chip--spec-drawing/mobile--size-md": {
+    "w": 347,
+    "h": 189,
+    "labels": [
+      "32px tall",
+      "14px text",
+      "8px apart",
+      "5px top and bottom",
+      "12px left and right"
+    ]
+  },
+  "components-chip--spec-drawing/mobile--size-sm": {
+    "w": 348,
+    "h": 182,
+    "labels": [
+      "24px tall",
+      "12px text",
+      "8px apart",
+      "3px top and bottom",
+      "8px left and right"
+    ]
+  },
+  "components-chip--spec-drawing/web--size-lg": {
+    "w": 460,
+    "h": 214,
+    "labels": [
+      "40px tall",
+      "14px text",
+      "6px apart",
+      "11px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-chip--spec-drawing/web--size-md": {
+    "w": 420,
+    "h": 198,
+    "labels": [
+      "32px tall",
+      "13px text",
+      "6px apart",
+      "7px top and bottom",
+      "12px left and right"
+    ]
+  },
+  "components-chip--spec-drawing/web--size-sm": {
+    "w": 394,
+    "h": 182,
+    "labels": [
+      "24px tall",
+      "12px text",
+      "6px apart",
+      "3px top and bottom",
+      "10px left and right"
+    ]
+  },
+  "components-dropdown--spec-drawing/mobile--default": {
+    "w": 287,
+    "h": 457,
+    "labels": [
+      "48px tall button",
+      "40px per item",
+      "160px wide menu"
+    ]
+  },
+  "components-dropdown--spec-drawing/web--default": {
+    "w": 287,
+    "h": 457,
+    "labels": [
+      "48px tall button",
+      "40px per item",
+      "160px wide menu"
+    ]
+  },
+  "components-forms-checkbox--spec-drawing/mobile--default": {
+    "w": 357,
+    "h": 205,
+    "labels": [
+      "44px tall row",
+      "16px box",
+      "8px to label",
+      "16px text"
+    ]
+  },
+  "components-forms-checkbox--spec-drawing/web--default": {
+    "w": 498,
+    "h": 211,
+    "labels": [
+      "32px tall row",
+      "16px box",
+      "8px to label",
+      "16px text"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/mobile--note-error_size-lg": {
+    "w": 341,
+    "h": 263,
+    "labels": [
+      "47px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "11px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/mobile--note-error_size-md": {
+    "w": 341,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "7px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/mobile--note-error_size-sm": {
+    "w": 342,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "4px top and bottom",
+      "8px left and right"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/mobile--note-help_size-lg": {
+    "w": 341,
+    "h": 284,
+    "labels": [
+      "47px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "11px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/mobile--note-help_size-md": {
+    "w": 341,
+    "h": 281,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "7px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/mobile--note-help_size-sm": {
+    "w": 342,
+    "h": 281,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "4px top and bottom",
+      "8px left and right"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/web--note-error_size-lg": {
+    "w": 582,
+    "h": 271,
+    "labels": [
+      "48px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "11px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/web--note-error_size-md": {
+    "w": 582,
+    "h": 261,
+    "labels": [
+      "40px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "7px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/web--note-error_size-sm": {
+    "w": 585,
+    "h": 250,
+    "labels": [
+      "32px tall",
+      "14px text",
+      "16px label",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "4px top and bottom",
+      "8px left and right"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/web--note-help_size-lg": {
+    "w": 582,
+    "h": 271,
+    "labels": [
+      "48px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "11px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/web--note-help_size-md": {
+    "w": 582,
+    "h": 261,
+    "labels": [
+      "40px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "7px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-date-picker--spec-drawing/web--note-help_size-sm": {
+    "w": 585,
+    "h": 250,
+    "labels": [
+      "32px tall",
+      "14px text",
+      "16px label",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "4px top and bottom",
+      "8px left and right"
+    ]
+  },
+  "components-forms-file-uploader--spec-drawing/mobile--default": {
+    "w": 375,
+    "h": 218,
+    "labels": [
+      "44px tall buttons",
+      "50px per file"
+    ]
+  },
+  "components-forms-file-uploader--spec-drawing/web--default": {
+    "w": 512,
+    "h": 275,
+    "labels": [
+      "128px tall drop area",
+      "16px text",
+      "50px per file"
+    ]
+  },
+  "components-forms-input--spec-drawing/mobile--note-error_size-lg": {
+    "w": 341,
+    "h": 263,
+    "labels": [
+      "47px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "11px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-input--spec-drawing/mobile--note-error_size-md": {
+    "w": 341,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "7px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-input--spec-drawing/mobile--note-error_size-sm": {
+    "w": 342,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "4px top and bottom",
+      "8px left and right"
+    ]
+  },
+  "components-forms-input--spec-drawing/mobile--note-help_size-lg": {
+    "w": 341,
+    "h": 263,
+    "labels": [
+      "47px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "11px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-input--spec-drawing/mobile--note-help_size-md": {
+    "w": 341,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "7px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-input--spec-drawing/mobile--note-help_size-sm": {
+    "w": 342,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "4px top and bottom",
+      "8px left and right"
+    ]
+  },
+  "components-forms-input--spec-drawing/web--note-error_size-lg": {
+    "w": 582,
+    "h": 271,
+    "labels": [
+      "48px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "11px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-input--spec-drawing/web--note-error_size-md": {
+    "w": 582,
+    "h": 261,
+    "labels": [
+      "40px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "7px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-input--spec-drawing/web--note-error_size-sm": {
+    "w": 585,
+    "h": 250,
+    "labels": [
+      "32px tall",
+      "14px text",
+      "16px label",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "4px top and bottom",
+      "8px left and right"
+    ]
+  },
+  "components-forms-input--spec-drawing/web--note-help_size-lg": {
+    "w": 582,
+    "h": 271,
+    "labels": [
+      "48px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "11px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-input--spec-drawing/web--note-help_size-md": {
+    "w": 582,
+    "h": 261,
+    "labels": [
+      "40px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "7px top and bottom",
+      "16px left and right"
+    ]
+  },
+  "components-forms-input--spec-drawing/web--note-help_size-sm": {
+    "w": 585,
+    "h": 250,
+    "labels": [
+      "32px tall",
+      "14px text",
+      "16px label",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "4px top and bottom",
+      "8px left and right"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/mobile--note-error_size-lg": {
+    "w": 346,
+    "h": 284,
+    "labels": [
+      "47px tall",
+      "16px text",
+      "44px wide button",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "11px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/mobile--note-error_size-md": {
+    "w": 348,
+    "h": 281,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "44px wide button",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "7px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/mobile--note-error_size-sm": {
+    "w": 349,
+    "h": 281,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "44px wide button",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "4px top and bottom",
+      "8px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/mobile--note-help_size-lg": {
+    "w": 346,
+    "h": 263,
+    "labels": [
+      "47px tall",
+      "16px text",
+      "44px wide button",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "11px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/mobile--note-help_size-md": {
+    "w": 348,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "44px wide button",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "7px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/mobile--note-help_size-sm": {
+    "w": 349,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "44px wide button",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "4px top and bottom",
+      "8px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/web--note-error_size-lg": {
+    "w": 575,
+    "h": 245,
+    "labels": [
+      "48px tall",
+      "16px text",
+      "36px wide button",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "11px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/web--note-error_size-md": {
+    "w": 575,
+    "h": 235,
+    "labels": [
+      "40px tall",
+      "16px text",
+      "36px wide button",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "7px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/web--note-error_size-sm": {
+    "w": 578,
+    "h": 224,
+    "labels": [
+      "32px tall",
+      "14px text",
+      "36px wide button",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "4px top and bottom",
+      "8px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/web--note-help_size-lg": {
+    "w": 575,
+    "h": 245,
+    "labels": [
+      "48px tall",
+      "16px text",
+      "36px wide button",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "11px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/web--note-help_size-md": {
+    "w": 575,
+    "h": 235,
+    "labels": [
+      "40px tall",
+      "16px text",
+      "36px wide button",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "7px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/web--note-help_size-sm": {
+    "w": 578,
+    "h": 224,
+    "labels": [
+      "32px tall",
+      "14px text",
+      "36px wide button",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "4px top and bottom",
+      "8px on the left"
+    ]
+  },
+  "components-forms-radio-group--spec-drawing/mobile--default": {
+    "w": 352,
+    "h": 205,
+    "labels": [
+      "44px tall row",
+      "16px circle",
+      "8px to label",
+      "16px text"
+    ]
+  },
+  "components-forms-radio-group--spec-drawing/web--default": {
+    "w": 503,
+    "h": 211,
+    "labels": [
+      "32px tall row",
+      "16px circle",
+      "8px to label",
+      "16px text"
+    ]
+  },
+  "components-forms-select--spec-drawing/mobile--note-error_size-lg": {
+    "w": 346,
+    "h": 263,
+    "labels": [
+      "47px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "11px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-select--spec-drawing/mobile--note-error_size-md": {
+    "w": 346,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "7px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-select--spec-drawing/mobile--note-error_size-sm": {
+    "w": 349,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "4px top and bottom",
+      "8px on the left"
+    ]
+  },
+  "components-forms-select--spec-drawing/mobile--note-help_size-lg": {
+    "w": 344,
+    "h": 263,
+    "labels": [
+      "47px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "11px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-select--spec-drawing/mobile--note-help_size-md": {
+    "w": 344,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "7px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-select--spec-drawing/mobile--note-help_size-sm": {
+    "w": 345,
+    "h": 260,
+    "labels": [
+      "44px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "4px top and bottom",
+      "8px on the left"
+    ]
+  },
+  "components-forms-select--spec-drawing/web--note-error_size-lg": {
+    "w": 575,
+    "h": 271,
+    "labels": [
+      "48px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "11px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-select--spec-drawing/web--note-error_size-md": {
+    "w": 575,
+    "h": 261,
+    "labels": [
+      "40px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "7px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-select--spec-drawing/web--note-error_size-sm": {
+    "w": 578,
+    "h": 250,
+    "labels": [
+      "32px tall",
+      "14px text",
+      "16px label",
+      "8px label to field",
+      "4px to error",
+      "14px error text, red",
+      "4px top and bottom",
+      "8px on the left"
+    ]
+  },
+  "components-forms-select--spec-drawing/web--note-help_size-lg": {
+    "w": 575,
+    "h": 271,
+    "labels": [
+      "48px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "11px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-select--spec-drawing/web--note-help_size-md": {
+    "w": 575,
+    "h": 261,
+    "labels": [
+      "40px tall",
+      "16px text",
+      "16px label",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "7px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-forms-select--spec-drawing/web--note-help_size-sm": {
+    "w": 578,
+    "h": 250,
+    "labels": [
+      "32px tall",
+      "14px text",
+      "16px label",
+      "8px label to field",
+      "4px to help text",
+      "14px help text, grey",
+      "4px top and bottom",
+      "8px on the left"
+    ]
+  },
+  "components-iconbutton--spec-drawing/mobile--default": {
+    "w": 150,
+    "h": 122,
+    "labels": [
+      "40px tall",
+      "40px wide",
+      "18px icon"
+    ]
+  },
+  "components-iconbutton--spec-drawing/web--default": {
+    "w": 150,
+    "h": 122,
+    "labels": [
+      "40px tall",
+      "40px wide",
+      "18px icon"
+    ]
+  },
+  "components-link--spec-drawing/mobile--size-lg": {
+    "w": 341,
+    "h": 134,
+    "labels": [
+      "18px text",
+      "44px tall"
+    ]
+  },
+  "components-link--spec-drawing/mobile--size-md": {
+    "w": 331,
+    "h": 137,
+    "labels": [
+      "16px text",
+      "44px tall"
+    ]
+  },
+  "components-link--spec-drawing/mobile--size-sm": {
+    "w": 308,
+    "h": 137,
+    "labels": [
+      "14px text",
+      "44px tall"
+    ]
+  },
+  "components-link--spec-drawing/web--size-lg": {
+    "w": 364,
+    "h": 106,
+    "labels": [
+      "18px text",
+      "27px tall"
+    ]
+  },
+  "components-link--spec-drawing/web--size-md": {
+    "w": 336,
+    "h": 101,
+    "labels": [
+      "16px text",
+      "24px tall"
+    ]
+  },
+  "components-link--spec-drawing/web--size-sm": {
+    "w": 307,
+    "h": 101,
+    "labels": [
+      "14px text",
+      "21px tall"
+    ]
+  },
+  "components-loading--spec-drawing/mobile--size-lg": {
+    "w": 349,
+    "h": 194,
+    "labels": [
+      "64px spinner",
+      "8px bar",
+      "14px text"
+    ]
+  },
+  "components-loading--spec-drawing/mobile--size-md": {
+    "w": 349,
+    "h": 162,
+    "labels": [
+      "32px spinner",
+      "8px bar",
+      "14px text"
+    ]
+  },
+  "components-loading--spec-drawing/mobile--size-sm": {
+    "w": 349,
+    "h": 147,
+    "labels": [
+      "16px spinner",
+      "8px bar",
+      "14px text"
+    ]
+  },
+  "components-loading--spec-drawing/web--size-lg": {
+    "w": 506,
+    "h": 245,
+    "labels": [
+      "64px spinner",
+      "8px bar",
+      "14px text"
+    ]
+  },
+  "components-loading--spec-drawing/web--size-md": {
+    "w": 506,
+    "h": 201,
+    "labels": [
+      "32px spinner",
+      "8px bar",
+      "14px text"
+    ]
+  },
+  "components-loading--spec-drawing/web--size-sm": {
+    "w": 506,
+    "h": 180,
+    "labels": [
+      "16px spinner",
+      "8px bar",
+      "14px text"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-end_header-divider_kind-bar": {
+    "w": 375,
+    "h": 268,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line above the buttons",
+      "1px line under the header",
+      "Header: 16px top, 12px bottom · 20px left, 16px right",
+      "Body: 12px top, 20px bottom · 20px sides",
+      "Footer: 12px top, 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-end_header-divider_kind-none": {
+    "w": 375,
+    "h": 208,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line under the header",
+      "Header: 16px top, 12px bottom · 20px left, 16px right",
+      "Body: 12px top, 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-end_header-divider_kind-plain": {
+    "w": 375,
+    "h": 268,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line under the header",
+      "Header: 16px top, 12px bottom · 20px left, 16px right",
+      "Body: 12px top, 20px bottom · 20px sides",
+      "Footer: 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-end_header-plain_kind-bar": {
+    "w": 375,
+    "h": 247,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line above the buttons",
+      "Header: 16px top, 8px bottom · 20px left, 16px right",
+      "Body: 8px top, 20px bottom · 20px sides",
+      "Footer: 12px top, 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-end_header-plain_kind-none": {
+    "w": 375,
+    "h": 187,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "Header: 16px top, 8px bottom · 20px left, 16px right",
+      "Body: 8px top, 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-end_header-plain_kind-plain": {
+    "w": 375,
+    "h": 247,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "Header: 16px top, 8px bottom · 20px left, 16px right",
+      "Body: 8px top, 20px bottom · 20px sides",
+      "Footer: 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-start_header-divider_kind-bar": {
+    "w": 375,
+    "h": 268,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line above the buttons",
+      "1px line under the header",
+      "Header: 16px top, 12px bottom · 20px left, 16px right",
+      "Body: 12px top, 20px bottom · 20px sides",
+      "Footer: 12px top, 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-start_header-divider_kind-none": {
+    "w": 375,
+    "h": 208,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line under the header",
+      "Header: 16px top, 12px bottom · 20px left, 16px right",
+      "Body: 12px top, 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-start_header-divider_kind-plain": {
+    "w": 375,
+    "h": 268,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line under the header",
+      "Header: 16px top, 12px bottom · 20px left, 16px right",
+      "Body: 12px top, 20px bottom · 20px sides",
+      "Footer: 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-start_header-plain_kind-bar": {
+    "w": 375,
+    "h": 247,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line above the buttons",
+      "Header: 16px top, 8px bottom · 20px left, 16px right",
+      "Body: 8px top, 20px bottom · 20px sides",
+      "Footer: 12px top, 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-start_header-plain_kind-none": {
+    "w": 375,
+    "h": 187,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "Header: 16px top, 8px bottom · 20px left, 16px right",
+      "Body: 8px top, 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/mobile--align-start_header-plain_kind-plain": {
+    "w": 375,
+    "h": 247,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "Header: 16px top, 8px bottom · 20px left, 16px right",
+      "Body: 8px top, 20px bottom · 20px sides",
+      "Footer: 20px bottom · 20px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-end_header-divider_kind-bar": {
+    "w": 661,
+    "h": 351,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line above the buttons",
+      "1px line under the header",
+      "12px between buttons",
+      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Body: 16px top, 24px bottom · 24px sides",
+      "Footer: 16px top, 24px bottom · 24px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-end_header-divider_kind-none": {
+    "w": 661,
+    "h": 237,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line under the header",
+      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Body: 16px top, 24px bottom · 24px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-end_header-divider_kind-plain": {
+    "w": 661,
+    "h": 334,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line under the header",
+      "12px between buttons",
+      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Body: 16px top, 24px bottom · 24px sides",
+      "Footer: 24px bottom · 24px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-end_header-plain_kind-bar": {
+    "w": 661,
+    "h": 313,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line above the buttons",
+      "12px between buttons",
+      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Body: 8px top, 24px bottom · 24px sides",
+      "Footer: 16px top, 24px bottom · 24px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-end_header-plain_kind-none": {
+    "w": 661,
+    "h": 199,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Body: 8px top, 24px bottom · 24px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-end_header-plain_kind-plain": {
+    "w": 661,
+    "h": 296,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "12px between buttons",
+      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Body: 8px top, 24px bottom · 24px sides",
+      "Footer: 24px bottom · 24px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-start_header-divider_kind-bar": {
+    "w": 661,
+    "h": 377,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line above the buttons",
+      "1px line under the header",
+      "12px between buttons",
+      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Body: 16px top, 24px bottom · 24px sides",
+      "Footer: 16px top, 24px bottom · 24px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-start_header-divider_kind-none": {
+    "w": 661,
+    "h": 237,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line under the header",
+      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Body: 16px top, 24px bottom · 24px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-start_header-divider_kind-plain": {
+    "w": 661,
+    "h": 334,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line under the header",
+      "12px between buttons",
+      "Header: 20px top, 16px bottom · 24px left, 20px right",
+      "Body: 16px top, 24px bottom · 24px sides",
+      "Footer: 24px bottom · 24px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-start_header-plain_kind-bar": {
+    "w": 661,
+    "h": 339,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "1px line above the buttons",
+      "12px between buttons",
+      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Body: 8px top, 24px bottom · 24px sides",
+      "Footer: 16px top, 24px bottom · 24px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-start_header-plain_kind-none": {
+    "w": 661,
+    "h": 199,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Body: 8px top, 24px bottom · 24px sides"
+    ]
+  },
+  "components-modal--spec-drawing/web--align-start_header-plain_kind-plain": {
+    "w": 661,
+    "h": 296,
+    "labels": [
+      "16px corners",
+      "20px title",
+      "32px close button",
+      "12px between buttons",
+      "Header: 20px top, 8px bottom · 24px left, 20px right",
+      "Body: 8px top, 24px bottom · 24px sides",
+      "Footer: 24px bottom · 24px sides"
+    ]
+  },
+  "components-notification--spec-drawing/mobile--default": {
+    "w": 353,
+    "h": 179,
+    "labels": [
+      "20px icon",
+      "14px text",
+      "28px close button",
+      "14px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-notification--spec-drawing/web--default": {
+    "w": 523,
+    "h": 179,
+    "labels": [
+      "20px icon",
+      "14px text",
+      "28px close button",
+      "14px top and bottom",
+      "16px on the left"
+    ]
+  },
+  "components-progressbutton--spec-drawing/mobile--default": {
+    "w": 279,
+    "h": 173,
+    "labels": [
+      "39px tall",
+      "12px text",
+      "29px count",
+      "8px top and bottom",
+      "12px left and right"
+    ]
+  },
+  "components-progressbutton--spec-drawing/web--default": {
+    "w": 279,
+    "h": 173,
+    "labels": [
+      "39px tall",
+      "12px text",
+      "29px count",
+      "8px top and bottom",
+      "12px left and right"
+    ]
+  },
+  "components-tabs--spec-drawing/mobile--default": {
+    "w": 349,
+    "h": 132,
+    "labels": [
+      "48px tall",
+      "15px text",
+      "14px left and right"
+    ]
+  },
+  "components-tabs--spec-drawing/web--default": {
+    "w": 615,
+    "h": 136,
+    "labels": [
+      "40px tall",
+      "15px text",
+      "14px left and right"
+    ]
+  },
+  "components-tag--spec-drawing/mobile--size-lg": {
+    "w": 346,
+    "h": 188,
+    "labels": [
+      "40px tall",
+      "16px text",
+      "9px top and bottom",
+      "12px left and right"
+    ]
+  },
+  "components-tag--spec-drawing/mobile--size-md": {
+    "w": 335,
+    "h": 172,
+    "labels": [
+      "32px tall",
+      "14px text",
+      "6px top and bottom",
+      "12px left and right"
+    ]
+  },
+  "components-tag--spec-drawing/mobile--size-sm": {
+    "w": 311,
+    "h": 159,
+    "labels": [
+      "24px tall",
+      "12px text",
+      "4px top and bottom",
+      "8px left and right"
+    ]
+  },
+  "components-tag--spec-drawing/web--size-lg": {
+    "w": 330,
+    "h": 160,
+    "labels": [
+      "26px tall",
+      "13px text",
+      "5px top and bottom",
+      "11px left and right"
+    ]
+  },
+  "components-tag--spec-drawing/web--size-md": {
+    "w": 304,
+    "h": 156,
+    "labels": [
+      "20px tall",
+      "11px text",
+      "3px top and bottom",
+      "9px left and right"
+    ]
+  },
+  "components-tag--spec-drawing/web--size-sm": {
+    "w": 285,
+    "h": 156,
+    "labels": [
+      "16px tall",
+      "10px text",
+      "2px top and bottom",
+      "7px left and right"
+    ]
+  },
+  "components-tooltip--spec-drawing/mobile--default": {
+    "w": 224,
+    "h": 217,
+    "labels": [
+      "13px text",
+      "6px corners",
+      "8px caret",
+      "6px top and bottom",
+      "10px left and right"
+    ]
+  },
+  "components-tooltip--spec-drawing/web--default": {
+    "w": 223,
+    "h": 217,
+    "labels": [
+      "13px text",
+      "6px corners",
+      "8px caret",
+      "6px top and bottom",
+      "10px left and right"
+    ]
+  }
+}

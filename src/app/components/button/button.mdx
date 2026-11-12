@@ -1,8 +1,8 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import {
   PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
-  ScreenReader, Related, SizeSpecs, TokenTable,
+  ScreenReader, Related, TokenTable,
 } from '../../../../.storybook/blocks/Guidelines';
 import * as ButtonStories from './button.stories';
 
@@ -120,19 +120,9 @@ Put 2 or 3 related buttons in a `<div class="btn-set">`:
 
 ## Specs
 
-Read from the theme, so these values always match the code. These are the web sizes; on phones, buttons are at least 44px tall.
+Use **Mobile / Web** to compare devices. The numbers are measured from the code. On phones, buttons are at least 44px tall.
 
-<SizeSpecs
-  element="button"
-  baseClass="btn btn-primary"
-  labelClass="btn-label"
-  sample="Save changes"
-  sizes={[
-    { label: 'Small', className: 'btn-sm' },
-    { label: 'Medium', className: '' },
-    { label: 'Large', className: 'btn-lg' },
-  ]}
-/>
+<SpecPictures of={ButtonStories.SpecDrawing} />
 
 ## Content
 
@@ -240,8 +230,3 @@ Buttons read these CSS variables from `.exos-theme-dcfc`. Override them there to
     { title: 'Spacing', text: 'The spacing scale buttons use', href: '/?path=/docs/foundations-spacing--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 12, 2026:** sizes and spacing from IBM Carbon: `size` (32 / 40 / 48px, `lg` by default), 16px side padding, `btn-set` with 16px between buttons; 44px on phones; long labels wrap.
-- **Earlier:** first version, with primary, secondary, destructive, ghost and disabled.

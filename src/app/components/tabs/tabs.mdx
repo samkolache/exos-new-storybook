@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import { PageNav, DoDont, Guideline, SpecimenGrid, Specimen, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
 import * as TabsStories from './tabs.stories';
 
@@ -69,13 +69,11 @@ Add `disabled: true` to an item that has nothing yet. Arrow keys skip it. Hiding
 
 ## Specs
 
-| | Web | Mobile |
-|---|---|---|
-| Line tab height | 40px | 48px |
-| Line tab padding | 14px each side | 14px |
-| Picked bar | 2px, blue | 2px |
-| Text | 15px, medium; picked semibold | Same |
-| Too many to fit | Scroll sideways | Scroll sideways |
+Use **Mobile / Web** to compare devices. The numbers are measured from the code.
+
+<SpecPictures of={TabsStories.SpecDrawing} />
+
+- The picked tab has a 2px blue bar. When tabs don't fit, they scroll sideways.
 
 ## Content
 
@@ -154,8 +152,3 @@ For the second tab in the live demo, a screen reader reads:
     { title: 'Chip', text: 'Picking short answers', href: '/?path=/docs/components-chip--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 12, 2026:** the segmented variant moved to its own component, [Segmented control](?path=/docs/components-segmented-control--docs).
-- **Nov 11, 2026:** first version: line and segmented, counts, disabled tabs.

@@ -1,8 +1,8 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import {
   PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
-  ScreenReader, Related, SizeSpecs, TokenTable,
+  ScreenReader, Related, TokenTable,
 } from '../../../../.storybook/blocks/Guidelines';
 import * as InputStories from './input.stories';
 
@@ -183,18 +183,14 @@ On phones, pick the keyboard and the Return key:
 
 ## Specs
 
-Read from the theme, so these values always match the code. These are the web sizes; on mobile, fields are at least 44px tall with 16px text.
+Use **Small / Medium / Large**, **Help / Error** and **Mobile / Web** to see each case. Blue shows the padding inside the field. The numbers are measured from the code.
 
-<SizeSpecs
-  element="input"
-  baseClass="form-control"
-  sample="Alex Morgan"
-  sizes={[
-    { label: 'Small', className: 'form-control-sm' },
-    { label: 'Medium', className: '' },
-    { label: 'Large', className: 'form-control-lg' },
-  ]}
-/>
+<SpecPictures of={InputStories.SpecDrawing} />
+
+- **Label to field:** 8px on every device.
+- **Field to help or error text:** 4px on the web, 8px on phones, so the message reads as its own line under a taller field.
+- **Help text** is grey and **error text** is red, both 14px. An error shows right under the field (above any help text), and the field gets a red border.
+- Phone text is 16px or more, so the phone doesn't zoom in when someone taps the field.
 
 ## Content
 
@@ -259,6 +255,8 @@ See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs) for the rules
 
 | | Mobile (below 672px) | Web (672px and up) |
 |---|---|---|
+| Space to help or error text | 8px | 4px |
+| Label to field | 8px | 8px |
 | Height | At least 44px, at every size | 32, 40 or 48px |
 | Text | 16px, so the phone doesn't zoom in on focus | 14 to 16px, by size |
 | Clear and show password | 44px tap areas | 28px buttons |
@@ -332,8 +330,3 @@ Inputs read these CSS variables from `.exos-theme-dcfc`. Override them there to 
     { title: 'Grid', text: 'Laying out forms on mobile and web', href: '/?path=/docs/foundations-grid--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** no capitals or autocorrect on exact values on phones; heights of 32 / 40 / 48px; 44px and 16px text on mobile; warning state; `optional`, `hideLabel`, `inputMode` and `enterKeyHint`; darker green for valid messages.
-- **Nov 10, 2026:** first version, with text area, clear, password, prefix and suffix, and count.

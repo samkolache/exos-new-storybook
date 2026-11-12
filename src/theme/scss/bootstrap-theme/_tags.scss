@@ -90,29 +90,65 @@
   }
 }
 
-// Phones:
-// - Text is never under 11pt, so small tags take the medium size.
-// - Long labels wrap instead of truncating: touch screens have no hover to show the tooltip.
+// Phones (below md): a larger, touch-friendly scale on a 4px grid.
+//   sm 24px · 12/16 type · 4px 8px padding · 14px icons · 12px radius
+//   md 32px · 14/20 type · 6px 12px padding · 16px icons · 16px radius
+//   lg 40px · 16/22 type · 9px 12px padding · 16px icons · 20px radius
+// Radius is half the height, so one-line tags are pills and wrapped ones stay neat.
+// Long labels wrap instead of truncating: touch screens have no hover to show the tooltip.
 @include media-breakpoint-down(md) {
-  .exos-tag-sm {
-    gap: 4px;
-    padding: 3px 9px 3px 7px;
-    font-size: 11px;
-    line-height: 14px;
+  .exos-tag {
+    gap: 6px;
+    padding: 6px 12px 6px 10px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: normal;
+
+    // Icons are drawn for a 12px slot; scale them to the phone size, keeping their shape.
+    > img {
+      width: calc(var(--exos-tag-icon-w, 12) * 16px / 12);
+      height: calc(var(--exos-tag-icon-h, 12) * 16px / 12);
+    }
 
     &.exos-tag-text-only {
-      padding-left: 9px;
+      padding-left: 12px;
     }
   }
 
-  .exos-tag {
-    white-space: normal;
-    border-radius: 13px;
+  .exos-tag-sm {
+    gap: 4px;
+    padding: 4px 8px 4px 6px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 16px;
+
+    > img {
+      width: calc(var(--exos-tag-icon-w, 12) * 14px / 12);
+      height: calc(var(--exos-tag-icon-h, 12) * 14px / 12);
+    }
+
+    &.exos-tag-text-only {
+      padding-left: 8px;
+    }
+  }
+
+  .exos-tag-lg {
+    gap: 6px;
+    padding: 9px 12px 9px 10px;
+    border-radius: 20px;
+    font-size: 16px;
+    line-height: 22px;
+
+    &.exos-tag-text-only {
+      padding-left: 12px;
+    }
   }
 
   .exos-tag-label {
     overflow: visible;
     text-overflow: clip;
-    overflow-wrap: anywhere;
+    // break-word, not anywhere: only splits a word wider than the space, so chips never shrink to one letter per line.
+    overflow-wrap: break-word;
   }
 }

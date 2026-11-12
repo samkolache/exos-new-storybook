@@ -275,3 +275,95 @@ export const DeviceVariation = ({
     </div>
   </section>
 );
+
+// ─── Spec pictures ──────────────────────────────────────────────────────────
+// Specs don't change between visits, so the docs show saved pictures instead of starting a live
+// copy of the component every time. `npm run specs` makes them from the real components (with
+// Storybook running); a test fails if a picture no longer matches the code.
+
+/** Settings a spec drawing story declares: `parameters.specs`. */
+export type SpecConfig = { sizes?: boolean; switches?: ArgSwitch[] };
+type SpecEntry = { w: number; h: number; labels: string[] };
+type SpecManifest = Record<string, SpecEntry>;
+
+let manifestPromise: Promise<SpecManifest> | null = null;
+const loadManifest = () =>
+  (manifestPromise ??= fetch('specs/manifest.json')
+    .then((r) => (r.ok ? r.json() : {}))
+    .catch(() => ({}))) as Promise<SpecManifest>;
+
+/** The picture's name for these settings. Must match scripts/spec-pictures.mjs. */
+export const specKey = (storyId: string, device: Device, args: Record<string, string>): string => {
+  const parts = Object.keys(args)
+    .sort()
+    .map((k) => `${k}-${args[k]}`);
+  return `${storyId}/${device}--${parts.length ? parts.join('_') : 'default'}`;
+};
+
+/** The spec drawing as a saved picture, with the same switches as a live canvas. Switching is instant. */
+export const SpecPictures = ({ of, defaultDevice = 'web' }: { of: unknown; defaultDevice?: Device }) => {
+  const story = useOf(of as never, ['story']).story as unknown as StoryLike & { parameters?: { specs?: SpecConfig } };
+  const config = story.parameters?.specs ?? {};
+  const allSwitches = [...(config.switches ?? []), ...(config.sizes ? [SIZE_SWITCH] : [])];
+  const [device, setDevice] = useState<Device>(defaultDevice);
+  const [picked, setPicked] = useState<Record<string, string>>(() => Object.fromEntries(allSwitches.map((sw) => [sw.arg, sw.initial])));
+  const [manifest, setManifest] = useState<SpecManifest | null>(null);
+  useEffect(() => {
+    loadManifest().then(setManifest);
+  }, []);
+
+  const key = specKey(story.id, device, picked);
+  const entry = manifest?.[key];
+
+  return (
+    <div className="exos-device exos-device--pictures">
+      <div className={`exos-device__stage exos-device__stage--${device}`}>
+        {entry ? (
+          <img
+            className="exos-device__picture"
+            src={`specs/${key}.png`}
+            width={entry.w}
+            height={entry.h}
+            alt={`Measurements: ${entry.labels.join(', ')}.`}
+          />
+        ) : (
+          <p className="exos-device__missing">
+            {manifest ? 'This picture hasn’t been made yet. With Storybook running, run npm run specs.' : 'Loading…'}
+          </p>
+        )}
+      </div>
+      <div className="exos-device__bar">
+        <span className="exos-device__ref">Measured from the code</span>
+        <div className="exos-device__switches">
+          {allSwitches.map((sw) => (
+            <div key={sw.arg} className="exos-device__switch" role="radiogroup" aria-label={sw.label}>
+              {sw.options.map((o) => (
+                <button
+                  key={o.value}
+                  type="button"
+                  role="radio"
+                  aria-checked={picked[sw.arg] === o.value}
+                  aria-label={o.label}
+                  title={o.label}
+                  className={picked[sw.arg] === o.value ? 'is-active' : ''}
+                  onClick={() => setPicked((p) => ({ ...p, [sw.arg]: o.value }))}
+                >
+                  <span className="exos-device__label">{o.label}</span>
+                  <span className="exos-device__short" aria-hidden="true">{o.short ?? o.label}</span>
+                </button>
+              ))}
+            </div>
+          ))}
+          <div className="exos-device__switch" role="radiogroup" aria-label="Preview width">
+            {(['mobile', 'web'] as Device[]).map((d) => (
+              <button key={d} type="button" role="radio" aria-checked={device === d} aria-label={d === 'mobile' ? 'Mobile' : 'Web'} title={d === 'mobile' ? 'Mobile (375px)' : 'Web'} className={device === d ? 'is-active' : ''} onClick={() => setDevice(d)}>
+                {d === 'mobile' ? <MobileIcon /> : <WebIcon />}
+                <span className="exos-device__label">{d === 'mobile' ? 'Mobile' : 'Web'}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -3,6 +3,8 @@ import { expect, within } from 'storybook/test';
 import { AnatomyComponent } from '../shared/anatomy';
 import { storySource } from '../shared/story-source';
 import { TagComponent } from './tag';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 /** Component defaults: the code panel only prints props that differ. */
 const DEFAULTS = { label: 'Tag', color: 'neutral', size: 'md', icon: 'none', ai: false, disabled: false };
@@ -136,50 +138,6 @@ export const AllColors: Story = {
 </div>` }),
 };
 
-export const IconSet: Story = {
-  tags: ['!dev'],
-  parameters: { controls: { disable: true }, example: true },
-  render: () => ({ template: `
-<div class="d-flex flex-wrap gap-2">
-  <app-tag label="sparkle" icon="sparkle" />
-  <app-tag label="voice" icon="voice" />
-  <app-tag label="records" icon="records" />
-  <app-tag label="calendar" icon="calendar" />
-  <app-tag label="note" icon="note" />
-  <app-tag label="dot" icon="dot" />
-  <app-tag label="conflict" icon="conflict" />
-  <app-tag label="camera" icon="camera" />
-  <app-tag label="skip" icon="skip" />
-  <app-tag label="lock" icon="lock" />
-  <app-tag label="flag" icon="flag" />
-</div>` }),
-};
-
-export const FigmaSourceTags: Story = {
-  tags: ['!dev'],
-  parameters: { controls: { disable: true }, example: true },
-  render: () => ({ template: `
-<div class="d-flex flex-column gap-3">
-  <div class="d-flex flex-wrap gap-2">
-    <app-tag label="Photos" [ai]="true" />
-    <app-tag label="Voice" [ai]="true" icon="voice" />
-    <app-tag label="From property records" icon="records" />
-  </div>
-  <div class="d-flex flex-wrap gap-2">
-    <app-tag label="From order" icon="calendar" />
-    <app-tag label="Client note" color="attention" icon="note" />
-    <app-tag label="Needs your input" color="attention" icon="dot" />
-    <app-tag label="Sources disagree" color="attention" icon="conflict" />
-  </div>
-  <div class="d-flex flex-wrap gap-2">
-    <app-tag label="Waiting on photo" color="info" icon="camera" />
-    <app-tag label="Skipped" icon="skip" [disabled]="true" />
-    <app-tag label="Set by system" icon="lock" [disabled]="true" />
-    <app-tag label="Final check" icon="flag" />
-  </div>
-</div>` }),
-};
-
 // Docs: Do / Don't
 
 export const DoShortLabel: Story = { tags: ['!dev'], render: () => ({ template: `<app-tag label="Waiting on photo" color="info" icon="camera" />` }) };
@@ -256,4 +214,44 @@ export const TestScreenReader: Story = {
     await expect(canvasElement.querySelector('#order img')).toHaveAttribute('alt', '');
     await expect(canvasElement.querySelector('#order')!.textContent!.trim()).toBe('From order');
   },
+};
+
+/** Phones: 24 / 32 / 40px tags with 12 / 14 / 16px text and 14 / 16 / 16px icons. */
+export const TestMobileSizes: Story = {
+  tags: ['!dev'],
+  name: 'Test · Mobile sizes',
+  globals: { viewport: { value: 'exosMobile', isRotated: false } },
+  render: () => ({
+    template: `<app-tag id="sm" size="sm" label="From order" icon="calendar" /><app-tag id="md" label="From order" icon="calendar" /><app-tag id="lg" size="lg" label="From order" icon="calendar" />`,
+  }),
+  play: async ({ canvasElement }) => {
+    if (window.innerWidth >= 672) return;
+    for (const [id, h, font, icon] of [['sm', 24, '12px', 14], ['md', 32, '14px', 16], ['lg', 40, '16px', 16]] as const) {
+      const tag = canvasElement.querySelector<HTMLElement>(`#${id} .exos-tag`)!;
+      await expect(Math.round(tag.getBoundingClientRect().height)).toBe(h);
+      await expect(getComputedStyle(tag).fontSize).toBe(font);
+      await expect(Math.round(tag.querySelector('img')!.getBoundingClientRect().width)).toBe(icon);
+    }
+  },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: '.exos-tag', side: 'right', label: '{v} tall' },
+  { kind: 'style', target: '.exos-tag', prop: 'font-size', side: 'top', label: '{v} text' },
+  { kind: 'padding', target: '.exos-tag', label: '{v} top and bottom', labelSides: '{v} left and right' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: true, switches: [] } },
+  args: { size: 'md' } as Story['args'],
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS },
+    template: `<app-redline [marks]="marks" [scale]="2" [key]="false"><app-tag label="From order" [size]="size" /></app-redline>`,
+  }),
 };

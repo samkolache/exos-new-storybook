@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import {
   PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
   ScreenReader, Related, TokenTable,
@@ -126,17 +126,12 @@ Once people change the AI's picks, the AI label becomes a **revert** button that
 
 ## Specs
 
-| | Web | Mobile |
-|---|---|---|
-| Checkbox | 16px, 4px corners | 16px, 4px corners |
-| Row height | 32px | 44px |
-| Checkbox to label | 8px | 8px |
-| Label | 16px / 24px | 16px / 24px |
-| Indent under Select all | 24px | 24px |
-| Space between horizontal options | 24px | Stacked |
-| Space to the next field | 32px | 32px |
+Use **Mobile / Web** to compare devices. The numbers are measured from the code.
 
-The whole row is the tap or click target, not just the box.
+<SpecPictures of={CheckboxStories.SpecDrawing} />
+
+- The whole row can be tapped or clicked, not just the box.
+- On phones options that sit side by side on web stack under each other.
 
 ## Content
 
@@ -253,7 +248,3 @@ Works with `[formControl]`, `formControlName`, `ngModel`, `[(value)]` for groups
     { title: 'Grid', text: 'Laying out forms on mobile and web', href: '/?path=/docs/foundations-grid--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** first version: single, group and switch, Select all, AI label with explanation and revert, warning and read-only states, 44px rows on mobile.

@@ -3,6 +3,8 @@ import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular-vi
 import { fn } from 'storybook/test';
 import { LucideChevronLeft, LucideChevronRight, LucideX } from '@lucide/angular';
 import { IconButtonComponent } from './icon-button';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 const icons = { ChevronLeft: LucideChevronLeft, ChevronRight: LucideChevronRight, X: LucideX };
 
@@ -81,5 +83,25 @@ export const AccessibleLabel: Story = {
   render: () => ({
     props: { LucideChevronLeft },
     template: `<app-icon-button [icon]="LucideChevronLeft" label="Back" />`,
+  }),
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: '.btn-icon', side: 'right', label: '{v} tall' },
+  { kind: 'size', target: '.btn-icon', side: 'bottom', label: '{v} wide' },
+  { kind: 'size', target: '.btn-icon svg', side: 'top', label: '{v} icon' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: false, switches: [] } },
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS, icon: LucideChevronLeft },
+    template: `<app-redline [marks]="marks" [scale]="2" [key]="false"><app-icon-button [icon]="icon" label="Back" /></app-redline>`,
   }),
 };

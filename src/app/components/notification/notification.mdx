@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import {
   PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
   ScreenReader, Related, TokenTable,
@@ -110,16 +110,11 @@ Leave out `message` when the title says it all, like "Changes saved".
 
 ## Specs
 
-| | Web | Mobile |
-|---|---|---|
-| Side bar | 4px, status colour | Same |
-| Corners | 10px | 10px |
-| Padding | 14px 12px 14px 16px | Same |
-| Icon | 20px | 20px |
-| Text | Title 14px semibold; message 14px | Same |
-| Close button | 28px | 28px, with a 44px tap area |
-| Action | Text button | At least 44px tall |
-| Toast | Top right, 384px wide, 8px apart | Along the bottom, full width minus 12px |
+Use **Mobile / Web** to compare devices. The numbers are measured from the code.
+
+<SpecPictures of={NotificationStories.SpecDrawing} />
+
+- Toasts appear top right on web, and along the bottom of the screen on phones.
 
 ## Content
 
@@ -216,7 +211,3 @@ For the payment error in the live demo, a screen reader announces as soon as it 
     { title: 'Input', text: 'Messages for one field', href: '/?path=/docs/components-forms-input--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** first version: info, success, warning and error; inline and toast; action and dismiss.

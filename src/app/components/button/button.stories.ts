@@ -3,6 +3,8 @@ import { expect, fn, userEvent, within } from 'storybook/test';
 import { AnatomyComponent } from '../shared/anatomy';
 import { storySource } from '../shared/story-source';
 import { ButtonComponent } from './button';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 /** Component defaults: the code panel only prints props that differ. */
 const DEFAULTS = { label: 'Button', variant: 'primary', size: 'lg', ghost: false, disabled: false, type: 'button' };
@@ -272,4 +274,24 @@ export const TestWrap: Story = {
     await expect(button.scrollWidth).toBeLessThanOrEqual(button.clientWidth);
     await expect(button.getBoundingClientRect().height).toBeGreaterThan(48);
   },
+};
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: '.btn', side: 'right', label: '{v} tall' },
+  { kind: 'style', target: '.btn', prop: 'font-size', side: 'top', label: '{v} text' },
+  { kind: 'padding', target: '.btn', label: '{v} top and bottom', labelSides: '{v} left and right' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: true, switches: [] } },
+  args: { size: 'lg' },
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS },
+    template: `<app-redline [marks]="marks" [scale]="2" [key]="false"><app-button label="Save changes" [size]="size" /></app-redline>`,
+  }),
 };

@@ -1,35 +1,70 @@
+<!-- What sits inside every chip: lead (checkbox / check / icon), label, sparkle, trailing icon. -->
+<ng-template #chipContent let-chip>
+  @if (isSelectable() && type() === 'multi') {
+    <span class="chip-checkbox" aria-hidden="true">
+      <!-- Disabled chips keep their answer visible: a picked one stays checked, in grey. -->
+      @if (chip.selected) {
+        <img src="icons/pcr/checkbox-check.svg" width="12" height="12" alt="" />
+      }
+    </span>
+  }
+  @if (showsCheck(chip)) {
+    <img src="icons/pcr/chip-check.svg" width="12" height="12" alt="" />
+  }
+  @if (chip.icon !== 'none') {
+    <img class="chip-icon" [src]="iconSrc(chip.icon)" width="12" height="12" alt="" />
+  }
+  <span class="chip-label">{{ chip.label }}</span>
+  @if (isSelectable() && chip.suggested && !chip.disabled) {
+    <img src="icons/pcr/chip-sparkle.svg" width="10" height="10" alt="(AI suggested)" />
+  }
+  @if (chip.iconEnd !== 'none') {
+    <img class="chip-icon chip-icon-end" [src]="iconSrc(chip.iconEnd)" width="12" height="12" alt="" />
+  }
+</ng-template>
+
 <ng-template #chipTemplate let-chip let-i="index">
-  <button
-    type="button"
-    [class]="classesOf(chip)"
-    [attr.role]="chipRole()"
-    [attr.aria-checked]="chipRole() ? chip.selected : null"
-    [attr.aria-pressed]="chipRole() ? null : chip.selected"
-    [attr.tabindex]="tabIndexOf(i)"
-    [attr.title]="titleOf(chip)"
-    [attr.data-state]="stateOf(chip)"
-    [disabled]="chip.disabled"
-    (click)="click(chip)"
-  >
-    @if (type() === 'multi') {
-      <span class="chip-checkbox" aria-hidden="true">
-        @if (chip.selected && !chip.disabled) {
-          <img src="icons/pcr/checkbox-check.svg" width="12" height="12" alt="" />
-        }
-      </span>
-    }
-    <!-- Single chips show a check only when picked by the user, not when AI-suggested. -->
-    @if (type() === 'single' && stateOf(chip) === 'selected') {
-      <img src="icons/pcr/chip-check.svg" width="12" height="12" alt="" />
-    }
-    @if (chip.icon === 'records') {
-      <img src="icons/pcr/records.svg" width="12" height="12" alt="" />
-    }
-    <span class="chip-label">{{ chip.label }}</span>
-    @if (chip.suggested && !chip.disabled) {
-      <img src="icons/pcr/chip-sparkle.svg" width="10" height="10" alt="(AI suggested)" />
-    }
-  </button>
+  @if (isSelectable()) {
+    <button
+      type="button"
+      [class]="classesOf(chip)"
+      [attr.role]="chipRole()"
+      [attr.aria-checked]="chipRole() ? chip.selected : null"
+      [attr.aria-pressed]="chipRole() ? null : chip.selected"
+      [attr.tabindex]="tabIndexOf(i)"
+      [attr.title]="titleOf(chip)"
+      [attr.data-state]="stateOf(chip)"
+      [disabled]="chip.disabled"
+      (click)="click(chip)"
+    >
+      <ng-container [ngTemplateOutlet]="chipContent" [ngTemplateOutletContext]="{ $implicit: chip }" />
+    </button>
+  } @else {
+    <!-- Removable and read-only chips aren't buttons; a removable one holds its own cross button. -->
+    <span
+      [class]="classesOf(chip)"
+      [attr.role]="isGroup() ? 'listitem' : null"
+      [attr.title]="titleOf(chip)"
+      [attr.data-state]="stateOf(chip)"
+      [attr.aria-disabled]="chip.disabled || null"
+    >
+      <ng-container [ngTemplateOutlet]="chipContent" [ngTemplateOutletContext]="{ $implicit: chip }" />
+      @if (variant() === 'removable') {
+        <button
+          type="button"
+          class="chip-remove"
+          [attr.aria-label]="'Remove ' + chip.label"
+          [disabled]="chip.disabled"
+          (click)="remove(chip, i)"
+          (keydown)="onRemoveKeydown($event, chip, i)"
+        >
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false">
+            <path d="M3.5 3.5l7 7M10.5 3.5l-7 7" />
+          </svg>
+        </button>
+      }
+    </span>
+  }
 </ng-template>
 
 @if (isGroup()) {
@@ -37,7 +72,7 @@
     class="chip-group"
     [class.chip-group-sm]="size() === 'sm'"
     [class.chip-group-lg]="size() === 'lg'"
-    [attr.role]="type() === 'single' ? 'radiogroup' : 'group'"
+    [attr.role]="groupRole()"
     [attr.aria-label]="groupLabel() || null"
     [attr.aria-labelledby]="labelledBy()"
     (keydown)="onKeydown($event)"

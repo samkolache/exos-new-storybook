@@ -1,8 +1,8 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import {
   PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
-  ScreenReader, Related, SizeSpecs, TokenTable,
+  ScreenReader, Related, TokenTable,
 } from '../../../../.storybook/blocks/Guidelines';
 import * as ChipStories from './chip.stories';
 
@@ -12,7 +12,7 @@ import * as ChipStories from './chip.stories';
 
 <Title />
 
-<Subtitle>Chips let people pick an answer from a short set of options, often with an AI-suggested answer already picked.</Subtitle>
+<Subtitle>Chips let people pick an answer from a short set of options, often with an AI-suggested answer already picked. They can also list things people can remove, or show answers that can't change.</Subtitle>
 
 ## Live demo
 
@@ -22,15 +22,19 @@ import * as ChipStories from './chip.stories';
 
 **Use chips** to answer a question with a short, known set of options:
 
-- 2 to 7 options that fit on one or two lines, like a condition rating or nearby influences.
-- When an answer is suggested (by AI, photos or records) and people confirm or change it.
+- 2 to 7 options that fit on one or two lines, like a priority level or the teams a request goes to.
+- When an answer is suggested (for example by AI) and people confirm or change it.
 - For one answer or several.
+- **Removable:** to list what someone added or applied, like filters, so they can take items out.
+- **Read-only:** to show a set of values as chips that can't be changed, like a profile's skills.
 
 ### Compared with look-alikes
 
 | Component | Options | All visible | People pick | Editable |
 |---|---|---|---|---|
 | **Chip** | 2–7, short | Yes | One or many | Yes |
+| **Chip, removable** | Any, short | Yes | Removes items | Remove only |
+| **Chip, read-only** | 2–7, short | Yes | Nothing | No |
 | [Select](?path=/docs/components-forms-select--docs) | 8 or more | No, in a list | One | Yes |
 | [Radio group](?path=/docs/components-forms-radio-group--docs) | 2–5, each with detail | Yes | One | Yes |
 | [Tag](?path=/docs/components-tag--docs) | One label | Yes | Nothing | No |
@@ -46,17 +50,27 @@ import * as ChipStories from './chip.stories';
 | 3 | **Label** | Always. On web, long labels end in an ellipsis with the full text on hover. On phones they wrap, since there's no hover. |
 | 4 | **AI sparkle** | The option has `suggested: true`. |
 
-A chip can also lead with a source icon, like `records` (see Modifiers).
+A chip can also show an icon before and after the label (see Modifiers), and a removable chip ends in a **remove button** (see Variants).
 
 ## Variants
 
-Chips come in two variants. Pick by how many answers a question allows: it changes what `value` holds and how screen readers announce the chips.
+Pick a variant by what people do with the chip. Set it with `variant`.
+
+| `variant` | People | Lead | Ends with | Screen readers hear |
+|---|---|---|---|---|
+| `selectable` (default) | Pick one or many | Check (single) or checkbox (multi) | — | Radio or checkbox |
+| `removable` | Remove it | Icon, if any | Remove button | List item, plus a "Remove …" button |
+| `readonly` | Read it | Icon, if any | — | List item |
+
+### Selectable
+
+Pick by how many answers a question allows: `type` changes what `value` holds and how screen readers announce the chips.
 
 <DeviceVariation title="Single" of={ChipStories.GroupSingle}>
 
 People pick **one** answer, like radios. A picked chip shows a check.
 
-- `value` is a string, like `'average'`.
+- `value` is a string, like `'medium'`.
 - This is the default, so no `type` is needed.
 
 </DeviceVariation>
@@ -66,7 +80,33 @@ People pick **one** answer, like radios. A picked chip shows a check.
 People pick **any number** of answers, like checkboxes. Each chip leads with a checkbox.
 
 - Add `type="multi"`.
-- `value` is a string array, in the order of `options`, like `['commercial', 'freeway']`.
+- `value` is a string array, in the order of `options`, like `['engineering', 'support']`.
+
+</DeviceVariation>
+
+### Removable
+
+<DeviceVariation title="Removable" of={ChipStories.Removable}>
+
+Each chip ends in a remove button. Try removing them all.
+
+- Add `variant="removable"` and handle `(removed)`. It emits the option's `value` (a lone chip emits its label).
+- The chip doesn't remove itself: drop the option from `options` in your handler, so your data stays the source of truth.
+- Focus moves to the next chip (or the one before), so keyboard users can keep going.
+- Removable chips have no picked state. Use them for what's already chosen.
+
+</DeviceVariation>
+
+### Read-only
+
+<DeviceVariation title="Read-only" of={ChipStories.ReadOnly}>
+
+Shows values as plain chips. Nothing can be pressed, and there is no picked state.
+
+- Add `variant="readonly"` and pass the values as `options`. There's no `value` to set.
+- Use it to show a set of values, like a profile's skills. To show something locked, add `iconEnd: 'lock'`.
+- If people need to see which option was picked from a list, show a selectable group with `disabled` instead.
+- To label something that was never a choice, like a source or status, use a [Tag](?path=/docs/components-tag--docs).
 
 </DeviceVariation>
 
@@ -86,14 +126,30 @@ Set `size` on the group, so every chip in a row is the same size.
 
 ## Modifiers
 
-Small details on an option. Each is one property on the option, so it works with either variant and any size.
+Small details on an option. Each is one property on the option, so it works with every variant and any size.
 
 <DeviceVariation title="Source icon" of={ChipStories.ModifierSource}>
 
-Shows where an answer came from, before the label.
+Shows what kind an option is, before the label.
 
-- Add `icon: 'records'` to the option.
-- Use it only when the source helps people choose, like photos vs property records.
+- Add `icon`, like `icon: 'camera'`, to the option.
+- Use it only when the icon helps people choose, like photos vs documents.
+
+</DeviceVariation>
+
+<DeviceVariation title="Icons before and after" of={ChipStories.Icons} noCode>
+
+Use `icon` for an icon before the label and `iconEnd` for one after it. On a lone chip they are inputs; in a group, put them on the option. The example shows each where it is really used:
+
+- **File type:** the icon before each option shows what kind it is.
+- **Plan:** a read-only chip with a lock after it, because it can't be changed here.
+- **Filters:** removable filters, each with its icon.
+
+
+- **Before:** what kind the option is (`camera`, `records`, `calendar`, `note`).
+- **After:** something about the answer (`lock` when it can't change, `flag` or `conflict` when it needs a look).
+- Icons are 12px and scale with the size (10px small, 14px large). They are decorative: put anything people need to know in the label.
+- One icon on each side at most. A sparkle (AI suggested) sits between the label and the end icon.
 
 </DeviceVariation>
 
@@ -108,25 +164,16 @@ Marks the answer the AI picked with a sparkle after the label.
 
 ## Specs
 
-Read from the theme, so these values always match the code.
+Use **Small / Medium / Large** and **Mobile / Web** to see the sizes. The numbers are measured from the code.
 
-<SizeSpecs
-  baseClass="chip chip-single"
-  sample="Average"
-  groupClass="chip-group"
-  sizes={[
-    { label: 'Small', className: 'chip-sm' },
-    { label: 'Medium', className: '' },
-    { label: 'Large', className: 'chip-lg' },
-  ]}
-/>
+<SpecPictures of={ChipStories.SpecDrawing} />
 
 ## Content
 
 - **Keep labels short:** 1 to 3 words, sentence case, no full stop.
 - **Ask the question in a label above or beside the group,** not in the chips. Point `labelledBy` at it.
-- **Order options by meaning,** like Good → Poor, not by how often they are picked.
-- **Show where an answer came from in the label** when it helps people choose, like "3 · photos".
+- **Order options by meaning,** like Low → Urgent, not by how often they are picked.
+- **Put the detail people compare first,** like "Photos" vs "Documents", and leave the rest to the icon.
 
 <DoDont>
   <Guideline type="do" of={ChipStories.DoShortLabels}>use short labels that scan in one glance.</Guideline>
@@ -145,9 +192,10 @@ Read from the theme, so these values always match the code.
 
 <DeviceVariation title="All states" of={ChipStories.AllStates} noCode>
 
-Every state from the Figma component set: default, AI suggested, selected and disabled, for single (top) and multi (bottom). States follow from the data, so there is no code to copy here.
+Every variant in every state it can be in, with everyday example answers. A dash means the variant has no such state: only selectable chips can be suggested or picked. States follow from the data, so there is no code to copy here.
 
 - Disable one option with `disabled: true`, or the whole group with the `disabled` input.
+- **Disabled, picked:** a disabled chip keeps its answer visible. A picked multi chip keeps a grey filled checkbox, and a picked single chip keeps a grey check. Screen readers still hear it as checked.
 
 </DeviceVariation>
 
@@ -162,28 +210,31 @@ Every state from the Figma component set: default, AI suggested, selected and di
 
 ### Keyboard
 
-| Key | Single group | Multi group |
-|---|---|---|
-| <kbd>Tab</kbd> | Into the group (to the picked chip) and out again in one step | To each chip in turn |
-| <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> | Next or previous chip, and picks it, skipping disabled chips | Not used |
-| <kbd>Home</kbd> / <kbd>End</kbd> | Picks the first or last chip | Not used |
-| <kbd>Space</kbd> / <kbd>Enter</kbd> | Picks the focused chip | Turns the focused chip on or off |
+| Key | Single group | Multi group | Removable |
+|---|---|---|---|
+| <kbd>Tab</kbd> | Into the group (to the picked chip) and out again in one step | To each chip in turn | To each remove button in turn |
+| <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> | Next or previous chip, and picks it, skipping disabled chips | Not used | Not used |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Picks the first or last chip | Not used | Not used |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Picks the focused chip | Turns the focused chip on or off | Removes the chip |
+| <kbd>Delete</kbd> / <kbd>Backspace</kbd> | Not used | Not used | Removes the chip |
+
+Read-only chips are skipped by <kbd>Tab</kbd>: there's nothing to press.
 
 A picked chip in a single group stays picked when clicked again, like a radio. A multi `value` follows the order of `options`, not the order people clicked.
 
 ### Mobile and web
 
-See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+What people notice on a phone compared with a computer. For exact sizes, see [Specs](#specs). For the general rules, see [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
 
-| | Mobile (below 672px) | Web (672px and up) |
+| | On a phone (screens narrower than 672px) | On a computer (672px and wider) |
 |---|---|---|
-| Tap or click area | 44px, larger than the chip | The chip itself |
-| Space between rows | 44px minus the chip height, so tap areas don't overlap | 6px |
-| Space between chips | 12px, so a tap lands on the intended chip | 6px |
-| Long labels | Wrap onto a second line | End in an ellipsis, full text on hover |
-| How many | About 5 | Up to 7 |
-| Layout | Question above its chips, full width | Question in a label column, chips beside it |
-| Hover | None | Light grey on unpicked chips |
+| **Reading** | Text is slightly larger (14px instead of 13px on a medium chip), so it's easy to read at arm's length. | Compact, so more fits on screen. |
+| **Tapping or clicking** | A tap still counts up to 4px outside the chip, so a near miss isn't lost. Two chips' tap areas meet but never overlap. | Click on the chip itself. |
+| **Removing** | The × is a 24px target, about the size of a fingertip, even though the × itself is small. | The × is sized to the chip. |
+| **Long labels** | Continue onto a second line, because there's no way to hover to read the rest. | Cut off with "…". Point at the chip to see the full text. |
+| **How many options** | About 5, so the list fits without scrolling. | Up to 7. |
+| **Where the question goes** | Above the chips, across the full width. | To the left, with the chips beside it. |
+| **Pointing** | Nothing changes. Phones have no pointer. | Unpicked chips turn light grey when the pointer is over them. |
 
 ### Edge cases
 
@@ -197,9 +248,10 @@ See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
 
 For the picked chip in the live demo, a screen reader gets:
 
-<ScreenReader name="Average (AI suggested)" role="radio button" state="checked" position="2 of 4" group="Interior condition" />
+<ScreenReader name="Medium (AI suggested)" role="radio button" state="checked" position="2 of 4" group="Priority" />
 
-- **Roles:** a group is a `radiogroup` (single) or `group` (multi), and each chip is a `radio` or `checkbox`. A lone chip is a toggle button (`aria-pressed`).
+- **Roles:** a selectable group is a `radiogroup` (single) or `group` (multi), and each chip is a `radio` or `checkbox`. A lone chip is a toggle button (`aria-pressed`).
+- **Removable and read-only groups** are a `list` of `listitem`s. In a removable chip only the remove button can be pressed; it is named after its chip, like "Remove Engineering".
 - **Names:** name every group. Point `labelledBy` at the visible question, or set `groupLabel`.
 - **AI suggestions** are part of the chip's name, so they aren't shown only by colour and the sparkle.
 - **Checked automatically:** every chip story runs an accessibility scan in the tests, and a test checks the output above.
@@ -230,7 +282,6 @@ Chips read these CSS variables from `.exos-theme-dcfc`. Override them there to t
     { name: '--color-background-disabled', use: 'Fill of disabled chips' },
     { name: '--color-border-disabled', use: 'Border of disabled chips' },
     { name: '--color-text-disabled', use: 'Label of disabled chips' },
-    { name: '--exos-touch-target-min', use: 'Tap area on mobile' },
   ]}
 />
 
@@ -245,8 +296,3 @@ Chips read these CSS variables from `.exos-theme-dcfc`. Override them there to t
     { title: 'Grid', text: 'Columns for mobile and web layouts', href: '/?path=/docs/foundations-grid--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** on phones, 12px between chips and long labels wrap; sizes (`sm`, `md`, `lg`); one Tab stop with arrow keys; long labels truncate; 44px tap area on mobile; hover only on devices with a pointer.
-- **Nov 10, 2026:** first version from the Figma component set (Review / Option chip), with single, multi and group modes.

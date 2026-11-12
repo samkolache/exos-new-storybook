@@ -71,6 +71,12 @@ export class TagComponent {
     this.icon() === 'none' && this.ai() ? 'sparkle' : this.icon(),
   );
 
+  /** Icon size in the 12px slot; CSS scales it per size and per device (phones get bigger icons). */
+  protected readonly iconBase = computed(() => {
+    const icon = this.resolvedIcon();
+    return icon === 'none' ? null : ICON_SIZE[icon];
+  });
+
   protected readonly iconSize = computed(() => {
     const icon = this.resolvedIcon();
     if (icon === 'none') return null;

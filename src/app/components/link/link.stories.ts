@@ -3,6 +3,8 @@ import { expect, within } from 'storybook/test';
 import { AnatomyComponent } from '../shared/anatomy';
 import { storySource } from '../shared/story-source';
 import { LinkComponent } from './link';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 /** Component defaults: the code panel only prints props that differ. */
 const DEFAULTS = { href: '', standalone: false, external: false, size: 'md', disabled: false };
@@ -194,4 +196,25 @@ export const TestTapArea: Story = {
     if (mobile) await expect(link.getBoundingClientRect().height).toBeGreaterThanOrEqual(44);
     else await expect(link.getBoundingClientRect().height).toBeLessThan(44);
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'style', target: 'a', prop: 'font-size', side: 'top', label: '{v} text' },
+  { kind: 'size', target: 'a', side: 'right', label: '{v} tall' },
+  { kind: 'tap', target: 'a', side: 'bottom', fallback: 'Same as the control', label: 'Tap area {v}' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: true, switches: [] } },
+  args: { size: 'md' } as Story['args'],
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS },
+    template: `<app-redline [marks]="marks" [scale]="1.8" [key]="false"><app-link href="https://example.com" [standalone]="true" [size]="size">View your orders</app-link></app-redline>`,
+  }),
 };

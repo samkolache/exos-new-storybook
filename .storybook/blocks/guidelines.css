@@ -222,3 +222,13 @@
 .exos-specs__samples { position: absolute; left: -9999px; top: 0; visibility: hidden; display: flex; align-items: flex-start; gap: 8px; }
 .exos-tokens__swatch { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border: 1px solid rgba(15, 18, 26, 0.15); border-radius: 3px; vertical-align: -1px; }
 .sbdocs .exos-specs table, .sbdocs .exos-tokens table { font-variant-numeric: tabular-nums; }
+
+/* Specs with Web and Mobile side by side */
+.sbdocs .exos-specs--devices { overflow-x: auto; }
+.sbdocs .exos-specs--devices table { width: 100%; }
+.sbdocs .exos-specs--devices th.exos-specs__size { text-align: center; border-bottom: 0; }
+.sbdocs .exos-specs--devices th.exos-specs__device { font-size: 12px; font-weight: 600; color: #5c6870; }
+.sbdocs .exos-specs--devices td { white-space: nowrap; }
+.sbdocs .exos-specs--devices td.exos-specs__mobile.is-diff { background: #eef5ff; color: #1d4fa8; font-weight: 600; }
+.sbdocs .exos-specs__note { display: flex; align-items: center; gap: 8px; margin: 8px 0 0; font-size: 13px; color: #5c6870; }
+.sbdocs .exos-specs__swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #eef5ff; border: 1px solid #c9dcfb; flex-shrink: 0; }

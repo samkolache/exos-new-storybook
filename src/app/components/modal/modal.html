@@ -8,7 +8,7 @@
   (click)="onBackdrop($event)"
 >
   <div class="exos-modal-panel">
-    <header class="exos-modal-header">
+    <header class="exos-modal-header" [class.exos-modal-header-divider]="headerDivider()">
       <div>
         <h2 class="exos-modal-title" [id]="titleId">{{ title() }}</h2>
         @if (subtitle()) {
@@ -27,7 +27,7 @@
       <ng-content />
     </div>
     @if (primaryLabel() || secondaryLabel()) {
-      <footer class="exos-modal-footer">
+      <footer class="exos-modal-footer" [class.exos-modal-footer-plain]="!footerBar()" [class.exos-modal-footer-start]="buttonsAlign() === 'start'">
         @if (secondaryLabel()) {
           <app-button variant="secondary" [label]="secondaryLabel()" (clicked)="onSecondary()" />
         }
