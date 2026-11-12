@@ -12,21 +12,29 @@ import {
   viewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { FieldSize, ValidationState, uniqueId } from '../shared/form-field';
+import { FieldSize, FieldState, uniqueId } from '../shared/form-field';
 
 /** 'textarea' renders a multi-line field; everything else is a native <input type>. */
 export type InputType = 'text' | 'email' | 'password' | 'number' | 'search' | 'tel' | 'url' | 'textarea';
-/** outline: pcr-demo "Add a room" field. filled: search field. pill: detail field. */
+/** outline: most forms. filled: search and toolbars. pill: short, casual fields. */
 export type InputAppearance = 'outline' | 'filled' | 'pill';
 export type InputIcon = 'none' | 'search';
+/** Warning is for answers that are allowed but probably wrong. */
+export type InputState = FieldState;
+/** The on-screen keyboard to show on phones (the HTML inputmode attribute). */
+export type InputMode = 'text' | 'numeric' | 'decimal' | 'tel' | 'email' | 'url' | 'search' | 'none';
+/** How phones capitalise as people type (the HTML autocapitalize attribute). */
+export type Autocapitalize = 'none' | 'sentences' | 'words' | 'characters';
+/** The label of the Return key on phones (the HTML enterkeyhint attribute). */
+export type EnterKeyHint = 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
 /**
- * Text field: Bootstrap .form-control with the pcr-demo styles.
+ * Text field: Bootstrap .form-control with the Exos styles.
  *
- *   <app-input label="Room name" [(value)]="name" />
- *   <app-input type="textarea" label="Notes" [autoResize]="true" [maxLength]="500" [showCount]="true" />
- *   <app-input type="password" label="Lockbox code" />            (show/hide button built in)
- *   <app-input icon="search" appearance="filled" [clearable]="true" />
+ *   <app-input label="Full name" autocomplete="name" [(value)]="name" />
+ *   <app-input type="textarea" label="Message" [autoResize]="true" [maxLength]="500" [showCount]="true" />
+ *   <app-input type="password" label="Password" />                  (show/hide button built in)
+ *   <app-input label="Search" [hideLabel]="true" icon="search" appearance="filled" [clearable]="true" />
  *
  * Works with [(value)], ngModel and reactive forms.
  */
@@ -39,6 +47,8 @@ export type InputIcon = 'none' | 'search';
 })
 export class InputComponent implements ControlValueAccessor {
   readonly label = input('');
+  /** Keeps the label for screen readers but hides it on screen, e.g. a search field with an icon. */
+  readonly hideLabel = input(false);
   readonly placeholder = input('');
   readonly type = input<InputType>('text');
   readonly size = input<FieldSize>('md');
@@ -50,15 +60,26 @@ export class InputComponent implements ControlValueAccessor {
   readonly prefix = input('');
   readonly suffix = input('');
   readonly helpText = input('');
-  readonly state = input<ValidationState>('none');
-  /** Message shown under the field when state is valid or invalid. */
+  readonly state = input<InputState>('none');
+  /** Message shown under the field when state is valid, warning or invalid. */
   readonly feedback = input('');
   readonly disabled = input(false);
   readonly readonly = input(false);
   readonly required = input(false);
+  /** Adds "(optional)" after the label. Mark whichever is rarer in a form: required or optional. */
+  readonly optional = input(false);
   readonly inputId = input(uniqueId('input'));
   readonly name = input<string | null>(null);
   readonly autocomplete = input<string | null>(null);
+  /** Keyboard on phones. Email, tel and url types already pick theirs. */
+  readonly inputMode = input<InputMode | null>(null);
+  /** Return key label on phones, e.g. 'next' between fields, 'send' on the last. */
+  readonly enterKeyHint = input<EnterKeyHint | null>(null);
+  /**
+   * Capitalisation on phones. Left unset, it's off for email, url, password and tel fields
+   * and for usernames and codes, and the browser default everywhere else.
+   */
+  readonly autocapitalize = input<Autocapitalize | null>(null);
 
   /** Limits the length (native maxlength). */
   readonly maxLength = input<number | null>(null);
@@ -86,6 +107,13 @@ export class InputComponent implements ControlValueAccessor {
   protected readonly revealed = signal(false);
 
   protected readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
+  /** Exact values (emails, codes, usernames): no autocorrect, spell check or capitals. */
+  protected readonly exact = computed(
+    () =>
+      ['email', 'url', 'password', 'tel'].includes(this.type()) ||
+      /\b(username|email|one-time-code|postal-code|cc-number|url)\b/.test(this.autocomplete() ?? ''),
+  );
+  protected readonly capitalize = computed(() => this.autocapitalize() ?? (this.exact() ? 'none' : null));
   protected readonly isTextarea = computed(() => this.type() === 'textarea');
   protected readonly nativeType = computed(() =>
     this.type() === 'password' && this.revealed() ? 'text' : this.type(),
@@ -112,6 +140,7 @@ export class InputComponent implements ControlValueAccessor {
   });
 
   protected readonly showFeedback = computed(() => this.state() !== 'none' && !!this.feedback());
+  protected readonly feedbackClass = computed(() => `d-block ${this.state()}-feedback`);
   protected readonly helpId = computed(() => `${this.inputId()}-help`);
   protected readonly feedbackId = computed(() => `${this.inputId()}-feedback`);
   protected readonly countId = computed(() => `${this.inputId()}-count`);

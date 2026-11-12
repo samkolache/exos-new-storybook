@@ -1,0 +1,178 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
+import * as NumberStories from './number-input.stories';
+
+<Meta of={NumberStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>A number input takes a number people type or step through with − and +, like a quantity.</Subtitle>
+
+## Live demo
+
+On a phone, tapping the field opens the number keypad. Switch the device to compare.
+
+<DeviceCanvas of={NumberStories.Overview} defaultDevice="mobile" />
+
+## When to use
+
+**Use a number input** for amounts people might count up or down: quantities, guests, weights, percentages.
+
+**Don't use it** for numbers that aren't amounts, like card, phone or order numbers: use an [Input](?path=/docs/components-forms-input--docs) with `inputMode="numeric"`. Nobody steps a card number with +.
+
+### Compared with look-alikes
+
+| Component | Use it for |
+|---|---|
+| **Number input** | Amounts, often small, often stepped: 1 to 10 tickets |
+| [Input](?path=/docs/components-forms-input--docs) with `inputMode` | Numbers that are names or codes: card, phone, ZIP |
+| [Select](?path=/docs/components-forms-select--docs) or [Chip](?path=/docs/components-chip--docs) | A few fixed amounts: 1, 2, 4 or 8 |
+
+## Anatomy
+
+<DeviceCanvas of={NumberStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Label** | Always. |
+| 2 | **Field** | Always. Takes typing; opens the number keypad on phones. |
+| 3 | **Unit** | `unit` is set, like "kg". |
+| 4 | **Decrease** | Unless `hideSteppers`. Turns grey at the minimum. |
+| 5 | **Increase** | Unless `hideSteppers`. Turns grey at the maximum. |
+| 6 | **Help text or message** | `helpText`; or a message when it's out of range. |
+
+## Size
+
+<DeviceVariation title="Small, medium, large" of={NumberStories.SizeSwitchable} sizeSwitch>
+
+The same heights as [Input](?path=/docs/components-forms-input--docs): 32, 40 and 48px on the web, at least 44px with 44px − and + on phones.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Unit" of={NumberStories.ModUnit}>
+
+`unit="%"` shows the unit after the number, so people only type the number. Screen readers hear "15 %".
+
+</DeviceVariation>
+
+<DeviceVariation title="Decimals" of={NumberStories.ModDecimals}>
+
+`[decimals]="1"` allows decimals and opens the decimal keypad on phones. Pair it with a matching `step`, like 0.5.
+
+</DeviceVariation>
+
+<DeviceVariation title="Range" of={NumberStories.ModRange}>
+
+`min` and `max` limit the number. Out of range, it says "Enter a number from 1 to 8" right away, and snaps back into range when people leave. Say the range in `helpText` too, so people know before they hit it.
+
+</DeviceVariation>
+
+<DeviceVariation title="No steppers" of={NumberStories.ModNoSteppers}>
+
+`[hideSteppers]="true"` for numbers nobody steps through, like a year.
+
+</DeviceVariation>
+
+## Specs
+
+| | Web | Mobile |
+|---|---|---|
+| Height | 32 / 40 / 48px | At least 44px |
+| − and + | 36px wide each, inside the field | 44px wide each |
+| Text | Numbers line up (tabular figures) | Same |
+| Keypad | — | Number keypad, or decimal keypad with `decimals` |
+
+## Content
+
+- **Label: what's counted,** like "Guests" or "Weight".
+- **Say the range in help text** when there is one: "Up to 8 per booking."
+- **Use the unit,** not a label like "Weight (kg)".
+
+<DoDont>
+  <Guideline type="do" of={NumberStories.DoForCounts}>use it for amounts people count.</Guideline>
+  <Guideline type="dont" of={NumberStories.DontForIds}>use it for numbers like card numbers. Use an Input.</Guideline>
+  <Guideline type="do" of={NumberStories.DoSayRange}>say the limits before people hit them.</Guideline>
+  <Guideline type="dont" of={NumberStories.DontHideRange}>leave people to find the limits by trying.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="All states" of={NumberStories.AllStates} noCode>
+
+At a limit, that button turns grey. Out of range shows the message and a red border; read only and disabled hide nothing but can't change.
+
+</DeviceVariation>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Up or down one step |
+| <kbd>Page Up</kbd> / <kbd>Page Down</kbd> | Up or down ten steps |
+| <kbd>Home</kbd> / <kbd>End</kbd> | The minimum or maximum |
+| Typing | Any number; checked as people type, snapped into range when they leave |
+
+− and + aren't Tab stops: the arrow keys do the same, so keyboard users have one stop instead of three.
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Keyboard | Number keypad (decimal keypad with `decimals`) | A physical keyboard, with arrow keys |
+| − and + | 44px wide | 36px wide |
+| Height | At least 44px with 16px text | 32 / 40 / 48px |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+## Accessibility
+
+For the quantity in the live demo, a screen reader reads:
+
+<ScreenReader name="Quantity" role="spin button" state="2" description="minimum 1, maximum 10" />
+
+- **A spin button,** with its value, minimum and maximum, so screen readers say where it is in the range.
+- **The out-of-range message** is linked to the field and read when it changes.
+- **− and + have names:** "Decrease Quantity", "Increase Quantity".
+- **Checked automatically:** every story runs an accessibility scan in the tests, plus stepping, range and reactive form tests.
+
+## Code
+
+### Reactive forms
+
+<DeviceCanvas of={NumberStories.ReactiveForm} codeOpen />
+
+### API
+
+<Controls of={NumberStories.Default} />
+
+### Theming
+
+Uses the same tokens as [Input](?path=/docs/components-forms-input--docs), plus:
+
+<TokenTable
+  tokens={[
+    { name: '--color-border-divider', use: 'Line between − and +' },
+    { name: '--color-text-secondary', use: 'Unit' },
+    { name: '--color-text-disabled', use: '− or + at a limit' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Input', text: 'Numbers that aren’t amounts', href: '/?path=/docs/components-forms-input--docs' },
+    { title: 'Select', text: 'A few fixed amounts', href: '/?path=/docs/components-forms-select--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** first version: steppers, range, decimals, unit, sizes.

@@ -1,0 +1,176 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, SpecimenGrid, Specimen, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
+import * as TabsStories from './tabs.stories';
+
+<Meta of={TabsStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>Tabs switch between views of the same page, showing one at a time.</Subtitle>
+
+## Live demo
+
+<DeviceCanvas of={TabsStories.Overview} defaultDevice="mobile" />
+
+## When to use
+
+**Use tabs** to split related content into views people switch between, without leaving the page:
+
+- Parts of one thing, like an order's summary, items and history.
+- Views of the same data, like day, week and month.
+
+**Don't use them** for steps people go through in order, or for content people need to compare side by side.
+
+### Compared with look-alikes
+
+| Component | Shows | Use it for |
+|---|---|---|
+| **Tabs (line)** | One section at a time | Parts of one thing, over a section |
+| **Tabs (segmented)** | One view at a time | A compact switch between views of the same data |
+| [Accordion](?path=/docs/components-accordion--docs) | Any number, stacked | Sections people scan and open, often on phones |
+| [Radio group](?path=/docs/components-forms-radio-group--docs) | Nothing changes until sent | Picking an answer in a form |
+
+## Anatomy
+
+<DeviceCanvas of={TabsStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Tab list** | Always. Named with `label`. |
+| 2 | **Picked tab** | Always one. Bold, with a blue bar. |
+| 3 | **Tab** | Each item. |
+| 4 | **Count** | The item has `count`. |
+| 5 | **Panel** | The picked tab's content, in `app-tab-panel`. |
+
+## Variants
+
+<DeviceVariation title="Line" of={TabsStories.VarLine}>
+
+The default. Tabs over a section, with a bar under the picked one. Put each tab's content in `<app-tab-panel value="…">` inside `app-tabs`.
+
+</DeviceVariation>
+
+<DeviceVariation title="Segmented" of={TabsStories.VarSegmented}>
+
+`variant="segmented"`: a compact switch between views of the same data, like day, week and month. 2 to 5 short segments. Often used without panels: listen to `value` and change the view.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Count" of={TabsStories.ModCount}>
+
+Add `count` to an item for a number after its label, like 3 items.
+
+</DeviceVariation>
+
+<DeviceVariation title="Full width" of={TabsStories.ModFullWidth}>
+
+`[fullWidth]="true"` stretches segmented tabs across their container. On phones they're always full width.
+
+</DeviceVariation>
+
+<DeviceVariation title="Disabled tab" of={TabsStories.ModDisabled}>
+
+Add `disabled: true` to an item that has nothing yet. Arrow keys skip it. Hiding it is often clearer.
+
+</DeviceVariation>
+
+## Specs
+
+| | Web | Mobile |
+|---|---|---|
+| Line tab height | 40px | 48px |
+| Line tab padding | 14px each side | 14px |
+| Picked bar | 2px, blue | 2px |
+| Segmented height | 32px, inside a 3px track | 44px; full width |
+| Text | 15px, medium; picked semibold | Same |
+| Too many to fit | Scroll sideways | Scroll sideways |
+
+## Content
+
+- **One or two words per tab,** nouns: "Summary", "Shipping". Sentence case.
+- **Order by use:** most used first.
+- **Segmented:** 2 to 5 options of about the same length.
+
+<DoDont>
+  <Guideline type="do" of={TabsStories.DoShortLabels}>use short, parallel labels.</Guideline>
+  <Guideline type="dont" of={TabsStories.DontLongLabels}>write sentences in tabs.</Guideline>
+  <Guideline type="do" of={TabsStories.DoFewSegments}>keep segmented tabs to 2 to 5.</Guideline>
+  <Guideline type="dont" of={TabsStories.DontManySegments}>squeeze many options into segments. Use line tabs.</Guideline>
+</DoDont>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> | Into the tab list (the picked tab), then into the panel |
+| <kbd>←</kbd> <kbd>→</kbd> | Previous or next tab, and shows it; skips disabled tabs; wraps around |
+| <kbd>Home</kbd> / <kbd>End</kbd> | First or last tab |
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Line tabs | 48px tall; scroll sideways if they don't fit | 40px tall |
+| Segmented | Full width, 44px segments | As wide as its content |
+| Many sections | Consider an [Accordion](?path=/docs/components-accordion--docs) instead | Tabs |
+| Hover | None | Text darkens |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+### Edge cases
+
+<SpecimenGrid>
+  <Specimen of={TabsStories.EdgeManyTabs}>**More tabs than fit:** the list scrolls sideways, and arrow keys bring each tab into view.</Specimen>
+</SpecimenGrid>
+
+## Accessibility
+
+For the second tab in the live demo, a screen reader reads:
+
+<ScreenReader name="Items 3" role="tab" state="not selected" position="2 of 4" group="Order details" />
+
+- **Roles:** `tablist`, `tab` and `tabpanel`, each panel named by its tab.
+- **One Tab stop** for the whole list; arrows move between tabs.
+- **Panels are focusable,** so keyboard users can reach content with no links in it.
+- **Checked automatically:** every story runs an accessibility scan in the tests, plus keyboard and panel tests.
+
+## Code
+
+### API
+
+<Controls of={TabsStories.Default} />
+
+`app-tab-panel` takes one input, `value`, matching a tab's value.
+
+### Theming
+
+<TokenTable
+  tokens={[
+    { name: '--color-control-selected', use: 'Picked bar' },
+    { name: '--color-text-heading', use: 'Picked tab' },
+    { name: '--color-text-label', use: 'Other tabs' },
+    { name: '--color-border-divider', use: 'Line under the tabs' },
+    { name: '--color-background-subtle', use: 'Segmented track, count' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Accordion', text: 'Stacked sections', href: '/?path=/docs/components-accordion--docs' },
+    { title: 'Radio group', text: 'Picking an answer in a form', href: '/?path=/docs/components-forms-radio-group--docs' },
+    { title: 'Chip', text: 'Picking short answers', href: '/?path=/docs/components-chip--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** first version: line and segmented, counts, disabled tabs.

@@ -1,0 +1,164 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
+import * as DateStories from './date-picker.stories';
+
+<Meta of={DateStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>A date picker lets people pick a date from a calendar, or type it.</Subtitle>
+
+## Live demo
+
+On the web, the calendar button opens a calendar under the field. On a phone, tapping the field opens the phone's own date picker. Switch the device to compare.
+
+<DeviceCanvas of={DateStories.Overview} defaultDevice="mobile" />
+
+## When to use
+
+**Use a date picker** for a date in the near past or future, where seeing the calendar helps: deliveries, bookings, appointments.
+
+For dates people know by heart and that are far away, like a date of birth, a calendar means a lot of scrolling. Use it with `max` and let people type, or use three [Inputs](?path=/docs/components-forms-input--docs) for day, month and year.
+
+### Why it's the browser's own date field
+
+The calendar is the browser's and the phone's own, so:
+
+- **On phones,** people get the date picker they use everywhere else.
+- **Dates show in each person's format,** like 20/11/2026 or 11/20/2026, while your code always gets `'2026-11-20'`.
+- **Keyboards and screen readers** already know how to use it.
+
+## Anatomy
+
+<DeviceCanvas of={DateStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Label** | Always. |
+| 2 | **Field** | Always. Shows the date in the person's own format. |
+| 3 | **Calendar button** | On the web. Opens the calendar. Phones open their picker from the whole field. |
+| 4 | **Help text or message** | `helpText`, or a `state` with `feedback`. |
+
+## Size
+
+<DeviceVariation title="Small, medium, large" of={DateStories.SizeSwitchable} sizeSwitch>
+
+The same heights as [Input](?path=/docs/components-forms-input--docs): 32, 40 and 48px on the web, at least 44px with 16px text on phones.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Earliest and latest" of={DateStories.ModRange}>
+
+`min` and `max` (ISO dates) grey out the dates outside the range in the calendar. Say the range in `helpText` too.
+
+</DeviceVariation>
+
+<DeviceVariation title="Start and end dates" of={DateStories.ModRangePair}>
+
+For a range, use two pickers. Set the second one's `min` to the day after the first, and show the length in its help text, like "2 nights".
+
+</DeviceVariation>
+
+<DeviceVariation title="Optional" of={DateStories.ModOptional}>
+
+`[optional]="true"` shows "(optional)".
+
+</DeviceVariation>
+
+## Specs
+
+| | Web | Mobile |
+|---|---|---|
+| Height | 32 / 40 / 48px | At least 44px |
+| Text | 14 to 16px | 16px, so the phone doesn't zoom in |
+| Calendar | The browser's, under the field | The phone's own picker |
+| Date format | The person's own | The person's own |
+
+## Content
+
+- **Label: what the date is for,** like "Delivery date" or "Check in".
+- **Say the limits** in help text: "From tomorrow until Dec 31."
+- **Don't explain the format.** The field already shows it the way each person reads dates.
+
+<DoDont>
+  <Guideline type="do" of={DateStories.DoLimitDates}>limit the dates people can pick, and say so.</Guideline>
+  <Guideline type="dont" of={DateStories.DontFreeText}>ask people to type a date in a format you choose.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="All states" of={DateStories.AllStates} noCode>
+
+Empty, picked, warning, invalid, read only and disabled, like every field.
+
+</DeviceVariation>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> | Into the field, through day, month and year |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Changes the focused part |
+| Numbers | Type the date directly |
+| <kbd>Space</kbd> or the calendar button | Opens the calendar (web) |
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Opens | The phone's own date picker | A calendar under the field |
+| Typing | Through the picker | Directly, or with the calendar |
+| Height | At least 44px with 16px text | 32 / 40 / 48px |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+## Accessibility
+
+For the picked date in the live demo, a screen reader reads:
+
+<ScreenReader name="Check in" role="date field" state="20 November 2026" />
+
+- **The browser's own date field,** so screen readers read each part (day, month, year) and the date in full.
+- **Labels, help and messages** are linked like every field.
+- **Checked automatically:** every story runs an accessibility scan in the tests, plus value and reactive form tests.
+
+## Code
+
+### Reactive forms
+
+<DeviceCanvas of={DateStories.ReactiveForm} codeOpen />
+
+### API
+
+<Controls of={DateStories.Default} />
+
+### Theming
+
+The same tokens as [Input](?path=/docs/components-forms-input--docs).
+
+<TokenTable
+  tokens={[
+    { name: '--color-border-default', use: 'Border' },
+    { name: '--color-text-placeholder', use: 'Empty date (dd / mm / yyyy)' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Input', text: 'Dates people type, like birthdays', href: '/?path=/docs/components-forms-input--docs' },
+    { title: 'Number input', text: 'Amounts', href: '/?path=/docs/components-forms-number-input--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** first version: the browser's own date field with min, max, states and sizes.

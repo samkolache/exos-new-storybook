@@ -5,6 +5,7 @@
 @import "scss/tokens/primitives";     // Layer 1: raw values
 @import "scss/tokens/colors";         // Layer 2: semantic aliases
 @import "scss/tokens/css-variables";  // emits --primitive-*, --color-*, --surface-*
+@import "scss/tokens/layout";         // breakpoints, grid, spacing
 
 // 2. Bootstrap
 @import "scss/bootstrap-variables";   // DCFC → Bootstrap mapping

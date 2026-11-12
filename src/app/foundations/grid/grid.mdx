@@ -1,0 +1,172 @@
+import { Meta, Title, Subtitle, Story } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, Related } from '../../../../.storybook/blocks/Guidelines';
+import * as GridStories from './grid.stories';
+
+<Meta of={GridStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>The grid lines content up on every screen: 4 columns on phones, 8 on tablets and 16 on the web.</Subtitle>
+
+## Overview
+
+The grid arranges content in the **main area** of a screen. Navigation, top bars and side panels sit outside it; everything in the main area lines up on its columns.
+
+<Story of={GridStories.AppAnatomy} />
+
+- **Phones:** a top bar, the main area and often a tab bar. The grid fills the main area.
+- **Web:** a top bar, side navigation and sometimes a panel. The grid fills what's left between them.
+
+## Grid basics
+
+Every grid has three parts:
+
+- **Columns** hold the content. 4 on phones, 8 on tablets, 16 on the web.
+- **Gutters** are the space between columns. Content never sits in a gutter.
+- **Margins** are the space between the screen's edge and the content.
+
+<Story of={GridStories.Basics} />
+
+Try it live: switch between Mobile and Web. The same code gives 4 columns on a phone and 16 on the web.
+
+<DeviceCanvas of={GridStories.Columns} webOf={GridStories.Columns} defaultDevice="mobile" noCode />
+
+## Column span
+
+Blocks span whole columns. On the web, common spans are 16 (full), 8 + 8 (halves), 4 + 4 + 4 + 4 (quarters) and 11 + 5 (main and side). On phones, most things span all 4.
+
+<Story of={GridStories.Spans} />
+
+### Centring
+
+For reading and focused tasks, centre a block over 8, 10 or 12 columns with an offset: `exos-col-lg-10 exos-col-lg-offset-3` starts after 3 columns, so 10 sit in the middle of 16.
+
+<Story of={GridStories.CenteredSpans} />
+
+<DeviceCanvas of={GridStories.Centered} webOf={GridStories.Centered} defaultDevice="web" />
+
+<DoDont>
+  <Guideline type="do" of={GridStories.DoAligned}>line containers up on columns, so edges match across the page.</Guideline>
+  <Guideline type="dont" of={GridStories.DontOverflow}>run content into margins or across gutters.</Guideline>
+</DoDont>
+
+## What to align
+
+- **Align containers to columns:** cards, tables, forms, images and text blocks.
+- **Inside a container, use spacing:** buttons, icons, labels and text are spaced with [Spacing](?path=/docs/foundations-spacing--docs) tokens, not columns.
+
+<Story of={GridStories.AlignContainers} />
+
+## Nested grids
+
+A container with complex content, like a card with a photo and details, can have its own grid. Put an `exos-grid` inside it: a grid inside a grid drops its outer margin, so it lines up with the container's padding.
+
+<Story of={GridStories.Nested} />
+
+```html
+<div class="exos-grid">
+  <div class="exos-col-lg-10 card">
+    <div class="exos-grid">
+      <img class="exos-col-lg-5" … />
+      <div class="exos-col-lg-3">Details</div>
+    </div>
+  </div>
+</div>
+```
+
+## Breakpoints
+
+The grid changes at three widths. Design for at least two: **always phone**, and web.
+
+<Story of={GridStories.Breakpoints} />
+
+| Device | Breakpoint | Width | Columns | Gutter | Margin |
+|---|---|---|---|---|---|
+| Phone | `xs`, `sm` | 0–671px | 4 | 16px | 16px, more beside a notch |
+| Tablet | `md` | 672–1055px | 8 | 16px | 24px |
+| Web | `lg` | 1056–1311px | 16 | 32px | 32px |
+| Web | `xl` | 1312–1583px | 16 | 32px | 32px |
+| Web | `xxl` | 1584px and up | 16 | 32px | 32px; the grid stops growing and centres |
+
+Bootstrap uses the same breakpoints, so `d-md-none` and `media-breakpoint-up(lg)` match the grid.
+
+## Grid widths
+
+How wide the grid gets on big screens depends on the content.
+
+<Story of={GridStories.Widths} />
+
+| Width | Class | Widest (margins included) | Use it for |
+|---|---|---|---|
+| **Default** | `exos-grid` | 1584px | Most pages: tables, dashboards, lists, search results |
+| **Narrow** | `exos-grid exos-grid--narrow` | 960px | Reading and forms: articles, help, settings, checkout |
+| **Fluid** | `exos-grid exos-grid--fluid` | None | Boards and canvases that use every pixel; use sparingly |
+
+All three are the full width on phones and tablets.
+
+<DoDont>
+  <Guideline type="do" of={GridStories.DoReadingWidth}>keep long text to about 10 columns, or use the narrow grid.</Guideline>
+  <Guideline type="dont" of={GridStories.DontFullWidthText}>run text across 16 columns. Long lines are hard to follow.</Guideline>
+  <Guideline type="do" of={GridStories.DoPhoneStack}>stack blocks on phones, each across all 4 columns.</Guideline>
+  <Guideline type="dont" of={GridStories.DontPhoneSqueeze}>squeeze a side panel next to content on a phone.</Guideline>
+</DoDont>
+
+## Applying the grid
+
+1. **Wrap the main area in `exos-grid`.** Add `exos-grid--narrow` or `--fluid` if the content needs it.
+2. **Give each block its span at each size it changes:** `exos-col-*` for phones (of 4), `exos-col-md-*` for tablets (of 8), `exos-col-lg-*` for the web (of 16).
+3. **Leave out a span to take the whole row.** Blocks with no class stack on phones without any work.
+4. **Centre with an offset:** `exos-col-lg-offset-3` before a 10-column block.
+5. **Space things inside blocks with [Spacing](?path=/docs/foundations-spacing--docs) tokens.**
+
+```html
+<main class="exos-grid">
+  <section class="exos-col-4 exos-col-md-5 exos-col-lg-11">Orders</section>
+  <aside class="exos-col-4 exos-col-md-3 exos-col-lg-5">Filters</aside>
+</main>
+```
+
+> **Tip:** Check every layout at phone width first. If it works in 4 columns, it usually works everywhere. Open **On mobile (375)**, **On tablet (768)** or **On web (1312)** in the sidebar to see a layout at a fixed width.
+
+| Class | Does |
+|---|---|
+| `exos-col-1` … `exos-col-4` | Span on phones |
+| `exos-col-md-1` … `exos-col-md-8` | Span from tablets |
+| `exos-col-lg-1` … `exos-col-lg-16` | Span from the web (`xl`, `xxl` too) |
+| `exos-col-{size}-offset-{n}` | Start after n columns |
+| `exos-col-full`, `exos-col-md-full`, … | Take the whole row |
+| `exos-grid--condensed` | No gaps, for tiles |
+| `exos-grid--narrow`, `exos-grid--fluid` | Grid widths |
+
+Bootstrap's `.row` and `.col-*` are turned off, so there's only one grid.
+
+## Layouts
+
+Live, with the Mobile / Web switch.
+
+### Main content and a side panel
+
+<DeviceCanvas of={GridStories.PageLayout} webOf={GridStories.PageLayout} defaultDevice="mobile" />
+
+### Cards
+
+1 per row on phones, 2 on tablets, 4 on the web.
+
+<DeviceCanvas of={GridStories.Cards} webOf={GridStories.Cards} defaultDevice="mobile" noCode />
+
+### A form page
+
+<DeviceCanvas of={GridStories.FormLayout} webOf={GridStories.FormLayout} defaultDevice="mobile" />
+
+## Related
+
+<Related
+  items={[
+    { title: 'Spacing', text: 'Space inside and between things', href: '/?path=/docs/foundations-spacing--docs' },
+    { title: 'Mobile and web', text: 'How components change', href: '/?path=/docs/foundations-mobile-and-web--docs' },
+    { title: 'Forms', text: 'Laying out forms', href: '/?path=/docs/patterns-forms--docs' },
+  ]}
+/>

@@ -1,70 +1,235 @@
-import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
-import { Variation } from '../../../../.storybook/blocks/Variation';
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import {
+  PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
+  ScreenReader, Related, SizeSpecs, TokenTable,
+} from '../../../../.storybook/blocks/Guidelines';
 import * as TagStories from './tag.stories';
 
 <Meta of={TagStories} />
 
+<PageNav />
+
 <Title />
 
-<Subtitle>Small labels that show the status or source of something, like where an answer came from.</Subtitle>
+<Subtitle>Tags are small, read-only labels that show the status or source of something, like where an answer came from.</Subtitle>
 
-## Demo
+## Live demo
 
-<Canvas of={TagStories.WithIcon} />
+<DeviceCanvas of={TagStories.Overview} />
 
-## Usage
+## When to use
 
-Tags are read-only. If people should click or pick something, use a [Chip](?path=/docs/components-chip--docs) or [Button](?path=/docs/components-button--docs) instead.
+**Use a tag** to label something with a short fact people read but don't act on:
 
-```html
-<app-tag label="From order" icon="calendar" />
-```
+- Where an answer came from, like photos, voice notes or property records.
+- A status, like "Needs your input" or "Waiting on photo".
+- That the AI produced something.
 
-## Variations
+### Compared with look-alikes
 
-<Variation title="Color" of={TagStories.Colors}>
+| Component | People can… | Use it for |
+|---|---|---|
+| **Tag** | Read it | Status or source labels |
+| [Chip](?path=/docs/components-chip--docs) | Pick it | Answers to a question |
+| [Button](?path=/docs/components-button--docs) | Press it | Actions |
+| Plain text | Read it | Details too long or too important for a label |
 
-Set the `color` input to match the meaning:
+## Anatomy
 
-- `neutral` (default) for plain facts, like "From order".
-- `blue` for AI. Usually set with `ai` instead (see below).
-- `attention` for things that need someone, like "Needs your input".
-- `info` for things in progress, like "Waiting on photo".
+<DeviceCanvas of={TagStories.Anatomy} noCode />
 
-</Variation>
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Container** | Always. Fully rounded, 16, 20 or 26px tall. Its fill comes from the colour. |
+| 2 | **Icon** | Optional. The `icon` input, or the sparkle when `ai` is set. |
+| 3 | **Label** | Always. On web, long labels end in an ellipsis with the full text on hover. On phones they wrap, since there's no hover. |
 
-<Variation title="Icon" of={TagStories.Icons}>
+## Variants
 
-Add an `icon` to make the tag quicker to scan. Leave it out (`none`, the default) for text-only tags.
+<DeviceVariation
+  title="Color"
+  of={TagStories.Switchable}
+  switches={[{ arg: 'color', label: 'Color', initial: 'neutral', options: [
+    { value: 'neutral', label: 'Neutral', short: 'N' },
+    { value: 'blue', label: 'Blue', short: 'B' },
+    { value: 'attention', label: 'Attention', short: 'A' },
+    { value: 'info', label: 'Info', short: 'I' },
+  ] }]}
+>
 
-</Variation>
+Colour carries the meaning, so pick it by what the tag says. Use the switch in the toolbar; only `color` changes in the code.
 
-<Variation title="AI" of={TagStories.ExampleAITags}>
+- **Neutral** (default): plain facts, like "From order".
+- **Blue:** AI. Usually set with `ai` instead (see Modifiers).
+- **Attention:** something needs a person, like "Needs your input".
+- **Info:** something is in progress, like "Waiting on photo".
 
-Add `[ai]="true"` when the AI produced the answer. The tag turns blue with a sparkle. Pass an `icon` to replace the sparkle, like `icon="voice"` for voice notes.
+</DeviceVariation>
 
-</Variation>
+## Size
 
-<Variation title="Disabled" of={TagStories.ExampleDisabledTags}>
+<DeviceVariation title="Small, medium, large" of={TagStories.Switchable} sizeSwitch>
 
-Add `[disabled]="true"` for things nobody needs to act on, like skipped steps. It greys out the tag and its icon, whatever the color.
+Use the switch in the toolbar. Only `size` changes in the code.
 
-</Variation>
+- **Small** (`sm`, 16px): dense web tables and lists. On phones it takes the medium size, so text is never under 11px.
+- **Medium** (`md`, 20px, default): the Figma tag.
+- **Large** (`lg`, 26px): next to large text, like a page title.
 
-<Variation title="Size" of={TagStories.Sizes}>
+Icons scale with the size.
 
-Use the `size` input: `sm`, `md` (default) or `lg`.
+</DeviceVariation>
 
-</Variation>
+## Modifiers
 
-<Variation title="Figma source tags" of={TagStories.ExampleFigmaSourceTags}>
+One input each, so they work with any colour and size.
 
-The full "Review / Source tag" set from Figma, built from these inputs. Show the code to copy any of them.
+<DeviceVariation title="Icon" of={TagStories.ModIcon}>
 
-</Variation>
+A leading icon makes a tag faster to scan. Add `icon`, like `icon="calendar"`. Leave it out for text-only tags.
 
-## API
+</DeviceVariation>
 
-Change the inputs below to update the demo at the top of the page.
+<DeviceVariation title="AI" of={TagStories.ModAI}>
+
+Add `[ai]="true"` when the AI produced the answer. The tag turns blue with a sparkle. An `icon` you pass replaces the sparkle, like `icon="voice"` for voice notes.
+
+</DeviceVariation>
+
+<DeviceVariation title="Disabled" of={TagStories.ModDisabled}>
+
+Add `[disabled]="true"` for things nobody needs to act on, like skipped steps. It greys out the tag and its icon, whatever the colour.
+
+</DeviceVariation>
+
+## Specs
+
+Read from the theme, so these values always match the code.
+
+<SizeSpecs
+  element="span"
+  baseClass="exos-tag exos-tag-neutral exos-tag-text-only"
+  labelClass="exos-tag-label"
+  sample="From order"
+  sizes={[
+    { label: 'Small', className: 'exos-tag-sm' },
+    { label: 'Medium', className: '' },
+    { label: 'Large', className: 'exos-tag-lg' },
+  ]}
+/>
+
+## Content
+
+- **Keep labels to 1 to 3 words,** sentence case, no full stop. They are labels, not messages.
+- **Say what it is, not what to do:** "Needs your input", not "Please check this".
+- **Start source tags with where it came from:** "From order", "From property records".
+
+<DoDont>
+  <Guideline type="do" of={TagStories.DoShortLabel}>keep the label short enough to read at a glance.</Guideline>
+  <Guideline type="dont" of={TagStories.DontSentence}>write a sentence. It gets cut off; use plain text instead.</Guideline>
+  <Guideline type="do" of={TagStories.DoAttentionSparingly}>use attention only for what needs a person.</Guideline>
+  <Guideline type="dont" of={TagStories.DontAllAttention}>make everything orange. Nothing stands out any more.</Guideline>
+  <Guideline type="do" of={TagStories.DoOneTag}>give each item the one tag that matters most.</Guideline>
+  <Guideline type="dont" of={TagStories.DontManyTags}>stack several tags on one item.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="Colors and disabled" of={TagStories.AllColors} noCode>
+
+Every colour, normal and disabled. Disabled greys out the fill, text and icon.
+
+Tags have no hover, focus or pressed states: they aren't interactive.
+
+</DeviceVariation>
+
+<DeviceVariation title="Icons" of={TagStories.IconSet} noCode>
+
+All the icons a tag can carry, from the Figma.
+
+</DeviceVariation>
+
+<DeviceVariation title="Figma source tags" of={TagStories.FigmaSourceTags} noCode>
+
+The full "Review / Source tag" set from Figma, built from these inputs.
+
+</DeviceVariation>
+
+## Behavior
+
+### Interaction
+
+Tags are labels, not controls. They can't be clicked, focused or reached with <kbd>Tab</kbd>. If people need to act on something, use a [Button](?path=/docs/components-button--docs) or a [Chip](?path=/docs/components-chip--docs).
+
+### Mobile and web
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Size | Small shows as medium: text is never under 11pt | Any; small fits dense tables |
+| Long labels | Wrap onto a second line | End in an ellipsis, full text on hover |
+| Placement | Under the item it labels, so it doesn't squeeze the content | Beside the item, on the same line |
+| Many tags | Wrap onto a new line | Wrap onto a new line |
+
+### Edge cases
+
+<SpecimenGrid>
+  <Specimen of={TagStories.EdgeLongLabel}>**Long label:** on web it ends in an ellipsis with the full text in the tooltip; on phones it wraps.</Specimen>
+  <Specimen of={TagStories.EdgeWrap}>**Narrow space:** tags wrap onto a new line instead of shrinking.</Specimen>
+  <Specimen of={TagStories.EdgeNoIcon}>**No icon:** the padding evens out on both sides.</Specimen>
+</SpecimenGrid>
+
+## Accessibility
+
+For the AI tag in the live demo, a screen reader reads:
+
+<ScreenReader name="AI Photos" role="text" state="no state (not interactive)" />
+
+- **Colour is never the only signal:** the label says what the tag means, and AI tags include "AI" in what is read.
+- **Decorative icons are hidden** from screen readers. Only the AI sparkle is announced.
+- **Contrast:** every colour passes 4.5:1 for its text. The info text is a shade darker than the Figma blue to get there.
+- **Checked automatically:** every tag story runs an accessibility scan in the tests, and a test checks the text above.
+
+## Code
+
+The Variants, Size and Modifiers examples above each have their code.
+
+### API
 
 <Controls of={TagStories.WithIcon} />
+
+### Theming
+
+Tags read these CSS variables from `.exos-theme-dcfc`. Override them there to theme tags everywhere.
+
+<TokenTable
+  tokens={[
+    { name: '--color-background-tag-neutral', use: 'Fill: neutral and disabled' },
+    { name: '--color-text-tag-neutral', use: 'Text: neutral' },
+    { name: '--color-background-selected', use: 'Fill: blue (AI)' },
+    { name: '--color-text-tag', use: 'Text: blue (AI)' },
+    { name: '--color-background-attention', use: 'Fill: attention' },
+    { name: '--color-text-tag-attention', use: 'Text: attention' },
+    { name: '--color-background-tag-info', use: 'Fill: info' },
+    { name: '--color-text-tag-info', use: 'Text: info (darker than the link blue, for contrast)' },
+    { name: '--color-text-label', use: 'Text: disabled' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Chip', text: 'When people pick the answer', href: '/?path=/docs/components-chip--docs' },
+    { title: 'Button', text: 'For actions', href: '/?path=/docs/components-button--docs' },
+    { title: 'Grid', text: 'Where tags sit on mobile and web', href: '/?path=/docs/foundations-grid--docs' },
+    { title: 'Catalog', text: 'Every component at a glance', href: '/?path=/docs/catalog--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** long labels truncate with a tooltip on web and wrap on phones; small takes the medium size on phones (11px minimum text); darker info text for contrast.
+- **Nov 10, 2026:** first version from the Figma "Review / Source tag" set; sizes (`sm`, `md`, `lg`), AI and disabled.

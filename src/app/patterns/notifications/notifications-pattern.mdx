@@ -1,0 +1,78 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, Related } from '../../../../.storybook/blocks/Guidelines';
+import * as Stories from './notifications-pattern.stories';
+
+<Meta of={Stories} />
+
+<PageNav />
+
+# Notifications
+
+How to tell people something: which component, how loud, and for how long. Use the **quietest one that works**. Every interruption costs attention.
+
+## From quietest to loudest
+
+<DeviceCanvas of={Stories.Ladder} defaultDevice="mobile" noCode />
+
+| | Use it for | Stays | Blocks |
+|---|---|---|---|
+| **1. Field message** ([Input](?path=/docs/components-forms-input--docs)) | A problem with one answer | Until fixed | No |
+| **2. Inline notification** ([Notification](?path=/docs/components-notification--docs)) | Something about this page or section, or several problems at once | Until fixed or dismissed | No |
+| **3. Toast** ([Notification](?path=/docs/components-notification--docs)) | The result of something people just did | A few seconds (info, success) | No |
+| **4. Modal** ([Modal](?path=/docs/components-modal--docs)) | A decision people must make before going on | Until they choose | Yes |
+
+## Which one
+
+| Situation | Use |
+|---|---|
+| An email address is wrong | Field message |
+| A form was sent with problems | Field messages, plus an error summary at the top (see [Forms](?path=/docs/patterns-forms--docs)) |
+| Saved, archived, sent | Success toast; add "Undo" when it can be undone |
+| Couldn't save because the connection dropped | Error toast that stays, with "Try again" |
+| A card expires next week | Inline warning on the billing page |
+| A new version is available | Info notification at the top of the page, dismissible |
+| Delete something that can't be undone | Modal, with "Delete" and "Cancel" |
+| A list couldn't load | [Empty state](?path=/docs/patterns-empty-states--docs) error in place of the list |
+
+## Kinds
+
+| Kind | Means | Example |
+|---|---|---|
+| **Info** | Good to know | "New version available" |
+| **Success** | It worked | "Order placed" |
+| **Warning** | It worked, but check something, or something will matter soon | "Card expires soon" |
+| **Error** | It didn't work; here's what to do | "Payment failed. Try another card." |
+
+## Rules
+
+- **Next to what it's about.** A field's problem goes under the field; a page's problem at the top of the page.
+- **One at a time.** Several notifications stacked get ignored. Sum them up: "3 items need your attention".
+- **Things people must act on don't disappear.** Errors, warnings and toasts with an action stay until dismissed.
+- **Never only colour.** Every kind has its own icon, and the title says what happened.
+- **Don't confirm what people can see.** If the page already shows the change, skip the toast.
+
+## Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Toasts | Along the bottom, in thumb reach, clear of the home bar | Top right |
+| Modals | A sheet from the bottom | Centred |
+| Inline notifications | Full width | As wide as the content they're about |
+
+## Accessibility
+
+- **Errors and warnings are announced right away;** info and success when the screen reader is free.
+- **Notifications don't take focus,** except the error summary on a form and modals, which people must deal with.
+- **Toasts that matter stay** until dismissed, and hovering or focusing pauses the others.
+
+## Related
+
+<Related
+  items={[
+    { title: 'Notification', text: 'Inline and toast', href: '/?path=/docs/components-notification--docs' },
+    { title: 'Modal', text: 'Decisions', href: '/?path=/docs/components-modal--docs' },
+    { title: 'Forms', text: 'Field messages and the error summary', href: '/?path=/docs/patterns-forms--docs' },
+    { title: 'Empty states', text: 'When content can’t load', href: '/?path=/docs/patterns-empty-states--docs' },
+  ]}
+/>

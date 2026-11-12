@@ -1,9 +1,12 @@
-<ng-template #chipTemplate let-chip>
+<ng-template #chipTemplate let-chip let-i="index">
   <button
     type="button"
     [class]="classesOf(chip)"
-    [attr.role]="type() === 'single' ? 'radio' : 'checkbox'"
-    [attr.aria-checked]="chip.selected"
+    [attr.role]="chipRole()"
+    [attr.aria-checked]="chipRole() ? chip.selected : null"
+    [attr.aria-pressed]="chipRole() ? null : chip.selected"
+    [attr.tabindex]="tabIndexOf(i)"
+    [attr.title]="titleOf(chip)"
     [attr.data-state]="stateOf(chip)"
     [disabled]="chip.disabled"
     (click)="click(chip)"
@@ -22,7 +25,7 @@
     @if (chip.icon === 'records') {
       <img src="icons/pcr/records.svg" width="12" height="12" alt="" />
     }
-    {{ chip.label }}
+    <span class="chip-label">{{ chip.label }}</span>
     @if (chip.suggested && !chip.disabled) {
       <img src="icons/pcr/chip-sparkle.svg" width="10" height="10" alt="(AI suggested)" />
     }
@@ -32,14 +35,17 @@
 @if (isGroup()) {
   <div
     class="chip-group"
+    [class.chip-group-sm]="size() === 'sm'"
+    [class.chip-group-lg]="size() === 'lg'"
     [attr.role]="type() === 'single' ? 'radiogroup' : 'group'"
     [attr.aria-label]="groupLabel() || null"
     [attr.aria-labelledby]="labelledBy()"
+    (keydown)="onKeydown($event)"
   >
-    @for (chip of chips(); track chip.option!.value) {
-      <ng-container [ngTemplateOutlet]="chipTemplate" [ngTemplateOutletContext]="{ $implicit: chip }" />
+    @for (chip of chips(); track chip.option!.value; let i = $index) {
+      <ng-container [ngTemplateOutlet]="chipTemplate" [ngTemplateOutletContext]="{ $implicit: chip, index: i }" />
     }
   </div>
 } @else {
-  <ng-container [ngTemplateOutlet]="chipTemplate" [ngTemplateOutletContext]="{ $implicit: chips()[0] }" />
+  <ng-container [ngTemplateOutlet]="chipTemplate" [ngTemplateOutletContext]="{ $implicit: chips()[0], index: 0 }" />
 }

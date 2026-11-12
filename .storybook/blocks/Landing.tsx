@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Story } from '@storybook/addon-docs/blocks';
 import './landing.css';
 
@@ -196,63 +196,143 @@ export type CatalogItem = {
   group: string;
 };
 
-/** Searchable grid of components, each with a live preview, its name and a one-line description. */
+/** Groups in reading order, each with its own tint. Unknown groups go last, in grey. */
+const GROUP_ORDER = ['Actions', 'Forms', 'Navigation', 'Feedback', 'Display'];
+const groupKey = (group: string) => (GROUP_ORDER.includes(group) ? group.toLowerCase() : 'other');
+
+/**
+ * The live preview, scaled down to fit its tile if it's bigger, never up.
+ * Measured after the story renders, and again whenever it changes size.
+ */
+const Specimen = ({ of }: { of: unknown }) => {
+  const stage = useRef<HTMLDivElement>(null);
+  const inner = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    const fit = () => {
+      if (!stage.current || !inner.current) return;
+      const pad = 32;
+      const w = inner.current.scrollWidth;
+      const h = inner.current.scrollHeight;
+      if (!w || !h) return;
+      const next = Math.min(1, (stage.current.clientWidth - pad) / w, (stage.current.clientHeight - pad) / h);
+      setScale((s) => (Math.abs(s - next) > 0.01 ? next : s));
+    };
+    const observer = new ResizeObserver(fit);
+    if (stage.current) observer.observe(stage.current);
+    if (inner.current) observer.observe(inner.current);
+    const timer = setTimeout(fit, 400);
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
+  }, []);
+  return (
+    <div ref={stage} className="exos-catalog__stage" inert>
+      <div ref={inner} className="exos-catalog__specimen" style={{ transform: `scale(${scale})` }}>
+        <Story of={of as never} inline />
+      </div>
+    </div>
+  );
+};
+
+/** Searchable, filterable grid of components: a live preview, the name and one line each. */
 export const Catalog = ({ items }: { items: CatalogItem[] }) => {
   const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState('All');
   const q = query.trim().toLowerCase();
-  const groups = useMemo(() => {
-    const shown = items
-      .filter((i) => !q || i.name.toLowerCase().includes(q) || i.description.toLowerCase().includes(q))
-      .sort((a, b) => a.name.localeCompare(b.name));
-    return [...new Set(items.map((i) => i.group))]
-      .map((group) => ({ group, items: shown.filter((i) => i.group === group) }))
-      .filter((g) => g.items.length);
-  }, [items, q]);
+
+  const allGroups = useMemo(() => {
+    const names = [...new Set(items.map((i) => i.group))];
+    return names.sort((a, b) => (GROUP_ORDER.indexOf(a) + 99) % 99 - (GROUP_ORDER.indexOf(b) + 99) % 99 || a.localeCompare(b));
+  }, [items]);
+
+  const matches = (i: CatalogItem) => !q || i.name.toLowerCase().includes(q) || i.description.toLowerCase().includes(q);
+
+  const groups = useMemo(
+    () =>
+      allGroups
+        .filter((g) => filter === 'All' || g === filter)
+        .map((group) => ({
+          group,
+          items: items.filter((i) => i.group === group && matches(i)).sort((a, b) => a.name.localeCompare(b.name)),
+        }))
+        .filter((g) => g.items.length),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [items, allGroups, filter, q],
+  );
   const count = groups.reduce((n, g) => n + g.items.length, 0);
 
   return (
     <div className="exos-catalog">
-      <label className="exos-catalog__search">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-          <circle cx="7" cy="7" r="4.75" />
-          <path d="M10.5 10.5L14 14" strokeLinecap="round" />
-        </svg>
-        <input
-          type="search"
-          placeholder="Search by component name…"
-          aria-label="Search components"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </label>
+      <div className="exos-catalog__tools">
+        <label className="exos-catalog__search">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+            <circle cx="7" cy="7" r="4.75" />
+            <path d="M10.5 10.5L14 14" strokeLinecap="round" />
+          </svg>
+          <input
+            type="search"
+            placeholder="Search components…"
+            aria-label="Search components"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </label>
+        <div className="exos-catalog__filters" role="group" aria-label="Filter by group">
+          {['All', ...allGroups].map((g) => {
+            const n = items.filter((i) => (g === 'All' || i.group === g) && matches(i)).length;
+            return (
+              <button
+                key={g}
+                type="button"
+                className={`exos-catalog__filter exos-catalog__filter--${g === 'All' ? 'all' : groupKey(g)}`}
+                aria-pressed={filter === g}
+                onClick={() => setFilter(g)}
+              >
+                {g}
+                <span className="exos-catalog__filter-count">{n}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
       <p className="exos-catalog__count" aria-live="polite">
         {count} {count === 1 ? 'component' : 'components'}
       </p>
 
       {groups.map(({ group, items: groupItems }) => (
-        <section key={group} className="exos-catalog__group">
-          <h2 className="exos-catalog__group-title">{group}</h2>
+        <section key={group} className={`exos-catalog__group exos-catalog__group--${groupKey(group)}`}>
+          <h2 className="exos-catalog__group-title">
+            <span className="exos-catalog__dot" aria-hidden="true" />
+            {group}
+            <span className="exos-catalog__group-count">{groupItems.length}</span>
+          </h2>
           <div className="exos-catalog__grid">
             {groupItems.map((item) => (
-              <article key={item.name} className="exos-catalog__item">
-                <div className="exos-catalog__preview">
-                  <div className="exos-catalog__stage" inert>
-                    <Story of={item.of as never} inline />
-                  </div>
-                  {/* Whole preview opens the docs; the name link below is the keyboard target. */}
-                  <a className="exos-catalog__cover" href={docsHref(item.docs)} target="_top" tabIndex={-1} aria-hidden="true" />
-                </div>
-                <a className="exos-catalog__name" href={docsHref(item.docs)} target="_top">
-                  {item.name}
-                </a>
-                <p className="exos-catalog__description">{item.description}</p>
-              </article>
+              <a key={item.name} className="exos-catalog__card" href={docsHref(item.docs)} target="_top">
+                <Specimen of={item.of} />
+                <span className="exos-catalog__body">
+                  <span className="exos-catalog__name">{item.name}</span>
+                  <span className="exos-catalog__description">{item.description}</span>
+                  <span className="exos-catalog__open" aria-hidden="true">
+                    Open docs <span>→</span>
+                  </span>
+                </span>
+              </a>
             ))}
           </div>
         </section>
       ))}
 
-      {!count && <p className="exos-catalog__empty">No components match “{query}”.</p>}
+      {!count && (
+        <div className="exos-catalog__empty">
+          <p>No components match “{query}”.</p>
+          <button type="button" onClick={() => { setQuery(''); setFilter('All'); }}>
+            Clear search
+          </button>
+        </div>
+      )}
     </div>
   );
 };

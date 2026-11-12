@@ -1,0 +1,222 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import {
+  PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
+  ScreenReader, Related, TokenTable,
+} from '../../../../.storybook/blocks/Guidelines';
+import * as NotificationStories from './notification.stories';
+
+<Meta of={NotificationStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>Notifications tell people that something happened, worked, needs a look, or didn't work.</Subtitle>
+
+## Live demo
+
+<DeviceCanvas of={NotificationStories.Overview} defaultDevice="mobile" />
+
+## When to use
+
+**Use a notification** to tell people about something they didn't ask to see, or the result of something they did:
+
+- The result of an action, like "Order placed" or "Couldn't save".
+- Something about the whole page, like "New version available".
+- Something that needs attention soon, like an expiring card.
+
+### Compared with look-alikes
+
+| Component | Blocks the page | Stays | Use it for |
+|---|---|---|---|
+| **Inline notification** | No | Until fixed or dismissed | Something about this page or section |
+| **Toast** | No | A few seconds (info, success) | A quick result: "Saved", "Order archived" |
+| [Modal](?path=/docs/components-modal--docs) | Yes | Until people choose | A decision before going on: "Delete photo?" |
+| Field message ([Input](?path=/docs/components-forms-input--docs)) | No | Until fixed | A problem with one field |
+
+## Anatomy
+
+<DeviceCanvas of={NotificationStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Container** | Always. A side bar and light fill in the status colour. |
+| 2 | **Status icon** | Always. A different shape for each kind. |
+| 3 | **Title** | Always. What happened. |
+| 4 | **Message** | Optional. What it means or what to do. |
+| 5 | **Action** | Optional, one at most. |
+| 6 | **Close** | `dismissible` is set. |
+
+## Variants
+
+<DeviceVariation
+  title="Kind"
+  of={NotificationStories.KindSwitchable}
+  switches={[{ arg: 'kind', label: 'Kind', initial: 'info', options: [
+    { value: 'info', label: 'Info', short: 'I' },
+    { value: 'success', label: 'Success', short: 'S' },
+    { value: 'warning', label: 'Warning', short: 'W' },
+    { value: 'error', label: 'Error', short: 'E' },
+  ] }]}
+>
+
+Pick the kind by what happened. Use the switch in the toolbar; only `kind` changes in the code.
+
+- **Info:** good to know, nothing to do.
+- **Success:** it worked.
+- **Warning:** it worked, or will soon matter; check something.
+- **Error:** it didn't work. Say what to do next.
+
+</DeviceVariation>
+
+<DeviceVariation title="Toast" of={NotificationStories.VarToast} noCode>
+
+A notification that floats above the page for a moment, for the result of something people just did. Try the buttons, then switch to Mobile.
+
+- **Web:** top right. **Phones:** along the bottom, where thumbs are, clear of the home bar.
+- Info and success hide after 6 seconds; hovering or focusing one keeps it open.
+- Errors, warnings and toasts with an action stay until dismissed, so nobody misses them.
+- At most 3 at a time; the newest is closest to the edge.
+
+```ts
+// Once, in the app shell:      <app-toast-region />
+// Anywhere:
+inject(ToastService).show({ kind: 'success', title: 'Changes saved' });
+inject(ToastService).show({ kind: 'info', title: 'Order archived', actionLabel: 'Undo', onAction: () => restore() });
+```
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Action" of={NotificationStories.ModAction}>
+
+`actionLabel` adds one action, like "Try again" or "View order"; it emits `action`. One at most: a notification isn't a menu.
+
+</DeviceVariation>
+
+<DeviceVariation title="Dismissible" of={NotificationStories.ModDismissible}>
+
+`[dismissible]="true"` adds a close button that emits `dismissed`; you remove the notification. Leave errors people must fix undismissible: they go away once fixed.
+
+</DeviceVariation>
+
+<DeviceVariation title="Title only" of={NotificationStories.ModTitleOnly}>
+
+Leave out `message` when the title says it all, like "Changes saved".
+
+</DeviceVariation>
+
+## Specs
+
+| | Web | Mobile |
+|---|---|---|
+| Side bar | 4px, status colour | Same |
+| Corners | 10px | 10px |
+| Padding | 14px 12px 14px 16px | Same |
+| Icon | 20px | 20px |
+| Text | Title 14px semibold; message 14px | Same |
+| Close button | 28px | 28px, with a 44px tap area |
+| Action | Text button | At least 44px tall |
+| Toast | Top right, 384px wide, 8px apart | Along the bottom, full width minus 12px |
+
+## Content
+
+- **Title: what happened,** in a few words: "Payment failed", "Order placed". Not "Error" or "Success".
+- **Message: what to do,** in one or two sentences, without blaming people.
+- **Action: a verb,** like "Try again" or "Update card".
+- **Write for when it's read:** "Saved", not "Saving was successful".
+
+<DoDont>
+  <Guideline type="do" of={NotificationStories.DoSaySolution}>say what happened and what to do.</Guideline>
+  <Guideline type="dont" of={NotificationStories.DontVague}>write "Something went wrong" and stop there.</Guideline>
+  <Guideline type="do" of={NotificationStories.DoInlineForBlocking}>keep problems people must fix inline, where they'll stay.</Guideline>
+  <Guideline type="dont" of={NotificationStories.DontToastForBlocking}>put a problem in a toast that can disappear.</Guideline>
+  <Guideline type="do" of={NotificationStories.DoOneAtATime}>sum several issues up in one notification.</Guideline>
+  <Guideline type="dont" of={NotificationStories.DontStack}>stack several notifications. People stop reading them.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="All kinds" of={NotificationStories.AllKinds} noCode>
+
+Every kind inline, and as a toast. Each kind has its own icon shape, so the kind is clear without colour.
+
+</DeviceVariation>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> | To the action, then the close button |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Presses the focused button |
+
+A notification never takes focus when it appears, so it doesn't pull people away from what they're doing. Screen readers announce it instead.
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Toasts | Along the bottom, in thumb reach | Top right |
+| Toast width | Full width minus 12px | 384px |
+| Close and action | 44px tap areas | Their own size |
+| Hover | None (toasts don't pause) | Hover pauses a toast |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+### Edge cases
+
+<SpecimenGrid>
+  <Specimen of={NotificationStories.EdgeLongMessage}>**Long message:** wraps; the icon and close stay at the top.</Specimen>
+  <Specimen of={NotificationStories.EdgeNarrow}>**Narrow space:** the action moves under the title.</Specimen>
+</SpecimenGrid>
+
+## Accessibility
+
+For the payment error in the live demo, a screen reader announces as soon as it appears:
+
+<ScreenReader name="Payment failed. Your card was declined. Try another card." role="alert" state="announced right away" />
+
+- **Errors and warnings** use `role="alert"`, so they're read right away. **Info and success** use `role="status"`, read when the screen reader is free.
+- **Not by colour alone:** each kind has its own icon shape, and the title says what happened.
+- **Time to read:** toasts that matter stay until dismissed, and hovering or focusing pauses the rest.
+- **Close buttons say what they close:** "Dismiss: Payment failed".
+- **Checked automatically:** every notification story runs an accessibility scan in the tests, plus role, button and toast tests.
+
+## Code
+
+### API
+
+<Controls of={NotificationStories.Default} />
+
+### Theming
+
+<TokenTable
+  tokens={[
+    { name: '--color-status-info', use: 'Side bar and icon: info' },
+    { name: '--color-background-info', use: 'Fill: info' },
+    { name: '--color-status-success', use: 'Side bar and icon: success' },
+    { name: '--color-background-success', use: 'Fill: success' },
+    { name: '--color-status-warning', use: 'Side bar and icon: warning' },
+    { name: '--color-background-warning', use: 'Fill: warning' },
+    { name: '--color-status-danger', use: 'Side bar and icon: error' },
+    { name: '--color-background-danger', use: 'Fill: error' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Modal', text: 'When people must decide', href: '/?path=/docs/components-modal--docs' },
+    { title: 'Loading', text: 'While something is happening', href: '/?path=/docs/components-loading--docs' },
+    { title: 'Input', text: 'Messages for one field', href: '/?path=/docs/components-forms-input--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** first version: info, success, warning and error; inline and toast; action and dismiss.

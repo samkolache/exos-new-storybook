@@ -1,0 +1,99 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, Related } from '../../../../.storybook/blocks/Guidelines';
+import * as FormStories from './forms.stories';
+
+<Meta of={FormStories} />
+
+<PageNav />
+
+# Forms
+
+How Exos fields come together into a form people can fill in quickly, on a phone or at a desk, and fix easily when something's wrong.
+
+## Example
+
+Try sending it empty: a summary lists every problem and takes focus, each link jumps to its field, and fixing a field takes it off the list. Switch to Mobile: one column, and the button spans the width.
+
+<DeviceCanvas of={FormStories.Overview} defaultDevice="mobile" noCode />
+
+## Layout
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Columns | One, full width | On the [Grid](?path=/docs/foundations-grid--docs); short related fields side by side |
+| Field width | Full width | Sized to the answer (a ZIP code is short) |
+| Space between fields | 24px | 24px |
+| Main button | Full width, at the end, in thumb reach | At the end, left-aligned with the fields |
+| Keyboard | Return key labelled "Next" between fields, "Done" or "Send" on the last | Tab between fields; Enter sends |
+
+- **One question per line,** in the order people think about it: who, then what, then how.
+- **Group related fields** under a short heading when a form has more than about 6.
+- **Long forms:** split into steps of 3 to 6 fields, each its own page, with a progress line ("Step 2 of 3").
+
+## Labels and help
+
+- **Every field has a visible label above it.** Placeholders disappear as people type.
+- **Mark the few optional fields "(optional)"** rather than every required one with `*`.
+- **Help text says what people need before they type,** like a format or why you ask. Keep it to one line.
+- **Pick the right field:** a few known answers are [radios](?path=/docs/components-forms-radio-group--docs) or [chips](?path=/docs/components-chip--docs), a long list is a [select](?path=/docs/components-forms-select--docs), an amount is a [number input](?path=/docs/components-forms-number-input--docs), a date is a [date picker](?path=/docs/components-forms-date-picker--docs).
+- **Ask only for what you need.** Every field is one more reason to stop.
+
+## Checking answers
+
+| When | What happens |
+|---|---|
+| People are typing | Nothing. Don't interrupt halfway through an email address. |
+| New usernames and passwords, while typing | Show the rules being met, so people know before they move on. |
+| People leave a field | Check it; show the message under it if it's wrong. |
+| People fix it | The message goes as soon as it's right. |
+| People send | Check everything. If anything's wrong, show the **error summary** at the top and move focus to it. |
+
+### The error summary
+
+<DeviceCanvas of={FormStories.ErrorSummary} defaultDevice="web" noCode />
+
+- **Title counts the problems:** "Fix 2 problems to continue".
+- **One link per problem,** with the same words as the field's message, jumping to that field.
+- **It takes focus,** so screen readers read it and people on phones don't miss it above the fold.
+- **It shrinks as people fix things,** and goes when they're all fixed.
+
+## Messages
+
+- **Say what's wrong and how to fix it:** "Enter an email address like name@example.com", not "Invalid input".
+- **Don't blame:** "Enter your full name", not "You didn't enter a name".
+- **Same words** in the field's message and in the summary.
+
+## Buttons
+
+- **Name the main button after what happens:** "Place order", "Save address". Not "Submit".
+- **Keep it enabled.** A disabled button doesn't say what's missing; a click that shows the error summary does.
+- **One main button.** "Cancel" or "Back" is secondary, before it.
+
+<DoDont>
+  <Guideline type="do" of={FormStories.DoLabelsAbove}>put a visible label above every field.</Guideline>
+  <Guideline type="dont" of={FormStories.DontLabelsInside}>use the placeholder as the label.</Guideline>
+  <Guideline type="do" of={FormStories.DoSpecificButton}>say what the button does.</Guideline>
+  <Guideline type="dont" of={FormStories.DontGenericButton}>write "Submit".</Guideline>
+  <Guideline type="do" of={FormStories.DoEnabledSubmit}>keep the button enabled and say what's missing when it's pressed.</Guideline>
+  <Guideline type="dont" of={FormStories.DontDisabledSubmit}>disable the button until the form is right. People can't tell why.</Guideline>
+</DoDont>
+
+## Accessibility
+
+- **Labels, help and messages are linked to their fields** by every Exos field; don't build fields by hand.
+- **`autocomplete` on personal details,** so browsers and password managers fill them in.
+- **Errors are never colour alone:** each has a message and an icon.
+- **The summary takes focus,** and its links move focus to the field.
+- **Checked automatically:** the example runs an accessibility scan and an error summary test.
+
+## Related
+
+<Related
+  items={[
+    { title: 'Input', text: 'Text fields', href: '/?path=/docs/components-forms-input--docs' },
+    { title: 'Disabled and read only', text: 'When fields can’t change', href: '/?path=/docs/patterns-disabled-and-read-only--docs' },
+    { title: 'Notifications', text: 'Which message to use', href: '/?path=/docs/patterns-notifications--docs' },
+    { title: 'Grid', text: 'Laying out forms', href: '/?path=/docs/foundations-grid--docs' },
+  ]}
+/>

@@ -1,0 +1,22 @@
+<div [class]="classes()" [attr.role]="role()">
+  <app-status-icon class="exos-notification-icon" [kind]="kind()" />
+  <div class="exos-notification-body">
+    @if (title()) {
+      <p class="exos-notification-title">{{ title() }}</p>
+    }
+    @if (message()) {
+      <p class="exos-notification-message">{{ message() }}</p>
+    }
+    <ng-content />
+    @if (actionLabel()) {
+      <button type="button" class="exos-notification-action" (click)="action.emit()">{{ actionLabel() }}</button>
+    }
+  </div>
+  @if (dismissible()) {
+    <button type="button" class="exos-notification-close" [attr.aria-label]="'Dismiss: ' + (title() || message())" (click)="dismissed.emit()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false">
+        <path d="M3.5 3.5l7 7M10.5 3.5l-7 7" />
+      </svg>
+    </button>
+  }
+</div>

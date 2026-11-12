@@ -1,72 +1,252 @@
-import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
-import { Variation } from '../../../../.storybook/blocks/Variation';
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import {
+  PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
+  ScreenReader, Related, SizeSpecs, TokenTable,
+} from '../../../../.storybook/blocks/Guidelines';
 import * as ChipStories from './chip.stories';
 
 <Meta of={ChipStories} />
 
+<PageNav />
+
 <Title />
 
-<Subtitle>Chips let people pick an answer from a short set of options.</Subtitle>
+<Subtitle>Chips let people pick an answer from a short set of options, often with an AI-suggested answer already picked.</Subtitle>
 
-## Demo
+## Live demo
 
-<Canvas of={ChipStories.GroupSingle} />
+<DeviceCanvas of={ChipStories.MobileExample} webOf={ChipStories.WebExample} defaultDevice="mobile" />
 
-## Usage
+## When to use
 
-Pass `options` to show a row of chips and bind the answer with `[(value)]`. It also works with `ngModel` and reactive forms.
+**Use chips** to answer a question with a short, known set of options:
 
-```html
-<app-chip groupLabel="Interior condition" [options]="options" [(value)]="condition" />
-```
+- 2 to 7 options that fit on one or two lines, like a condition rating or nearby influences.
+- When an answer is suggested (by AI, photos or records) and people confirm or change it.
+- For one answer or several.
 
-```ts
-options: ChipOption[] = [
-  { label: 'Good', value: 'good' },
-  { label: 'Average', value: 'average', suggested: true },
-  { label: 'Fair', value: 'fair' },
-];
-```
+### Compared with look-alikes
 
-Without `options` it is a single chip you can toggle: `<app-chip label="Fair" [(selected)]="picked" />`.
+| Component | Options | All visible | People pick | Editable |
+|---|---|---|---|---|
+| **Chip** | 2–7, short | Yes | One or many | Yes |
+| [Select](?path=/docs/components-forms-select--docs) | 8 or more | No, in a list | One | Yes |
+| [Radio group](?path=/docs/components-forms-radio-group--docs) | 2–5, each with detail | Yes | One | Yes |
+| [Tag](?path=/docs/components-tag--docs) | One label | Yes | Nothing | No |
 
-## Variations
+## Anatomy
 
-<Variation title="Type" of={ChipStories.Types}>
+<DeviceCanvas of={ChipStories.Anatomy} noCode />
 
-Set how many answers people can pick with the `type` input:
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Container** | Always. Fully rounded, 24, 32 or 40px tall. Blue fill and border when picked. |
+| 2 | **Checkbox** | Multi chips. Single chips show a **check** here instead, once a person picks one. |
+| 3 | **Label** | Always. On web, long labels end in an ellipsis with the full text on hover. On phones they wrap, since there's no hover. |
+| 4 | **AI sparkle** | The option has `suggested: true`. |
 
-- `single` (default) picks one. `value` is a string. A picked chip shows a check.
-- `multi` picks any number. `value` is a string array, kept in option order. Each chip shows a checkbox.
+A chip can also lead with a source icon, like `records` (see Modifiers).
 
-</Variation>
+## Variants
 
-<Variation title="States" of={ChipStories.AllStates}>
+Chips come in two variants. Pick by how many answers a question allows: it changes what `value` holds and how screen readers announce the chips.
 
-Every chip in the Figma component set: default, AI suggested, selected and disabled, for both types.
+<DeviceVariation title="Single" of={ChipStories.GroupSingle}>
 
-</Variation>
+People pick **one** answer, like radios. A picked chip shows a check.
 
-<Variation title="AI suggested" of={ChipStories.SuggestedShowcase}>
+- `value` is a string, like `'average'`.
+- This is the default, so no `type` is needed.
 
-Add `suggested: true` to an option the AI picked. It shows a sparkle. While it is still picked, it has no check, so people can tell the AI's answer from their own.
+</DeviceVariation>
 
-</Variation>
+<DeviceVariation title="Multi" of={ChipStories.GroupMulti}>
 
-<Variation title="Icon" of={ChipStories.IconShowcase}>
+People pick **any number** of answers, like checkboxes. Each chip leads with a checkbox.
 
-Add `icon: 'records'` to an option to show where the answer came from.
+- Add `type="multi"`.
+- `value` is a string array, in the order of `options`, like `['commercial', 'freeway']`.
 
-</Variation>
+</DeviceVariation>
 
-<Variation title="Disabled" of={ChipStories.DisabledShowcase}>
+## Size
 
-Add `disabled: true` to an option to grey out one chip, or use the `disabled` input to grey out the whole group.
+<DeviceVariation title="Small, medium, large" of={ChipStories.GroupSingle} sizeSwitch>
 
-</Variation>
+Use the **Small / Medium / Large** switch in the toolbar. Only `size` changes in the code.
 
-## API
+- **Small** (`sm`, 24px): dense web screens like filters and side panels.
+- **Medium** (`md`, 32px, default): the Figma chip. Most questions.
+- **Large** (`lg`, 40px): guided flows where answering is the main task.
 
-Change the inputs below to update the demo at the top of the page.
+Set `size` on the group, so every chip in a row is the same size.
+
+</DeviceVariation>
+
+## Modifiers
+
+Small details on an option. Each is one property on the option, so it works with either variant and any size.
+
+<DeviceVariation title="Source icon" of={ChipStories.ModifierSource}>
+
+Shows where an answer came from, before the label.
+
+- Add `icon: 'records'` to the option.
+- Use it only when the source helps people choose, like photos vs property records.
+
+</DeviceVariation>
+
+<DeviceVariation title="AI suggested" of={ChipStories.ModifierSuggested}>
+
+Marks the answer the AI picked with a sparkle after the label.
+
+- Add `suggested: true` to the option.
+- Suggest one option per single group.
+
+</DeviceVariation>
+
+## Specs
+
+Read from the theme, so these values always match the code.
+
+<SizeSpecs
+  baseClass="chip chip-single"
+  sample="Average"
+  groupClass="chip-group"
+  sizes={[
+    { label: 'Small', className: 'chip-sm' },
+    { label: 'Medium', className: '' },
+    { label: 'Large', className: 'chip-lg' },
+  ]}
+/>
+
+## Content
+
+- **Keep labels short:** 1 to 3 words, sentence case, no full stop.
+- **Ask the question in a label above or beside the group,** not in the chips. Point `labelledBy` at it.
+- **Order options by meaning,** like Good → Poor, not by how often they are picked.
+- **Show where an answer came from in the label** when it helps people choose, like "3 · photos".
+
+<DoDont>
+  <Guideline type="do" of={ChipStories.DoShortLabels}>use short labels that scan in one glance.</Guideline>
+  <Guideline type="dont" of={ChipStories.DontLongLabels}>write sentences. They wrap, get cut off and are slow to compare.</Guideline>
+  <Guideline type="do" of={ChipStories.DoQuestionAsLabel}>ask the question in a label and keep the chips to the answers.</Guideline>
+  <Guideline type="dont" of={ChipStories.DontQuestionInChips}>repeat the question inside every chip.</Guideline>
+  <Guideline type="do" of={ChipStories.DoOneSuggestion}>suggest one answer in a single group, so people know what the AI thinks.</Guideline>
+  <Guideline type="dont" of={ChipStories.DontManySuggestions}>mark several options as suggested. Nothing stands out any more.</Guideline>
+  <Guideline type="do" of={ChipStories.DoFewOnPhone}>keep to about 5 options on phones, so they fit in two rows.</Guideline>
+  <Guideline type="dont" of={ChipStories.DontManyOnPhone}>wrap a long list over many rows on a phone. Use a Select.</Guideline>
+  <Guideline type="do" of={ChipStories.DoAnswers}>use chips for answers people pick.</Guideline>
+  <Guideline type="dont" of={ChipStories.DontActions}>use chips for actions. Use buttons.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="All states" of={ChipStories.AllStates} noCode>
+
+Every state from the Figma component set: default, AI suggested, selected and disabled, for single (top) and multi (bottom). States follow from the data, so there is no code to copy here.
+
+- Disable one option with `disabled: true`, or the whole group with the `disabled` input.
+
+</DeviceVariation>
+
+<DeviceVariation title="AI suggestion, kept or changed" of={ChipStories.SuggestedShowcase} noCode>
+
+- While the suggestion is still picked it has **no check**, so people can tell the AI's answer from their own (top).
+- Once someone picks something else, the sparkle stays on the suggestion so they can go back to it (bottom).
+
+</DeviceVariation>
+
+## Interaction
+
+### Keyboard
+
+| Key | Single group | Multi group |
+|---|---|---|
+| <kbd>Tab</kbd> | Into the group (to the picked chip) and out again in one step | To each chip in turn |
+| <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> | Next or previous chip, and picks it, skipping disabled chips | Not used |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Picks the first or last chip | Not used |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Picks the focused chip | Turns the focused chip on or off |
+
+A picked chip in a single group stays picked when clicked again, like a radio. A multi `value` follows the order of `options`, not the order people clicked.
+
+### Mobile and web
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Tap or click area | 44px, larger than the chip | The chip itself |
+| Space between rows | 44px minus the chip height, so tap areas don't overlap | 6px |
+| Space between chips | 12px, so a tap lands on the intended chip | 6px |
+| Long labels | Wrap onto a second line | End in an ellipsis, full text on hover |
+| How many | About 5 | Up to 7 |
+| Layout | Question above its chips, full width | Question in a label column, chips beside it |
+| Hover | None | Light grey on unpicked chips |
+
+### Edge cases
+
+<SpecimenGrid>
+  <Specimen of={ChipStories.EdgeLongLabel}>**Long label:** on web it ends in an ellipsis with the full text in the tooltip; on phones it wraps.</Specimen>
+  <Specimen of={ChipStories.EdgeOneOption}>**One option:** use a checkbox or toggle instead of a group.</Specimen>
+  <Specimen of={ChipStories.EdgeTooMany}>**Too many options:** past 7, switch to a [Select](?path=/docs/components-forms-select--docs).</Specimen>
+</SpecimenGrid>
+
+## Accessibility
+
+For the picked chip in the live demo, a screen reader gets:
+
+<ScreenReader name="Average (AI suggested)" role="radio button" state="checked" position="2 of 4" group="Interior condition" />
+
+- **Roles:** a group is a `radiogroup` (single) or `group` (multi), and each chip is a `radio` or `checkbox`. A lone chip is a toggle button (`aria-pressed`).
+- **Names:** name every group. Point `labelledBy` at the visible question, or set `groupLabel`.
+- **AI suggestions** are part of the chip's name, so they aren't shown only by colour and the sparkle.
+- **Checked automatically:** every chip story runs an accessibility scan in the tests, and a test checks the output above.
+
+## Code
+
+The Variants, Size and Modifiers examples above each have their code. This section covers the rest.
+
+### Reactive forms
+
+<DeviceCanvas of={ChipStories.GroupReactiveForm} codeOpen />
+
+### API
 
 <Controls of={ChipStories.GroupSingle} />
+
+### Theming
+
+Chips read these CSS variables from `.exos-theme-dcfc`. Override them there to theme chips everywhere.
+
+<TokenTable
+  tokens={[
+    { name: '--color-border-chip', use: 'Border of unpicked chips' },
+    { name: '--color-background-selected', use: 'Fill of picked chips' },
+    { name: '--color-control-selected', use: 'Border of picked chips, checkbox fill' },
+    { name: '--color-text-selected', use: 'Label of picked chips' },
+    { name: '--color-border-checkbox', use: 'Checkbox border' },
+    { name: '--color-background-disabled', use: 'Fill of disabled chips' },
+    { name: '--color-border-disabled', use: 'Border of disabled chips' },
+    { name: '--color-text-disabled', use: 'Label of disabled chips' },
+    { name: '--exos-touch-target-min', use: 'Tap area on mobile' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Select', text: 'For 8 or more options', href: '/?path=/docs/components-forms-select--docs' },
+    { title: 'Radio group', text: 'When options need a description', href: '/?path=/docs/components-forms-radio-group--docs' },
+    { title: 'Tag', text: 'Read-only labels', href: '/?path=/docs/components-tag--docs' },
+    { title: 'Dropdown card', text: 'Uses chips for its questions', href: '/?path=/docs/components-dropdown-card--docs' },
+    { title: 'Grid', text: 'Columns for mobile and web layouts', href: '/?path=/docs/foundations-grid--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** on phones, 12px between chips and long labels wrap; sizes (`sm`, `md`, `lg`); one Tab stop with arrow keys; long labels truncate; 44px tap area on mobile; hover only on devices with a pointer.
+- **Nov 10, 2026:** first version from the Figma component set (Review / Option chip), with single, multi and group modes.

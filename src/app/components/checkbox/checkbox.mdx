@@ -1,0 +1,259 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import {
+  PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
+  ScreenReader, Related, TokenTable,
+} from '../../../../.storybook/blocks/Guidelines';
+import * as CheckboxStories from './checkbox.stories';
+
+<Meta of={CheckboxStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>Checkboxes let people turn one option on or off, or pick any number of options from a list.</Subtitle>
+
+## Live demo
+
+One form, one piece of code. Switch to Mobile: rows get taller and the horizontal group stacks by itself.
+
+<DeviceCanvas of={CheckboxStories.Overview} defaultDevice="mobile" />
+
+## When to use
+
+**Use checkboxes** when:
+
+- People can pick **any number** of options, including none.
+- One option is a yes or no, like "Remember me" or agreeing to terms.
+- A parent option controls a list, like "All updates".
+
+### Compared with look-alikes
+
+| Component | People pick | Takes effect | Use it for |
+|---|---|---|---|
+| **Checkbox** | Any number | When the form is sent | Several answers, or one yes/no in a form |
+| [Radio group](?path=/docs/components-forms-radio-group--docs) | Exactly one | When the form is sent | One answer worth comparing |
+| [Chip](?path=/docs/components-chip--docs) (multi) | Any number | When the form is sent | Short answers on one line |
+| **Switch** (below) | On or off | Right away | Settings, like dark mode |
+
+## Anatomy
+
+<DeviceCanvas of={CheckboxStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Group label** | Groups. The question, with `*`, "(optional)" or an AI label. |
+| 2 | **Select all** | `selectAll` is set. A dash when some are picked. |
+| 3 | **Checkbox** | Always. A check when picked. |
+| 4 | **Option label** | Always. Wraps onto more lines; never cut off. |
+| 5 | **Description** | Optional, per option. |
+| 6 | **Help text and message** | `helpText`, or a `state` with `feedback`. |
+
+## Variants
+
+The same component, decided by `options`.
+
+<DeviceVariation title="Single" of={CheckboxStories.VarSingle}>
+
+One yes/no. No `options`: `label` is the checkbox's own label and `checked` holds the answer.
+
+- Use `[(checked)]`, or a reactive form with a boolean.
+
+</DeviceVariation>
+
+<DeviceVariation title="Group" of={CheckboxStories.VarGroup}>
+
+A question with several answers. Pass `options`; `label` becomes the question and `value` is a string array, in the order of `options`.
+
+</DeviceVariation>
+
+<DeviceVariation title="Switch" of={CheckboxStories.VarSwitch}>
+
+A single on/off **setting that takes effect right away**, like dark mode. Add `appearance="switch"`; it's announced as a switch.
+
+- On web it sits before its label.
+- On phones it moves to the end of the row at 51 × 31, like a phone's settings list. Switch the toolbar to Mobile to see it.
+- For answers that are sent with a form, keep a checkbox.
+
+</DeviceVariation>
+
+## Modifiers
+
+One input each.
+
+<DeviceVariation title="Select all" of={CheckboxStories.ModSelectAll}>
+
+Add `selectAll="All updates"` for a parent checkbox above the options, which are indented under it.
+
+- It shows a dash when some are picked, and a check when all are.
+- Clicking it picks every option, or clears them if all are picked. Disabled options keep their state.
+
+</DeviceVariation>
+
+<DeviceVariation title="Description" of={CheckboxStories.ModDescription}>
+
+Add `description` to an option for one short line of detail. It's read by screen readers after the option's name.
+
+</DeviceVariation>
+
+<DeviceVariation title="Help text (single)" of={CheckboxStories.ModSingleHelp}>
+
+On a single checkbox, `helpText` sits under its label.
+
+</DeviceVariation>
+
+<DeviceVariation title="Horizontal" of={CheckboxStories.ModHorizontal}>
+
+Add `[inline]="true"` for 2 or 3 short options side by side. On phones they always stack. Vertical stays the default, since it's easier to scan.
+
+</DeviceVariation>
+
+<DeviceVariation title="AI suggested" of={CheckboxStories.ModAI}>
+
+Add `suggested: true` to the options the AI picked, and put them in `value`.
+
+- Each gets a sparkle, and the group label gets an **AI label**.
+- Set `aiExplanation` to say why, in one sentence.
+
+</DeviceVariation>
+
+<DeviceVariation title="AI suggested, changed" of={CheckboxStories.ModAIChanged}>
+
+Once people change the AI's picks, the AI label becomes a **revert** button that puts them back. Nothing to set: it follows from `value`.
+
+</DeviceVariation>
+
+## Specs
+
+| | Web | Mobile |
+|---|---|---|
+| Checkbox | 16px, 4px corners | 16px, 4px corners |
+| Row height | 32px | 44px |
+| Checkbox to label | 8px | 8px |
+| Label | 16px / 24px | 16px / 24px |
+| Indent under Select all | 24px | 24px |
+| Space between horizontal options | 24px | Stacked |
+| Space to the next field | 32px | 32px |
+
+The whole row is the tap or click target, not just the box.
+
+## Content
+
+- **Write labels as positive statements:** "Email me about offers", not "Don't email me".
+- **Keep option labels to 1 to 3 words,** sentence case. Put detail in `description`.
+- **Start unchecked,** especially for anything that sends people things or costs them money. They should opt in.
+- **For terms, say what they agree to** and link the documents next to the checkbox.
+
+<DoDont>
+  <Guideline type="do" of={CheckboxStories.DoPositive}>write what checking it does.</Guideline>
+  <Guideline type="dont" of={CheckboxStories.DontNegative}>use negatives. People have to think twice.</Guideline>
+  <Guideline type="do" of={CheckboxStories.DoCheckboxForMany}>use checkboxes when several answers can be true.</Guideline>
+  <Guideline type="dont" of={CheckboxStories.DontCheckboxForOne}>use them when only one can be. Use radios.</Guideline>
+  <Guideline type="do" of={CheckboxStories.DoSwitchInstant}>use switches for settings that change right away.</Guideline>
+  <Guideline type="dont" of={CheckboxStories.DontSwitchInForm}>use switches for form answers. Nothing happens until people send.</Guideline>
+  <Guideline type="do" of={CheckboxStories.DoUnchecked}>let people opt in.</Guideline>
+  <Guideline type="dont" of={CheckboxStories.DontPrechecked}>check marketing for them.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="All states" of={CheckboxStories.AllStates} noCode>
+
+- **Warning:** the picks are allowed but worth a second look.
+- **Invalid:** a required checkbox isn't checked, or a group needs at least one. Says how to fix it.
+- **Read only:** grey outlines with a dark check. People can Tab to it and read it but not change it.
+- **Disabled:** can't be used right now, and is skipped by <kbd>Tab</kbd>. Say nearby why.
+
+Warning and invalid messages lead with an icon, so colour is never the only signal. The AI label stays active even when the group is disabled or read only.
+
+</DeviceVariation>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> / <kbd>Shift</kbd> <kbd>Tab</kbd> | To each checkbox in turn, including Select all |
+| <kbd>Space</kbd> | Turns the focused checkbox on or off |
+| <kbd>Enter</kbd> / <kbd>Esc</kbd> on the AI label | Opens / closes the explanation |
+
+A group's `value` follows the order of `options`, not the order people clicked.
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Row height | 44px, the whole row is the target | 32px |
+| Horizontal | Stacks | Side by side |
+| Switch | 51 × 31px, at the end of the row | 48 × 24px, before the label |
+| AI label and revert | 44px tap areas | Their own size |
+| Hover | None | Pointer on the row |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+### Edge cases
+
+<SpecimenGrid>
+  <Specimen of={CheckboxStories.EdgeLongLabel}>**Long label:** wraps under itself, with the box on the first line.</Specimen>
+  <Specimen of={CheckboxStories.EdgeAllDisabledButOne}>**Disabled under Select all:** keeps its state; Select all only changes the rest.</Specimen>
+  <Specimen of={CheckboxStories.EdgeNoneLeft}>**Nothing picked:** fine for a group unless it's required. Say so in help text.</Specimen>
+</SpecimenGrid>
+
+## Accessibility
+
+For the required terms checkbox after a failed send, a screen reader reads:
+
+<ScreenReader name="I agree to the terms and privacy policy" role="checkbox" state="not checked, required, invalid entry" description="Agree to the terms to continue." />
+
+- **Groups** are a `fieldset` named by the group label. Messages and help text describe the group.
+- **Select all** is a real checkbox in the mixed state, with `aria-controls` pointing at the options it controls.
+- **Read only** uses `aria-readonly`, and clicks and Space are ignored.
+- **AI:** suggested options' names end in "(AI suggested)". The AI label is a button whose explanation is announced when it opens.
+- **Checked automatically:** every checkbox story runs an accessibility scan in the tests, plus keyboard, select all, read-only, AI revert and screen reader tests.
+
+## Code
+
+The Variants and Modifiers examples above each have their code.
+
+### Reactive forms
+
+Works with `[formControl]`, `formControlName`, `ngModel`, `[(value)]` for groups and `[(checked)]` for one checkbox. Here `Validators.requiredTrue` makes the terms required.
+
+<DeviceCanvas of={CheckboxStories.ReactiveForm} codeOpen />
+
+### API
+
+<Controls of={CheckboxStories.Group} />
+
+### Theming
+
+<TokenTable
+  tokens={[
+    { name: '--color-border-default', use: 'Checkbox border' },
+    { name: '--color-control-selected', use: 'Checked fill and border' },
+    { name: '--color-text-secondary', use: 'Description, read-only checkbox' },
+    { name: '--color-text-disabled', use: 'Disabled label' },
+    { name: '--color-status-warning', use: 'Warning border and icon' },
+    { name: '--color-text-attention', use: 'Warning message' },
+    { name: '--color-background-selected', use: 'AI label fill' },
+    { name: '--color-text-tag-info', use: 'AI label and revert' },
+    { name: '--exos-touch-target-min', use: 'Row height on mobile' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Radio group', text: 'Pick exactly one', href: '/?path=/docs/components-forms-radio-group--docs' },
+    { title: 'Chip', text: 'Short answers on one line', href: '/?path=/docs/components-chip--docs' },
+    { title: 'Input', text: 'Open answers', href: '/?path=/docs/components-forms-input--docs' },
+    { title: 'Grid', text: 'Laying out forms on mobile and web', href: '/?path=/docs/foundations-grid--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** first version: single, group and switch, Select all, AI label with explanation and revert, warning and read-only states, 44px rows on mobile.

@@ -1,0 +1,208 @@
+/* Canvas with a Mobile / Web switch (Storybook chrome, not part of the theme).
+   Looks like Storybook's own canvas: preview box, then an action bar. */
+
+/* Reset every button in the canvas first, so browser and docs defaults never leak in. */
+.sbdocs .exos-device button {
+  appearance: none;
+  margin: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.sbdocs .exos-device {
+  margin: 16px 0 32px;
+  border: 1px solid hsla(203, 50%, 30%, 0.15);
+  border-radius: 4px;
+  background: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px 0;
+  overflow: hidden;
+}
+
+.sbdocs .exos-docs-variation .exos-device {
+  margin: 0;
+}
+
+/* Preview */
+.exos-device__stage {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  background: #f6f8fb;
+}
+
+.exos-device__frame {
+  overflow: hidden;
+  border: 1px solid #e6eaf1;
+  border-radius: 8px;
+  background: #ffffff;
+  transition: width 0.25s ease, height 0.25s ease;
+}
+
+.exos-device__stage--mobile .exos-device__frame {
+  border-radius: 20px;
+}
+
+.exos-device__frame iframe {
+  display: block;
+  border: 0;
+  transform-origin: top left;
+}
+
+/* Action bar: code actions left, device switch right */
+.exos-device__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 8px;
+  border-top: 1px solid hsla(203, 50%, 30%, 0.15);
+}
+
+.exos-device__actions {
+  display: flex;
+  gap: 4px;
+}
+
+.sbdocs .exos-device__actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  font-size: 12px;
+  font-weight: 700;
+  color: #5c6870;
+  cursor: pointer;
+}
+
+.sbdocs .exos-device__actions button:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #2e3438;
+}
+
+.exos-device__switch {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: #eef1f6;
+}
+
+.sbdocs .exos-device__switch button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: #5b6475;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+}
+
+.sbdocs .exos-device__switch button.is-active {
+  background: #ffffff;
+  color: #0f121a;
+  box-shadow: 0 1px 2px rgba(15, 18, 26, 0.14);
+}
+
+.exos-device button:focus-visible {
+  outline: 2px solid #438af5;
+  outline-offset: 1px;
+}
+
+/* Code: one tab per Angular file */
+.exos-device__files {
+  display: flex;
+  gap: 2px;
+  padding: 0 8px;
+  border-top: 1px solid hsla(203, 50%, 30%, 0.15);
+  background: #f6f8fb;
+}
+
+.sbdocs .exos-device__files button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px 9px;
+  border-bottom: 2px solid transparent;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  color: #5b6475;
+}
+
+.sbdocs .exos-device__files button:hover {
+  color: #0f121a;
+}
+
+.sbdocs .exos-device__files button.is-active {
+  border-bottom-color: #438af5;
+  color: #0f121a;
+}
+
+.exos-device__file-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.exos-device__file-dot--html { background: #e44d26; }
+.exos-device__file-dot--ts { background: #3178c6; }
+
+.exos-device__code .docblock-source {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid hsla(203, 50%, 30%, 0.15);
+  background: #ffffff;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exos-device__frame { transition: none; }
+}
+
+/* One copy button: the toolbar's (it follows the open file). Hide the code block's own. */
+.sbdocs .exos-device__code button:not([role="tab"]) {
+  display: none;
+}
+
+/* Size and device switches sit together on the right. */
+.exos-device__switches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+/* Reference-only canvases (no code) label themselves instead. */
+.exos-device__ref {
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8c95a6;
+}
+
+/* Toolbar labels never wrap. */
+.sbdocs .exos-device__bar button { white-space: nowrap; }
+.exos-device__bar { flex-wrap: nowrap; }
+.exos-device__short { display: none; }
+
+/* Narrow canvases (Variations column): icon-only code buttons, S / M / L, device icons only. */
+.exos-device { container-type: inline-size; }
+
+@container (max-width: 760px) {
+  .exos-device__bar .exos-device__label { display: none; }
+  .exos-device__bar .exos-device__short { display: inline; }
+  .sbdocs .exos-device__actions button { padding: 6px 8px; }
+  .sbdocs .exos-device__switch button { padding: 4px 9px; }
+  .exos-device__switches { flex-wrap: nowrap; }
+}

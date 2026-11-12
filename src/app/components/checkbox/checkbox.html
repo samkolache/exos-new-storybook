@@ -1,0 +1,125 @@
+@if (isGroup()) {
+  <fieldset
+    class="exos-choice-group"
+    [class]="stateClass()"
+    [class.is-readonly]="readonly()"
+    [disabled]="isDisabled()"
+    [attr.aria-labelledby]="label() ? legendId() : null"
+    [attr.aria-describedby]="describedBy()"
+  >
+    @if (label()) {
+      <legend class="exos-choice-legend">
+        <span [id]="legendId()">{{ label() }}</span>
+        @if (required()) {
+          <span class="text-danger" aria-hidden="true">*</span>
+        } @else if (optional()) {
+          <span class="form-label-optional">(optional)</span>
+        }
+        @if (aiMode() === 'label') {
+          <app-ai-label [explanation]="aiExplanation()" />
+        } @else if (aiMode() === 'revert') {
+          <app-ai-revert (revert)="revertToSuggestion()" />
+        }
+      </legend>
+    }
+
+    <div class="exos-choice-list" [class.exos-choice-list-inline]="inline() && !selectAll()">
+      @if (selectAll()) {
+        <div class="exos-check">
+          <input
+            class="form-check-input"
+            [class]="stateClass()"
+            type="checkbox"
+            [id]="optionId('all')"
+            [checked]="allState() === 'all'"
+            [indeterminate]="allState() === 'some'"
+            [attr.aria-controls]="name() + '-children'"
+            (click)="onClick($event)"
+            (change)="toggleAll()"
+            (blur)="onTouched()"
+          />
+          <div class="exos-check-body">
+            <label class="exos-check-label" [for]="optionId('all')">{{ selectAll() }}</label>
+          </div>
+        </div>
+      }
+      <div [id]="name() + '-children'" class="exos-choice-list" [class.exos-choice-children]="selectAll()" [class.exos-choice-list-inline]="inline() && !selectAll()">
+        @for (option of options(); track option.value; let i = $index) {
+          <div class="exos-check" [class.is-disabled]="option.disabled || isDisabled()">
+            <input
+              class="form-check-input"
+              [class]="stateClass()"
+              type="checkbox"
+              [id]="optionId(i)"
+              [name]="name()"
+              [value]="option.value"
+              [checked]="value().includes(option.value)"
+              [disabled]="option.disabled"
+              [attr.aria-readonly]="readonly() || null"
+              [attr.aria-describedby]="option.description ? optionId(i) + '-description' : null"
+              (click)="onClick($event)"
+              (change)="toggle(option, $event)"
+              (blur)="onTouched()"
+            />
+            <div class="exos-check-body">
+              <label class="exos-check-label" [for]="optionId(i)">
+                {{ option.label }}
+                @if (option.suggested) {
+                  <img class="exos-choice-sparkle" src="icons/pcr/chip-sparkle.svg" width="10" height="10" alt="(AI suggested)" />
+                }
+              </label>
+              @if (option.description) {
+                <div [id]="optionId(i) + '-description'" class="exos-check-description">{{ option.description }}</div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (showFeedback()) {
+      <div [id]="feedbackId()" [class]="feedbackClass()">{{ feedback() }}</div>
+    }
+    @if (helpText()) {
+      <div [id]="helpId()" class="form-text">{{ helpText() }}</div>
+    }
+  </fieldset>
+} @else {
+  <div class="exos-choice-single" [class]="stateClass()" [class.is-readonly]="readonly()">
+    <div class="exos-check" [class.exos-switch]="appearance() === 'switch'" [class.is-disabled]="isDisabled()">
+      <input
+        [attr.role]="appearance() === 'switch' ? 'switch' : null"
+        class="form-check-input"
+        [class]="stateClass()"
+        type="checkbox"
+        [id]="optionId(0)"
+        [name]="name()"
+        [checked]="checked()"
+        [indeterminate]="indeterminate() && appearance() !== 'switch'"
+        [disabled]="isDisabled()"
+        [required]="required()"
+        [attr.aria-readonly]="readonly() || null"
+        [attr.aria-invalid]="state() === 'invalid' || null"
+        [attr.aria-describedby]="describedBy()"
+        (click)="onClick($event)"
+        (keydown.space)="readonly() && $event.preventDefault()"
+        (change)="toggleSingle($event)"
+        (blur)="onTouched()"
+      />
+      <div class="exos-check-body">
+        <label class="exos-check-label" [for]="optionId(0)">
+          {{ label() }}
+          @if (required()) {
+            <span class="text-danger" aria-hidden="true">*</span>
+          }
+        </label>
+        @if (helpText()) {
+          <div [id]="helpId()" class="exos-check-description">{{ helpText() }}</div>
+        }
+      </div>
+    </div>
+    @if (showFeedback()) {
+      <div [id]="feedbackId()" [class]="feedbackClass()">{{ feedback() }}</div>
+    }
+  </div>
+}

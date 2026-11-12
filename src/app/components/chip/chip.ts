@@ -1,10 +1,12 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
+import { Component, ElementRef, computed, forwardRef, inject, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /** single: pick one (radio). multi: pick any (checkbox). Figma prop "type". */
 export type ChipType = 'single' | 'multi';
 export type ChipIcon = 'none' | 'records';
+/** sm 24px · md 32px (the Figma chip) · lg 40px. */
+export type ChipSize = 'sm' | 'md' | 'lg';
 /** The Figma "state" a chip resolves to; derived from selected / suggested / disabled. */
 export type ChipState = 'default' | 'ai-suggested' | 'selected' | 'disabled';
 
@@ -46,6 +48,8 @@ interface ChipView {
   imports: [NgTemplateOutlet],
   templateUrl: './chip.html',
   host: {
+    // Never wider than its column, so long labels can truncate.
+    style: 'max-width: 100%',
     '[class.d-inline-flex]': '!isGroup()',
     '[class.d-block]': 'isGroup()',
   },
@@ -53,6 +57,8 @@ interface ChipView {
 })
 export class ChipComponent implements ControlValueAccessor {
   readonly type = input<ChipType>('single');
+  /** sm 24px · md 32px (default, the Figma chip) · lg 40px. Applies to every chip in a group. */
+  readonly size = input<ChipSize>('md');
   readonly disabled = input(false);
 
   // One chip
@@ -72,6 +78,7 @@ export class ChipComponent implements ControlValueAccessor {
   readonly groupLabel = input('');
   readonly labelledBy = input<string | null>(null);
 
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly formDisabled = signal(false);
   private onChange: (value: ChipGroupValue | boolean) => void = () => {};
   private onTouched: () => void = () => {};
@@ -107,6 +114,54 @@ export class ChipComponent implements ControlValueAccessor {
     }));
   });
 
+  /** Single groups have one Tab stop: the picked chip, or the first one that can be picked. */
+  private readonly tabStop = computed(() => {
+    const chips = this.chips();
+    const picked = chips.findIndex((c) => c.selected && !c.disabled);
+    return picked >= 0 ? picked : chips.findIndex((c) => !c.disabled);
+  });
+
+  protected tabIndexOf(index: number): number | null {
+    if (!this.isGroup() || this.type() === 'multi') return null;
+    return index === this.tabStop() ? 0 : -1;
+  }
+
+  /** Role for one chip: radio / checkbox inside a group; a lone chip is a toggle button. */
+  protected readonly chipRole = computed(() =>
+    !this.isGroup() ? null : this.type() === 'single' ? 'radio' : 'checkbox',
+  );
+
+  /** Long labels are cut off with an ellipsis; the full text shows on hover. */
+  protected titleOf(chip: ChipView): string | null {
+    return chip.label.length > 24 ? chip.label : null;
+  }
+
+  /** Arrow keys, Home and End move through a single group and pick as they go (like radios). */
+  protected onKeydown(event: KeyboardEvent): void {
+    if (!this.isGroup() || this.type() !== 'single') return;
+    const keys: Record<string, number> = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+    const chips = this.chips();
+    const enabled = chips.map((c, i) => (c.disabled ? -1 : i)).filter((i) => i >= 0);
+    if (!enabled.length) return;
+    const buttons = [...this.host.nativeElement.querySelectorAll<HTMLButtonElement>('button.chip')];
+    const current = enabled.indexOf(buttons.indexOf(document.activeElement as HTMLButtonElement));
+    let target: number;
+    if (event.key in keys) {
+      const step = keys[event.key];
+      target = enabled[current === -1 ? 0 : (current + step + enabled.length) % enabled.length];
+    } else if (event.key === 'Home') {
+      target = enabled[0];
+    } else if (event.key === 'End') {
+      target = enabled[enabled.length - 1];
+    } else {
+      return;
+    }
+    event.preventDefault();
+    buttons[target]?.focus();
+    const chip = chips[target];
+    if (!chip.selected) this.click(chip);
+  }
+
   protected stateOf(chip: ChipView): ChipState {
     if (chip.disabled) return 'disabled';
     if (chip.selected) return chip.suggested ? 'ai-suggested' : 'selected';
@@ -115,6 +170,7 @@ export class ChipComponent implements ControlValueAccessor {
 
   protected classesOf(chip: ChipView): string {
     const cls = ['chip', `chip-${this.type()}`];
+    if (this.size() !== 'md') cls.push(`chip-${this.size()}`);
     if (chip.selected && !chip.disabled) cls.push('selected');
     return cls.join(' ');
   }

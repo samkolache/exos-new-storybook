@@ -10,6 +10,7 @@
 .exos-tag {
   display: inline-flex;
   align-items: center;
+  max-width: 100%;
   gap: 4px;
   padding: 3px 9px 3px 7px;
   border-radius: 999px;
@@ -30,6 +31,13 @@
   &.exos-tag-text-only {
     padding-left: 9px;
   }
+}
+
+// Long labels end in an ellipsis instead of overflowing (full text in the title).
+.exos-tag-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 // Sizes. md is the Figma tag; sm and lg scale around it.
@@ -67,7 +75,7 @@
 
 .exos-tag-info {
   background-color: var(--color-background-tag-info);
-  color: var(--color-text-link);
+  color: var(--color-text-tag-info);
 }
 
 // Wins over any colour.
@@ -79,5 +87,32 @@
   > img {
     filter: grayscale(1);
     opacity: 0.8;
+  }
+}
+
+// Phones:
+// - Text is never under 11pt, so small tags take the medium size.
+// - Long labels wrap instead of truncating: touch screens have no hover to show the tooltip.
+@include media-breakpoint-down(md) {
+  .exos-tag-sm {
+    gap: 4px;
+    padding: 3px 9px 3px 7px;
+    font-size: 11px;
+    line-height: 14px;
+
+    &.exos-tag-text-only {
+      padding-left: 9px;
+    }
+  }
+
+  .exos-tag {
+    white-space: normal;
+    border-radius: 13px;
+  }
+
+  .exos-tag-label {
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: anywhere;
   }
 }

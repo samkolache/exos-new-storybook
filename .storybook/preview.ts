@@ -12,7 +12,15 @@ const preview: Preview = {
     // Sidebar: Welcome and Catalog first, then the components.
     options: {
       storySort: {
-        order: ['Welcome', 'Catalog', 'Components', ['Button', 'IconButton', 'ProgressButton', 'Dropdown', 'Forms', '*'], 'Examples'],
+        order: ['Welcome', 'Catalog', 'Foundations', ['Grid', 'Spacing', 'Mobile and web', '*'], 'Components', ['Button', 'IconButton', 'ProgressButton', 'Dropdown', 'Link', 'Tabs', 'Accordion', 'Forms', ['Input', 'Select', 'Number Input', 'Date Picker', 'Radio Group', 'Checkbox', 'File Uploader', '*'], 'Chip', 'Tag', 'Notification', 'Modal', 'Tooltip', 'Loading', '*'], 'Patterns', ['Forms', 'Disabled and read only', 'Empty states', 'Loading', 'Notifications', '*'], 'Examples'],
+      },
+    },
+    // Viewports that match the Exos grid: one per grid (4 / 8 / 16 columns).
+    viewport: {
+      options: {
+        exosMobile: { name: 'Exos Mobile (375)', styles: { width: '375px', height: '812px' }, type: 'mobile' },
+        exosTablet: { name: 'Exos Tablet (768)', styles: { width: '768px', height: '1024px' }, type: 'tablet' },
+        exosDesktop: { name: 'Exos Desktop (1312)', styles: { width: '1312px', height: '900px' }, type: 'desktop' },
       },
     },
     controls: {

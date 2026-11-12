@@ -1,0 +1,84 @@
+import { Meta, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, Related } from '../../../../.storybook/blocks/Guidelines';
+import * as Stories from './empty-states.stories';
+
+<Meta of={Stories} />
+
+<PageNav />
+
+# Empty states
+
+What to show where content would be, when there isn't any. An empty screen should say **why it's empty** and **what to do next**, never just "No data".
+
+## Three kinds
+
+Each has its own icon and its own job. Use `<app-empty-state>` with the matching `kind`.
+
+### First use: nothing here yet
+
+People haven't added anything. Explain what will appear here, and give one way to start.
+
+<DeviceCanvas of={Stories.FirstUse} defaultDevice="mobile" />
+
+### No results: a search or filter found nothing
+
+Say what was searched, suggest a fix, and offer a way back, like clearing filters.
+
+<DeviceCanvas of={Stories.NoResults} defaultDevice="mobile" />
+
+### Error: it couldn't load
+
+Say what didn't load, what people can do, and offer "Try again". It's announced to screen readers.
+
+<DeviceCanvas of={Stories.LoadError} defaultDevice="mobile" />
+
+### Inside cards and panels
+
+`[compact]="true"` for a small area, like an empty list inside a card.
+
+<DeviceCanvas of={Stories.Compact} defaultDevice="web" />
+
+## Content
+
+| | Title | Message | Action |
+|---|---|---|---|
+| **First use** | What's missing: "No orders yet" | What will be here | Start: "Start shopping" |
+| **No results** | What was searched: "No results for 'lamp'" | How to find it | Go back: "Clear filters" |
+| **Error** | What failed: "Couldn't load your orders" | Why, if known, and what to try | "Try again" |
+
+- **One action at most.** The primary button for first use; a secondary one otherwise.
+- **No jokes on errors.** People are already stuck.
+
+<DoDont>
+  <Guideline type="do" of={Stories.DoHelpful}>say why it's empty and what to do.</Guideline>
+  <Guideline type="dont" of={Stories.DontBlank}>show "No data" and nothing else.</Guideline>
+</DoDont>
+
+## Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Where | In the middle of the empty area, below any header and filters | Same |
+| Width | Full width, 16px from the edges | Up to 416px, centred |
+
+Keep the page's header, search and filters visible, so people can change what they asked for.
+
+## Accessibility
+
+- **Error states are announced** (`role="alert"`). First use and no results are read in place.
+- **The icon is decorative;** the title says what happened.
+- **Checked automatically:** every example runs an accessibility scan, plus an action test.
+
+## API
+
+<Controls of={Stories.FirstUse} />
+
+## Related
+
+<Related
+  items={[
+    { title: 'Loading', text: 'Before content arrives', href: '/?path=/docs/patterns-loading--docs' },
+    { title: 'Notifications', text: 'Telling people what happened', href: '/?path=/docs/patterns-notifications--docs' },
+  ]}
+/>

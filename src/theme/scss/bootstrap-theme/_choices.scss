@@ -1,0 +1,314 @@
+// Radios and checkboxes (app-radio-group, app-checkbox): web and mobile rules.
+
+// Group: a plain fieldset with the question as its legend.
+.exos-choice-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.exos-choice-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  float: none;
+  width: auto;
+  margin-bottom: 0.25rem;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+
+  .form-label-optional {
+    margin-left: 0;
+  }
+}
+
+.exos-choice-list {
+  display: flex;
+  flex-direction: column;
+}
+
+// Under "Select all": indented so the parent reads as a parent.
+.exos-choice-children {
+  padding-left: 1.5rem;
+}
+
+// Side by side from tablet up. Phones always stack.
+@include media-breakpoint-up(md) {
+  .exos-choice-list-inline {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 1.5rem;
+  }
+}
+
+// One option: control top-aligned with a label that wraps (never truncate).
+// Web rows are 32px; the whole row is the click target.
+.exos-check {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+
+  > .form-check-input {
+    flex-shrink: 0;
+    float: none;
+    margin: 0.25rem 0 0;
+    cursor: pointer;
+  }
+
+  &.exos-check-reverse {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+
+  // The label greys out; the description stays readable, since it often says why it's disabled.
+  &.is-disabled {
+    .exos-check-label {
+      color: var(--color-text-disabled);
+      cursor: default;
+    }
+  }
+}
+
+.exos-check-body {
+  min-width: 0;
+}
+
+.exos-check-label {
+  cursor: pointer;
+  overflow-wrap: anywhere;
+
+  // The whole row is clickable, not just the words.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+}
+
+.exos-check-description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.exos-choice-sparkle {
+  margin-left: 0.125rem;
+  vertical-align: 0.125em;
+}
+
+// Warning: orange boxes until picked; the message says why.
+.form-check-input.is-warning:not(:checked) {
+  border-color: var(--color-status-warning);
+}
+
+// Group messages lead with an icon, so colour isn't the only signal.
+.exos-choice-group,
+.exos-choice-single {
+  > .invalid-feedback,
+  > .warning-feedback {
+    display: flex !important;
+    gap: 0.375rem;
+
+    &::before {
+      content: "";
+      flex-shrink: 0;
+      width: 1em;
+      height: 1em;
+      margin-top: 0.1875em;
+      background: no-repeat center / contain;
+    }
+  }
+
+  > .invalid-feedback::before {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3ccircle cx='8' cy='8' r='7' fill='%23D93B3B'/%3e%3cpath stroke='%23fff' stroke-width='1.6' stroke-linecap='round' d='M8 4.5v4'/%3e%3ccircle cx='8' cy='11.2' r='.9' fill='%23fff'/%3e%3c/svg%3e");
+  }
+
+  > .warning-feedback::before {
+    background-image: $exos-warning-icon;
+  }
+}
+
+// Read only: grey outlines, no fill, a dark mark. People can Tab to it but not change it.
+.is-readonly {
+  .form-check-input {
+    border-color: var(--color-text-secondary);
+    background-color: transparent;
+    cursor: default;
+
+    &:checked[type="checkbox"] {
+      --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%233A4150' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+    }
+
+    &:checked[type="radio"] {
+      --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%233A4150'/%3e%3c/svg%3e");
+    }
+
+    &[type="checkbox"]:indeterminate {
+      --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%233A4150' stroke-linecap='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");
+    }
+  }
+
+  .exos-check-label,
+  .radio-card {
+    cursor: default;
+  }
+}
+
+// ── AI label ─────────────────────────────────────────────────────────────
+
+.exos-ai {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.exos-ai-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 18px;
+  padding: 0 5px;
+  border: 1px solid var(--color-border-chip);
+  border-radius: 4px;
+  background-color: var(--color-background-selected);
+  color: var(--color-text-tag-info);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+
+  &:hover {
+    border-color: var(--color-text-tag-info);
+  }
+}
+
+.exos-ai-revert {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--color-text-tag-info);
+
+  &:hover {
+    background-color: var(--color-background-selected);
+  }
+}
+
+.exos-ai-label,
+.exos-ai-revert {
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+.exos-ai-pop-anchor {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+}
+
+.exos-ai-pop {
+  display: block;
+  width: max-content;
+  max-width: 16rem;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 10px;
+  background-color: var(--color-background-page);
+  box-shadow: 0 8px 24px rgba(15, 18, 26, 0.12);
+  color: var(--color-text-primary);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+// ── Mobile (below md) ────────────────────────────────────────────────────
+// 44px rows, so every option is an easy tap; AI buttons get 44px tap areas.
+@include media-breakpoint-down(md) {
+  .exos-check {
+    padding: 0.625rem 0;
+  }
+
+  .exos-ai-label::after,
+  .exos-ai-revert::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--exos-touch-target-min, 44px);
+    height: var(--exos-touch-target-min, 44px);
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (hover: none) {
+  .exos-ai-label:hover { border-color: var(--color-border-chip); }
+  .exos-ai-revert:hover { background: none; }
+}
+
+// ── Switch (app-checkbox appearance="switch") ────────────────────────────
+// Web: 48 × 24px before the label.
+// Phones: 51 × 31px at the end of the row, like a phone's settings list.
+.exos-switch {
+  align-items: center;
+
+  > .form-check-input {
+    // Off: a grey track with a white knob. On: the blue fill.
+    --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+    border-color: var(--color-text-secondary);
+    background-color: var(--color-text-secondary);
+    width: 3rem;
+    height: 1.5rem;
+    margin-top: 0;
+    border-radius: 1.5rem;
+    background-image: var(--bs-form-switch-bg);
+    background-position: left center;
+    background-size: contain;
+    transition: background-position 0.15s ease-in-out, background-color 0.15s;
+
+    &:checked {
+      border-color: var(--color-control-selected);
+      background-color: var(--color-control-selected);
+      background-position: right center;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .exos-switch {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.375rem 0;
+
+    > .form-check-input {
+      width: 51px;
+      height: 31px;
+      border-radius: 31px;
+    }
+  }
+}
+
+// Read-only switch: no fill, so the knob turns dark to stay visible, on or off.
+.is-readonly .exos-switch > .form-check-input,
+.is-readonly .exos-switch > .form-check-input:checked {
+  --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%233A4150'/%3e%3c/svg%3e");
+}

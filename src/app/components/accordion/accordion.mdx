@@ -1,0 +1,169 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
+import * as AccordionStories from './accordion.stories';
+
+<Meta of={AccordionStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>An accordion is a list of sections people open one by one, to keep a long page short.</Subtitle>
+
+## Live demo
+
+<DeviceCanvas of={AccordionStories.Overview} defaultDevice="mobile" />
+
+## When to use
+
+**Use an accordion** when people need only some sections of a long page, and can tell which from the titles:
+
+- FAQs, settings groups, the details of an order.
+- On phones, where a long page is tiring to scroll, for content that sits side by side on the web.
+
+**Don't use it** for content everyone needs (show it), or to hide one short paragraph.
+
+### Compared with look-alikes
+
+| Component | Shows | Use it for |
+|---|---|---|
+| **Accordion** | Any number of sections, stacked | Scanning titles and opening what's needed |
+| [Tabs](?path=/docs/components-tabs--docs) | One view at a time | Switching between parts of one thing |
+| [Dropdown card](?path=/docs/components-dropdown-card--docs) | One card with its answers | A summary that opens to show detail |
+
+## Anatomy
+
+<DeviceCanvas of={AccordionStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Title** | Always. A heading, so it's in the page outline. |
+| 2 | **Meta** | Optional. A short count or status at the end of the row. |
+| 3 | **Chevron** | Always. Points down when closed, up when open. |
+| 4 | **Content** | When open. Anything: text, fields, lists. |
+| 5 | **Row** | Always. The whole row opens and closes the section. |
+
+## Variants
+
+<DeviceVariation title="Several open" of={AccordionStories.VarMultiple}>
+
+The default: people open as many sections as they like. Best when they compare sections.
+
+</DeviceVariation>
+
+<DeviceVariation title="One at a time" of={AccordionStories.VarSingle}>
+
+`[multiple]="false"`: opening a section closes the open one. Keeps the page short on phones.
+
+</DeviceVariation>
+
+## Size
+
+<DeviceVariation title="Small, medium, large" of={AccordionStories.SizeSwitchable} sizeSwitch>
+
+Row height on the web. On phones, rows are always at least 44px. Use the switch in the toolbar.
+
+- **Small** (`sm`, 32px): dense side panels.
+- **Medium** (`md`, 40px, default): most pages.
+- **Large** (`lg`, 48px): a page that's mostly the accordion, like an FAQ.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Meta and disabled" of={AccordionStories.ModMeta}>
+
+`meta` adds a short count or status at the end of the row, like "12". `[disabled]="true"` on an item that has nothing yet.
+
+</DeviceVariation>
+
+<DeviceVariation title="Chevron at the start" of={AccordionStories.ModChevronStart}>
+
+`chevron="start"` for lists inside other content, like a side panel, so the chevron lines up with what's above.
+
+</DeviceVariation>
+
+## Specs
+
+| | Web | Mobile |
+|---|---|---|
+| Row height | 32 / 40 / 48px | At least 44px |
+| Title | 14 or 16px, medium | 16px, medium |
+| Chevron | 16px, turns over 0.2s | Same |
+| Dividers | 1px between rows, and above and below | Same |
+| Content padding | 4px top, 16px bottom | Same |
+
+## Content
+
+- **Titles say what's inside,** so people can skip what they don't need: "Returns", not "More information".
+- **Keep what everyone needs outside,** like a total or a deadline.
+- **Order sections by how often they're needed.**
+
+<DoDont>
+  <Guideline type="do" of={AccordionStories.DoScannableTitles}>write titles people can scan.</Guideline>
+  <Guideline type="dont" of={AccordionStories.DontVagueTitles}>use vague titles like "Details".</Guideline>
+  <Guideline type="do" of={AccordionStories.DoShowWhatMatters}>show what everyone needs, and fold the rest.</Guideline>
+  <Guideline type="dont" of={AccordionStories.DontHideWhatMatters}>hide key information in a section.</Guideline>
+</DoDont>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> | To the next row, then into open content |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Opens or closes the focused section |
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Row height | At least 44px | 32, 40 or 48px |
+| Use | Often instead of side-by-side columns or tabs | When people need only some sections |
+| Hover | None | Light grey row |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+## Accessibility
+
+For the first section in the live demo, a screen reader reads:
+
+<ScreenReader name="Shipping" role="button" state="collapsed" group="heading level 3" />
+
+- **Each title is a heading** (`headingLevel`, 3 by default) with a button inside, so people can jump between sections.
+- **The button says if it's open** with `aria-expanded`, and controls a named region.
+- **Checked automatically:** every story runs an accessibility scan in the tests, plus open, close and one-at-a-time tests.
+
+## Code
+
+### API
+
+<Controls of={AccordionStories.Default} />
+
+`app-accordion-item` inputs: `title`, `meta`, `[(open)]` and `disabled`.
+
+### Theming
+
+<TokenTable
+  tokens={[
+    { name: '--color-border-divider', use: 'Dividers' },
+    { name: '--color-text-heading', use: 'Title' },
+    { name: '--color-text-secondary', use: 'Meta' },
+    { name: '--color-background-subtle', use: 'Row on hover' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Tabs', text: 'One view at a time', href: '/?path=/docs/components-tabs--docs' },
+    { title: 'Dropdown card', text: 'A card that opens', href: '/?path=/docs/components-dropdown-card--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** first version: several or one open, three sizes, meta, chevron position.

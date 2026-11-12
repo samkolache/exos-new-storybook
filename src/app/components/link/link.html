@@ -1,0 +1,21 @@
+<ng-template #content><ng-content /></ng-template>
+@if (disabled()) {
+  <span [class]="classes()" role="link" aria-disabled="true">
+    <ng-container *ngTemplateOutlet="content" />
+  </span>
+} @else {
+  <a
+    [class]="classes()"
+    [href]="href()"
+    [attr.target]="external() ? '_blank' : null"
+    [attr.rel]="external() ? 'noopener noreferrer' : null"
+  >
+    <ng-container *ngTemplateOutlet="content" />
+    @if (external()) {
+      <svg class="exos-link-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M7 1.5h3.5V5M10.5 1.5L5.5 6.5M9 7.5v2a1 1 0 01-1 1H2.5a1 1 0 01-1-1V4a1 1 0 011-1h2" />
+      </svg>
+      <span class="visually-hidden">(opens in a new tab)</span>
+    }
+  </a>
+}

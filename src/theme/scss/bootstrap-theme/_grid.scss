@@ -1,0 +1,111 @@
+// Exos grid: 4 columns on mobile, 8 on tablet, 16 on web.
+//
+//   <div class="exos-grid">
+//     <div class="exos-col-4 exos-col-md-4 exos-col-lg-12">Main</div>
+//     <div class="exos-col-4 exos-col-md-4 exos-col-lg-4">Side</div>
+//   </div>
+//
+// Children with no column class take the full row, so content stacks
+// on mobile by default. Column classes are capped per breakpoint
+// (`exos-col-*` 1–4, `exos-col-md-*` 1–8, `exos-col-lg-*` and up 1–16),
+// so a span can never be wider than the grid it is in.
+
+// Grid values as CSS variables, switched per breakpoint.
+@at-root .exos-theme-dcfc {
+  --exos-grid-max-width: #{$exos-grid-max-width};
+  --exos-touch-target-min: #{$exos-touch-target-min};
+
+  @each $step, $value in $exos-spacing {
+    --exos-spacing-#{$step}: #{$value};
+  }
+
+  // Layout spacing: phone values, then web values from md.
+  @each $name, $steps in $exos-layout-spacing {
+    --exos-space-#{$name}: #{exos-spacing(nth($steps, 1))};
+  }
+
+  @include media-breakpoint-up(md, $exos-breakpoints) {
+    @each $name, $steps in $exos-layout-spacing {
+      --exos-space-#{$name}: #{exos-spacing(nth($steps, 2))};
+    }
+  }
+
+  @each $bp, $values in $exos-grid {
+    @include media-breakpoint-up($bp, $exos-breakpoints) {
+      --exos-grid-columns: #{map-get($values, columns)};
+      --exos-grid-margin: #{map-get($values, margin)};
+      --exos-grid-gutter: #{map-get($values, gutter)};
+    }
+  }
+}
+
+.exos-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--exos-grid-columns), minmax(0, 1fr));
+  gap: var(--exos-grid-gutter);
+  width: 100%;
+  max-width: var(--exos-grid-max-width);
+  margin-inline: auto;
+  // Keep content clear of the notch / rounded corners on phones.
+  padding-inline:
+    max(var(--exos-grid-margin), env(safe-area-inset-left))
+    max(var(--exos-grid-margin), env(safe-area-inset-right));
+
+  > * {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  // Grid inside a grid: no outer margin, no max width.
+  .exos-grid {
+    padding-inline: 0;
+  }
+}
+
+// No gaps between columns, for tiles and dashboards.
+.exos-grid--condensed {
+  gap: 0;
+}
+
+// Grid widths. Default: up to 1584px, then centred (tables, dashboards, most pages).
+// Narrow: up to 960px, for reading and forms. Fluid: no limit, for boards and canvases.
+.exos-grid--narrow {
+  max-width: $exos-grid-narrow-max-width;
+}
+
+.exos-grid--fluid {
+  max-width: none;
+}
+
+// Column spans. Mobile classes first, wider breakpoints override them.
+$_exos-col-ranges: (
+  xs: 4,
+  md: 8,
+  lg: 16,
+  xl: 16,
+  xxl: 16,
+);
+
+@each $bp, $max in $_exos-col-ranges {
+  @include media-breakpoint-up($bp, $exos-breakpoints) {
+    $infix: if($bp == xs, "", "-#{$bp}");
+
+    @for $i from 1 through $max {
+      // Start stays automatic (an offset class can set it); the end is the span.
+      .exos-grid > .exos-col#{$infix}-#{$i} {
+        grid-column: auto / span $i;
+      }
+    }
+
+    // Offsets: start after this many columns, e.g. exos-col-lg-10 exos-col-lg-offset-3 centres 10 of 16.
+    @for $i from 1 through $max - 1 {
+      .exos-grid > .exos-col#{$infix}-offset-#{$i} {
+        grid-column-start: $i + 1;
+      }
+    }
+
+    .exos-grid > .exos-col#{$infix}-full {
+      grid-column: 1 / -1;
+    }
+  }
+}

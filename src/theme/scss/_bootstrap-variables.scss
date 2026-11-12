@@ -4,11 +4,19 @@
 $primary:   dcfc-color("action-primary");
 $secondary: dcfc-color("action-secondary");
 $success:   dcfc-color("status-success");
+$form-valid-color: dcfc-color("text-success"); // the success green is too light for 14px text
+$form-valid-border-color: $success;
 $info:      dcfc-color("status-info");      // gap: PwC has no info color yet
 $warning:   dcfc-color("status-warning");   // gap: mapped to attention orange
 $danger:    dcfc-color("status-danger");
 
-$body-color:      dcfc-color("text-primary");
+// Layout: Exos breakpoints. Page layout uses the Exos grid
+// (.exos-grid, see bootstrap-theme/_grid.scss), so Bootstrap's
+// .row / .col-* classes are turned off to avoid two grids.
+$grid-breakpoints:    $exos-breakpoints;
+$enable-grid-classes: false;
+
+$body-color:     dcfc-color("text-primary");
 $body-bg:         dcfc-color("background-page");
 $link-color:      dcfc-color("text-link");
 $border-color:    dcfc-color("border-default");
@@ -23,6 +31,11 @@ $input-border-radius:       14px;
 $input-border-radius-sm:    10px;
 $input-border-radius-lg:    16px;
 $input-padding-x:           1rem;
+// Field heights: sm 32px, md 40px, lg 48px (1.5px borders included).
+$input-padding-y:           0.40625rem; // 24px line + 13px + 3px = 40px
+$input-padding-y-sm:        0.25rem;    // 21px line + 8px + 3px = 32px
+$input-padding-y-lg:        0.65625rem; // 24px line + 21px + 3px = 48px
+$input-font-size-lg:        1rem;       // lg is taller, not louder
 $input-placeholder-color:   dcfc-color("text-placeholder");
 $input-focus-border-color:  dcfc-color("border-focus");
 $input-focus-box-shadow:    0 0 0 0.25rem $focus-ring-blue;
@@ -32,6 +45,8 @@ $form-select-focus-box-shadow: 0 0 0 0.25rem $focus-ring-blue;
 $form-check-input-border:              1.5px solid dcfc-color("border-default");
 $form-check-input-checked-bg-color:    dcfc-color("control-selected");
 $form-check-input-checked-border-color: dcfc-color("control-selected");
+$form-check-input-indeterminate-bg-color:     dcfc-color("control-selected"); // the "Select all" dash matches a check
+$form-check-input-indeterminate-border-color: dcfc-color("control-selected");
 $form-check-input-focus-border:        dcfc-color("border-focus");
 $form-check-input-focus-box-shadow:    0 0 0 0.25rem $focus-ring-blue;
 

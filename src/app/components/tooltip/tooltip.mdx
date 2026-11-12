@@ -1,0 +1,167 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
+import * as TooltipStories from './tooltip.stories';
+
+<Meta of={TooltipStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>Tooltips name things on hover; toggletips explain things when people ask, on any device.</Subtitle>
+
+## Live demo
+
+Hover or tab to the icon buttons for their tooltips. Click the (i) for a toggletip. Switch to Mobile: tapping an icon button shows no tooltip, because phones have no hover, but the toggletip works the same.
+
+<DeviceCanvas of={TooltipStories.Overview} defaultDevice="web" />
+
+## When to use
+
+| | Tooltip | Toggletip |
+|---|---|---|
+| **Opens** | On hover or keyboard focus | On click, tap or Enter |
+| **Holds** | A short label, plain text | One or two sentences, can include a link |
+| **On phones** | Doesn't show (no hover) | Works the same |
+| **Use it for** | Naming icon buttons | Explaining a term, a field or a number |
+
+**Never put something people need in either one.** If people need it to finish the task, show it on the page: as help text, or a sentence.
+
+## Anatomy
+
+<DeviceCanvas of={TooltipStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Toggletip button** | Always. An (i) that says what it's about to screen readers. |
+| 2 | **Toggletip** | Once opened, until people click outside, tab away or press Esc. |
+
+A tooltip is a dark label, 6px corners, above the element (below if there's no room).
+
+## Variants
+
+<DeviceVariation title="Tooltip" of={TooltipStories.VarTooltip}>
+
+Add `appTooltip="Download"` to any element. It shows after 300ms of hover, or right away on keyboard focus, and hides on Esc.
+
+- On an icon button, the tooltip repeats its `aria-label`, so add `[tooltipIsLabel]="true"`: screen readers read the name once.
+- `tooltipPosition="bottom"` puts it below.
+
+</DeviceVariation>
+
+<DeviceVariation title="Toggletip" of={TooltipStories.VarToggletip}>
+
+`<app-toggletip label="About delivery times">…</app-toggletip>` next to the thing it explains. The text goes between the tags; it can include a link.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Next to a field" of={TooltipStories.ModNextToField}>
+
+Put the toggletip after the label, for terms people may not know, like "Security code". Anything people always need belongs in the field's help text instead.
+
+</DeviceVariation>
+
+<DeviceVariation title="Open to the left" of={TooltipStories.ModAlignEnd}>
+
+`align="end"` when the button is near the right edge, so the toggletip stays on screen.
+
+</DeviceVariation>
+
+## Specs
+
+| | Tooltip | Toggletip |
+|---|---|---|
+| Colours | White on ink | Ink on white, with a border and shadow |
+| Text | 13px | 14px |
+| Width | Up to 240px | Up to 288px (full width minus 32px on phones) |
+| Corners | 6px | 10px |
+| Distance | 8px from the element | 6px under the button |
+| Delay | 300ms on hover; none on focus | None |
+| Button | — | 24px, with a 44px tap area on phones |
+
+## Content
+
+- **Tooltips:** a word or two, like "Download". No full stop.
+- **Toggletips:** one or two sentences. Lead with the answer.
+- **Don't repeat** what's already on screen.
+
+<DoDont>
+  <Guideline type="do" of={TooltipStories.DoTooltipForIcons}>name icon buttons with tooltips.</Guideline>
+  <Guideline type="dont" of={TooltipStories.DontTooltipEssential}>hide rules people need in a tooltip. Use help text.</Guideline>
+  <Guideline type="do" of={TooltipStories.DoToggletipShort}>keep a toggletip to a sentence or two.</Guideline>
+  <Guideline type="dont" of={TooltipStories.DontToggletipLong}>fit a whole policy in one. Link to a page.</Guideline>
+</DoDont>
+
+## Behavior
+
+### Keyboard
+
+| Key | Tooltip | Toggletip |
+|---|---|---|
+| <kbd>Tab</kbd> | Focusing the element shows it | To the (i) button; tabbing away closes it |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | — | Opens or closes it |
+| <kbd>Esc</kbd> | Hides it; focus stays | Closes it; focus goes back to the button |
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Tooltip | Doesn't show. Icon buttons still need an `aria-label` | Hover (after 300ms) or keyboard focus |
+| Toggletip | Tap the (i); tap anywhere else to close | Click, or Enter |
+| (i) button | 44px tap area | 24px |
+| Toggletip width | Up to the screen width minus 32px | Up to 288px |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+## Accessibility
+
+For the toggletip in the live demo, a screen reader reads:
+
+<ScreenReader name="About delivery times" role="button" state="collapsed" description="When opened, the text is read out" />
+
+- **Tooltips** use `role="tooltip"` and `aria-describedby`, so they're read after the element's name. With `tooltipIsLabel`, they're skipped, since the name already says it.
+- **Toggletips** are buttons with `aria-expanded`; their text sits in a live region, so it's read when it opens.
+- **Esc** hides both, without moving focus away from what people were on.
+- **Checked automatically:** every story runs an accessibility scan in the tests, plus tooltip and toggletip keyboard tests.
+
+## Code
+
+### Tooltip inputs
+
+| Input | Type | Default | Does |
+|---|---|---|---|
+| `appTooltip` | `string` | `''` | The text |
+| `tooltipPosition` | `'top' \| 'bottom'` | `'top'` | Where it shows; flips below if there's no room above |
+| `tooltipIsLabel` | `boolean` | `false` | The text repeats the element's name, so screen readers skip it |
+
+### Toggletip API
+
+<Controls of={TooltipStories.Default} />
+
+### Theming
+
+<TokenTable
+  tokens={[
+    { name: '--color-background-inverse', use: 'Tooltip' },
+    { name: '--color-background-page', use: 'Toggletip' },
+    { name: '--color-border-default', use: 'Toggletip border' },
+    { name: '--color-text-label', use: '(i) button' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Input', text: 'Help text for what people always need', href: '/?path=/docs/components-forms-input--docs' },
+    { title: 'Modal', text: 'For longer explanations or decisions', href: '/?path=/docs/components-modal--docs' },
+    { title: 'Mobile and web', text: 'Why there’s no hover on phones', href: '/?path=/docs/foundations-mobile-and-web--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** first version: tooltip directive and toggletip.

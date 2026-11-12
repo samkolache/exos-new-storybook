@@ -1,16 +1,28 @@
 <fieldset
   role="radiogroup"
+  class="exos-choice-group"
+  [class]="stateClass()"
+  [class.is-readonly]="readonly()"
   [disabled]="isDisabled()"
   [attr.aria-labelledby]="label() ? legendId() : null"
   [attr.aria-describedby]="describedBy()"
   [attr.aria-required]="required() || null"
+  [attr.aria-readonly]="readonly() || null"
   [attr.aria-invalid]="state() === 'invalid' || null"
+  (keydown)="onKeydown($event)"
 >
   @if (label()) {
-    <legend [id]="legendId()" class="form-label fs-6">
-      {{ label() }}
+    <legend class="exos-choice-legend">
+      <span [id]="legendId()">{{ label() }}</span>
       @if (required()) {
         <span class="text-danger" aria-hidden="true">*</span>
+      } @else if (optional()) {
+        <span class="form-label-optional">(optional)</span>
+      }
+      @if (aiMode() === 'label') {
+        <app-ai-label [explanation]="aiExplanation()" />
+      } @else if (aiMode() === 'revert') {
+        <app-ai-revert (revert)="revertToSuggestion()" />
       }
     </legend>
   }
@@ -33,11 +45,17 @@
             [checked]="option.value === value()"
             [disabled]="option.disabled"
             [required]="required()"
+            (click)="onClick($event)"
             (change)="select(option.value)"
             (blur)="onTouched()"
           />
           <span class="radio-card-body">
-            <span class="radio-card-title">{{ option.label }}</span>
+            <span class="radio-card-title">
+              {{ option.label }}
+              @if (option.suggested) {
+                <img class="exos-choice-sparkle" src="icons/pcr/chip-sparkle.svg" width="10" height="10" alt="(AI suggested)" />
+              }
+            </span>
             @if (option.description) {
               <span class="radio-card-description">{{ option.description }}</span>
             }
@@ -46,34 +64,42 @@
       }
     </div>
   } @else {
-    @for (option of options(); track option.value; let i = $index) {
-      <div class="form-check" [class.form-check-inline]="inline()" [class.form-check-reverse]="reverse()">
-        <input
-          class="form-check-input"
-          [class]="stateClass()"
-          type="radio"
-          [id]="optionId(i)"
-          [name]="name()"
-          [value]="option.value"
-          [checked]="option.value === value()"
-          [disabled]="option.disabled"
-          [required]="required()"
-          [attr.aria-describedby]="option.description ? optionId(i) + '-description' : null"
-          (change)="select(option.value)"
-          (blur)="onTouched()"
-        />
-        <label class="form-check-label" [for]="optionId(i)">{{ option.label }}</label>
-        @if (option.description) {
-          <div [id]="optionId(i) + '-description'" class="form-text mt-0">{{ option.description }}</div>
-        }
-      </div>
-    }
+    <div class="exos-choice-list" [class.exos-choice-list-inline]="inline()">
+      @for (option of options(); track option.value; let i = $index) {
+        <div class="exos-check" [class.exos-check-reverse]="reverse()" [class.is-disabled]="option.disabled || isDisabled()">
+          <input
+            class="form-check-input"
+            [class]="stateClass()"
+            type="radio"
+            [id]="optionId(i)"
+            [name]="name()"
+            [value]="option.value"
+            [checked]="option.value === value()"
+            [disabled]="option.disabled"
+            [required]="required()"
+            [attr.aria-describedby]="option.description ? optionId(i) + '-description' : null"
+            (click)="onClick($event)"
+            (change)="select(option.value)"
+            (blur)="onTouched()"
+          />
+          <div class="exos-check-body">
+            <label class="exos-check-label" [for]="optionId(i)">
+              {{ option.label }}
+              @if (option.suggested) {
+                <img class="exos-choice-sparkle" src="icons/pcr/chip-sparkle.svg" width="10" height="10" alt="(AI suggested)" />
+              }
+            </label>
+            @if (option.description) {
+              <div [id]="optionId(i) + '-description'" class="exos-check-description">{{ option.description }}</div>
+            }
+          </div>
+        </div>
+      }
+    </div>
   }
 
   @if (showFeedback()) {
-    <div [id]="feedbackId()" class="d-block" [class]="state() === 'valid' ? 'valid-feedback' : 'invalid-feedback'">
-      {{ feedback() }}
-    </div>
+    <div [id]="feedbackId()" [class]="feedbackClass()">{{ feedback() }}</div>
   }
   @if (helpText()) {
     <div [id]="helpId()" class="form-text">{{ helpText() }}</div>

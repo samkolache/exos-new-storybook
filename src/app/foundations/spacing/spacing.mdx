@@ -1,0 +1,110 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
+import * as Stories from './spacing.stories';
+
+<Meta of={Stories} />
+
+<PageNav />
+
+# Spacing
+
+One scale for all space in Exos, on an 8px base with 2px and 4px steps for small details. Space shows what belongs together: **related things sit close, separate groups sit apart.**
+
+## Live demo
+
+The shaded areas are the space. Switch between Mobile and Web: sections, card padding and the space between buttons change by themselves, because they use the layout spacing tokens below.
+
+<DeviceCanvas of={Stories.InUse} webOf={Stories.InUse} defaultDevice="mobile" noCode />
+
+## Mobile and web
+
+Use these tokens for space around and between blocks. They hold the phone value below 672px and the web value from 672px up, so one line of CSS is right on both.
+
+| Token | Use it for | Phone | Web |
+|---|---|---|---|
+| `--exos-space-section` | Between sections of a page | 32px | 48px |
+| `--exos-space-group` | Between groups inside a section, like a heading and its card | 24px | 32px |
+| `--exos-space-stack` | Between fields or stacked items | 24px | 24px |
+| `--exos-space-inset` | Padding inside cards and panels | 16px | 24px |
+| `--exos-space-controls` | Between buttons, chips and other controls with a border | 12px | 8px |
+| `--exos-space-related` | Between closely related things, like an icon and its text | 8px | 8px |
+
+Why they differ:
+
+- **Phones have less room,** so sections and card padding are tighter, and the page fits more on screen.
+- **Fingers need room between controls,** so buttons and chips are further apart on phones (12px) than on the web (8px), and every tap target is at least 44px.
+- **The web has room to breathe,** so sections sit further apart and cards have more padding.
+
+Page margins and the space between columns come from the [Grid](?path=/docs/foundations-grid--docs): 16px on phones, 24px on tablets, 32px on the web.
+
+## The scale
+
+<DeviceCanvas of={Stories.Scale} defaultDevice="web" noCode />
+
+Every value as a CSS variable on `.exos-theme-dcfc`, read live from the theme:
+
+<TokenTable
+  tokens={[
+    { name: '--exos-spacing-01', use: 'Hairline details, like a badge offset' },
+    { name: '--exos-spacing-02', use: 'Inside small parts, like a label and its value' },
+    { name: '--exos-spacing-03', use: 'Icon to text; related items' },
+    { name: '--exos-spacing-04', use: 'Between controls on phones' },
+    { name: '--exos-spacing-05', use: 'Card padding on phones; page margin on phones' },
+    { name: '--exos-spacing-06', use: 'Between fields; card padding on web' },
+    { name: '--exos-spacing-07', use: 'Between sections on phones; page margin on web' },
+    { name: '--exos-spacing-08', use: 'Large gaps' },
+    { name: '--exos-spacing-09', use: 'Between sections on web' },
+    { name: '--exos-spacing-10', use: 'Page top and bottom on web' },
+    { name: '--exos-spacing-11', use: 'Hero areas' },
+    { name: '--exos-spacing-12', use: 'Hero areas' },
+    { name: '--exos-spacing-13', use: 'Very large layouts' },
+    { name: '--exos-touch-target-min', use: 'Smallest tap target on phones' },
+  ]}
+/>
+
+## Usage
+
+```css
+.order-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--exos-space-section);   /* 32px on phones, 48px on web */
+}
+
+.order-card {
+  padding: var(--exos-space-inset); /* 16px on phones, 24px on web */
+}
+```
+
+In SCSS, use the fixed steps with `exos-spacing("05")`.
+
+Bootstrap's spacing classes are on the same scale, so they're fine for quick layouts:
+
+| Bootstrap | Size | Exos step |
+|---|---|---|
+| `p-1`, `gap-1`, … | 4px | `02` |
+| `p-2`, `gap-2`, … | 8px | `03` |
+| `p-3`, `gap-3`, … | 16px | `05` |
+| `p-4`, `gap-4`, … | 24px | `06` |
+| `p-5`, `gap-5`, … | 48px | `09` |
+
+They don't change between phone and web; the `--exos-space-*` tokens do.
+
+## Do and don't
+
+<DoDont>
+  <Guideline type="do" of={Stories.DoGroupBySpace}>keep related things close and groups apart.</Guideline>
+  <Guideline type="dont" of={Stories.DontEvenSpace}>space everything the same. Nothing looks grouped.</Guideline>
+  <Guideline type="do" of={Stories.DoTokens}>use the tokens.</Guideline>
+  <Guideline type="dont" of={Stories.DontMagicNumbers}>pick numbers by eye. They drift from page to page.</Guideline>
+</DoDont>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Grid', text: 'Columns, margins and gutters', href: '/?path=/docs/foundations-grid--docs' },
+    { title: 'Mobile and web', text: 'Everything that changes at 672px', href: '/?path=/docs/foundations-mobile-and-web--docs' },
+  ]}
+/>

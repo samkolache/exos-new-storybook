@@ -1,0 +1,76 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, Related } from '../../../../.storybook/blocks/Guidelines';
+import * as Stories from './disabled-read-only.stories';
+
+<Meta of={Stories} />
+
+<PageNav />
+
+# Disabled and read only
+
+Two ways to show a field people can't change, for two different reasons. Pick by whether people need to **read** the value.
+
+## Compared
+
+<DeviceCanvas of={Stories.Compare} defaultDevice="web" noCode />
+
+| | Read only | Disabled |
+|---|---|---|
+| **Means** | This is the value, and it can't change here | This isn't available right now |
+| **Looks** | Like normal text, easy to read | Greyed out |
+| **Tab** | Reaches it | Skips it |
+| **Select and copy** | Yes | No |
+| **Screen readers** | Read the value, and that it's read only | Say it's unavailable; may skip it |
+| **Sent with the form** | Yes | No |
+| **Use it for** | Values set elsewhere: an account number, a setting from a company policy | Options that need something first: a phone number before text messages |
+
+## Read only
+
+- **Use it to show a value people need, but can't change here,** like an account number, a price set by a plan, or a policy setting.
+- **Say where it's changed,** if it can be: "Set by your company. Ask your admin to change it."
+- **For a whole page of values nobody edits,** use plain text, not read-only fields.
+
+## Disabled
+
+- **Use it for something that will be available,** once people do something else.
+- **Always say why, and what to do,** next to it: "Add a phone number to turn this on."
+- **If it will never be available to this person, hide it** instead.
+- **Don't disable a form's main button** until the form is right: people can't tell what's missing. Let them press it and show what's wrong (see [Forms](?path=/docs/patterns-forms--docs)).
+
+<DeviceCanvas of={Stories.DisabledWithReason} defaultDevice="web" noCode />
+
+<DoDont>
+  <Guideline type="do" of={Stories.DoReadOnlyToShow}>use read only for a value people need to read or copy.</Guideline>
+  <Guideline type="dont" of={Stories.DontDisabledToShow}>grey out a value people need. It's hard to read and can't be copied.</Guideline>
+  <Guideline type="do" of={Stories.DoSayWhy}>say why it's disabled and how to turn it on.</Guideline>
+  <Guideline type="dont" of={Stories.DontNoReason}>leave people guessing why they can't use it.</Guideline>
+</DoDont>
+
+## Every component
+
+| Component | Read only | Disabled |
+|---|---|---|
+| [Input](?path=/docs/components-forms-input--docs) | `[readonly]="true"` | `[disabled]="true"` |
+| [Select](?path=/docs/components-forms-select--docs) | `[readonly]="true"`: no chevron, won't open | `[disabled]="true"` |
+| [Radio group](?path=/docs/components-forms-radio-group--docs) | `[readonly]="true"`: grey outline, dark dot | `[disabled]="true"`, or `disabled` per option |
+| [Checkbox](?path=/docs/components-forms-checkbox--docs) | `[readonly]="true"`: grey outline, dark check | `[disabled]="true"`, or per option |
+| [Number input](?path=/docs/components-forms-number-input--docs) | `[readonly]="true"`: − and + grey out | `[disabled]="true"` |
+| [Date picker](?path=/docs/components-forms-date-picker--docs) | `[readonly]="true"` | `[disabled]="true"` |
+| [Chip](?path=/docs/components-chip--docs) | — | `disabled` per option, or the group |
+| [Link](?path=/docs/components-link--docs) | — | `[disabled]="true"` |
+
+Reactive forms: `control.disable()` disables any of these.
+
+## Mobile and web
+
+The same on both. On phones, tapping a read-only field doesn't open the keyboard; people can still long-press to copy.
+
+## Related
+
+<Related
+  items={[
+    { title: 'Forms', text: 'Layout and checking answers', href: '/?path=/docs/patterns-forms--docs' },
+    { title: 'Input', text: 'Read only and disabled fields', href: '/?path=/docs/components-forms-input--docs' },
+  ]}
+/>

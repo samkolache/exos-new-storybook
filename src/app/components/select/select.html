@@ -5,17 +5,28 @@
     [disabled]="isDisabled()"
     [required]="required()"
     [attr.aria-invalid]="state() === 'invalid' || null"
+    [attr.aria-readonly]="readonly() || null"
     [attr.aria-describedby]="describedBy()"
+    (mousedown)="onReadonlyPointer($event)"
+    (keydown)="onKeydown($event)"
     (change)="onSelect($event)"
     (blur)="onBlur($event)"
   >
     @if (placeholder()) {
       <option value="" disabled [selected]="!value()">{{ placeholder() }}</option>
     }
-    @for (option of options(); track option.value) {
-      <option [value]="option.value" [disabled]="option.disabled" [selected]="option.value === value()">
-        {{ option.label }}
-      </option>
+    @for (group of groups(); track $index) {
+      @if (group.label) {
+        <optgroup [label]="group.label">
+          @for (option of group.options; track option.value) {
+            <option [value]="option.value" [disabled]="option.disabled" [selected]="option.value === value()">{{ option.label }}</option>
+          }
+        </optgroup>
+      } @else {
+        @for (option of group.options; track option.value) {
+          <option [value]="option.value" [disabled]="option.disabled" [selected]="option.value === value()">{{ option.label }}</option>
+        }
+      }
     }
   </select>
 </ng-template>
@@ -24,6 +35,8 @@
   {{ label() }}
   @if (required()) {
     <span class="text-danger" aria-hidden="true">*</span>
+  } @else if (optional()) {
+    <span class="form-label-optional">(optional)</span>
   }
 </ng-template>
 
@@ -34,13 +47,13 @@
   </div>
 } @else {
   @if (label()) {
-    <label class="form-label" [for]="selectId()"><ng-container [ngTemplateOutlet]="labelText" /></label>
+    <label [class]="hideLabel() ? 'visually-hidden' : 'form-label'" [for]="selectId()"><ng-container [ngTemplateOutlet]="labelText" /></label>
   }
   <ng-container [ngTemplateOutlet]="control" />
 }
 
 @if (showFeedback()) {
-  <div [id]="feedbackId()" class="d-block" [class]="state() === 'valid' ? 'valid-feedback' : 'invalid-feedback'">
+  <div [id]="feedbackId()" [class]="feedbackClass()">
     {{ feedback() }}
   </div>
 }

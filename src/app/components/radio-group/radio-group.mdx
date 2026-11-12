@@ -1,65 +1,245 @@
-import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
-import { Variation } from '../../../../.storybook/blocks/Variation';
-import * as RadioGroupStories from './radio-group.stories';
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import {
+  PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
+  ScreenReader, Related, TokenTable,
+} from '../../../../.storybook/blocks/Guidelines';
+import * as RadioStories from './radio-group.stories';
 
-<Meta of={RadioGroupStories} />
+<Meta of={RadioStories} />
+
+<PageNav />
 
 <Title />
 
-<Subtitle>A set of options where people pick exactly one.</Subtitle>
+<Subtitle>Radio buttons let people pick exactly one option from a short list they can see all at once.</Subtitle>
 
-## Demo
+## Live demo
 
-<Canvas of={RadioGroupStories.Default} />
+One form, one piece of code. Switch to Mobile: the horizontal group stacks by itself.
 
-## Usage
+<DeviceCanvas of={RadioStories.Overview} defaultDevice="mobile" />
 
-Use a radio group when people should see every option before choosing. For a long list, use a [Select](?path=/docs/components-forms-select--docs). For short answers in a row, use a [Chip](?path=/docs/components-chip--docs).
+## When to use
 
-```html
-<app-radio-group label="Section" [options]="sections" [(value)]="section" />
-```
+**Use radio buttons** when people must pick **one** option and it helps to compare them all:
 
-```ts
-sections: RadioOption[] = [
-  { label: 'Interior', value: 'interior' },
-  { label: 'Exterior', value: 'exterior', description: 'Front, rear and sides' },
-];
-```
+- 2 to 5 options, like shipping speed or a plan.
+- Options that need a short description to choose well.
+- Settings that switch between modes.
 
-It works with `[(value)]`, `ngModel` and reactive forms.
+### Compared with look-alikes
 
-## Variations
+| Component | People pick | Options | Use it for |
+|---|---|---|---|
+| **Radio group** | One | 2–5, all visible | Choices worth comparing, often with a description |
+| [Checkbox](?path=/docs/components-forms-checkbox--docs) | Any number | Any | Several answers, or one yes/no |
+| [Select](?path=/docs/components-forms-select--docs) | One | 6 or more, in a list | Long, known lists, like countries |
+| [Chip](?path=/docs/components-chip--docs) | One or several | 2–7, short | Quick answers on one line |
 
-<Variation title="Appearance" of={RadioGroupStories.Appearances}>
+## Anatomy
 
-Set the look with the `appearance` input:
+<DeviceCanvas of={RadioStories.Anatomy} noCode />
 
-- `default` is a plain Bootstrap radio list.
-- `card` turns each option into a selectable card. Use it when options need more room or a description.
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Group label** | Always. The question, with `*` or "(optional)". |
+| 2 | **AI label** | An option has `suggested: true`. Opens what the AI did. |
+| 3 | **Radio** | Always. Filled when picked. |
+| 4 | **Option label** | Always. Wraps onto more lines; never cut off. |
+| 5 | **Description** | Optional, per option. |
+| 6 | **Help text and message** | `helpText`, or a `state` with `feedback`. |
 
-</Variation>
+## Variants
 
-<Variation title="Cards" of={RadioGroupStories.CardsShowcase}>
+Pick by how much people need to read to choose.
 
-Add a `description` to an option for a second line of detail. The picked card gets a blue border.
+<DeviceVariation title="List" of={RadioStories.VarList}>
 
-</Variation>
+The default: a compact list. Use it for most choices.
 
-<Variation title="Layout" of={RadioGroupStories.LayoutShowcase}>
+</DeviceVariation>
 
-Options stack by default. `[inline]="true"` puts them side by side. `[reverse]="true"` puts the radio after its label.
+<DeviceVariation title="Card" of={RadioStories.VarCard}>
 
-</Variation>
+Each option is a card. Use it when options carry more detail, or the choice is the main task on the screen, like picking a plan.
 
-<Variation title="States" of={RadioGroupStories.StatesShowcase}>
+- Add `appearance="card"`.
 
-Set `state="invalid"` with a `feedback` message when nothing is picked. Use the `disabled` input for the whole group, or `disabled: true` on a single option.
+</DeviceVariation>
 
-</Variation>
+## Modifiers
 
-## API
+One input each, so they work with either variant.
 
-Change the inputs below to update the demo at the top of the page.
+<DeviceVariation title="Horizontal" of={RadioStories.ModHorizontal}>
 
-<Controls of={RadioGroupStories.Default} />
+Add `[inline]="true"` to put 2 or 3 short options side by side. On phones they always stack, so labels don't squeeze. Vertical is easier to scan, so it stays the default.
+
+</DeviceVariation>
+
+<DeviceVariation title="Description" of={RadioStories.ModDescription}>
+
+Add `description` to an option for one short line of detail, like price or time. It's read by screen readers after the option's name.
+
+</DeviceVariation>
+
+<DeviceVariation title="AI suggested" of={RadioStories.ModAI}>
+
+Add `suggested: true` to the AI's answer and set it as the `value`.
+
+- The option gets a sparkle, and the group label gets an **AI label**.
+- Set `aiExplanation` to say why, in one sentence. It opens from the AI label.
+
+</DeviceVariation>
+
+<DeviceVariation title="AI suggested, changed" of={RadioStories.ModAIChanged}>
+
+Once people pick something else, the AI label becomes a **revert** button that puts the AI's answer back. The sparkle stays on the AI's option so people know which it was. Nothing to set: it follows from `value`.
+
+</DeviceVariation>
+
+<DeviceVariation title="Optional" of={RadioStories.ModOptional}>
+
+Add `[optional]="true"`. With nothing picked and no "None" option, people can't undo a pick, so add one if skipping is fine.
+
+</DeviceVariation>
+
+<DeviceVariation title="Reverse" of={RadioStories.ModReverse}>
+
+Add `[reverse]="true"` to put the radio at the end of the row, like a settings list on a phone.
+
+</DeviceVariation>
+
+## Specs
+
+| | Web | Mobile |
+|---|---|---|
+| Radio | 16px | 16px |
+| Row height | 32px | 44px |
+| Radio to label | 8px | 8px |
+| Label | 16px / 24px | 16px / 24px |
+| Description | 14px, secondary text | 14px, secondary text |
+| Space between horizontal options | 24px | Stacked |
+| Space to the next field | 32px | 32px |
+
+The whole row is the tap or click target, not just the circle.
+
+## Content
+
+- **Ask the question in the group label,** in sentence case: "Shipping", "Contact me by".
+- **Keep option labels to 1 to 3 words.** Put detail in `description`.
+- **Order options logically:** cheapest to most expensive, smallest to largest, or most common first.
+- **Don't preselect** unless there's a safe default or the AI suggested it. A preselected answer is easy to miss.
+
+<DoDont>
+  <Guideline type="do" of={RadioStories.DoVertical}>stack options so they're quick to scan.</Guideline>
+  <Guideline type="dont" of={RadioStories.DontHorizontalLong}>put long options side by side.</Guideline>
+  <Guideline type="do" of={RadioStories.DoNone}>add "None" when skipping is fine, so people can undo a pick.</Guideline>
+  <Guideline type="dont" of={RadioStories.DontNoWayBack}>leave people stuck with a pick they didn't want.</Guideline>
+  <Guideline type="do" of={RadioStories.DoCheckboxForOnOff}>use one checkbox for a single yes or no.</Guideline>
+  <Guideline type="dont" of={RadioStories.DontRadiosForOnOff}>use a Yes / No pair. It takes longer to read.</Guideline>
+  <Guideline type="do" of={RadioStories.DoFewOptions}>use radios for 2 to 5 options.</Guideline>
+  <Guideline type="dont" of={RadioStories.DontManyOptions}>list 6 or more. Use a Select.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="All states" of={RadioStories.AllStates} noCode>
+
+- **Warning:** the pick is allowed but worth a second look.
+- **Invalid:** nothing picked, or the pick can't be used. Says how to fix it.
+- **Read only:** a grey outline and dark dot. People can Tab to it and read it but not change it, like a setting from a company policy.
+- **Disabled:** can't be used right now, and is skipped by <kbd>Tab</kbd>. Say nearby why.
+
+Warning and invalid messages lead with an icon, so colour is never the only signal. The AI label stays active even when the group is disabled or read only.
+
+</DeviceVariation>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> | Into the group (to the picked radio, or the first one) and out again in one step |
+| <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> | Next or previous option, and picks it, skipping disabled ones |
+| <kbd>Space</kbd> | Picks the focused option, if none is picked yet |
+| <kbd>Enter</kbd> / <kbd>Esc</kbd> on the AI label | Opens / closes the explanation |
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Row height | 44px, the whole row is the target | 32px |
+| Horizontal | Stacks | Side by side |
+| Space between cards | 12px, so a tap lands on the intended card | 8px |
+| AI label and revert | 44px tap areas | Their own size |
+| Hover | None | Pointer on the row |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+### Edge cases
+
+<SpecimenGrid>
+  <Specimen of={RadioStories.EdgeLongLabel}>**Long label:** wraps under itself, with the radio on the first line.</Specimen>
+  <Specimen of={RadioStories.EdgeNothingPicked}>**Nothing picked:** fine to start with. Mark it invalid only after people try to continue.</Specimen>
+  <Specimen of={RadioStories.EdgeDisabledOption}>**Unavailable option:** add `disabled: true`, and say why in its description.</Specimen>
+</SpecimenGrid>
+
+## Accessibility
+
+For the picked option in the description example, a screen reader reads:
+
+<ScreenReader name="Standard" role="radio button" state="checked" position="1 of 3" group="Shipping" description="3 to 5 business days · Free" />
+
+- **Group:** a `fieldset` with `role="radiogroup"`, named by its label. Messages and help text describe the group.
+- **Read only** uses `aria-readonly`, and clicks and arrow keys are ignored, so the answer stays.
+- **AI:** the suggested option's name ends in "(AI suggested)". The AI label is a button whose explanation is announced when it opens.
+- **Checked automatically:** every radio story runs an accessibility scan in the tests, plus keyboard, read-only, AI revert and screen reader tests.
+
+## Code
+
+The Variants and Modifiers examples above each have their code.
+
+### Reactive forms
+
+Works with `[formControl]`, `formControlName`, `ngModel` and `[(value)]`.
+
+<DeviceCanvas of={RadioStories.ReactiveForm} codeOpen />
+
+### API
+
+<Controls of={RadioStories.Default} />
+
+### Theming
+
+<TokenTable
+  tokens={[
+    { name: '--color-border-default', use: 'Radio border' },
+    { name: '--color-control-selected', use: 'Picked radio, picked card border' },
+    { name: '--color-text-secondary', use: 'Description, read-only radio' },
+    { name: '--color-text-disabled', use: 'Disabled label' },
+    { name: '--color-status-warning', use: 'Warning border and icon' },
+    { name: '--color-text-attention', use: 'Warning message' },
+    { name: '--color-background-selected', use: 'AI label fill' },
+    { name: '--color-text-tag-info', use: 'AI label and revert' },
+    { name: '--exos-touch-target-min', use: 'Row height on mobile' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Checkbox', text: 'Pick any number', href: '/?path=/docs/components-forms-checkbox--docs' },
+    { title: 'Select', text: 'Pick one from a long list', href: '/?path=/docs/components-forms-select--docs' },
+    { title: 'Chip', text: 'Short answers on one line', href: '/?path=/docs/components-chip--docs' },
+    { title: 'Input', text: 'Open answers', href: '/?path=/docs/components-forms-input--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** AI label with explanation and revert; warning and read-only states; `optional`; 44px rows on mobile; horizontal groups stack on phones; the whole row is clickable; labels wrap.
+- **Nov 10, 2026:** first version, with list and card appearances.

@@ -1,6 +1,6 @@
-<span [class]="classes()" [attr.aria-disabled]="disabled() || null">
+<span [class]="classes()" [attr.aria-disabled]="disabled() || null" [attr.title]="title()">
   @if (iconSize(); as size) {
     <img [src]="'icons/pcr/tag-icon-' + resolvedIcon() + '.svg'" [width]="size[0]" [height]="size[1]" [alt]="ai() ? 'AI' : ''" />
   }
-  {{ label() }}
+  <span class="exos-tag-label">{{ label() }}</span>
 </span>

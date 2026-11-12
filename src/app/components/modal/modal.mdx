@@ -1,0 +1,192 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
+import * as ModalStories from './modal.stories';
+
+<Meta of={ModalStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>Modals ask people to finish one short task or make one decision before going back to the page.</Subtitle>
+
+## Live demo
+
+On the web it opens in the middle of the screen; on a phone it slides up from the bottom. Switch the device to compare.
+
+<DeviceCanvas of={ModalStories.Overview} defaultDevice="mobile" />
+
+## When to use
+
+**Use a modal** when people must deal with something before going on:
+
+- Confirming something that can't be undone, like deleting.
+- A short task that belongs to this page, like adding an address.
+- Something that stops work until handled, like an expired session.
+
+**Don't use one** for information people can read in passing (use a [Notification](?path=/docs/components-notification--docs)), or for long tasks (use a page).
+
+### Compared with look-alikes
+
+| Component | Blocks the page | Use it for |
+|---|---|---|
+| **Modal** | Yes | A decision or short task now |
+| [Notification](?path=/docs/components-notification--docs) | No | Telling people something happened |
+| [Toggletip](?path=/docs/components-tooltip--docs) | No | A short explanation on request |
+| A new page | Not a layer | Long or multi-step tasks |
+
+## Anatomy
+
+<DeviceCanvas of={ModalStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Title** | Always. The question or task. Names the modal for screen readers. |
+| 2 | **Close** | `dismissible` (default). |
+| 3 | **Body** | Always. A sentence, or a short form. Scrolls if it's tall. |
+| 4 | **Secondary button** | `secondaryLabel`. Cancels and closes. |
+| 5 | **Main button** | `primaryLabel`. Says what happens. |
+
+## Variants
+
+Two kinds, by what's inside.
+
+<DeviceVariation title="Decision" of={ModalStories.VarDecision}>
+
+A question with two answers, like "Delete photo?" with Delete and Cancel. Use `size="sm"`, and `primaryVariant="destructive"` when the answer deletes something.
+
+</DeviceVariation>
+
+<DeviceVariation title="Short form" of={ModalStories.Overview}>
+
+A few fields that belong to this page, like adding an address. Use `size="md"`. More than about 5 fields, or several steps? Use a page.
+
+</DeviceVariation>
+
+## Size
+
+<DeviceVariation title="Small, medium, large" of={ModalStories.SizeSwitchable} sizeSwitch>
+
+The width on the web. On phones, modals are always full width. Use the switch in the toolbar.
+
+- **Small** (`sm`, 400px): decisions.
+- **Medium** (`md`, 560px, default): short forms.
+- **Large** (`lg`, 800px): content that needs room, like a preview.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Full screen on phones" of={ModalStories.ModFullscreen}>
+
+`mobile="fullscreen"` fills a phone's screen, so a form has room above the keyboard. Use it for forms; keep decisions as a sheet. On the web it looks the same either way.
+
+</DeviceVariation>
+
+<DeviceVariation title="Subtitle" of={ModalStories.ModSubtitle}>
+
+`subtitle` adds a line under the title, like the name of the item it's about.
+
+</DeviceVariation>
+
+<DeviceVariation title="Not dismissible" of={ModalStories.ModNotDismissible}>
+
+`[dismissible]="false"` removes the close button, and Esc and clicking outside do nothing. Only when people truly must choose, like signing in again. Always leave one way out.
+
+</DeviceVariation>
+
+## Specs
+
+| | Web | Mobile |
+|---|---|---|
+| Position | Centred | From the bottom (sheet) or full screen |
+| Width | 400 / 560 / 800px | Full width |
+| Height | Up to the screen minus 64px; the body scrolls | Up to 90% (sheet) or full |
+| Corners | 16px | 16px top corners (sheet), none (full screen) |
+| Padding | 24px | 20px |
+| Buttons | Side by side, at the right, main button last | Stacked full width, main button on top |
+| Backdrop | Ink at 48% | Same |
+
+## Content
+
+- **Title: the question or task,** like "Delete photo?" or "Add address". Not "Warning" or "Are you sure?".
+- **Body: what happens,** in one or two sentences, especially anything that can't be undone.
+- **Buttons: say what they do,** like "Delete" and "Keep editing". Never "Yes" and "No": people should know what a button does without reading the question.
+- **Two buttons at most.** The main one says the action; the other cancels.
+
+<DoDont>
+  <Guideline type="do" of={ModalStories.DoSpecificButtons}>name the buttons after what they do.</Guideline>
+  <Guideline type="dont" of={ModalStories.DontYesNo}>ask "Are you sure?" with Yes and No.</Guideline>
+  <Guideline type="do" of={ModalStories.DoShort}>keep it to a decision people need to make now.</Guideline>
+  <Guideline type="dont" of={ModalStories.DontModalForInfo}>stop people to say something worked. Use a toast.</Guideline>
+</DoDont>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> / <kbd>Shift</kbd> <kbd>Tab</kbd> | Moves between the modal's controls; focus can't leave it |
+| <kbd>Esc</kbd> | Closes it, unless it isn't dismissible |
+| <kbd>Enter</kbd> | Presses the focused button |
+
+When it opens, focus moves into it. When it closes, focus goes back to the button that opened it. The page behind can't be scrolled or reached.
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Opens | Slides up from the bottom | Fades in, centred |
+| Forms | `mobile="fullscreen"` for room above the keyboard | The same modal |
+| Buttons | Stacked, full width, main button on top in thumb reach | Side by side at the right |
+| Close | 44px tap area; tapping the backdrop also closes | Click outside or Esc |
+| Clear of the home bar | Yes (safe area) | Not needed |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+## Accessibility
+
+When the delete modal opens, a screen reader reads:
+
+<ScreenReader name="Delete photo?" role="dialog" state="modal" description="The photo will be removed from this report. This can’t be undone." />
+
+- **Built on the browser's `<dialog>`:** focus stays inside, Esc closes it, and the page behind is hidden from screen readers.
+- **Named by its title** with `aria-labelledby`.
+- **Focus returns** to the button that opened it.
+- **Reduce motion:** no slide or fade when people ask for less motion.
+- **Checked automatically:** every modal story runs an accessibility scan in the tests, plus focus, Esc and button tests.
+
+## Code
+
+The Variants, Size and Modifiers examples above each have their code.
+
+### API
+
+<Controls of={ModalStories.Default} />
+
+### Theming
+
+<TokenTable
+  tokens={[
+    { name: '--color-background-page', use: 'Modal' },
+    { name: '--color-text-heading', use: 'Title' },
+    { name: '--color-border-divider', use: 'Line above the buttons' },
+    { name: '--color-text-label', use: 'Close button' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Notification', text: 'When it doesn’t need to stop people', href: '/?path=/docs/components-notification--docs' },
+    { title: 'Button', text: 'The modal’s buttons', href: '/?path=/docs/components-button--docs' },
+    { title: 'Input', text: 'Fields in a short form', href: '/?path=/docs/components-forms-input--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** first version: decisions and short forms, three sizes, a sheet or full screen on phones.

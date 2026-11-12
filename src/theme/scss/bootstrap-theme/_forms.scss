@@ -141,6 +141,11 @@ textarea.form-control {
   flex-direction: column;
   gap: 0.5rem;
 
+  // Phones: about 12px between bordered controls.
+  @include media-breakpoint-down(md) {
+    gap: 0.75rem;
+  }
+
   &.radio-card-group-inline {
     flex-direction: row;
     flex-wrap: wrap;
@@ -183,9 +188,13 @@ textarea.form-control {
     }
   }
 
+  // Grey title, normal description (still readable); the radio itself fades.
   &.disabled {
-    opacity: 0.5;
     cursor: not-allowed;
+
+    .radio-card-title {
+      color: var(--color-text-disabled);
+    }
   }
 
   &.is-invalid {
@@ -210,4 +219,121 @@ textarea.form-control {
 .radio-card-description {
   font-size: 0.875rem;
   color: var(--color-text-secondary);
+}
+
+// "(optional)" after a label: quieter than the label itself.
+.form-label-optional {
+  margin-left: 0.25rem;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+// Warning: the answer is allowed but probably wrong, like a date far in the past.
+// Orange border and a triangle in the field, so colour isn't the only signal.
+$exos-warning-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='%23F28C28' d='M8 1.5 15 14H1z'/%3e%3cpath stroke='%23fff' stroke-width='1.6' stroke-linecap='round' d='M8 6v3.6'/%3e%3ccircle cx='8' cy='11.8' r='.9' fill='%23fff'/%3e%3c/svg%3e");
+
+.form-control.is-warning {
+  padding-right: calc(1.5em + 0.75rem);
+  border-color: var(--color-status-warning);
+  background-image: $exos-warning-icon;
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+
+  &:focus {
+    border-color: var(--color-status-warning);
+    box-shadow: 0 0 0 0.25rem rgba(242, 140, 40, 0.25);
+  }
+}
+
+textarea.form-control.is-warning {
+  background-position: top calc(0.375em + 0.1875rem) right calc(0.375em + 0.1875rem);
+}
+
+.form-control-wrap[class*="has-trailing"] .form-control.is-warning {
+  background-image: none;
+}
+
+.warning-feedback {
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: var(--color-text-attention);
+}
+
+// Exact heights on every screen. Padding alone lands a pixel short where the browser
+// rounds the 1.5px border down to 1px.
+input.form-control,
+.form-select { min-height: 2.5rem; }
+input.form-control-sm,
+.form-select-sm { min-height: 2rem; }
+input.form-control-lg,
+.form-select-lg { min-height: 3rem; }
+
+// Hover belongs to devices with a pointer; on touch it sticks after a tap.
+@media (hover: none) {
+  .form-control-action:hover {
+    background: none;
+    color: var(--color-text-label);
+  }
+}
+
+// Mobile (below md):
+// - 16px text at every size, so phone browsers don't zoom the page when a field gets focus.
+// - Fields are at least 44px tall, and the clear / show password buttons get 44px tap areas.
+// Tablet and web keep the 32 / 40 / 48px sizes.
+@include media-breakpoint-down(md) {
+  .form-control,
+  .form-select {
+    font-size: 1rem;
+  }
+
+  input.form-control,
+  .form-select {
+    min-height: var(--exos-touch-target-min, 44px);
+  }
+
+  .form-control-actions {
+    right: 0;
+    gap: 0;
+  }
+
+  .form-control-action,
+  .form-control-wrap-sm .form-control-action {
+    justify-content: center;
+    align-items: center;
+    width: var(--exos-touch-target-min, 44px);
+    height: var(--exos-touch-target-min, 44px);
+    padding: 0;
+  }
+
+  .form-control-wrap {
+    &.has-trailing-1 .form-control { padding-right: calc(var(--exos-touch-target-min, 44px) + 0.25rem); }
+    &.has-trailing-2 .form-control { padding-right: calc(2 * var(--exos-touch-target-min, 44px) + 0.25rem); }
+  }
+
+  // Multi-line: buttons sit in the first line's corner.
+  .form-control-wrap.is-textarea > .form-control-actions {
+    top: 0;
+  }
+}
+
+// Select: warning keeps the chevron and adds the triangle beside it, like invalid does.
+.form-select.is-warning:not([multiple]):not([size]) {
+  --#{$prefix}form-select-bg-icon: #{$exos-warning-icon};
+  padding-right: $form-select-feedback-icon-padding-end;
+  border-color: var(--color-status-warning);
+  background-position: $form-select-bg-position, $form-select-feedback-icon-position;
+  background-size: $form-select-bg-size, $form-select-feedback-icon-size;
+
+  &:focus {
+    border-color: var(--color-status-warning);
+    box-shadow: 0 0 0 0.25rem rgba(242, 140, 40, 0.25);
+  }
+}
+
+// Select, read only: no chevron, since it won't open; normal text people can still read and copy.
+.form-select.form-select-readonly {
+  --#{$prefix}form-select-bg-img: none;
+  padding-right: $input-padding-x;
+  cursor: default;
 }

@@ -1,0 +1,67 @@
+// Layout tokens: breakpoints, grid and spacing.
+//
+// Web: 16 columns, 8px base. Mobile: 4 columns, 16px margins, safe areas.
+// Bootstrap's $grid-breakpoints is set from $exos-breakpoints, so
+// `d-md-none`, `media-breakpoint-up(lg)` etc. use these same values.
+
+// Breakpoints. Names match Bootstrap.
+$exos-breakpoints: (
+  xs:  0,       // small phones (below 320px)
+  sm:  320px,   // phones
+  md:  672px,   // tablets
+  lg:  1056px,  // laptops
+  xl:  1312px,  // desktops
+  xxl: 1584px,  // wide screens
+) !default;
+
+// Grid per breakpoint. Each entry applies from that breakpoint up.
+$exos-grid: (
+  xs: (columns: 4,  margin: 16px, gutter: 16px),  // mobile
+  md: (columns: 8,  margin: 24px, gutter: 16px),  // tablet
+  lg: (columns: 16, margin: 32px, gutter: 32px),  // web
+) !default;
+
+// Widest the grid gets. Past this it stays centred.
+$exos-grid-max-width: 1584px !default;
+
+// Narrow grid, for reading and forms: lines stay a comfortable length.
+$exos-grid-narrow-max-width: 960px !default;
+
+// Spacing scale (8px base with 2px and 4px steps).
+$exos-spacing: (
+  "01": 2px,
+  "02": 4px,
+  "03": 8px,
+  "04": 12px,
+  "05": 16px,
+  "06": 24px,
+  "07": 32px,
+  "08": 40px,
+  "09": 48px,
+  "10": 64px,
+  "11": 80px,
+  "12": 96px,
+  "13": 160px,
+) !default;
+
+// Layout spacing that changes with the screen: phone values first, web values from md (672px).
+// Use these for space around and between blocks, so layouts get the right space on both.
+$exos-layout-spacing: (
+  //               phone   web
+  "section":      ("07", "09"),  // between sections of a page: 32 → 48
+  "group":        ("06", "07"),  // between groups inside a section: 24 → 32
+  "stack":        ("06", "06"),  // between fields or stacked items: 24 → 24
+  "inset":        ("05", "06"),  // padding inside cards and panels: 16 → 24
+  "controls":     ("04", "03"),  // between buttons, chips and other bordered controls: 12 → 8
+  "related":      ("03", "03"),  // between closely related things, like an icon and its text: 8
+) !default;
+
+// Smallest tap target on touch screens (44px).
+$exos-touch-target-min: 44px !default;
+
+@function exos-spacing($step) {
+  @if not map-has-key($exos-spacing, $step) {
+    @error "Unknown spacing step `#{$step}`.";
+  }
+  @return map-get($exos-spacing, $step);
+}

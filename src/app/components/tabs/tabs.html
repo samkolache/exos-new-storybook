@@ -1,0 +1,23 @@
+<div [class]="listClasses()" role="tablist" [attr.aria-label]="label() || null">
+  @for (item of items(); track item.value; let i = $index) {
+    <button
+      #tab
+      type="button"
+      role="tab"
+      class="exos-tab"
+      [id]="tabId(item.value)"
+      [attr.aria-selected]="current() === item.value"
+      [attr.aria-controls]="controlsOf(item.value)"
+      [attr.tabindex]="current() === item.value ? 0 : -1"
+      [disabled]="item.disabled"
+      (click)="select(item)"
+      (keydown)="onKeydown($event, i)"
+    >
+      <span class="exos-tab-label">{{ item.label }}</span>
+      @if (item.count !== undefined) {
+        <span class="exos-tab-count">{{ item.count }}</span>
+      }
+    </button>
+  }
+</div>
+<ng-content />

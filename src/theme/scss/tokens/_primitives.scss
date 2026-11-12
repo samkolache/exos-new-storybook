@@ -11,6 +11,7 @@ $dcfc-primitives: (
   "ink-975":    #0F121A, // from Figma PCR (headings, values)
   "ink-1000":   #0F1219, // Figma: icon button glyph
   "ink-800":    #3A4150, // from Figma tag (neutral text)
+  "blue-700":   #2160D4, // info tag text: blue-600 darkened to pass 4.5:1 on blue-25
   "blue-600":   #2F6FE4, // from setup doc
   "blue-500":   #438AF5, // from setup doc (action blue / info)
   "blue-500-a15": rgba(67, 138, 245, 0.15), // Figma: progress button pending bg
@@ -25,9 +26,13 @@ $dcfc-primitives: (
   "yellow-700": #B38626, // Figma: yellow-50, progress button in-progress badge
   "violet-400": #8B6CF0,
   "violet-900-a08": rgba(48, 36, 120, 0.08), // Figma: icon button shadow
+  "green-50":   #E9F7EF, // success notification fill
+  "green-700":  #1A7F49, // valid message text: green-500 darkened to pass 4.5:1 on white
   "green-500":  #1E9E5A,
   "green-500-a40": rgba(39, 178, 112, 0.40), // Figma: progress button complete border
   "green-600":  #1E9E6A, // Figma: progress button complete bg
+  "red-50":     #FDECEC, // error notification fill
+  "red-700":    #B42318, // error text on red-50 (5.8:1)
   "red-500":    #D93B3B,
   "red-600":    #D2463B, // Figma: button destructive
   "grey-50":    #F4F6FA, // from pcr-demo (filled field well)

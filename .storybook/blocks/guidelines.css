@@ -1,0 +1,224 @@
+/* Guideline blocks: "On this page" nav and Do / Don't cards (Storybook chrome, not the theme). */
+
+/* ── On this page ─────────────────────────────────────────────────────── */
+
+/* Narrow docs area: a compact bar at the top of the page with the links in a wrapping row. */
+.sbdocs .exos-pagenav {
+  margin: 0 0 24px;
+  padding: 12px 14px;
+  border: 1px solid #e6eaf1;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+@media (max-width: 899px) {
+  .sbdocs .exos-pagenav ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 2px;
+    border-left: 0;
+  }
+  .sbdocs .exos-pagenav a {
+    margin-left: 0;
+    padding: 3px 8px;
+    border-left: 0;
+    border-radius: 999px;
+    font-size: 13px;
+  }
+  .sbdocs .exos-pagenav a.is-active { border-left: 0; background: #edf5ff; }
+  .sbdocs .exos-pagenav__title { margin-left: 0; }
+}
+
+/* Wide docs area (a 1280px laptop with the Storybook sidebar open, and up): sticky on the right. */
+@media (min-width: 900px) {
+  body.exos-has-pagenav .sbdocs-wrapper {
+    padding-right: 220px;
+  }
+
+  .sbdocs .exos-pagenav {
+    position: fixed;
+    top: 64px;
+    right: 24px;
+    z-index: 2;
+    width: 176px;
+    max-height: calc(100vh - 96px);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    overflow-y: auto;
+  }
+}
+
+.sbdocs .exos-pagenav__title {
+  margin: 0 0 8px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8c95a6;
+}
+
+.exos-pagenav ul {
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid #e6eaf1;
+  list-style: none;
+}
+
+.exos-pagenav li {
+  margin: 0;
+}
+
+.sbdocs .exos-pagenav a {
+  display: block;
+  margin-left: -2px;
+  padding: 6px 12px;
+  border-left: 2px solid transparent;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #5b6475;
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.sbdocs .exos-pagenav a:hover {
+  color: #0f121a;
+}
+
+.sbdocs .exos-pagenav a.is-active {
+  border-left-color: #438af5;
+  font-weight: 600;
+  color: #0f121a;
+}
+
+/* Section headings land below the top edge when jumped to. */
+.sbdocs-content h2[id] {
+  scroll-margin-top: 24px;
+}
+
+/* ── Do / Don't ───────────────────────────────────────────────────────── */
+
+.exos-dodont {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 16px;
+  margin: 16px 0 32px;
+}
+
+@media (max-width: 700px) {
+  .exos-dodont { grid-template-columns: minmax(0, 1fr); }
+}
+
+.sbdocs .exos-guideline {
+  margin: 0;
+}
+
+.exos-guideline__preview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+  border-top: 4px solid;
+  background: #f4f6fa;
+}
+
+.exos-guideline--do .exos-guideline__preview { border-color: #1e9e5a; }
+.exos-guideline--dont .exos-guideline__preview { border-color: #d93b3b; }
+
+.exos-guideline__badge {
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #ffffff;
+}
+
+.exos-guideline--do .exos-guideline__badge { background: #1e9e5a; }
+.exos-guideline--dont .exos-guideline__badge { background: #d93b3b; }
+
+.exos-guideline__stage {
+  width: 100%;
+  pointer-events: none;
+}
+
+/* Centre each example in its card (unless it sits under a label). */
+.exos-guideline__stage .chip-group {
+  justify-content: center;
+}
+
+.exos-guideline__stage [data-align="start"] .chip-group {
+  justify-content: flex-start;
+}
+
+.exos-guideline__stage .docs-story,
+.exos-guideline__stage .sb-story {
+  margin: 0;
+  background: none;
+}
+
+.sbdocs .exos-guideline figcaption {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #3a3f4a;
+}
+
+/* ── Header metadata ──────────────────────────────────────────────── */
+.sbdocs .exos-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin: -4px 0 28px;
+  font-size: 13px;
+  color: #5b6475;
+}
+.sbdocs .exos-meta a { color: #2f6fe4; text-decoration: none; }
+.sbdocs .exos-meta a:hover { text-decoration: underline; }
+.exos-meta__status { padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.exos-meta__status--stable { background: #e9f7ef; color: #1e9e5a; }
+.exos-meta__status--beta { background: #fff4e2; color: #b46e0e; }
+.exos-meta__status--draft { background: #eef1f6; color: #5b6475; }
+
+/* ── Specimens (edge cases) ───────────────────────────────────────── */
+.exos-specimens {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 12px 0 24px;
+}
+.sbdocs .exos-specimen { margin: 0; padding: 12px; border: 1px dashed #c3cad6; border-radius: 10px; }
+.exos-specimen__stage { min-height: 80px; display: flex; align-items: center; pointer-events: none; }
+.exos-specimen__stage > * { width: 100%; }
+.exos-specimen__stage .docs-story, .exos-specimen__stage .sb-story { margin: 0; background: none; }
+.sbdocs .exos-specimen figcaption { margin-top: 8px; font-size: 13px; color: #5b6475; }
+
+/* ── Screen reader output ─────────────────────────────────────────── */
+.sbdocs .exos-sr { display: flex; gap: 12px; margin: 12px 0 20px; padding: 14px 16px; border-radius: 10px; background: #edf5ff; }
+.exos-sr__icon { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #438af5; color: #fff; }
+.sbdocs .exos-sr q { font-family: ui-monospace, Menlo, monospace; font-size: 14px; color: #0f121a; }
+/* Name / Role / State as small "label value" pairs on one baseline. Plain spans, so Storybook's list styles don't apply. */
+.sbdocs .exos-sr__facts, .exos-sr__facts { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; font-size: 13px; line-height: 1.4; }
+.exos-sr__fact { display: inline-flex; align-items: baseline; gap: 6px; }
+.sbdocs .exos-sr__key, .exos-sr__key { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #8c95a6; }
+.sbdocs .exos-sr__val, .exos-sr__val { color: #3a3f4a; }
+
+/* ── Related ──────────────────────────────────────────────────────── */
+.exos-related { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin: 12px 0 24px; }
+.sbdocs .exos-related a { display: grid; gap: 4px; padding: 12px 14px; border: 1px solid #e6eaf1; border-radius: 10px; color: #0f121a; text-decoration: none; }
+.sbdocs .exos-related a:hover { border-color: #b8c2d3; }
+.sbdocs .exos-related b { font-weight: 600; }
+.sbdocs .exos-related span { font-size: 13px; color: #5b6475; }
+
+/* ── Specs and tokens ─────────────────────────────────────────────── */
+.exos-specs__samples { position: absolute; left: -9999px; top: 0; visibility: hidden; display: flex; align-items: flex-start; gap: 8px; }
+.exos-tokens__swatch { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border: 1px solid rgba(15, 18, 26, 0.15); border-radius: 3px; vertical-align: -1px; }
+.sbdocs .exos-specs table, .sbdocs .exos-tokens table { font-variant-numeric: tabular-nums; }

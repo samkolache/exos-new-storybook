@@ -1,10 +1,16 @@
 // Compiles Bootstrap with the DCFC mapping, then component overrides.
 @import "bootstrap/scss/bootstrap";
 
+// Layout
+@import "bootstrap-theme/grid";
+
 // Component overrides (add as needed):
 @import "bootstrap-theme/buttons";
 @import "bootstrap-theme/forms";
+@import "bootstrap-theme/choices";
 @import "bootstrap-theme/dropdowns";
 @import "bootstrap-theme/chips";
 @import "bootstrap-theme/tags";
 @import "bootstrap-theme/dropdown-card";
+@import "bootstrap-theme/feedback";
+@import "bootstrap-theme/content";

@@ -13,6 +13,11 @@
       [attr.maxlength]="maxLength()"
       [attr.name]="name()"
       [attr.autocomplete]="autocomplete()"
+      [attr.inputmode]="inputMode()"
+      [attr.enterkeyhint]="enterKeyHint()"
+      [attr.autocapitalize]="capitalize()"
+      [attr.autocorrect]="exact() ? 'off' : null"
+      [attr.spellcheck]="exact() ? false : null"
       [attr.aria-label]="label() ? null : placeholder() || null"
       [attr.aria-invalid]="state() === 'invalid' || null"
       [attr.aria-describedby]="describedBy()"
@@ -33,6 +38,11 @@
       [attr.maxlength]="maxLength()"
       [attr.name]="name()"
       [attr.autocomplete]="autocomplete()"
+      [attr.inputmode]="inputMode()"
+      [attr.enterkeyhint]="enterKeyHint()"
+      [attr.autocapitalize]="capitalize()"
+      [attr.autocorrect]="exact() ? 'off' : null"
+      [attr.spellcheck]="exact() ? false : null"
       [attr.aria-label]="label() ? null : placeholder() || null"
       [attr.aria-invalid]="state() === 'invalid' || null"
       [attr.aria-describedby]="describedBy()"
@@ -46,6 +56,8 @@
   {{ label() }}
   @if (required()) {
     <span class="text-danger" aria-hidden="true">*</span>
+  } @else if (optional()) {
+    <span class="form-label-optional">(optional)</span>
   }
 </ng-template>
 
@@ -62,7 +74,7 @@
 </ng-template>
 
 @if (label() && !floatingLabel()) {
-  <label class="form-label" [for]="inputId()"><ng-container [ngTemplateOutlet]="labelText" /></label>
+  <label [class]="hideLabel() ? 'visually-hidden' : 'form-label'" [for]="inputId()"><ng-container [ngTemplateOutlet]="labelText" /></label>
 }
 
 @if (hasGroup()) {
@@ -118,7 +130,7 @@
 }
 
 @if (showFeedback()) {
-  <div [id]="feedbackId()" class="d-block" [class]="state() === 'valid' ? 'valid-feedback' : 'invalid-feedback'">
+  <div [id]="feedbackId()" [class]="feedbackClass()">
     {{ feedback() }}
   </div>
 }

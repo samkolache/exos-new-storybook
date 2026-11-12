@@ -1,0 +1,40 @@
+<dialog
+  #dialog
+  [class]="classes()"
+  [attr.aria-labelledby]="titleId"
+  (cancel)="onCancel($event)"
+  (keydown.escape)="onEscape($event)"
+  (close)="onClose()"
+  (click)="onBackdrop($event)"
+>
+  <div class="exos-modal-panel">
+    <header class="exos-modal-header">
+      <div>
+        <h2 class="exos-modal-title" [id]="titleId">{{ title() }}</h2>
+        @if (subtitle()) {
+          <p class="exos-modal-subtitle">{{ subtitle() }}</p>
+        }
+      </div>
+      @if (dismissible()) {
+        <button type="button" class="exos-modal-close" aria-label="Close" (click)="close()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false">
+            <path d="M4 4l8 8M12 4l-8 8" />
+          </svg>
+        </button>
+      }
+    </header>
+    <div class="exos-modal-body">
+      <ng-content />
+    </div>
+    @if (primaryLabel() || secondaryLabel()) {
+      <footer class="exos-modal-footer">
+        @if (secondaryLabel()) {
+          <app-button variant="secondary" [label]="secondaryLabel()" (clicked)="onSecondary()" />
+        }
+        @if (primaryLabel()) {
+          <app-button [variant]="primaryVariant()" [label]="primaryLabel()" (clicked)="onPrimary()" />
+        }
+      </footer>
+    }
+  </div>
+</dialog>

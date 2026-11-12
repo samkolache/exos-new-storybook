@@ -1,0 +1,603 @@
+// Link, notification, toast, modal, tooltip, toggletip and loading.
+// Web and mobile rules side by side; mobile is below md (672px).
+
+$exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
+
+// ── Link ───────────────────────────────────────────────────────────────────
+
+.exos-link {
+  color: var(--color-text-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  border-radius: 2px;
+
+  &:hover {
+    color: var(--color-text-link-hover);
+    text-decoration-thickness: 2px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+
+  &.is-disabled {
+    color: var(--color-text-disabled);
+    text-decoration: none;
+    cursor: not-allowed;
+  }
+}
+
+.exos-link-icon {
+  display: inline-block;
+  margin-left: 0.25em;
+  vertical-align: -0.05em;
+}
+
+// Standalone: on its own, so no underline until hover.
+.exos-link-standalone {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.exos-link-sm { font-size: 0.875rem; }
+  &.exos-link-md { font-size: 1rem; }
+  &.exos-link-lg { font-size: 1.125rem; }
+}
+
+// ── Notification ───────────────────────────────────────────────────────────
+
+.exos-notification {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.875rem 0.75rem 0.875rem 1rem;
+  border: 1px solid transparent;
+  border-left-width: 4px;
+  border-radius: 10px;
+  color: var(--color-text-heading);
+
+  p {
+    margin: 0;
+  }
+}
+
+.exos-notification-info { border-color: var(--color-status-info); background-color: var(--color-background-info); }
+.exos-notification-success { border-color: var(--color-status-success); background-color: var(--color-background-success); }
+.exos-notification-warning { border-color: var(--color-status-warning); background-color: var(--color-background-warning); }
+.exos-notification-error { border-color: var(--color-status-danger); background-color: var(--color-background-danger); }
+
+// The thin outline is lighter than the side bar, so the status colour leads.
+.exos-notification-inline {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.exos-notification-icon {
+  display: flex;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.exos-notification-body {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.exos-notification-title {
+  font-weight: 600;
+}
+
+.exos-notification-message {
+  color: var(--color-text-primary);
+}
+
+.exos-notification-action {
+  margin-top: 0.375rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  // The darker link blue: the regular one is under 4.5:1 on the coloured fills.
+  color: var(--color-text-link-hover);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+
+  &:hover { color: var(--color-text-heading); }
+}
+
+.exos-notification-close {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin: -4px -2px -4px 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--color-text-label);
+
+  @media (hover: hover) {
+    &:hover { background-color: rgba(15, 18, 26, 0.06); color: var(--color-text-heading); }
+  }
+}
+
+.exos-notification-action,
+.exos-notification-close {
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+// ── Toast ──────────────────────────────────────────────────────────────────
+// Web: top right, under the header. Phones: along the bottom, clear of the home bar.
+
+.exos-toast-region {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1090;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: min(24rem, calc(100vw - 2rem));
+  pointer-events: none;
+
+  > * { pointer-events: auto; }
+}
+
+.exos-notification-toast {
+  border-color: var(--color-border-default);
+  border-left-color: inherit;
+  background-color: var(--color-background-page);
+  box-shadow: 0 12px 32px rgba(15, 18, 26, 0.16);
+  animation: exos-toast-in 0.24s $exos-ease;
+
+  &.exos-notification-info { border-left-color: var(--color-status-info); }
+  &.exos-notification-success { border-left-color: var(--color-status-success); }
+  &.exos-notification-warning { border-left-color: var(--color-status-warning); }
+  &.exos-notification-error { border-left-color: var(--color-status-danger); }
+}
+
+@keyframes exos-toast-in {
+  from { opacity: 0; transform: translateY(-8px); }
+}
+
+// ── Modal ──────────────────────────────────────────────────────────────────
+
+.exos-modal {
+  width: calc(100% - 2rem);
+  max-height: calc(100dvh - 4rem);
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: var(--color-background-page);
+  color: var(--color-text-primary);
+  box-shadow: 0 24px 64px rgba(15, 18, 26, 0.24);
+  overflow: hidden;
+
+  &::backdrop {
+    background: rgba(15, 18, 26, 0.48);
+  }
+
+  // The browser focuses the dialog itself on open; it's not a control, so no outline.
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+
+  &[open] {
+    display: flex;
+    animation: exos-modal-in 0.2s $exos-ease;
+  }
+}
+
+.exos-modal-sm { max-width: 400px; }
+.exos-modal-md { max-width: 560px; }
+.exos-modal-lg { max-width: 800px; }
+
+@keyframes exos-modal-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+}
+
+.exos-modal-panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+}
+
+.exos-modal-header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1.25rem 1.25rem 0.5rem 1.5rem;
+}
+
+.exos-modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-text-heading);
+}
+
+.exos-modal-subtitle {
+  margin: 0.125rem 0 0;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.exos-modal-close {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--color-text-label);
+
+  @media (hover: hover) {
+    &:hover { background-color: var(--color-background-subtle); color: var(--color-text-heading); }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+.exos-modal-body {
+  flex: 1;
+  min-height: 0;
+  padding: 0.5rem 1.5rem 1.5rem;
+  overflow-y: auto;
+  line-height: 1.5;
+
+  > p:last-child { margin-bottom: 0; }
+}
+
+.exos-modal-footer {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  padding: 1rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--color-border-divider);
+}
+
+// The page behind a modal doesn't scroll.
+html.exos-modal-open {
+  overflow: hidden;
+}
+
+// ── Tooltip ────────────────────────────────────────────────────────────────
+
+.exos-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1080;
+  max-width: 15rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: 6px;
+  background-color: var(--color-background-inverse, #0f121a);
+  color: #fff;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.12s;
+
+  &.is-visible {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+// ── Toggletip ──────────────────────────────────────────────────────────────
+
+.exos-toggletip-host {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.exos-toggletip-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--color-text-label);
+
+  &:hover,
+  &[aria-expanded="true"] {
+    color: var(--color-text-heading);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 1px;
+  }
+}
+
+.exos-toggletip-anchor {
+  position: absolute;
+  top: 100%;
+  left: -8px;
+  z-index: 1080;
+
+  &.exos-toggletip-end {
+    right: -8px;
+    left: auto;
+  }
+}
+
+.exos-toggletip {
+  display: block;
+  width: max-content;
+  max-width: 18rem;
+  margin-top: 6px;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid var(--color-border-default);
+  border-radius: 10px;
+  background-color: var(--color-background-page);
+  box-shadow: 0 8px 24px rgba(15, 18, 26, 0.12);
+  color: var(--color-text-primary);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+}
+
+// ── Loading ────────────────────────────────────────────────────────────────
+
+.exos-spinner {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.exos-spinner-svg {
+  animation: exos-spin 0.9s linear infinite;
+}
+
+.exos-spinner-sm .exos-spinner-svg { width: 16px; height: 16px; }
+.exos-spinner-md .exos-spinner-svg { width: 32px; height: 32px; }
+.exos-spinner-lg .exos-spinner-svg { width: 64px; height: 64px; }
+
+.exos-spinner-track,
+.exos-spinner-arc {
+  fill: none;
+  stroke-width: 3;
+}
+
+.exos-spinner-lg .exos-spinner-track,
+.exos-spinner-lg .exos-spinner-arc {
+  stroke-width: 2;
+}
+
+.exos-spinner-track { stroke: var(--color-border-divider); }
+
+.exos-spinner-arc {
+  stroke: var(--color-control-selected);
+  stroke-dasharray: 60 100;
+  stroke-linecap: round;
+}
+
+@keyframes exos-spin {
+  to { transform: rotate(360deg); }
+}
+
+// Covers its container while it loads.
+.exos-spinner-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.exos-inline-loading {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+
+  &.is-error { color: var(--color-text-danger); }
+
+  > app-status-icon { display: inline-flex; }
+}
+
+.exos-inline-loading-spinner {
+  width: 16px;
+  height: 16px;
+}
+
+.exos-progress-head {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+
+  > app-status-icon { display: inline-flex; }
+}
+
+.exos-progress-label { color: var(--color-text-heading); }
+.exos-progress-value { color: var(--color-text-secondary); font-variant-numeric: tabular-nums; }
+
+.exos-progress-track {
+  position: relative;
+  height: 8px;
+  border-radius: 8px;
+  background-color: var(--color-border-divider);
+  overflow: hidden;
+
+  .exos-progress-sm & { height: 4px; }
+}
+
+.exos-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--color-control-selected);
+  transition: width 0.3s $exos-ease;
+
+  .is-finished & { background-color: var(--color-status-success); }
+  .is-error & { background-color: var(--color-status-danger); }
+
+  &.is-indeterminate {
+    position: absolute;
+    width: 40%;
+    animation: exos-progress-slide 1.4s $exos-ease infinite;
+  }
+}
+
+@keyframes exos-progress-slide {
+  from { left: -40%; }
+  to { left: 100%; }
+}
+
+.exos-progress-helper {
+  margin: 0.375rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+
+  .is-error & { color: var(--color-text-danger); }
+}
+
+// Reduce motion: no sliding or popping in; spinners turn slowly, the indeterminate bar pulses.
+@media (prefers-reduced-motion: reduce) {
+  .exos-notification-toast,
+  .exos-modal[open] { animation: none; }
+  .exos-spinner-svg { animation-duration: 2.4s; }
+  .exos-progress-fill { transition: none; }
+
+  .exos-progress-fill.is-indeterminate {
+    left: 0;
+    width: 100%;
+    animation: exos-progress-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes exos-progress-pulse {
+  50% { opacity: 0.4; }
+}
+
+// ── Mobile (below md) ──────────────────────────────────────────────────────
+@include media-breakpoint-down(md) {
+  // Standalone links get a 44px tap area.
+  .exos-link-standalone {
+    min-height: var(--exos-touch-target-min, 44px);
+  }
+
+  // Close and info buttons: 44px tap areas around the small visible button.
+  .exos-notification-close,
+  .exos-modal-close,
+  .exos-toggletip-button {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--exos-touch-target-min, 44px);
+      height: var(--exos-touch-target-min, 44px);
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .exos-notification-action {
+    min-height: var(--exos-touch-target-min, 44px);
+    margin-top: 0;
+  }
+
+  // Toasts along the bottom, in thumb reach and clear of the home bar.
+  .exos-toast-region {
+    top: auto;
+    right: 0.75rem;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    left: 0.75rem;
+    flex-direction: column-reverse;
+    width: auto;
+  }
+
+  @keyframes exos-toast-in {
+    from { opacity: 0; transform: translateY(8px); }
+  }
+
+  // Modal: a sheet from the bottom, full width, buttons stacked with the main one on top.
+  .exos-modal {
+    width: 100%;
+    max-width: none;
+    max-height: 90dvh;
+    margin: auto 0 0;
+    border-radius: 16px 16px 0 0;
+    padding-bottom: env(safe-area-inset-bottom);
+
+    &[open] { animation-name: exos-sheet-in; }
+  }
+
+  .exos-modal-mobile-fullscreen {
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+  }
+
+  .exos-modal-header { padding: 1rem 1rem 0.5rem 1.25rem; }
+  .exos-modal-body { padding: 0.5rem 1.25rem 1.25rem; }
+
+  .exos-modal-footer {
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem 1.25rem;
+
+    > app-button,
+    > app-button .btn {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  // Toggletip: as wide as the screen allows.
+  .exos-toggletip {
+    max-width: calc(100vw - 2rem);
+  }
+}
+
+@keyframes exos-sheet-in {
+  from { transform: translateY(100%); }
+}

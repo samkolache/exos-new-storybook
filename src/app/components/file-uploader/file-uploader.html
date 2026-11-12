@@ -1,0 +1,87 @@
+@if (label()) {
+  <p class="form-label mb-1" [id]="inputId + '-label'">{{ label() }}</p>
+}
+@if (description()) {
+  <p class="form-text mt-0 mb-2" [id]="descriptionId">{{ description() }}</p>
+}
+
+<input
+  #picker
+  class="visually-hidden"
+  type="file"
+  tabindex="-1"
+  aria-hidden="true"
+  [accept]="accept()"
+  [multiple]="multiple()"
+  [disabled]="disabled()"
+  (change)="onPicked($event)"
+/>
+@if (camera()) {
+  <input #cameraPicker class="visually-hidden" type="file" tabindex="-1" aria-hidden="true" accept="image/*" capture="environment" (change)="onPicked($event)" />
+}
+
+<!-- Web: a drop area that's also a button. -->
+<button
+  type="button"
+  class="exos-dropzone"
+  [class.is-dragging]="dragging()"
+  [disabled]="disabled()"
+  [attr.aria-describedby]="description() ? descriptionId : null"
+  (click)="openPicker()"
+  (dragover)="onDragOver($event)"
+  (dragleave)="dragging.set(false)"
+  (drop)="onDrop($event)"
+>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M12 15V4M7.5 8.5L12 4l4.5 4.5M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3" />
+  </svg>
+  <span><span class="exos-dropzone-strong">Drag files here</span> or <span class="exos-dropzone-link">{{ buttonLabel().toLowerCase() }}</span></span>
+</button>
+
+<!-- Phones: buttons, since there's nothing to drag. -->
+<div class="exos-upload-buttons">
+  @if (camera()) {
+    <button type="button" class="btn btn-primary exos-upload-button" [disabled]="disabled()" (click)="openCamera()">Take photo</button>
+  }
+  <button
+    type="button"
+    class="btn exos-upload-button"
+    [class]="camera() ? 'btn-secondary' : 'btn-primary'"
+    [disabled]="disabled()"
+    [attr.aria-describedby]="description() ? descriptionId : null"
+    (click)="openPicker()"
+  >
+    {{ buttonLabel() }}
+  </button>
+</div>
+
+@if (files().length) {
+  <ul class="exos-upload-list" [attr.aria-label]="label() ? label() + ', files' : 'Files'">
+    @for (item of files(); track item.id) {
+      <li class="exos-upload-item" [class]="'is-' + item.status">
+        <div class="exos-upload-row">
+          <span class="exos-upload-name">{{ item.name }}</span>
+          <span class="exos-upload-status" role="status">
+            @switch (item.status) {
+              @case ('done') { <app-status-icon kind="success" [size]="16" /><span class="visually-hidden">Uploaded</span> }
+              @case ('error') { <app-status-icon kind="error" [size]="16" /><span class="visually-hidden">Failed</span> }
+              @case ('uploading') { <span class="exos-upload-size">{{ item.progress ?? 0 }}%</span> }
+              @default { <span class="exos-upload-size">{{ sizeOf(item.size) }}</span> }
+            }
+          </span>
+          <button type="button" class="exos-upload-remove" [attr.aria-label]="'Remove ' + item.name" (click)="remove(item)">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false">
+              <path d="M3.5 3.5l7 7M10.5 3.5l-7 7" />
+            </svg>
+          </button>
+        </div>
+        @if (item.status === 'uploading') {
+          <app-progress-bar size="sm" [label]="'Uploading ' + item.name" [value]="item.progress ?? 0" [showValue]="false" [hideLabel]="true" class="exos-upload-progress" />
+        }
+        @if (item.status === 'error' && item.error) {
+          <p class="exos-upload-error">{{ item.error }}</p>
+        }
+      </li>
+    }
+  </ul>
+}

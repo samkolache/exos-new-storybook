@@ -1,0 +1,77 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { PageNav, Related } from '../../../../.storybook/blocks/Guidelines';
+
+<Meta title="Foundations/Mobile and web" />
+
+<PageNav />
+
+# Mobile and web
+
+One set of components, two sets of rules: **one for phones, one for tablets and computers.** The switch happens at **672px**, the same breakpoint as the [Grid](?path=/docs/foundations-grid--docs).
+
+The components do this themselves: you write the same code, and they change at 672px. This page lists what changes and why, so designs match what gets built.
+
+## Why two
+
+- **Phones are touched.** Fingers are wider than a pointer and can't hover, so targets get bigger, spacing gets wider and anything hidden behind hover has to show another way.
+- **Web is pointed at and typed on.** Screens are wide and dense, so compact sizes, keyboard focus and hover fit better.
+
+## The rules
+
+| | Phones (below 672px) | Web (672px and up) |
+|---|---|---|
+| **Tap or click area** | At least 44 × 44pt for anything people tap | The control itself (32px and up) |
+| **Space between controls** | About 12pt around controls with a border, 24pt around ones without | 6–8px |
+| **Space between sections and inside cards** | Tighter: 32px between sections, 16px card padding | Roomier: 48px and 24px (see [Spacing](?path=/docs/foundations-spacing--docs)) |
+| **Text size** | Never under 11pt; 16px in fields, so the page doesn't zoom when one gets focus | 10px and up, by size |
+| **Long labels** | Wrap. There's no hover to show a tooltip | Can end in an ellipsis, with the full text on hover |
+| **Hover** | None. Nothing depends on it | Light feedback on interactive things |
+| **Layout** | 4 columns, 16px margins, clear of the notch and rounded corners (safe areas) | 8 or 16 columns |
+| **Options side by side** | Stack, except 2–3 very short ones | Side by side when short |
+| **Keyboard** | On-screen: pick it with `type` and `inputMode`, and label the Return key | A physical keyboard: Tab, arrows, Enter |
+| **Settings that apply right away** | A switch at the end of the row | A toggle before its label |
+
+## What each component does
+
+| Component | On phones |
+|---|---|
+| [Chip](?path=/docs/components-chip--docs) | 44px tap area, rows spaced so tap areas don't overlap, 12px between chips, long labels wrap, no hover |
+| [Tag](?path=/docs/components-tag--docs) | Small shows as medium (11pt minimum), long labels wrap |
+| [Input](?path=/docs/components-forms-input--docs) | At least 44px tall with 16px text; 44px clear and show password buttons; no capitals or autocorrect on emails, codes and usernames |
+| [Select](?path=/docs/components-forms-select--docs) | At least 44px tall with 16px text; opens the phone's own picker |
+| [Radio group](?path=/docs/components-forms-radio-group--docs) | 44px rows (the whole row is the target), horizontal groups stack, 12px between cards |
+| [Checkbox](?path=/docs/components-forms-checkbox--docs) | 44px rows, horizontal groups stack, switches move to the end of the row at 51 × 31pt |
+| [Link](?path=/docs/components-link--docs) | Standalone links get a 44px tap area |
+| [Notification](?path=/docs/components-notification--docs) | Toasts along the bottom, in thumb reach and clear of the home bar; 44px close and action |
+| [Modal](?path=/docs/components-modal--docs) | A sheet from the bottom (or full screen for forms), buttons stacked full width with the main one on top |
+| [Tooltip](?path=/docs/components-tooltip--docs) | Tooltips don't show (no hover); toggletips work the same, with a 44px (i) button |
+| [Loading](?path=/docs/components-loading--docs) | Follows the phone's reduce-motion setting |
+| [Tabs](?path=/docs/components-tabs--docs) | Line tabs 48px tall and scroll sideways; segmented tabs full width with 44px segments |
+| [Accordion](?path=/docs/components-accordion--docs) | Rows at least 44px at every size |
+| [Number input](?path=/docs/components-forms-number-input--docs) | Number keypad; 44px − and + |
+| [Date picker](?path=/docs/components-forms-date-picker--docs) | Opens the phone's own date picker |
+| [File uploader](?path=/docs/components-forms-file-uploader--docs) | "Take photo" and "Choose files" buttons instead of dragging |
+
+Every component page has a **Mobile / Web** switch in its examples, and a **Mobile and web** table under Behavior.
+
+## Designing for phones
+
+For the choices components can't make for you:
+
+- **Ask people to type only when you have to.** If there are a few known answers, offer them as chips or radios.
+- **Stack fields** one under another, with consistent widths. Keep short ones together, like State and ZIP code, only if they still fit.
+- **Keep choice sets short:** about 5 chips or radios on a phone. Past that, use a Select.
+- **Put the main action where a thumb reaches it,** near the bottom of the screen.
+- **Never rely on colour alone.** Pair it with an icon, a label or a shape.
+- **Let text grow.** Don't fix heights around text, so it still fits when people make it bigger in their settings.
+- **Avoid light font weights,** especially at small sizes.
+
+## Related
+
+<Related
+  items={[
+    { title: 'Grid', text: 'Columns and margins at each size', href: '/?path=/docs/foundations-grid--docs' },
+    { title: 'Spacing', text: 'Space that changes between phone and web', href: '/?path=/docs/foundations-spacing--docs' },
+    { title: 'Catalog', text: 'Every component at a glance', href: '/?path=/docs/catalog--docs' },
+  ]}
+/>

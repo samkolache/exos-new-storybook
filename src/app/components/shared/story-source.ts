@@ -10,7 +10,7 @@
  *
  * (`propsSource()` is the older template-only formatter, still used by the button stories.)
  */
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 type Args = Record<string, unknown>;
 
@@ -43,7 +43,14 @@ const INDENT = '  ';
 /** A JS/TS literal with single quotes, laid out for reading. */
 function literal(value: unknown, depth = 0): string {
   const pad = INDENT.repeat(depth);
-  if (value instanceof FormControl) return `new FormControl(${literal(value.value, depth)})`;
+  if (value instanceof FormControl) {
+    // The common validators are printed too, so the snippet behaves like the demo.
+    const validators = (['required', 'requiredTrue', 'email'] as const).filter((v) => value.hasValidator(Validators[v]));
+    const v = literal(value.value, depth);
+    return validators.length
+      ? `new FormControl(${v}, { nonNullable: true, validators: [${validators.map((n) => `Validators.${n}`).join(', ')}] })`
+      : `new FormControl(${v})`;
+  }
   if (typeof value === 'string') return `'${value.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
   if (value === null || value === undefined || typeof value !== 'object') return String(value);
   if (Array.isArray(value)) {
@@ -85,7 +92,8 @@ function assemble(config: SourceConfig, template: string, fields: string[], meth
   if (usesJson) imports.push(`import { JsonPipe } from '@angular/common';`);
   imports.unshift(`import { ${coreImports.join(', ')} } from '@angular/core';`);
   if (usesForms) {
-    imports.push(`import { FormControl, ReactiveFormsModule } from '@angular/forms';`);
+    const validators = fields.some((f) => f.includes('Validators.')) ? ', Validators' : '';
+    imports.push(`import { FormControl, ReactiveFormsModule${validators} } from '@angular/forms';`);
     ngImports.push('ReactiveFormsModule');
   }
   if (usesJson) ngImports.push('JsonPipe');

@@ -1,0 +1,51 @@
+@if (label()) {
+  <label class="form-label" [for]="inputId()">
+    {{ label() }}
+    @if (required()) {
+      <span class="text-danger" aria-hidden="true">*</span>
+    }
+  </label>
+}
+<div class="exos-number" [class]="'exos-number-' + size()" [class.has-steppers]="!hideSteppers()" [class.has-unit]="!!unit()">
+  <input
+    [id]="inputId()"
+    type="text"
+    role="spinbutton"
+    [attr.inputmode]="decimals() > 0 ? 'decimal' : 'numeric'"
+    autocomplete="off"
+    [class]="controlClasses()"
+    [value]="shown()"
+    [disabled]="isDisabled()"
+    [readOnly]="readonly()"
+    [required]="required()"
+    [attr.aria-valuenow]="value()"
+    [attr.aria-valuemin]="min()"
+    [attr.aria-valuemax]="max()"
+    [attr.aria-valuetext]="value() !== null && unit() ? format(value()) + ' ' + unit() : null"
+    [attr.aria-invalid]="effectiveState() === 'invalid' || null"
+    [attr.aria-describedby]="describedBy()"
+    (input)="onInput($event)"
+    (keydown)="onKeydown($event)"
+    (blur)="onBlur($event)"
+  />
+  @if (unit()) {
+    <span class="exos-number-unit" aria-hidden="true">{{ unit() }}</span>
+  }
+  @if (!hideSteppers()) {
+    <div class="exos-number-steppers">
+      <button type="button" class="exos-number-step" tabindex="-1" [attr.aria-label]="'Decrease ' + label()" [disabled]="!canDecrease()" (click)="stepBy(-1)">
+        <svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M3 7h8" /></svg>
+      </button>
+      <span class="exos-number-divider" aria-hidden="true"></span>
+      <button type="button" class="exos-number-step" tabindex="-1" [attr.aria-label]="'Increase ' + label()" [disabled]="!canIncrease()" (click)="stepBy(1)">
+        <svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M3 7h8M7 3v8" /></svg>
+      </button>
+    </div>
+  }
+</div>
+@if (showFeedback()) {
+  <div [id]="feedbackId()" [class]="'d-block ' + effectiveState() + '-feedback'">{{ message() }}</div>
+}
+@if (helpText()) {
+  <div [id]="helpId()" class="form-text">{{ helpText() }}</div>
+}

@@ -7,9 +7,20 @@ import * as DropdownStories from '../app/components/dropdown/dropdown.stories';
 import * as InputStories from '../app/components/input/input.stories';
 import * as SelectStories from '../app/components/select/select.stories';
 import * as RadioGroupStories from '../app/components/radio-group/radio-group.stories';
+import * as CheckboxStories from '../app/components/checkbox/checkbox.stories';
 import * as ChipStories from '../app/components/chip/chip.stories';
 import * as TagStories from '../app/components/tag/tag.stories';
 import * as DropdownCardStories from '../app/components/dropdown-card/dropdown-card.stories';
+import * as LinkStories from '../app/components/link/link.stories';
+import * as NotificationStories from '../app/components/notification/notification.stories';
+import * as ModalStories from '../app/components/modal/modal.stories';
+import * as TooltipStories from '../app/components/tooltip/tooltip.stories';
+import * as LoadingStories from '../app/components/loading/loading.stories';
+import * as TabsStories from '../app/components/tabs/tabs.stories';
+import * as AccordionStories from '../app/components/accordion/accordion.stories';
+import * as NumberStories from '../app/components/number-input/number-input.stories';
+import * as DateStories from '../app/components/date-picker/date-picker.stories';
+import * as UploadStories from '../app/components/file-uploader/file-uploader.stories';
 
 <Meta title="Catalog" />
 
@@ -66,7 +77,35 @@ Every Exos component with a live preview. Click one to open its docs.
       name: 'Radio Group',
       description: 'A set of options where people pick exactly one.',
       docs: 'components-forms-radio-group--docs',
-      of: RadioGroupStories.Inline,
+      of: RadioGroupStories.Horizontal,
+    },
+    {
+      group: 'Forms',
+      name: 'Checkbox',
+      description: 'One yes/no, or a list where people pick any number.',
+      docs: 'components-forms-checkbox--docs',
+      of: CheckboxStories.Horizontal,
+    },
+    {
+      group: 'Forms',
+      name: 'Number Input',
+      description: 'An amount people type or step with − and +.',
+      docs: 'components-forms-number-input--docs',
+      of: NumberStories.Default,
+    },
+    {
+      group: 'Forms',
+      name: 'Date Picker',
+      description: 'Pick a date from a calendar, or type it.',
+      docs: 'components-forms-date-picker--docs',
+      of: DateStories.Picked,
+    },
+    {
+      group: 'Forms',
+      name: 'File Uploader',
+      description: 'Add files or photos, see them upload, remove them.',
+      docs: 'components-forms-file-uploader--docs',
+      of: UploadStories.VarSingle,
     },
     {
       group: 'Forms',
@@ -80,7 +119,7 @@ Every Exos component with a live preview. Click one to open its docs.
       name: 'Tag',
       description: 'A small label that shows the status or source of something.',
       docs: 'components-tag--docs',
-      of: TagStories.ExampleAITags,
+      of: TagStories.Overview,
     },
     {
       group: 'Display',
@@ -88,6 +127,55 @@ Every Exos component with a live preview. Click one to open its docs.
       description: 'A collapsible section that summarises answers and opens to show them.',
       docs: 'components-dropdown-card--docs',
       of: DropdownCardStories.CollapsedNeedsYou,
+    },
+    {
+      group: 'Navigation',
+      name: 'Tabs',
+      description: 'Switch between views of the same page, one at a time.',
+      docs: 'components-tabs--docs',
+      of: TabsStories.Segmented,
+    },
+    {
+      group: 'Navigation',
+      name: 'Accordion',
+      description: 'Sections people open one by one, to keep a long page short.',
+      docs: 'components-accordion--docs',
+      of: AccordionStories.DoScannableTitles,
+    },
+    {
+      group: 'Navigation',
+      name: 'Link',
+      description: 'Takes people to another page, a place on this page or another site.',
+      docs: 'components-link--docs',
+      of: LinkStories.VarStandalone,
+    },
+    {
+      group: 'Feedback',
+      name: 'Notification',
+      description: 'Tells people something happened, worked, needs a look or didn’t work. Inline or as a toast.',
+      docs: 'components-notification--docs',
+      of: NotificationStories.Default,
+    },
+    {
+      group: 'Feedback',
+      name: 'Modal',
+      description: 'Asks people to make one decision or finish one short task before going on.',
+      docs: 'components-modal--docs',
+      of: ModalStories.DoSpecificButtons,
+    },
+    {
+      group: 'Feedback',
+      name: 'Tooltip and toggletip',
+      description: 'Names icons on hover, or explains something when people ask.',
+      docs: 'components-tooltip--docs',
+      of: TooltipStories.Default,
+    },
+    {
+      group: 'Feedback',
+      name: 'Loading',
+      description: 'Spinner, inline loading and progress bar: something is happening.',
+      docs: 'components-loading--docs',
+      of: LoadingStories.VarProgress,
     },
   ]}
 />

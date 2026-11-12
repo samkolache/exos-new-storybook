@@ -1,0 +1,193 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import {
+  PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
+  ScreenReader, Related, TokenTable,
+} from '../../../../.storybook/blocks/Guidelines';
+import * as LinkStories from './link.stories';
+
+<Meta of={LinkStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>Links take people to another page, another place on this page, or another site.</Subtitle>
+
+## Live demo
+
+<DeviceCanvas of={LinkStories.Overview} defaultDevice="mobile" />
+
+## When to use
+
+**Use a link** to go somewhere: another page, a section, a file or another site.
+
+### Compared with look-alikes
+
+| Component | Does | Use it for |
+|---|---|---|
+| **Link** | Goes somewhere | "View your orders", "Terms of service" |
+| [Button](?path=/docs/components-button--docs) | Does something here | "Save", "Delete order", "Send" |
+| [Dropdown](?path=/docs/components-dropdown--docs) | Opens a menu of actions | "More actions" |
+
+If it changes something (saves, deletes, sends, opens a modal), it's a button, even if it looks like text.
+
+## Anatomy
+
+<DeviceCanvas of={LinkStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Text** | Always. Says where it goes. |
+| 2 | **Underline** | Always on inline links. On standalone links, on hover. |
+| 3 | **External icon** | `external` is set: it opens in a new tab. |
+
+## Variants
+
+Two variants, picked by where the link sits.
+
+<DeviceVariation title="Inline" of={LinkStories.VarInline}>
+
+Inside a sentence. Always underlined, so it stands out from the text around it by more than colour. Takes the size of its text.
+
+</DeviceVariation>
+
+<DeviceVariation title="Standalone" of={LinkStories.VarStandalone}>
+
+On its own, like "View your orders" under a card. Add `[standalone]="true"`.
+
+- Medium weight and no underline until hover: its place on the page already says it's a link.
+- On phones it gets a 44px tap area.
+
+</DeviceVariation>
+
+## Size
+
+<DeviceVariation title="Small, medium, large" of={LinkStories.SizeSwitchable} sizeSwitch>
+
+Standalone links only; inline links match their text. Use the switch in the toolbar.
+
+- **Small** (`sm`, 14px): under cards and in dense lists.
+- **Medium** (`md`, 16px, default): most places.
+- **Large** (`lg`, 18px): next to large text, like a page intro.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="External" of={LinkStories.ModExternal}>
+
+Add `[external]="true"` for links to other sites. It opens in a new tab, shows an icon, and tells screen readers "(opens in a new tab)". Links inside your product open in the same tab.
+
+</DeviceVariation>
+
+<DeviceVariation title="Disabled" of={LinkStories.ModDisabled}>
+
+Add `[disabled]="true"` when the destination isn't ready, like an invoice still being made. It's grey, can't be clicked and is skipped by <kbd>Tab</kbd>. Say nearby why, or hide the link instead.
+
+</DeviceVariation>
+
+## Specs
+
+| | Web | Mobile |
+|---|---|---|
+| Colour | Link blue, darker on hover | Same |
+| Underline | 1px, 2px on hover, offset 0.18em | Same |
+| Standalone weight | Medium (500) | Medium (500) |
+| Standalone tap area | The text | At least 44px tall |
+| Focus | 2px blue outline, 2px away | Same |
+| External icon | 12px, after the text | 12px |
+
+## Content
+
+- **Say where it goes:** "View your orders", "Return policy". People scanning a page, and screen reader users jumping between links, read link text out of context.
+- **Never "click here" or "read more"** on their own.
+- **Link the words that describe the destination,** not a whole sentence.
+- **Keep the same text for the same destination** across the product.
+
+<DoDont>
+  <Guideline type="do" of={LinkStories.DoDescriptive}>link the words that say where it goes.</Guideline>
+  <Guideline type="dont" of={LinkStories.DontClickHere}>write "click here". It means nothing out of context.</Guideline>
+  <Guideline type="do" of={LinkStories.DoLinkToGo}>use links to go somewhere.</Guideline>
+  <Guideline type="dont" of={LinkStories.DontLinkToAct}>use links for actions like delete. Use a button.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="All states" of={LinkStories.AllStates} noCode>
+
+Hover darkens the colour and thickens the underline (web only). Focus adds a blue outline; tab to any link above to see it.
+
+</DeviceVariation>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> | To the next link |
+| <kbd>Enter</kbd> | Follows the link |
+
+Links don't respond to <kbd>Space</kbd>; buttons do. That's one reason actions belong on buttons.
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Standalone tap area | At least 44px tall | The text |
+| Hover | None | Darker, thicker underline |
+| External links | New tab; the phone shows a back button to return | New tab |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+### Edge cases
+
+<SpecimenGrid>
+  <Specimen of={LinkStories.EdgeLongLink}>**Long link:** wraps with the text; the underline follows every line.</Specimen>
+  <Specimen of={LinkStories.EdgeNextToText}>**Two links close together:** keep a few words between them so they're easy to tap.</Specimen>
+</SpecimenGrid>
+
+## Accessibility
+
+For the external link in the live demo, a screen reader reads:
+
+<ScreenReader name="Shipping rates (opens in a new tab)" role="link" state="no state" />
+
+- **Not by colour alone:** inline links are always underlined.
+- **New tabs are announced,** so people aren't surprised by a missing back history.
+- **Disabled links** have no `href`, so they can't be followed or focused, and are announced as unavailable.
+- **Checked automatically:** every link story runs an accessibility scan in the tests.
+
+## Code
+
+The Variants, Size and Modifiers examples above each have their code.
+
+### API
+
+<Controls of={LinkStories.Default} />
+
+### Theming
+
+<TokenTable
+  tokens={[
+    { name: '--color-text-link', use: 'Link' },
+    { name: '--color-text-link-hover', use: 'Link on hover' },
+    { name: '--color-text-disabled', use: 'Disabled link' },
+    { name: '--color-border-focus', use: 'Focus outline' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Button', text: 'For actions', href: '/?path=/docs/components-button--docs' },
+    { title: 'Notification', text: 'Uses a link-style action', href: '/?path=/docs/components-notification--docs' },
+    { title: 'Mobile and web', text: 'Tap areas on phones', href: '/?path=/docs/foundations-mobile-and-web--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** first version: inline and standalone, sizes, external and disabled.

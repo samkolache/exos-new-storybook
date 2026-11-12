@@ -1,0 +1,202 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
+import * as LoadingStories from './loading.stories';
+
+<Meta of={LoadingStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>Loading shows that something is happening, and how far along it is when that can be measured.</Subtitle>
+
+## Live demo
+
+<DeviceCanvas of={LoadingStories.Overview} defaultDevice="mobile" />
+
+## When to use
+
+| | Spinner | Inline loading | Progress bar |
+|---|---|---|---|
+| **Shows** | Something is loading | One action's progress, then its result | How far along it is |
+| **Length known** | No | No | Yes, or no (moving bar) |
+| **Where** | Over the area that's loading | Next to the button people pressed | Where the result will appear |
+| **Use it for** | Loading a list or page | "Saving…" → "Saved" | Uploads, exports, long steps |
+
+**Under about 1 second, show nothing:** a flash of a spinner feels slower than none.
+
+## Anatomy
+
+<DeviceCanvas of={LoadingStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Label** | Always. What's happening. |
+| 2 | **Value** | A `value` is set. A percentage. |
+| 3 | **Fill** | Always. Blue while active, green when finished, red on error. |
+| 4 | **Track** | Always. |
+| 5 | **Helper text** | Optional. Detail, like "3 of 5 done", or what went wrong. |
+
+## Variants
+
+<DeviceVariation title="Spinner" of={LoadingStories.VarSpinner}>
+
+`<app-spinner label="Loading photos" />`. The label is always read by screen readers; `[showLabel]="true"` shows it too.
+
+</DeviceVariation>
+
+<DeviceVariation title="Inline loading" of={LoadingStories.VarInline}>
+
+`<app-inline-loading status="active" label="Saving…" />` next to the button people pressed. Switch `status` to `finished` ("Saved") or `error` ("Couldn't save") when it's done. Each change is announced.
+
+</DeviceVariation>
+
+<DeviceVariation title="Progress bar" of={LoadingStories.VarProgress}>
+
+`<app-progress-bar label="Uploading 5 photos" [value]="60" />`. Update `value` as it goes; set `status` to `finished` or `error` at the end.
+
+</DeviceVariation>
+
+## Size
+
+<DeviceVariation title="Spinner: small, medium, large" of={LoadingStories.SizeSwitchable} sizeSwitch>
+
+Use the switch in the toolbar.
+
+- **Small** (`sm`, 16px): inside a button or a row.
+- **Medium** (`md`, 32px, default): a section, like a card or list.
+- **Large** (`lg`, 64px): a whole page.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Overlay" of={LoadingStories.ModOverlay}>
+
+`[overlay]="true"` covers its container with a light layer while it reloads, so people can't use stale content. Give the container `position: relative`.
+
+</DeviceVariation>
+
+<DeviceVariation title="Can't measure" of={LoadingStories.ModIndeterminate}>
+
+Leave out `value` when you can't tell how far along it is: the bar moves without a number. Switch to a value as soon as you have one.
+
+</DeviceVariation>
+
+<DeviceVariation title="Small bar" of={LoadingStories.ModSmallBar}>
+
+`size="sm"` for a 4px bar inside rows and cards, like one bar per uploading file.
+
+</DeviceVariation>
+
+## Specs
+
+| | Spinner | Inline loading | Progress bar |
+|---|---|---|---|
+| Size | 16 / 32 / 64px | 16px icon, 14px text | 8px track (4px small), full width |
+| Colour | Blue arc on a light grey ring | Grey text; red on error | Blue fill; green finished; red error |
+| Motion | One turn every 0.9s | Spinner, then an icon | Fill eases to each value |
+| Reduce motion | One turn every 2.4s | Same | Moving bar becomes a slow pulse |
+
+## Content
+
+- **Say what's happening:** "Loading your orders", "Uploading 5 photos". Not "Please wait".
+- **Inline loading:** an -ing word while active ("Saving…"), past tense when done ("Saved").
+- **Errors say what to do:** "Connection lost. Try again."
+
+<DoDont>
+  <Guideline type="do" of={LoadingStories.DoSayWhat}>say what's loading.</Guideline>
+  <Guideline type="dont" of={LoadingStories.DontJustLoading}>write "Please wait". Wait for what?</Guideline>
+  <Guideline type="do" of={LoadingStories.DoProgressWhenKnown}>show progress when you can measure it.</Guideline>
+  <Guideline type="dont" of={LoadingStories.DontSpinnerWhenKnown}>spin when you know how far along it is.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="All states" of={LoadingStories.AllStates} noCode>
+
+Progress bars in progress, without a value, finished and failed; inline loading active, finished and failed; and the three spinner sizes. Finished and failed show an icon, so they don't rely on colour.
+
+</DeviceVariation>
+
+## Behavior
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Whole-page load | Large spinner in the middle of the screen | Large spinner in the area that's loading |
+| Uploads | One small bar per file, full width | One bar per file, or one for all |
+| Inline loading | Under the button if it doesn't fit beside it | Beside the button |
+| Motion | Follows the phone's reduce-motion setting | Follows the computer's setting |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+### Timing
+
+- **Under 1 second:** show nothing.
+- **1 to 10 seconds:** a spinner, or inline loading.
+- **Over 10 seconds:** a progress bar with a value, and let people keep working.
+
+## Accessibility
+
+For the inline loading in the live demo, a screen reader announces:
+
+<ScreenReader name="Saving…" role="status" state="announced when it changes" />
+
+- **Spinners and inline loading** use `role="status"`, so changes like "Saved" are read without moving focus.
+- **Progress bars** use `role="progressbar"` with their value and range, named by their label; `aria-busy` while active.
+- **Reduce motion:** spinners turn slowly and moving bars become a pulse.
+- **Checked automatically:** every story runs an accessibility scan in the tests, plus progress and status tests.
+
+## Code
+
+### Spinner API
+
+<Controls of={LoadingStories.Default} />
+
+### Inline loading inputs
+
+| Input | Type | Default | Does |
+|---|---|---|---|
+| `status` | `'active' \| 'finished' \| 'error'` | `'active'` | Spinner, check or error icon |
+| `label` | `string` | `'Loading…'` | What's happening |
+
+### Progress bar inputs
+
+| Input | Type | Default | Does |
+|---|---|---|---|
+| `label` | `string` | `''` | What's happening; names the bar |
+| `value` | `number \| null` | `null` | How far along; null moves without a number |
+| `max` | `number` | `100` | The value when done |
+| `status` | `'active' \| 'finished' \| 'error'` | `'active'` | Colour and icon |
+| `helperText` | `string` | `''` | Detail or what went wrong |
+| `showValue` | `boolean` | `true` | Shows the percentage |
+| `size` | `'sm' \| 'md'` | `'md'` | 4px or 8px |
+
+### Theming
+
+<TokenTable
+  tokens={[
+    { name: '--color-control-selected', use: 'Spinner arc, progress fill' },
+    { name: '--color-border-divider', use: 'Spinner ring, progress track' },
+    { name: '--color-status-success', use: 'Finished' },
+    { name: '--color-status-danger', use: 'Error' },
+    { name: '--color-text-danger', use: 'Error text' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Notification', text: 'Tell people when it’s done', href: '/?path=/docs/components-notification--docs' },
+    { title: 'Progress button', text: 'A button that shows its progress', href: '/?path=/docs/components-progressbutton--docs' },
+    { title: 'Mobile and web', text: 'Reduce motion and layout', href: '/?path=/docs/foundations-mobile-and-web--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** first version: spinner, inline loading and progress bar.

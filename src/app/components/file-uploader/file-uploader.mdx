@@ -1,0 +1,164 @@
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
+import * as UploadStories from './file-uploader.stories';
+
+<Meta of={UploadStories} />
+
+<PageNav />
+
+<Title />
+
+<Subtitle>The file uploader lets people add files or photos, see each one upload, and remove them.</Subtitle>
+
+## Live demo
+
+On the web, drag files onto the area or click it. On a phone there's nothing to drag, so it shows **Take photo** (the camera) and **Choose files** instead. Try adding a photo; this demo pretends to upload it.
+
+<DeviceCanvas of={UploadStories.Overview} defaultDevice="mobile" />
+
+## When to use
+
+**Use the file uploader** when people attach files to what they're doing: photos for a report, a signed contract, receipts.
+
+It checks each file's type and size, lists every file with its progress, and tells you which files are good to send. Sending them is up to your code: update each file's `status` and `progress` in `files` as it uploads.
+
+## Anatomy
+
+<DeviceCanvas of={UploadStories.Anatomy} noCode />
+
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Label** | Always. |
+| 2 | **Description** | What people can add and the limits. |
+| 3 | **Drop area** | On the web. Click or drop. Phones show buttons instead. |
+| 4 | **Status** | Each file: its size, its progress, or a check when done. |
+| 5 | **Progress bar** | While a file uploads. |
+| 6 | **Error** | A file failed: why, and what to do. |
+| 7 | **Remove** | Every file. |
+
+## Variants
+
+<DeviceVariation title="Several files" of={UploadStories.VarMultiple}>
+
+`[multiple]="true"`: people add as many files as they like, in one go or several. Each is listed with its own progress.
+
+</DeviceVariation>
+
+<DeviceVariation title="One file" of={UploadStories.VarSingle}>
+
+The default. Adding a new file replaces the old one, like a signed contract.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Take photo" of={UploadStories.ModCamera}>
+
+`[camera]="true"` adds **Take photo** on phones, which opens the camera straight away. Use it with `accept="image/*"` when people photograph something in front of them.
+
+</DeviceVariation>
+
+<DeviceVariation title="File list" of={UploadStories.ModList}>
+
+Pass `files` to show files that are already there or uploading. Each has a `status`: ready, uploading (with `progress`), done or error (with `error`).
+
+</DeviceVariation>
+
+<DeviceVariation title="Disabled" of={UploadStories.ModDisabled}>
+
+`[disabled]="true"` when people can't add files yet. Say nearby why.
+
+</DeviceVariation>
+
+## Specs
+
+| | Web | Mobile |
+|---|---|---|
+| Adding | Drop area, 128px tall, dashed border | Buttons, full width, 44px tall |
+| Camera | — | **Take photo** first, with `camera` |
+| File rows | Name, size or progress, remove | Same; 44px remove tap area |
+| Progress | 4px bar under the file | Same |
+| Errors | Red text under the file | Same |
+
+## Content
+
+- **Description: what and how big,** like "JPG or PNG, up to 20 MB each."
+- **Errors say why and what to do:** "Over 20 MB. Choose a smaller file."
+- **Keep file names as they are.** People recognise their own names.
+
+<DoDont>
+  <Guideline type="do" of={UploadStories.DoSayLimits}>say the file types and size limit up front.</Guideline>
+  <Guideline type="dont" of={UploadStories.DontHideLimits}>let people find the limits by failing.</Guideline>
+  <Guideline type="do" of={UploadStories.DoSayWhyFailed}>say why a file failed and what to do.</Guideline>
+  <Guideline type="dont" of={UploadStories.DontVagueError}>write "Upload failed".</Guideline>
+</DoDont>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> | To the drop area (or the buttons), then each remove button |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Opens the file chooser, or removes the focused file |
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Adding | **Take photo** and **Choose files** buttons | Drag and drop, or click the area |
+| Camera | Opens straight away with `camera` | Not shown |
+| Remove | 44px tap area | 28px button |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
+
+## Accessibility
+
+For the drop area, a screen reader reads:
+
+<ScreenReader name="Drag files here or choose files" role="button" state="no state" description="JPG or PNG, up to 20 MB each." />
+
+- **The drop area is a button,** so keyboard and screen reader users open the file chooser; dragging is never the only way.
+- **Each file's status** is announced as it changes: progress, "Uploaded" or "Failed", with the reason.
+- **Remove buttons say which file:** "Remove floor-plan.pdf".
+- **Checked automatically:** every story runs an accessibility scan in the tests, plus checks, remove and upload tests.
+
+## Code
+
+```ts
+// files: UploadFile[] = []
+upload(added: UploadFile[]) {
+  for (const item of added) {
+    // send item.file, then update its status and progress in this.files
+  }
+}
+```
+
+### API
+
+<Controls of={UploadStories.Default} />
+
+### Theming
+
+<TokenTable
+  tokens={[
+    { name: '--color-border-default', use: 'Drop area border' },
+    { name: '--color-control-selected', use: 'Drop area while dragging, progress' },
+    { name: '--color-background-selected', use: 'Drop area fill while dragging' },
+    { name: '--color-text-danger', use: 'Error text' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Loading', text: 'Progress bars', href: '/?path=/docs/components-loading--docs' },
+    { title: 'Notification', text: 'When all uploads finish', href: '/?path=/docs/components-notification--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** first version: one or several files, checks, progress, camera on phones.

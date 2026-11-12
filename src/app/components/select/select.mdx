@@ -1,65 +1,258 @@
-import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
-import { Variation } from '../../../../.storybook/blocks/Variation';
+import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import {
+  PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
+  ScreenReader, Related, SizeSpecs, TokenTable,
+} from '../../../../.storybook/blocks/Guidelines';
 import * as SelectStories from './select.stories';
 
 <Meta of={SelectStories} />
 
+<PageNav />
+
 <Title />
 
-<Subtitle>A dropdown list for picking one value in a form.</Subtitle>
+<Subtitle>A select lets people pick one option from a longer list, shown only when they open it.</Subtitle>
 
-## Demo
+## Live demo
 
-<Canvas of={SelectStories.Default} />
+One form, one piece of code. On a phone, tapping the field opens the phone's own picker; on the web, a list drops down.
 
-## Usage
+<DeviceCanvas of={SelectStories.Overview} defaultDevice="mobile" />
 
-Use a select when there are more options than fit comfortably on screen. For a few options people should see at once, use a [Radio Group](?path=/docs/components-forms-radio-group--docs) or [Chip](?path=/docs/components-chip--docs). For a menu of actions, use a [Dropdown](?path=/docs/components-dropdown--docs).
+## When to use
 
-```html
-<app-select label="Room" [options]="rooms" [(value)]="room" />
-```
+**Use a select** when people pick **one** option from a list that's too long to show all at once:
 
-```ts
-rooms: SelectOption[] = [
-  { label: 'Living room', value: 'living' },
-  { label: 'Kitchen', value: 'kitchen' },
-  { label: 'Basement', value: 'basement', disabled: true },
-];
-```
+- 6 or more options, like countries, time zones or sort orders.
+- A known list people mostly recognise, so they don't need to compare every option.
+- Space is tight, like a toolbar or a dense form.
 
-It works with `[(value)]`, `ngModel` and reactive forms.
+### Compared with look-alikes
 
-## Variations
+| Component | Options | All visible | People pick |
+|---|---|---|---|
+| **Select** | 6 or more | No, in a list | One |
+| [Radio group](?path=/docs/components-forms-radio-group--docs) | 2–5 | Yes | One |
+| [Chip](?path=/docs/components-chip--docs) | 2–7, short | Yes | One or several |
+| [Checkbox](?path=/docs/components-forms-checkbox--docs) | Any | Yes | Any number |
+| [Dropdown](?path=/docs/components-dropdown--docs) | Actions | No, in a menu | Does something now, not a form value |
 
-<Variation title="Appearance" of={SelectStories.Appearances}>
+With 2 to 5 options, show them: radios or chips are one tap instead of two.
 
-The same looks as [Input](?path=/docs/components-forms-input--docs): `outline` (default), `filled` and `pill`.
+## Anatomy
 
-</Variation>
+<DeviceCanvas of={SelectStories.Anatomy} noCode />
 
-<Variation title="Placeholder and label" of={SelectStories.PlaceholderShowcase}>
+| # | Part | Shows when |
+|---|---|---|
+| 1 | **Label** | Always. A red `*` when required, or "(optional)". Hide it on screen only with `hideLabel`. |
+| 2 | **Field** | Always. Shows the picked option, or the placeholder. |
+| 3 | **Chevron** | Always, except read only. With a status icon beside it for warning, invalid and valid. |
+| 4 | **Help text and message** | `helpText`, or a `state` with `feedback`. |
 
-- `placeholder` shows grey text until something is picked. It can't be picked itself. Set it to `''` to hide it.
-- Set `value` to start with an option picked.
-- `[floatingLabel]="true"` puts the label inside the field.
+## Variants
 
-</Variation>
+<DeviceVariation
+  title="Appearance"
+  of={SelectStories.Switchable}
+  switches={[{ arg: 'appearance', label: 'Appearance', initial: 'outline', options: [
+    { value: 'outline', label: 'Outline', short: 'O' },
+    { value: 'filled', label: 'Filled', short: 'F' },
+    { value: 'pill', label: 'Pill', short: 'P' },
+  ] }]}
+>
 
-<Variation title="Size" of={SelectStories.Sizes}>
+Use the switch in the toolbar; only `appearance` changes in the code. Match the inputs around it.
 
-Use the `size` input: `sm`, `md` (default) or `lg`.
+- **Outline** (default): forms.
+- **Filled:** toolbars and filters, like "Sort by".
+- **Pill:** short, casual choices.
 
-</Variation>
+</DeviceVariation>
 
-<Variation title="States" of={SelectStories.StatesShowcase}>
+## Size
 
-Add `helpText` for a hint. Set `state="invalid"` with a `feedback` message when nothing valid is picked. Use `disabled` when the choice isn't available yet.
+<DeviceVariation title="Small, medium, large" of={SelectStories.Switchable} sizeSwitch>
 
-</Variation>
+Use the switch in the toolbar. Only `size` changes in the code. The same heights as [Input](?path=/docs/components-forms-input--docs), so they line up in a row.
 
-## API
+- **Small** (`sm`, 32px): toolbars, tables and filters.
+- **Medium** (`md`, 40px, default): most forms.
+- **Large** (`lg`, 48px): short forms where picking is the main task.
 
-Change the inputs below to update the demo at the top of the page.
+On mobile every size is at least **44px** tall with **16px** text. Switch the toolbar to Mobile to see it.
+
+</DeviceVariation>
+
+## Modifiers
+
+<DeviceVariation title="Placeholder" of={SelectStories.ModPlaceholder}>
+
+`placeholder` shows while nothing is picked, like "Choose a country". It can't be picked itself, so a required select can't be sent empty by accident. Set `placeholder=""` when there's always a sensible answer, like a sort order.
+
+</DeviceVariation>
+
+<DeviceVariation title="Groups" of={SelectStories.ModGroups}>
+
+Add `group` to options to list them under headings, like regions for time zones. Use it past about 10 options, when the headings help people find their way.
+
+</DeviceVariation>
+
+<DeviceVariation title="Help text" of={SelectStories.ModHelp}>
+
+`helpText` for what people need to know before they pick, like what the answer is used for.
+
+</DeviceVariation>
+
+<DeviceVariation title="Optional" of={SelectStories.ModOptional}>
+
+`[optional]="true"` shows "(optional)". Mark the few optional fields rather than every required one.
+
+</DeviceVariation>
+
+<DeviceVariation title="Hidden label" of={SelectStories.ModHiddenLabel}>
+
+`[hideLabel]="true"` when the options explain themselves, like a sort control in a toolbar. The label is still read by screen readers.
+
+</DeviceVariation>
+
+<DeviceVariation title="Floating label" of={SelectStories.ModFloating}>
+
+`[floatingLabel]="true"` puts the label inside the field, to save height in short forms. Use it with the inputs around it, not on its own.
+
+</DeviceVariation>
+
+## Specs
+
+Read from the theme, so these values always match the code. These are the web sizes; on mobile, fields are at least 44px tall with 16px text.
+
+<SizeSpecs
+  element="input"
+  baseClass="form-select"
+  sample="Canada"
+  sizes={[
+    { label: 'Small', className: 'form-select-sm' },
+    { label: 'Medium', className: '' },
+    { label: 'Large', className: 'form-select-lg' },
+  ]}
+/>
+
+## Content
+
+- **Labels** are short nouns: "Country", "Time zone".
+- **Placeholders** say what to do: "Choose a country". Not "Select…" on its own.
+- **Order options so they're easy to find:** alphabetical for names, in order for sizes or times, most common first only when one or two answers cover most people.
+- **Keep option labels short.** The field shows only as much as fits.
+
+<DoDont>
+  <Guideline type="do" of={SelectStories.DoManyOptions}>use a select for long lists.</Guideline>
+  <Guideline type="dont" of={SelectStories.DontFewOptions}>hide 2 or 3 options in a select.</Guideline>
+  <Guideline type="do" of={SelectStories.DoFewAsRadios}>show a few options as radios or chips: one tap instead of two.</Guideline>
+  <Guideline type="dont" of={SelectStories.DontPreselectFirst}>preselect the first option. People miss it and send it unchanged.</Guideline>
+  <Guideline type="do" of={SelectStories.DoGroupLong}>group long lists under headings.</Guideline>
+  <Guideline type="dont" of={SelectStories.DontLongLabels}>write sentences as options. They get cut off in the field.</Guideline>
+</DoDont>
+
+## States
+
+<DeviceVariation title="All states" of={SelectStories.AllStates} noCode>
+
+- **Warning:** allowed, but worth a second look.
+- **Invalid:** has to be fixed before the form is sent.
+- **Valid:** only when confirming helps.
+- **Read only:** no chevron, since it won't open. People can Tab to it and read it.
+- **Disabled:** can't be used right now, and is skipped by <kbd>Tab</kbd>. Say nearby why.
+
+Status messages lead with an icon in the field, so colour is never the only signal.
+
+</DeviceVariation>
+
+## Behavior
+
+### Keyboard
+
+| Key | Does |
+|---|---|
+| <kbd>Tab</kbd> | To the select and on to the next field |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> / <kbd>Alt</kbd> <kbd>↓</kbd> | Opens the list |
+| <kbd>↑</kbd> <kbd>↓</kbd> | Next or previous option |
+| Letters | Jumps to the first option starting with them |
+| <kbd>Esc</kbd> | Closes the list without changing the answer |
+
+### Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Opens | The phone's own picker, at the bottom of the screen | A list under the field |
+| Height | At least 44px, at every size | 32, 40 or 48px |
+| Text | 16px, so the phone doesn't zoom in on focus | 14 to 16px, by size |
+| Many options | Fine: the picker scrolls and people can flick through | Fine: people can type to jump |
+| Layout | One column, full width | On the grid, sized to the answer |
+
+See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs) for the rules every component follows.
+
+### Edge cases
+
+<SpecimenGrid>
+  <Specimen of={SelectStories.EdgeLongOption}>**Long option:** the field shows what fits; the list shows it all. Shorten it if you can.</Specimen>
+  <Specimen of={SelectStories.EdgeDisabledOption}>**Unavailable option:** add `disabled: true` and say why in the label.</Specimen>
+  <Specimen of={SelectStories.EdgeOneOption}>**One option:** show it as text instead; there's nothing to pick.</Specimen>
+</SpecimenGrid>
+
+## Accessibility
+
+For the invalid playground, a screen reader reads:
+
+<ScreenReader name="Country" role="combo box" state="collapsed, required, invalid entry" description="Choose the country you’re shipping to." />
+
+- **It's the browser's own select,** so every screen reader, keyboard and phone already knows how to use it.
+- **Labels:** every select has a `<label>`, even with `hideLabel`.
+- **Messages and help text** are linked with `aria-describedby`, so they're read when people reach it.
+- **Read only** uses `aria-readonly`, and keys and clicks can't change it.
+- **Checked automatically:** every select story runs an accessibility scan in the tests, and a test checks the text above.
+
+## Code
+
+The Variants, Size and Modifiers examples above each have their code.
+
+### Reactive forms
+
+Works with `[formControl]`, `formControlName`, `ngModel` and `[(value)]`.
+
+<DeviceCanvas of={SelectStories.ReactiveForm} codeOpen />
+
+### API
 
 <Controls of={SelectStories.Default} />
+
+### Theming
+
+<TokenTable
+  tokens={[
+    { name: '--color-border-default', use: 'Border' },
+    { name: '--color-border-focus', use: 'Border on focus' },
+    { name: '--color-text-placeholder', use: 'Placeholder' },
+    { name: '--color-background-field', use: 'Fill: filled appearance' },
+    { name: '--color-status-danger', use: 'Border and message: invalid' },
+    { name: '--color-status-warning', use: 'Border and icon: warning' },
+    { name: '--color-text-attention', use: 'Message: warning' },
+    { name: '--exos-touch-target-min', use: 'Height on mobile' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Radio group', text: 'Pick one of 2 to 5', href: '/?path=/docs/components-forms-radio-group--docs' },
+    { title: 'Chip', text: 'Short answers on one line', href: '/?path=/docs/components-chip--docs' },
+    { title: 'Input', text: 'Open answers', href: '/?path=/docs/components-forms-input--docs' },
+    { title: 'Dropdown', text: 'Menus of actions', href: '/?path=/docs/components-dropdown--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 11, 2026:** warning and read-only states; option groups; `optional` and `hideLabel`; 32 / 40 / 48px heights, and 44px with 16px text on mobile.
+- **Nov 10, 2026:** first version.

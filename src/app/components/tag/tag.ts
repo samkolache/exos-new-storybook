@@ -51,7 +51,8 @@ const ICON_SIZE: Record<Exclude<TagIcon, 'none'>, [number, number]> = {
 @Component({
   selector: 'app-tag',
   templateUrl: './tag.html',
-  host: { class: 'd-inline-flex' },
+  // Never wider than its column, so long labels can truncate.
+  host: { class: 'd-inline-flex', style: 'max-width: 100%' },
 })
 export class TagComponent {
   readonly label = input('Tag');
@@ -62,6 +63,9 @@ export class TagComponent {
   readonly ai = input(false);
   /** Greyed out (Skipped, Set by system). */
   readonly disabled = input(false);
+
+  /** Long labels end in an ellipsis; the full text shows on hover. */
+  protected readonly title = computed(() => (this.label().length > 24 ? this.label() : null));
 
   protected readonly resolvedIcon = computed<TagIcon>(() =>
     this.icon() === 'none' && this.ai() ? 'sparkle' : this.icon(),

@@ -1,0 +1,81 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, Related } from '../../../../.storybook/blocks/Guidelines';
+import * as Stories from './loading-pattern.stories';
+
+<Meta of={Stories} />
+
+<PageNav />
+
+# Loading
+
+How to show that something is happening, so waiting feels short and nobody wonders if it's broken. The pieces are on the [Loading](?path=/docs/components-loading--docs) component page; this page says which to use when.
+
+## Pick by how long, and how much
+
+| Wait | What's loading | Show |
+|---|---|---|
+| Under 1 second | Anything | **Nothing.** A flash of a spinner feels slower than none. |
+| 1 to 10 seconds | A whole page or list | A **large spinner** where the content goes |
+| 1 to 10 seconds | Part of a page | A **spinner overlay** on that part; the rest stays usable |
+| 1 to 10 seconds | The result of a button | **Inline loading** next to it: "Saving…" then "Saved" |
+| Over 10 seconds | A task you can measure | A **progress bar** with a value, and let people keep working |
+| Over 10 seconds | A task you can't measure | A **moving progress bar** and a time estimate, if you have one |
+
+## Examples
+
+### A whole page
+
+Keep the header and navigation; put one large spinner where the content will be. Say what's loading.
+
+<DeviceCanvas of={Stories.PageLoad} defaultDevice="mobile" noCode />
+
+### Part of a page refreshing
+
+Keep the old content visible under a light layer, so the page doesn't jump, and people can't act on stale data.
+
+<DeviceCanvas of={Stories.SectionRefresh} defaultDevice="mobile" noCode />
+
+### After a button
+
+Show progress right where people pressed. Disable the button while it works so it isn't pressed twice, then show the result. For results people must notice, also show a [toast](?path=/docs/components-notification--docs).
+
+<DeviceCanvas of={Stories.ActionProgress} defaultDevice="mobile" noCode />
+
+### A long task
+
+Show how far along it is, how long is left, and let people leave. Tell them with a notification when it's done.
+
+<DeviceCanvas of={Stories.LongTask} defaultDevice="mobile" noCode />
+
+## Rules
+
+- **One loading indicator per area.** Several spinners at once look broken.
+- **Say what's loading:** "Loading your orders", not "Please wait".
+- **Don't block what doesn't need blocking.** Load parts of a page on their own.
+- **When it fails,** replace the spinner with an [empty state](?path=/docs/patterns-empty-states--docs) error and "Try again". Never spin forever: give up after about 30 seconds.
+- **Respect reduce motion.** The components slow down or stop moving when people ask for less motion.
+
+## Mobile and web
+
+| | Mobile (below 672px) | Web (672px and up) |
+|---|---|---|
+| Page load | Large spinner in the middle of the screen; keep the top bar | Large spinner in the content area; keep the side navigation |
+| Slow connections | More common: load the most important part first | Less common |
+| Long tasks | Keep going if people switch apps, and notify them when done | Keep going in another tab |
+
+## Accessibility
+
+- **Status messages** (spinners and inline loading) are announced without moving focus.
+- **Progress bars** expose their value to screen readers.
+- **Don't move focus** while loading; when content arrives, leave focus where it was.
+
+## Related
+
+<Related
+  items={[
+    { title: 'Loading', text: 'Spinner, inline loading, progress bar', href: '/?path=/docs/components-loading--docs' },
+    { title: 'Empty states', text: 'When loading fails or finds nothing', href: '/?path=/docs/patterns-empty-states--docs' },
+    { title: 'Notifications', text: 'Telling people it’s done', href: '/?path=/docs/patterns-notifications--docs' },
+  ]}
+/>
