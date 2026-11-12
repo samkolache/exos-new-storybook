@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "storybook": "ng run exos-new-storybook:storybook",
-    "build-storybook": "ng run exos-new-storybook:build-storybook"
+    "build-storybook": "ng run exos-new-storybook:build-storybook",
+    "specs": "node scripts/spec-pictures.mjs"
   },
   "private": true,
   "packageManager": "npm@11.16.0",

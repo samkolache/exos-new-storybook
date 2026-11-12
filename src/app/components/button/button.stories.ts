@@ -3,6 +3,8 @@ import { moduleMetadata } from '@storybook/angular-vite';
 import { fn } from 'storybook/test';
 import { ButtonComponent } from './button';
 import { propsSource } from '../shared/story-source';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 /** Component defaults: the code panel only prints props that differ. */
 const DEFAULTS = { label: 'Button', variant: 'primary', ghost: false, disabled: false, type: 'button' };
@@ -67,5 +69,25 @@ export const DisabledVariants: Story = {
   <app-button variant="secondary" label="Answer later" [disabled]="true" />
   <app-button variant="destructive" label="Remove" [disabled]="true" />
 </div>`,
+  }),
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: '.btn', side: 'right', label: '{v} tall' },
+  { kind: 'style', target: '.btn', prop: 'font-size', side: 'top', label: '{v} text' },
+  { kind: 'padding', target: '.btn', label: '{v} top and bottom', labelSides: '{v} left and right' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: false, switches: [] } },
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS },
+    template: `<app-redline [marks]="marks" [scale]="2" [key]="false"><app-button label="Confirm" /></app-redline>`,
   }),
 };

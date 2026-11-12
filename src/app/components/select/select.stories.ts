@@ -6,6 +6,8 @@ import { AnatomyComponent } from '../shared/anatomy';
 import { fieldColumn } from '../shared/story-decorators';
 import { storySource } from '../shared/story-source';
 import { SelectComponent, SelectOption } from './select';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 const COUNTRIES: SelectOption[] = [
   { label: 'Australia', value: 'au' },
@@ -337,4 +339,31 @@ export const TestReactiveForm: Story = {
     await userEvent.selectOptions(canvas.getByRole('combobox', { name: 'Country' }), 'France');
     await expect(canvas.getByText('Form value: fr')).toBeInTheDocument();
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: 'select', side: 'right', label: '{v} tall' },
+  { kind: 'style', target: 'select', prop: 'font-size', side: 'top', label: '{v} text' },
+  { kind: 'style', target: '.form-label', prop: 'font-size', side: 'top', label: '{v} label' },
+  { kind: 'padding', target: 'select', label: '{v} top and bottom', labelSides: '{v} on the left' },
+  { kind: 'gap', from: '.form-label', to: 'select', side: 'right', label: '{v} label to field' },
+  { kind: 'gap', from: 'select', to: '.form-text', side: 'right', label: '{v} to help text' },
+  { kind: 'gap', from: 'select', to: '.invalid-feedback', side: 'right', label: '{v} to error' },
+  { kind: 'style', target: '.form-text', prop: 'font-size', side: 'bottom', label: '{v} help text, grey' },
+  { kind: 'style', target: '.invalid-feedback', prop: 'font-size', side: 'bottom', label: '{v} error text, red' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { fullWidth: true, controls: { disable: true }, example: true, specs: { sizes: true, switches: [{ arg: 'note', label: 'Message', initial: 'help', options: [{ value: 'help', label: 'Help text', short: 'Help' }, { value: 'error', label: 'Error', short: 'Error' }] }] } },
+  args: { size: 'md', note: 'help' } as Story['args'],
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS, options: COUNTRIES },
+    template: `<app-redline [marks]="marks" [scale]="1.3" [room]="150" [key]="false"><div style="width: min(18rem, calc(100vw - 200px))"><app-select label="Country" [options]="options" [size]="size" [helpText]="note === 'help' ? 'Where the order ships.' : ''" [state]="note === 'error' ? 'invalid' : 'none'" [feedback]="note === 'error' ? 'Choose a country.' : ''" /></div></app-redline>`,
+  }),
 };

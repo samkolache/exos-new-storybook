@@ -1,5 +1,6 @@
 import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import { Variation } from '../../../../.storybook/blocks/Variation';
+import { DeviceCanvas, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import * as ButtonStories from './button.stories';
 
 <Meta of={ButtonStories} />
@@ -43,6 +44,12 @@ Add `[ghost]="true"` to any variant to get a text-only button. It is the same si
 Use the `disabled` input when an action is not available yet. Every variant uses the same grey disabled look. Ghost buttons stay text-only, with grey text.
 
 </Variation>
+
+## Specs
+
+Use **Mobile / Web** to compare devices. The numbers are measured from the code.
+
+<SpecPictures of={ButtonStories.SpecDrawing} />
 
 ## API
 

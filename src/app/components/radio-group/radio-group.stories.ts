@@ -6,6 +6,8 @@ import { AnatomyComponent } from '../shared/anatomy';
 import { storySource } from '../shared/story-source';
 import { CheckboxComponent } from '../checkbox/checkbox';
 import { RadioGroupComponent, RadioOption } from './radio-group';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 const SHIPPING: RadioOption[] = [
   { label: 'Standard', value: 'standard', description: '3 to 5 business days · Free' },
@@ -383,4 +385,25 @@ export const TestReactiveForm: Story = {
     await userEvent.click(canvas.getByRole('radio', { name: 'Express' }));
     await expect(canvas.getByText('Form value: express')).toBeInTheDocument();
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: '.exos-check', side: 'right', label: '{v} tall row' },
+  { kind: 'size', target: '.exos-check .form-check-input', side: 'top', label: '{v} circle' },
+  { kind: 'distance', from: { target: '.exos-check .form-check-input', edge: 'right' }, to: { target: '.exos-check .exos-check-label', edge: 'left' }, side: 'bottom', label: '{v} to label' },
+  { kind: 'style', target: '.exos-check .exos-check-label', prop: 'font-size', side: 'top', label: '{v} text' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { fullWidth: true, controls: { disable: true }, example: true, specs: { sizes: false, switches: [] } },
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS, options: SHIPPING_SHORT.slice(0, 2) },
+    template: `<app-redline [marks]="marks" [scale]="1.6" [key]="false"><div style="width: 14rem"><app-radio-group [options]="options" /></div></app-redline>`,
+  }),
 };

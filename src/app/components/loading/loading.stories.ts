@@ -4,6 +4,8 @@ import { ButtonComponent } from '../button/button';
 import { AnatomyComponent } from '../shared/anatomy';
 import { storySource } from '../shared/story-source';
 import { InlineLoadingComponent, ProgressBarComponent, SpinnerComponent } from './loading';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 /** Component defaults: the code panel only prints props that differ. */
 const DEFAULTS = { label: 'Loading', showLabel: false, size: 'md', overlay: false };
@@ -196,4 +198,25 @@ export const TestStatus: Story = {
     await expect(spinner.textContent).toContain('Loading orders');
     await expect(inline.textContent).toContain('Saved');
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: '.exos-spinner', side: 'right', label: '{v} spinner' },
+  { kind: 'size', target: '.exos-progress-track', side: 'right', label: '{v} bar' },
+  { kind: 'style', target: '.exos-progress-label', prop: 'font-size', side: 'top', label: '{v} text' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: true, switches: [] } },
+  args: { size: 'md' } as Story['args'],
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS },
+    template: `<app-redline [marks]="marks" [scale]="1.4" [key]="false"><div class="d-flex flex-column gap-4" style="width: 16rem"><app-spinner [size]="size" label="Loading photos" /><app-progress-bar label="Uploading photos" [value]="60" /></div></app-redline>`,
+  }),
 };

@@ -1,5 +1,6 @@
 import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import { Variation } from '../../../../.storybook/blocks/Variation';
+import { DeviceCanvas, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import * as ProgressButtonStories from './progress-button.stories';
 
 <Meta of={ProgressButtonStories} />
@@ -31,6 +32,12 @@ The colour follows `completed` and `total`. You don't set it yourself:
 - **Complete** (green): `completed` equals `total`.
 
 </Variation>
+
+## Specs
+
+Use **Mobile / Web** to compare devices. The numbers are measured from the code.
+
+<SpecPictures of={ProgressButtonStories.SpecDrawing} />
 
 ## API
 

@@ -42,7 +42,7 @@ const MIN_APART = 24; // pins on one side never overlap
   selector: 'app-anatomy',
   template: `
 <div #stage class="exos-anatomy">
-  <div #content class="exos-anatomy__content" [style.zoom]="scale()" [style.width]="width()">
+  <div #content class="exos-anatomy__content" [class.exos-anatomy__content--fit]="fits()" [style.zoom]="zoom()" [style.width]="width()">
     <ng-content />
   </div>
   <svg class="exos-anatomy__lines" aria-hidden="true">
@@ -63,6 +63,8 @@ const MIN_APART = 24; // pins on one side never overlap
     :host { display: block; }
     .exos-anatomy { position: relative; display: flex; justify-content: center; padding: 48px 72px; }
     .exos-anatomy__content { position: relative; max-width: 100%; }
+    /* Enlarged small components keep their real shape (one line); the zoom shrinks to fit instead. */
+    .exos-anatomy__content--fit { flex-shrink: 0; width: max-content; max-width: none; }
     .exos-anatomy__lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
     .exos-anatomy__lines line { stroke: #0f121a; stroke-width: 1.25; }
     .exos-anatomy__pin {
@@ -79,6 +81,12 @@ export class AnatomyComponent {
   readonly width = input<string | null>(null);
 
   protected readonly pins = signal<Pin[]>([]);
+  /** The zoom in use: `scale`, reduced (never below 1) when the enlarged example would not fit. */
+  protected readonly zoom = signal(1);
+  /** Enlarged small components (scale above 1, no fixed width) are fitted rather than wrapped. */
+  protected fits(): boolean {
+    return this.scale() > 1 && !this.width();
+  }
   protected readonly markerId = `anatomy-arrow-${Math.random().toString(36).slice(2, 8)}`;
   private readonly stage = viewChild.required<ElementRef<HTMLElement>>('stage');
   private readonly content = viewChild.required<ElementRef<HTMLElement>>('content');
@@ -86,6 +94,7 @@ export class AnatomyComponent {
   constructor() {
     const destroyRef = inject(DestroyRef);
     afterNextRender(() => {
+      this.zoom.set(this.scale());
       const measure = () => this.measure();
       // Fonts and icons can shift the layout after the first paint.
       const observer = new ResizeObserver(measure);
@@ -110,6 +119,17 @@ export class AnatomyComponent {
   }
 
   private measure(): void {
+    if (this.fits()) {
+      // Room left once the pins have space on both sides; shrink the zoom to fit, down to 1.
+      const stageEl = this.stage().nativeElement;
+      const pad = parseFloat(getComputedStyle(stageEl).paddingLeft) * 2;
+      const natural = this.content().nativeElement.getBoundingClientRect().width / this.zoom();
+      const next = Math.max(1, Math.min(this.scale(), (stageEl.clientWidth - pad) / natural));
+      if (natural && Math.abs(next - this.zoom()) > 0.01) {
+        this.zoom.set(next);
+        return; // the resize observer measures again at the new zoom
+      }
+    }
     const stage = this.stage().nativeElement.getBoundingClientRect();
     const content = this.content().nativeElement.getBoundingClientRect();
     const pins: Pin[] = [];

@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
 import * as AccordionStories from './accordion.stories';
 
@@ -86,13 +86,12 @@ Row height on the web. On phones, rows are always at least 44px. Use the switch 
 
 ## Specs
 
-| | Web | Mobile |
-|---|---|---|
-| Row height | 32 / 40 / 48px | At least 44px |
-| Title | 14 or 16px, medium | 16px, medium |
-| Chevron | 16px, turns over 0.2s | Same |
-| Dividers | 1px between rows, and above and below | Same |
-| Content padding | 4px top, 16px bottom | Same |
+Use **Small / Medium / Large** and **Mobile / Web** to see the sizes. The numbers are measured from the code.
+
+<SpecPictures of={AccordionStories.SpecDrawing} />
+
+- On phones every row is at least 44px tall, so it's easy to tap.
+- The arrow turns over 0.2s when a section opens. A 1px line separates the rows.
 
 ## Content
 
@@ -163,7 +162,3 @@ For the first section in the live demo, a screen reader reads:
     { title: 'Dropdown card', text: 'A card that opens', href: '/?path=/docs/components-dropdown-card--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** first version: several or one open, three sizes, meta, chevron position.

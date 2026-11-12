@@ -287,6 +287,15 @@ input.form-control-lg,
     font-size: 1rem;
   }
 
+  // Phones: 8px between a field and its help or error text (4px on the web), so the message
+  // reads as its own line and isn't crowded against a 44px field.
+  .form-text,
+  .invalid-feedback,
+  .valid-feedback,
+  .warning-feedback {
+    margin-top: 0.5rem;
+  }
+
   input.form-control,
   .form-select {
     min-height: var(--exos-touch-target-min, 44px);

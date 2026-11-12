@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
 import * as UploadStories from './file-uploader.stories';
 
@@ -73,13 +73,12 @@ Pass `files` to show files that are already there or uploading. Each has a `stat
 
 ## Specs
 
-| | Web | Mobile |
-|---|---|---|
-| Adding | Drop area, 128px tall, dashed border | Buttons, full width, 44px tall |
-| Camera | — | **Take photo** first, with `camera` |
-| File rows | Name, size or progress, remove | Same; 44px remove tap area |
-| Progress | 4px bar under the file | Same |
-| Errors | Red text under the file | Same |
+Use **Mobile / Web** to compare devices. The numbers are measured from the code.
+
+<SpecPictures of={UploadStories.SpecDrawing} />
+
+- On phones the drop area becomes two full-width buttons: Take photo and Choose files.
+- A thin bar under each file shows its upload progress.
 
 ## Content
 
@@ -158,7 +157,3 @@ upload(added: UploadFile[]) {
     { title: 'Notification', text: 'When all uploads finish', href: '/?path=/docs/components-notification--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** first version: one or several files, checks, progress, camera on phones.

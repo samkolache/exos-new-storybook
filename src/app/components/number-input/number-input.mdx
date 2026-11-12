@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
 import * as NumberStories from './number-input.stories';
 
@@ -80,12 +80,14 @@ The same heights as [Input](?path=/docs/components-forms-input--docs): 32, 40 an
 
 ## Specs
 
-| | Web | Mobile |
-|---|---|---|
-| Height | 32 / 40 / 48px | At least 44px |
-| − and + | 36px wide each, inside the field | 44px wide each |
-| Text | Numbers line up (tabular figures) | Same |
-| Keypad | — | Number keypad, or decimal keypad with `decimals` |
+Use **Small / Medium / Large**, **Help / Error** and **Mobile / Web** to see each case. Blue shows the padding inside the field. The numbers are measured from the code.
+
+<SpecPictures of={NumberStories.SpecDrawing} />
+
+- **Label to field:** 8px on every device.
+- **Field to help or error text:** 4px on the web, 8px on phones, so the message reads as its own line under a taller field.
+- **Help text** is grey and **error text** is red, both 14px. An error shows right under the field (above any help text), and the field gets a red border.
+- Phones show a number keypad (with a decimal point when decimals are allowed). Numbers line up in columns.
 
 ## Content
 
@@ -125,6 +127,8 @@ At a limit, that button turns grey. Out of range shows the message and a red bor
 
 | | Mobile (below 672px) | Web (672px and up) |
 |---|---|---|
+| Space to help or error text | 8px | 4px |
+| Label to field | 8px | 8px |
 | Keyboard | Number keypad (decimal keypad with `decimals`) | A physical keyboard, with arrow keys |
 | − and + | 44px wide | 36px wide |
 | Height | At least 44px with 16px text | 32 / 40 / 48px |
@@ -172,7 +176,3 @@ Uses the same tokens as [Input](?path=/docs/components-forms-input--docs), plus:
     { title: 'Select', text: 'A few fixed amounts', href: '/?path=/docs/components-forms-select--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** first version: steppers, range, decimals, unit, sizes.

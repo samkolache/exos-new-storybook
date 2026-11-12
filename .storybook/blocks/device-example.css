@@ -206,3 +206,23 @@
   .sbdocs .exos-device__switch button { padding: 4px 9px; }
   .exos-device__switches { flex-wrap: nowrap; }
 }
+
+/* Spec pictures: a saved drawing, centred, never wider than the panel */
+.exos-device--pictures .exos-device__stage {
+  align-items: center;
+  min-height: 160px;
+}
+
+.exos-device__picture {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.sbdocs .exos-device__missing {
+  margin: 0;
+  font-size: 13px;
+  color: #5c6870;
+}

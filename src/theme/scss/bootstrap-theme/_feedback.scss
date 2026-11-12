@@ -285,6 +285,27 @@ $exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
   border-top: 1px solid var(--color-border-divider);
 }
 
+// Header divider: a line under the header, with equal space above and below it.
+.exos-modal-header-divider {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border-divider);
+
+  + .exos-modal-body { padding-top: 1rem; }
+}
+
+// Buttons on the left: the main button first (row-reverse of the DOM order), so it's read first.
+.exos-modal-footer-start {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+// No footer bar: the buttons sit right under the message, with no line.
+// The body's bottom padding already gives the space above them.
+.exos-modal-footer-plain {
+  padding-top: 0;
+  border-top: 0;
+}
+
 // The page behind a modal doesn't scroll.
 html.exos-modal-open {
   overflow: hidden;
@@ -309,9 +330,69 @@ html.exos-modal-open {
   opacity: 0;
   transition: opacity 0.12s;
 
+  // Visible tooltips take the pointer, so people can move onto them to read.
   &.is-visible {
     visibility: visible;
     opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.exos-tooltip-text {
+  position: relative;
+  z-index: 1;
+}
+
+// The caret: an 8px square turned 45°, half of it showing, pointing at the element.
+.exos-tooltip-caret {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: inherit;
+  transform: rotate(45deg);
+
+  [data-position="top"] > & { bottom: -4px; left: calc(var(--exos-tooltip-caret, 50%) - 4px); }
+  [data-position="bottom"] > & { top: -4px; left: calc(var(--exos-tooltip-caret, 50%) - 4px); }
+  [data-position="left"] > & { right: -4px; top: calc(var(--exos-tooltip-caret, 50%) - 4px); }
+  [data-position="right"] > & { left: -4px; top: calc(var(--exos-tooltip-caret, 50%) - 4px); }
+}
+
+// Docs: tooltips shown inside an example instead of on the page.
+.exos-tooltip-layer {
+  position: relative;
+}
+
+// ── Definition tooltip ─────────────────────────────────────────────────────
+// A term in running text: dotted underline, same font as the words around it.
+
+.exos-definition {
+  display: inline;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px dotted currentColor;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  text-align: inherit;
+  cursor: help;
+
+  // Pointer devices only: on touch screens a tapped term would keep the solid line.
+  @media (hover: hover) {
+    &:hover {
+      border-bottom-style: solid;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 }
 
@@ -578,12 +659,18 @@ html.exos-modal-open {
   }
 
   .exos-modal-header { padding: 1rem 1rem 0.5rem 1.25rem; }
+  .exos-modal-header-divider { padding-bottom: 0.75rem; }
+  .exos-modal-header-divider + .exos-modal-body { padding-top: 0.75rem; }
   .exos-modal-body { padding: 0.5rem 1.25rem 1.25rem; }
 
   .exos-modal-footer {
     flex-direction: column-reverse;
     gap: 0.5rem;
     padding: 0.75rem 1.25rem 1.25rem;
+
+    &.exos-modal-footer-plain { padding-top: 0; }
+    // Phones stack the buttons the same way whichever side they're on.
+    &.exos-modal-footer-start { flex-direction: column-reverse; }
 
     > app-button,
     > app-button .btn {

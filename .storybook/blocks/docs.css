@@ -1,24 +1,30 @@
 /* Docs-page layout only (Storybook chrome, not part of the theme). */
 
+/* One "Variations" row: guidance first, then the example at full width below it. */
 .exos-docs-variation {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  gap: 32px;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   margin: 48px 0;
+}
+
+/* Guidance keeps a readable line length; the example below uses the full width. */
+.exos-docs-variation__text {
+  max-width: 720px;
 }
 
 .exos-docs-variation__text > h3 {
   margin-top: 0;
 }
 
-.exos-docs-variation__example > .sbdocs-preview {
-  margin-top: 0;
+.exos-docs-variation__text > :last-child {
+  margin-bottom: 0;
 }
 
-@media (max-width: 900px) {
-  .exos-docs-variation {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 8px;
-  }
+.exos-docs-variation__example {
+  min-width: 0;
+}
+
+.exos-docs-variation__example > .sbdocs-preview {
+  margin-top: 0;
 }

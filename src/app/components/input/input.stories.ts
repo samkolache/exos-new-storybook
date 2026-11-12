@@ -6,6 +6,8 @@ import { AnatomyComponent } from '../shared/anatomy';
 import { storySource } from '../shared/story-source';
 import { RadioGroupComponent } from '../radio-group/radio-group';
 import { InputComponent } from './input';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 /** Component defaults: the code panel only prints props that differ. */
 const DEFAULTS = {
@@ -538,4 +540,31 @@ export const TestReactiveForm: Story = {
     await expect(field).not.toHaveAttribute('aria-invalid');
     await expect(canvas.getByText(/alex@example\.com · valid/)).toBeInTheDocument();
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: 'input', side: 'right', label: '{v} tall' },
+  { kind: 'style', target: 'input', prop: 'font-size', side: 'top', label: '{v} text' },
+  { kind: 'style', target: '.form-label', prop: 'font-size', side: 'top', label: '{v} label' },
+  { kind: 'padding', target: 'input', label: '{v} top and bottom', labelSides: '{v} left and right' },
+  { kind: 'gap', from: '.form-label', to: 'input', side: 'right', label: '{v} label to field' },
+  { kind: 'gap', from: 'input', to: '.form-text', side: 'right', label: '{v} to help text' },
+  { kind: 'gap', from: 'input', to: '.invalid-feedback', side: 'right', label: '{v} to error' },
+  { kind: 'style', target: '.form-text', prop: 'font-size', side: 'bottom', label: '{v} help text, grey' },
+  { kind: 'style', target: '.invalid-feedback', prop: 'font-size', side: 'bottom', label: '{v} error text, red' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { fullWidth: true, controls: { disable: true }, example: true, specs: { sizes: true, switches: [{ arg: 'note', label: 'Message', initial: 'help', options: [{ value: 'help', label: 'Help text', short: 'Help' }, { value: 'error', label: 'Error', short: 'Error' }] }] } },
+  args: { size: 'md', note: 'help' } as Story['args'],
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS },
+    template: `<app-redline [marks]="marks" [scale]="1.3" [room]="150" [key]="false"><div style="width: min(18rem, calc(100vw - 200px))"><app-input label="Full name" placeholder="Alex Morgan" [size]="size" [helpText]="note === 'help' ? 'As it appears on your ID.' : ''" [state]="note === 'error' ? 'invalid' : 'none'" [feedback]="note === 'error' ? 'Enter your full name.' : ''" /></div></app-redline>`,
+  }),
 };

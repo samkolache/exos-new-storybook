@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
 import * as ModalStories from './modal.stories';
 
@@ -42,11 +42,11 @@ On the web it opens in the middle of the screen; on a phone it slides up from th
 
 | # | Part | Shows when |
 |---|---|---|
-| 1 | **Title** | Always. The question or task. Names the modal for screen readers. |
+| 1 | **Header** | Always. The title (the question or task, which names the modal for screen readers), and an optional `subtitle`. With `headerDivider`, a line under it. |
 | 2 | **Close** | `dismissible` (default). |
-| 3 | **Body** | Always. A sentence, or a short form. Scrolls if it's tall. |
-| 4 | **Secondary button** | `secondaryLabel`. Cancels and closes. |
-| 5 | **Main button** | `primaryLabel`. Says what happens. |
+| 3 | **Body** | Always. A sentence, details, or a short form. Scrolls if it's tall. |
+| 4 | **Footer** | When there are buttons. With `footerBar` (default) it's a bar with a line above; without, the buttons sit right under the body. |
+| 5 | **Buttons** | `primaryLabel` says what happens; `secondaryLabel` cancels and closes. On the right by default, or on the left with `buttonsAlign="start"`. |
 
 ## Variants
 
@@ -61,6 +61,35 @@ A question with two answers, like "Delete photo?" with Delete and Cancel. Use `s
 <DeviceVariation title="Short form" of={ModalStories.Overview}>
 
 A few fields that belong to this page, like adding an address. Use `size="md"`. More than about 5 fields, or several steps? Use a page.
+
+</DeviceVariation>
+
+### Buttons
+
+Three ways, by how much there is to read and do.
+
+<DeviceVariation title="Footer bar" of={ModalStories.VarFooterBar}>
+
+The buttons sit in a bar with a thin line above. Use it for **forms and anything that scrolls**: the line keeps the buttons apart from the content, and they stay put while the body scrolls.
+
+- This is the default.
+
+</DeviceVariation>
+
+<DeviceVariation title="Buttons, no footer bar" of={ModalStories.VarNoBar}>
+
+The buttons sit right under a short message, with no line. Use it for **quick decisions** like "Delete photo?", where the message is a sentence and nothing scrolls.
+
+- Add `[footerBar]="false"`.
+
+</DeviceVariation>
+
+<DeviceVariation title="No buttons" of={ModalStories.VarNoButtons}>
+
+Something to look at, like a photo's details or a preview. People close it with the × or <kbd>Esc</kbd>.
+
+- Leave out `primaryLabel` and `secondaryLabel`. Keep it `dismissible`, since the × is the only way out.
+- Not for saying something worked ("Saved"). Use a toast.
 
 </DeviceVariation>
 
@@ -90,6 +119,21 @@ The width on the web. On phones, modals are always full width. Use the switch in
 
 </DeviceVariation>
 
+<DeviceVariation title="Header divider" of={ModalStories.ModHeaderDivider}>
+
+`[headerDivider]="true"` adds a line under the header. Use it when the body is long or scrolls, so the title stays apart from the content. Pair it with the footer bar for a modal with a line at both ends.
+
+</DeviceVariation>
+
+<DeviceVariation title="Buttons on the left" of={ModalStories.ModButtonsStart}>
+
+`buttonsAlign="start"` puts the buttons on the left, with the **main button first** so it's read first. On the right (default), the main button is last, nearest the corner.
+
+- Use one side across a product, so people know where to look.
+- On phones the buttons always stack full width, main button on top.
+
+</DeviceVariation>
+
 <DeviceVariation title="Not dismissible" of={ModalStories.ModNotDismissible}>
 
 `[dismissible]="false"` removes the close button, and Esc and clicking outside do nothing. Only when people truly must choose, like signing in again. Always leave one way out.
@@ -98,15 +142,12 @@ The width on the web. On phones, modals are always full width. Use the switch in
 
 ## Specs
 
-| | Web | Mobile |
-|---|---|---|
-| Position | Centred | From the bottom (sheet) or full screen |
-| Width | 400 / 560 / 800px | Full width |
-| Height | Up to the screen minus 64px; the body scrolls | Up to 90% (sheet) or full |
-| Corners | 16px | 16px top corners (sheet), none (full screen) |
-| Padding | 24px | 20px |
-| Buttons | Side by side, at the right, main button last | Stacked full width, main button on top |
-| Backdrop | Ink at 48% | Same |
+Use the switches to see each kind on each device: the buttons (**Footer bar / No bar / No buttons**), the header (**No line / Line**), where the buttons sit (**Right / Left**), and **Mobile / Web**. Blue shows the padding of the header, body and footer. The numbers are measured from the code.
+
+<SpecPictures of={ModalStories.SpecDrawing} />
+
+- **Width on the web:** 400, 560 or 800px (`size`), centred. **On phones:** full width, sliding up from the bottom (or full screen).
+- **Buttons on phones** stack full width, 8px apart, with the main one on top.
 
 ## Content
 
@@ -186,7 +227,3 @@ The Variants, Size and Modifiers examples above each have their code.
     { title: 'Input', text: 'Fields in a short form', href: '/?path=/docs/components-forms-input--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** first version: decisions and short forms, three sizes, a sheet or full screen on phones.

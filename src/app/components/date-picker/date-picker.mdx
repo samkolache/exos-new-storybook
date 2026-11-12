@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
 import * as DateStories from './date-picker.stories';
 
@@ -72,12 +72,15 @@ For a range, use two pickers. Set the second one's `min` to the day after the fi
 
 ## Specs
 
-| | Web | Mobile |
-|---|---|---|
-| Height | 32 / 40 / 48px | At least 44px |
-| Text | 14 to 16px | 16px, so the phone doesn't zoom in |
-| Calendar | The browser's, under the field | The phone's own picker |
-| Date format | The person's own | The person's own |
+Use **Small / Medium / Large**, **Help / Error** and **Mobile / Web** to see each case. Blue shows the padding inside the field. The numbers are measured from the code.
+
+<SpecPictures of={DateStories.SpecDrawing} />
+
+- **Label to field:** 8px on every device.
+- **Field to help or error text:** 4px on the web, 8px on phones, so the message reads as its own line under a taller field.
+- **Help text** is grey and **error text** is red, both 14px. An error shows right under the field (above any help text), and the field gets a red border.
+- Phones open their own date picker; web shows the browser's calendar under the field.
+- Dates appear in the format the person's device uses.
 
 ## Content
 
@@ -113,6 +116,8 @@ Empty, picked, warning, invalid, read only and disabled, like every field.
 
 | | Mobile (below 672px) | Web (672px and up) |
 |---|---|---|
+| Space to help or error text | 8px | 4px |
+| Label to field | 8px | 8px |
 | Opens | The phone's own date picker | A calendar under the field |
 | Typing | Through the picker | Directly, or with the calendar |
 | Height | At least 44px with 16px text | 32 / 40 / 48px |
@@ -158,7 +163,3 @@ The same tokens as [Input](?path=/docs/components-forms-input--docs).
     { title: 'Number input', text: 'Amounts', href: '/?path=/docs/components-forms-number-input--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** first version: the browser's own date field with min, max, states and sizes.

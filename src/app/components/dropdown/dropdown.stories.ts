@@ -1,7 +1,10 @@
+import { moduleMetadata } from '@storybook/angular-vite';
 import { componentWrapperDecorator, type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { DropdownComponent, DropdownItem } from './dropdown';
 import { storySource } from '../shared/story-source';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 const PHOTO_ACTIONS: DropdownItem[] = [
   { type: 'header', label: 'Photo' },
@@ -138,4 +141,24 @@ export const KeyboardNavigation: Story = {
     await expect(toggle).toHaveFocus();
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: '.dropdown-toggle', side: 'right', label: '{v} tall button' },
+  { kind: 'size', target: '.dropdown-item', side: 'right', label: '{v} per item' },
+  { kind: 'size', target: '.dropdown-menu', side: 'bottom', label: '{v} wide menu' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: false, switches: [] } },
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS, items: PHOTO_ACTIONS },
+    template: `<app-redline [marks]="marks" [scale]="1.4" [key]="false"><div style="height: 400px; width: 12rem"><app-dropdown label="Photo actions" [items]="items" [open]="true" /></div></app-redline>`,
+  }),
 };

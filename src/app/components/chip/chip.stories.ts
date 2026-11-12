@@ -3,56 +3,59 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { AnatomyComponent } from '../shared/anatomy';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 import { storySource } from '../shared/story-source';
 import { ChipComponent, ChipOption } from './chip';
 
-// Content from Figma "PCR" › Form view.
-const CONDITION: ChipOption[] = [
-  { label: 'Good', value: 'good' },
-  { label: 'Average', value: 'average', suggested: true },
-  { label: 'Fair', value: 'fair' },
-  { label: 'Poor', value: 'poor' },
+// Everyday example content, so the chips read the same in any product.
+
+/** Single: one answer from an ordered scale. */
+const PRIORITY: ChipOption[] = [
+  { label: 'Low', value: 'low' },
+  { label: 'Medium', value: 'medium', suggested: true },
+  { label: 'High', value: 'high' },
+  { label: 'Urgent', value: 'urgent' },
 ];
 
-const AREA: ChipOption[] = [
-  { label: 'Urban', value: 'urban' },
-  { label: 'Suburban', value: 'suburban' },
-  { label: 'Rural', value: 'rural' },
+/** Single, nothing suggested. */
+const WORK_MODE: ChipOption[] = [
+  { label: 'Remote', value: 'remote' },
+  { label: 'Hybrid', value: 'hybrid' },
+  { label: 'On-site', value: 'onsite' },
 ];
 
-const BATHROOMS: ChipOption[] = [
-  { label: '3 · photos', value: '3', suggested: true },
-  { label: '2 · records', value: '2', icon: 'records' },
+/** Options that say what kind they are with an icon. */
+const FILE_TYPES: ChipOption[] = [
+  { label: 'Photos', value: 'photos', icon: 'camera', suggested: true },
+  { label: 'Documents', value: 'documents', icon: 'records' },
 ];
 
-const ADVERSE: ChipOption[] = [
-  { label: 'Powerlines', value: 'powerlines' },
-  { label: 'Commercial', value: 'commercial', suggested: true },
-  { label: 'Boarded homes', value: 'boarded' },
-  { label: 'Railroad', value: 'railroad' },
-  { label: 'Freeway', value: 'freeway' },
-  { label: 'Airport', value: 'airport', disabled: true },
-  { label: 'Waste facility', value: 'waste' },
+/** Multi: pick any number. */
+const TEAMS: ChipOption[] = [
+  { label: 'Design', value: 'design' },
+  { label: 'Engineering', value: 'engineering', suggested: true },
+  { label: 'Marketing', value: 'marketing' },
+  { label: 'Sales', value: 'sales' },
+  { label: 'Support', value: 'support' },
+  { label: 'Finance', value: 'finance', disabled: true },
+  { label: 'Legal', value: 'legal' },
 ];
 
-/** First five adverse influences, for compact examples. */
-const ADVERSE_SHORT: ChipOption[] = [
-  { label: 'Powerlines', value: 'powerlines' },
-  { label: 'Commercial', value: 'commercial', suggested: true },
-  { label: 'Boarded homes', value: 'boarded' },
-  { label: 'Railroad', value: 'railroad' },
-  { label: 'Freeway', value: 'freeway' },
-];
+/** First five teams, for compact examples. */
+const TEAMS_SHORT: ChipOption[] = TEAMS.slice(0, 5);
 
 /** Component defaults: the code panel only prints props that differ. */
 const DEFAULTS = {
-  label: 'Fair',
+  variant: 'selectable',
+  label: 'Chip',
   type: 'single',
   size: 'md',
   selected: false,
   suggested: false,
   disabled: false,
   icon: 'none',
+  iconEnd: 'none',
   options: [],
   value: null,
   groupLabel: '',
@@ -67,7 +70,7 @@ const meta: Meta<ChipComponent> = {
     // Accessibility checks fail the tests for chips (not just a warning).
     a11y: { test: 'error' },
     // Internal members: keep the API table to real inputs and outputs.
-    controls: { exclude: ['chips', 'classesOf', 'click', 'formDisabled', 'isDisabled', 'isGroup', 'nextValue', 'onChange', 'onTouched', 'picked', 'stateOf', 'writeValue', 'registerOnChange', 'registerOnTouched', 'setDisabledState', 'onKeydown', 'tabIndexOf', 'titleOf', 'chipRole', 'tabStop', 'host'] },
+    controls: { exclude: ['chips', 'classesOf', 'click', 'formDisabled', 'isDisabled', 'isGroup', 'nextValue', 'onChange', 'onTouched', 'picked', 'stateOf', 'writeValue', 'registerOnChange', 'registerOnTouched', 'setDisabledState', 'onKeydown', 'tabIndexOf', 'titleOf', 'chipRole', 'tabStop', 'host', 'injector', 'isSelectable', 'groupRole', 'iconSrc', 'showsCheck', 'remove', 'onRemoveKeydown'] },
     docs: {
       source: {
       language: 'typescript',
@@ -86,6 +89,17 @@ const meta: Meta<ChipComponent> = {
   argTypes: {
     selectedChange: { action: 'selectedChange', table: { category: 'outputs' } },
     valueChange: { action: 'valueChange', table: { category: 'outputs' } },
+    removed: {
+      action: 'removed',
+      description: "Removable chips: the cross was pressed. Emits the option's value (or a lone chip's label).",
+      table: { category: 'outputs' },
+    },
+    variant: {
+      control: 'inline-radio',
+      options: ['selectable', 'removable', 'readonly'],
+      description: 'selectable: people pick it. removable: a cross removes it. readonly: shows an answer, nothing to click.',
+      table: { defaultValue: { summary: 'selectable' } },
+    },
     size: {
       control: 'inline-radio',
       options: ['sm', 'md', 'lg'],
@@ -95,7 +109,7 @@ const meta: Meta<ChipComponent> = {
     type: {
       control: 'inline-radio',
       options: ['single', 'multi'],
-      description: 'single: pick one (radio, check when picked). multi: pick any (checkbox).',
+      description: 'Selectable chips. single: pick one (radio, check when picked). multi: pick any (checkbox).',
       table: { defaultValue: { summary: 'single' } },
     },
     disabled: { description: 'Disables the chip, or every chip in the group.', table: { defaultValue: { summary: 'false' } } },
@@ -109,14 +123,20 @@ const meta: Meta<ChipComponent> = {
       table: { category: 'One chip', defaultValue: { summary: 'false' } },
     },
     icon: {
-      control: 'inline-radio',
-      options: ['none', 'records'],
-      description: 'One chip: optional leading icon.',
+      control: 'select',
+      options: ['none', 'records', 'calendar', 'note', 'camera', 'lock', 'flag', 'conflict', 'skip', 'dot'],
+      description: 'One chip: icon before the label.',
+      table: { category: 'One chip', defaultValue: { summary: 'none' } },
+    },
+    iconEnd: {
+      control: 'select',
+      options: ['none', 'records', 'calendar', 'note', 'camera', 'lock', 'flag', 'conflict', 'skip', 'dot'],
+      description: 'One chip: icon after the label.',
       table: { category: 'One chip', defaultValue: { summary: 'none' } },
     },
     options: {
       control: 'object',
-      description: 'Group: `{ label, value, suggested?, disabled?, icon? }[]`. Setting it renders a row of chips.',
+      description: 'Group: `{ label, value, suggested?, disabled?, icon?, iconEnd? }[]`. Setting it renders a row of chips.',
       table: { category: 'Group' },
     },
     value: {
@@ -128,7 +148,7 @@ const meta: Meta<ChipComponent> = {
     labelledBy: { description: 'Group: id of a visible label (instead of groupLabel).', table: { category: 'Group' } },
   },
   args: {
-    label: 'Fair',
+    label: 'Medium',
   },
 };
 
@@ -151,66 +171,179 @@ export const MultiAISuggested: Story = {
 export const MultiSelected: Story = { tags: ['!dev'], name: 'Multi · Selected', args: { type: 'multi', selected: true } };
 export const MultiDisabled: Story = { tags: ['!dev'], name: 'Multi · Disabled', args: { type: 'multi', disabled: true } };
 
-export const WithIcon: Story = { tags: ['!dev'], args: { label: '2 · records', icon: 'records' } };
+export const WithIcon: Story = { tags: ['!dev'], args: { label: 'Documents', icon: 'records' } };
+export const WithEndIcon: Story = { tags: ['!dev'], name: 'With end icon', args: { variant: 'readonly', label: 'Pro plan', iconEnd: 'lock' } };
 
-/** The full Figma component set: type × state. */
+// Removable and read-only variants.
+
+const FILE_TYPES_ICONS: ChipOption[] = [
+  { label: 'Photos', value: 'photos', icon: 'camera' },
+  { label: 'Documents', value: 'documents', icon: 'records' },
+  { label: 'Notes', value: 'notes', icon: 'note' },
+];
+
+const ICON_FILTERS: ChipOption[] = [
+  { label: 'Due this week', value: 'due', icon: 'calendar' },
+  { label: 'Flagged', value: 'flagged', icon: 'flag' },
+  { label: 'Has notes', value: 'notes', icon: 'note' },
+];
+
+// Read-only: values shown as chips, like a profile's skills.
+const SKILLS: ChipOption[] = [
+  { label: 'Figma', value: 'figma' },
+  { label: 'Prototyping', value: 'prototyping' },
+  { label: 'User research', value: 'research' },
+  { label: 'Accessibility', value: 'a11y' },
+];
+
+// Filters someone applied to a list; the cross takes one off.
+const FILTERS: ChipOption[] = [
+  { label: 'Design', value: 'design' },
+  { label: 'Engineering', value: 'engineering' },
+  { label: 'Support', value: 'support' },
+  { label: 'Sales', value: 'sales' },
+];
+
+/** A removable group that really removes: the parent drops the option on `(removed)`. */
+export const Removable: Story = {
+  name: 'Removable',
+  args: { options: FILTERS } as Story['args'],
+  parameters: { controls: { disable: true }, example: true },
+  render: (args) => ({
+    props: {
+      ...args,
+      items: [...FILTERS],
+      drop(value: string) {
+        (this as { items: ChipOption[] }).items = (this as { items: ChipOption[] }).items.filter((o) => o.value !== value);
+      },
+      reset() {
+        (this as { items: ChipOption[] }).items = [...FILTERS];
+      },
+    },
+    template: `
+<app-chip variant="removable" groupLabel="Applied filters" [options]="items" (removed)="drop($event)" />
+@if (!items.length) {
+  <button type="button" class="btn btn-link p-0 small" (click)="reset()">Bring them back</button>
+}`,
+  }),
+};
+
+export const RemovableOne: Story = {
+  tags: ['!dev'],
+  name: 'Removable · One chip',
+  args: { variant: 'removable', label: 'Engineering' },
+};
+
+export const ReadOnly: Story = {
+  name: 'Read-only',
+  args: { variant: 'readonly', options: SKILLS, groupLabel: 'Skills' },
+};
+
+
+/** Icons before and after the label, each in the place it is actually used. */
+export const Icons: Story = {
+  name: 'With icons',
+  tags: ['!dev'],
+  args: { fileTypes: FILE_TYPES_ICONS, filters: ICON_FILTERS } as Story['args'],
+  parameters: { controls: { disable: true }, example: true },
+  render: (args) => ({ props: args, template: `
+<div class="d-flex flex-column gap-4">
+  <div>
+    <p id="filetype-q" class="small fw-semibold mb-2">File type · icon before: what kind each option is</p>
+    <app-chip labelledBy="filetype-q" [options]="fileTypes" value="photos" />
+  </div>
+  <div>
+    <p id="plan-q" class="small fw-semibold mb-2">Plan · icon after: locked, can't be changed here</p>
+    <app-chip labelledBy="plan-q" variant="readonly" [options]="[{ label: 'Pro plan', value: 'pro', iconEnd: 'lock' }]" />
+  </div>
+  <div>
+    <p id="filter-q" class="small fw-semibold mb-2">Filters · removable, each with its icon</p>
+    <app-chip labelledBy="filter-q" variant="removable" [options]="filters" />
+  </div>
+</div>` }),
+};
+
 export const AllStates: Story = {
   name: 'All states',
   tags: ['!dev'],
   parameters: { controls: { disable: true }, example: true },
   render: () => ({ template: `
-<div class="d-flex flex-column gap-3">
-  <div class="d-flex flex-wrap gap-3">
-    <app-chip label="Fair" />
-    <app-chip label="Fair" [selected]="true" [suggested]="true" />
-    <app-chip label="Fair" [selected]="true" />
-    <app-chip label="Fair" [disabled]="true" />
-  </div>
-  <div class="d-flex flex-wrap gap-3">
-    <app-chip label="Fair" type="multi" />
-    <app-chip label="Fair" type="multi" [selected]="true" [suggested]="true" />
-    <app-chip label="Fair" type="multi" [selected]="true" />
-    <app-chip label="Fair" type="multi" [disabled]="true" />
-  </div>
+<div style="overflow-x: auto">
+<div class="d-grid gap-3 align-items-center" style="grid-template-columns: max-content repeat(5, max-content)">
+  <span></span>
+  <span class="small text-body-secondary">Default</span>
+  <span class="small text-body-secondary">AI suggested</span>
+  <span class="small text-body-secondary">Selected</span>
+  <span class="small text-body-secondary">Disabled</span>
+  <span class="small text-body-secondary">Disabled, picked</span>
+
+  <span class="small fw-semibold">Single</span>
+  <app-chip label="Low" />
+  <app-chip label="Medium" [selected]="true" [suggested]="true" />
+  <app-chip label="High" [selected]="true" />
+  <app-chip label="Urgent" [disabled]="true" />
+  <app-chip label="High" [selected]="true" [disabled]="true" />
+
+  <span class="small fw-semibold">Multi</span>
+  <app-chip label="Design" type="multi" />
+  <app-chip label="Engineering" type="multi" [selected]="true" [suggested]="true" />
+  <app-chip label="Support" type="multi" [selected]="true" />
+  <app-chip label="Finance" type="multi" [disabled]="true" />
+  <app-chip label="Support" type="multi" [selected]="true" [disabled]="true" />
+
+  <span class="small fw-semibold">Removable</span>
+  <app-chip label="Sales" variant="removable" />
+  <span class="small text-body-secondary">—</span>
+  <span class="small text-body-secondary">—</span>
+  <app-chip label="Sales" variant="removable" [disabled]="true" />
+  <span class="small text-body-secondary">—</span>
+
+  <span class="small fw-semibold">Read-only</span>
+  <app-chip label="Figma" variant="readonly" />
+  <span class="small text-body-secondary">—</span>
+  <span class="small text-body-secondary">—</span>
+  <app-chip label="Figma" variant="readonly" [disabled]="true" />
+  <span class="small text-body-secondary">—</span>
+</div>
 </div>` }),
 };
 
 // Groups: same component with options.
 export const GroupSingle: Story = {
   name: 'Group',
-  args: { options: CONDITION, groupLabel: 'Interior condition', value: 'average' },
+  args: { options: PRIORITY, groupLabel: 'Priority', value: 'medium' },
 };
 
 export const GroupNothingPicked: Story = {
   tags: ['!dev'],
   name: 'Group · Nothing picked',
-  args: { options: AREA, groupLabel: 'Area' },
+  args: { options: WORK_MODE, groupLabel: 'Work mode' },
 };
 
 export const GroupWithIcons: Story = {
   tags: ['!dev'],
   name: 'Group · With icons',
-  args: { options: BATHROOMS, groupLabel: 'Bathrooms', value: '3' },
+  args: { options: FILE_TYPES, groupLabel: 'File type', value: 'photos' },
 };
 
 export const GroupMulti: Story = {
   name: 'Multi group',
-  args: { options: ADVERSE, type: 'multi', groupLabel: 'Adverse influences nearby', value: ['commercial', 'freeway'] },
+  args: { options: TEAMS, type: 'multi', groupLabel: 'Teams', value: ['engineering', 'support'] },
 };
 
 export const GroupDisabled: Story = {
   tags: ['!dev'],
   name: 'Group · Disabled',
-  args: { options: CONDITION, groupLabel: 'Interior condition', value: 'average', disabled: true },
+  args: { options: PRIORITY, groupLabel: 'Priority', value: 'medium', disabled: true },
 };
 
 /** Bound to a reactive FormControl. */
 export const GroupReactiveForm: Story = {
   name: 'Reactive form',
-  args: { options: ADVERSE, control: new FormControl<string[]>(['commercial']) } as Story['args'],
+  args: { options: TEAMS, control: new FormControl<string[]>(['engineering']) } as Story['args'],
   parameters: { controls: { disable: true }, example: true },
   render: (args) => ({ props: args, template: `
-<app-chip type="multi" groupLabel="Adverse influences nearby" [options]="options" [formControl]="control" />
+<app-chip type="multi" groupLabel="Teams" [options]="options" [formControl]="control" />
 <p class="mt-3 mb-0 small text-body-secondary">Form value: {{ control.value | json }}</p>` }),
 };
 
@@ -222,7 +355,7 @@ export const ToggleOne: Story = {
   args: { selectedChange: fn(), type: 'multi' },
   play: async ({ canvasElement, args }) => {
     // A lone chip is a toggle button (aria-pressed), not a radio or checkbox outside a group.
-    const chip = within(canvasElement).getByRole('button', { name: /Fair/ });
+    const chip = within(canvasElement).getByRole('button', { name: /Medium/ });
     await userEvent.click(chip);
     await expect(chip).toHaveAttribute('aria-pressed', 'true');
     await expect(args.selectedChange).toHaveBeenLastCalledWith(true);
@@ -235,14 +368,14 @@ export const ToggleOne: Story = {
 export const PickOne: Story = {
   tags: ['!dev'],
   name: 'Test · Pick one',
-  args: { valueChange: fn(), options: AREA, groupLabel: 'Area' },
+  args: { valueChange: fn(), options: WORK_MODE, groupLabel: 'Work mode' },
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole('radio', { name: 'Suburban' }));
-    await expect(args.valueChange).toHaveBeenLastCalledWith('suburban');
-    await userEvent.click(canvas.getByRole('radio', { name: 'Rural' }));
-    await expect(canvas.getByRole('radio', { name: 'Rural' })).toHaveAttribute('aria-checked', 'true');
-    await expect(canvas.getByRole('radio', { name: 'Suburban' })).toHaveAttribute('aria-checked', 'false');
+    await userEvent.click(canvas.getByRole('radio', { name: 'Hybrid' }));
+    await expect(args.valueChange).toHaveBeenLastCalledWith('hybrid');
+    await userEvent.click(canvas.getByRole('radio', { name: 'On-site' }));
+    await expect(canvas.getByRole('radio', { name: 'On-site' })).toHaveAttribute('aria-checked', 'true');
+    await expect(canvas.getByRole('radio', { name: 'Hybrid' })).toHaveAttribute('aria-checked', 'false');
   },
 };
 
@@ -250,14 +383,67 @@ export const PickOne: Story = {
 export const PickMany: Story = {
   tags: ['!dev'],
   name: 'Test · Pick many',
-  args: { valueChange: fn(), options: ADVERSE, type: 'multi', groupLabel: 'Adverse influences nearby', value: [] },
+  args: { valueChange: fn(), options: TEAMS, type: 'multi', groupLabel: 'Teams', value: [] },
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole('checkbox', { name: 'Freeway' }));
-    await userEvent.click(canvas.getByRole('checkbox', { name: 'Powerlines' }));
-    await expect(args.valueChange).toHaveBeenLastCalledWith(['powerlines', 'freeway']);
-    await userEvent.click(canvas.getByRole('checkbox', { name: 'Freeway' }));
-    await expect(args.valueChange).toHaveBeenLastCalledWith(['powerlines']);
+    await userEvent.click(canvas.getByRole('checkbox', { name: 'Support' }));
+    await userEvent.click(canvas.getByRole('checkbox', { name: 'Design' }));
+    await expect(args.valueChange).toHaveBeenLastCalledWith(['design', 'support']);
+    await userEvent.click(canvas.getByRole('checkbox', { name: 'Support' }));
+    await expect(args.valueChange).toHaveBeenLastCalledWith(['design']);
+  },
+};
+
+/** Removable: the cross is the only control, named after its chip; Delete removes too; focus moves on. */
+export const TestRemove: Story = {
+  ...Removable,
+  tags: ['!dev'],
+  name: 'Test · Remove',
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('list', { name: 'Applied filters' })).toBeInTheDocument();
+    await expect(canvas.getAllByRole('listitem')).toHaveLength(4);
+    // Only the crosses are buttons.
+    await expect(canvas.getAllByRole('button')).toHaveLength(4);
+    await userEvent.click(canvas.getByRole('button', { name: 'Remove Engineering' }));
+    await expect(canvas.queryByText('Engineering')).not.toBeInTheDocument();
+    // Focus lands on the chip that took its place.
+    await expect(await canvas.findByRole('button', { name: 'Remove Support' })).toHaveFocus();
+    await userEvent.keyboard('{Delete}');
+    await expect(await canvas.findByRole('button', { name: 'Remove Sales' })).toHaveFocus();
+    // Removing the last chip moves focus back to the one before.
+    await userEvent.keyboard('{Backspace}');
+    await expect(await canvas.findByRole('button', { name: 'Remove Design' })).toHaveFocus();
+  },
+};
+
+/** A lone removable chip emits its label. */
+export const TestRemoveOne: Story = {
+  tags: ['!dev'],
+  name: 'Test · Remove one chip',
+  args: { variant: 'removable', label: 'Engineering', removed: fn() },
+  play: async ({ canvasElement, args }) => {
+    await userEvent.click(within(canvasElement).getByRole('button', { name: 'Remove Engineering' }));
+    await expect(args.removed).toHaveBeenCalledWith('Engineering');
+  },
+};
+
+/** Read-only chips have nothing to focus or press, and never show a picked state, even with a value set. */
+export const TestReadOnly: Story = {
+  tags: ['!dev'],
+  name: 'Test · Read-only',
+  args: { variant: 'readonly', options: SKILLS, groupLabel: 'Skills', value: 'figma', valueChange: fn() },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryAllByRole('button')).toHaveLength(0);
+    await expect(canvas.queryAllByRole('radio')).toHaveLength(0);
+    const items = within(canvas.getByRole('list', { name: 'Skills' })).getAllByRole('listitem');
+    await expect(items).toHaveLength(4);
+    await expect(items[0]).not.toHaveClass('selected');
+    await expect(items[0].querySelector('img')).toBeNull();
+    await expect(items[0]).toHaveTextContent(/^\s*Figma\s*$/);
+    await userEvent.click(items[0]);
+    await expect(args.valueChange).not.toHaveBeenCalled();
   },
 };
 
@@ -265,20 +451,20 @@ export const PickMany: Story = {
 
 export const SuggestedShowcase: Story = {
   tags: ['!dev'],
-  args: { condition: CONDITION } as Story['args'],
+  args: { priority: PRIORITY } as Story['args'],
   parameters: { controls: { disable: true }, example: true },
   render: (args) => ({ props: args, template: `
 <div class="d-flex flex-column gap-3">
-  <app-chip groupLabel="Interior condition" [options]="condition" value="average" />
-  <app-chip groupLabel="Interior condition" [options]="condition" value="fair" />
+  <app-chip groupLabel="Priority" [options]="priority" value="medium" />
+  <app-chip groupLabel="Priority" [options]="priority" value="high" />
 </div>` }),
 };
 
 export const IconShowcase: Story = {
   tags: ['!dev'],
-  args: { bathrooms: BATHROOMS } as Story['args'],
+  args: { fileTypes: FILE_TYPES } as Story['args'],
   parameters: { controls: { disable: true }, example: true },
-  render: (args) => ({ props: args, template: `<app-chip groupLabel="Bathrooms" [options]="bathrooms" value="3" />` }),
+  render: (args) => ({ props: args, template: `<app-chip groupLabel="File type" [options]="fileTypes" value="photos" />` }),
 };
 
 export const Anatomy: Story = {
@@ -295,28 +481,53 @@ export const Anatomy: Story = {
   } as Story['args'],
   render: (args) => ({ props: args, template: `
 <app-anatomy [parts]="parts" [scale]="1.6">
-  <app-chip label="Commercial" type="multi" [selected]="true" [suggested]="true" />
+  <app-chip label="Engineering" type="multi" [selected]="true" [suggested]="true" />
 </app-anatomy>` }),
 };
 
+/** Specs drawn on a live chip. Every number is measured, so the size and device switches show real values. */
+const FIRST_CHIP = '.chip-group > .chip:nth-of-type(1)';
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: FIRST_CHIP, side: 'right', label: '{v} tall' },
+  { kind: 'style', target: `${FIRST_CHIP} .chip-label`, prop: 'font-size', side: 'top', label: '{v} text' },
+  { kind: 'padding', target: FIRST_CHIP, label: '{v} top and bottom', labelSides: '{v} left and right' },
+  { kind: 'distance', from: { target: FIRST_CHIP, edge: 'right' }, to: { target: '.chip-group > .chip:nth-of-type(2)', edge: 'left' }, side: 'bottom', label: '{v} apart' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: true, switches: [] } },
+  args: { size: 'md' },
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS, options: [{ label: 'Design', value: 'design' }, { label: 'Sales', value: 'sales' }] },
+    template: `
+<app-redline [marks]="marks" [scale]="2" [key]="false">
+  <app-chip groupLabel="Teams" [size]="size" [options]="options" />
+</app-redline>`,
+  }),
+};
+
 // Mobile / Web demo (top of the docs page). The two layouts of the same questions:
-// mobile stacks each question above its chips across the 4 columns (44px tap areas);
+// mobile stacks each question above its chips across the 4 columns (larger type, tap areas that meet across the 8px gap);
 // web puts the question in a label column and the chips beside it (16 columns).
 
 export const MobileExample: Story = {
   name: 'Mobile layout',
   tags: ['!dev'],
-  args: { condition: CONDITION, adverse: ADVERSE } as Story['args'],
+  args: { priority: PRIORITY, teams: TEAMS } as Story['args'],
   parameters: { controls: { disable: true }, example: true },
   render: (args) => ({ props: args, template: `
 <div class="exos-grid">
   <div class="exos-col-4">
-    <p id="condition-label" class="fw-semibold mb-2">How is the interior condition?</p>
-    <app-chip labelledBy="condition-label" [options]="condition" value="average" />
+    <p id="priority-label" class="fw-semibold mb-2">How urgent is this request?</p>
+    <app-chip labelledBy="priority-label" [options]="priority" value="medium" />
   </div>
   <div class="exos-col-4">
-    <p id="adverse-label" class="fw-semibold mb-2">Anything nearby that affects value?</p>
-    <app-chip type="multi" labelledBy="adverse-label" [options]="adverse" [value]="['commercial', 'freeway']" />
+    <p id="teams-label" class="fw-semibold mb-2">Which teams should see it?</p>
+    <app-chip type="multi" labelledBy="teams-label" [options]="teams" [value]="['engineering', 'support']" />
   </div>
 </div>` }),
 };
@@ -324,17 +535,17 @@ export const MobileExample: Story = {
 export const WebExample: Story = {
   name: 'Web layout',
   tags: ['!dev'],
-  args: { condition: CONDITION, adverse: ADVERSE } as Story['args'],
+  args: { priority: PRIORITY, teams: TEAMS } as Story['args'],
   parameters: { controls: { disable: true }, example: true },
   render: (args) => ({ props: args, template: `
 <div class="exos-grid align-items-center">
-  <p id="condition-label" class="exos-col-lg-5 fw-semibold mb-0">How is the interior condition?</p>
+  <p id="priority-label" class="exos-col-lg-5 fw-semibold mb-0">How urgent is this request?</p>
   <div class="exos-col-lg-11">
-    <app-chip labelledBy="condition-label" [options]="condition" value="average" />
+    <app-chip labelledBy="priority-label" [options]="priority" value="medium" />
   </div>
-  <p id="adverse-label" class="exos-col-lg-5 fw-semibold mb-0">Anything nearby that affects value?</p>
+  <p id="teams-label" class="exos-col-lg-5 fw-semibold mb-0">Which teams should see it?</p>
   <div class="exos-col-lg-11">
-    <app-chip type="multi" labelledBy="adverse-label" [options]="adverse" [value]="['commercial', 'freeway']" />
+    <app-chip type="multi" labelledBy="teams-label" [options]="teams" [value]="['engineering', 'support']" />
   </div>
 </div>` }),
 };
@@ -358,35 +569,35 @@ export const OnWeb: Story = {
 // Behaviour tests (hidden from the sidebar; they still run in the test suite).
 
 const RATING: ChipOption[] = [
-  { label: 'Good', value: 'good' },
-  { label: 'Average', value: 'average', suggested: true },
-  { label: 'Fair', value: 'fair', disabled: true },
-  { label: 'Poor', value: 'poor' },
+  { label: 'Low', value: 'low' },
+  { label: 'Medium', value: 'medium', suggested: true },
+  { label: 'High', value: 'high', disabled: true },
+  { label: 'Urgent', value: 'urgent' },
 ];
 
 /** WAI-ARIA radio group: one Tab stop, arrows move and pick, disabled chips are skipped. */
 export const TestKeyboard: Story = {
   tags: ['!dev'],
   name: 'Test · Keyboard',
-  args: { options: RATING, groupLabel: 'Condition', value: 'average', valueChange: fn() },
+  args: { options: RATING, groupLabel: 'Priority', value: 'medium', valueChange: fn() },
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const radios = canvas.getAllByRole('radio');
     // One Tab stop: the picked chip.
     await expect(radios.filter((r) => r.tabIndex === 0)).toHaveLength(1);
     await userEvent.tab();
-    await expect(canvas.getByRole('radio', { name: /Average/ })).toHaveFocus();
-    // Right arrow skips the disabled "Fair" and picks "Poor".
+    await expect(canvas.getByRole('radio', { name: /Medium/ })).toHaveFocus();
+    // Right arrow skips the disabled "High" and picks "Urgent".
     await userEvent.keyboard('{ArrowRight}');
-    await expect(canvas.getByRole('radio', { name: 'Poor' })).toHaveFocus();
-    await expect(args.valueChange).toHaveBeenLastCalledWith('poor');
+    await expect(canvas.getByRole('radio', { name: 'Urgent' })).toHaveFocus();
+    await expect(args.valueChange).toHaveBeenLastCalledWith('urgent');
     // Wraps around, and Home / End jump to the ends.
     await userEvent.keyboard('{ArrowRight}');
-    await expect(canvas.getByRole('radio', { name: 'Good' })).toHaveAttribute('aria-checked', 'true');
+    await expect(canvas.getByRole('radio', { name: 'Low' })).toHaveAttribute('aria-checked', 'true');
     await userEvent.keyboard('{End}');
-    await expect(args.valueChange).toHaveBeenLastCalledWith('poor');
+    await expect(args.valueChange).toHaveBeenLastCalledWith('urgent');
     await userEvent.keyboard('{Home}');
-    await expect(args.valueChange).toHaveBeenLastCalledWith('good');
+    await expect(args.valueChange).toHaveBeenLastCalledWith('low');
     // Tab leaves the group in one step.
     await expect(canvas.getAllByRole('radio').filter((r) => r.tabIndex === 0)).toHaveLength(1);
   },
@@ -396,39 +607,39 @@ export const TestKeyboard: Story = {
 export const TestMultiKeyboard: Story = {
   tags: ['!dev'],
   name: 'Test · Multi keyboard',
-  args: { options: ADVERSE, type: 'multi', groupLabel: 'Adverse influences', value: [], valueChange: fn() },
+  args: { options: TEAMS, type: 'multi', groupLabel: 'Teams', value: [], valueChange: fn() },
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     await userEvent.tab();
-    await expect(canvas.getByRole('checkbox', { name: 'Powerlines' })).toHaveFocus();
+    await expect(canvas.getByRole('checkbox', { name: 'Design' })).toHaveFocus();
     await userEvent.keyboard(' ');
-    await expect(args.valueChange).toHaveBeenLastCalledWith(['powerlines']);
-    await expect(canvas.getByRole('checkbox', { name: 'Airport' })).toBeDisabled();
+    await expect(args.valueChange).toHaveBeenLastCalledWith(['design']);
+    await expect(canvas.getByRole('checkbox', { name: 'Finance' })).toBeDisabled();
   },
 };
 
-const FORM_CONTROL = new FormControl<string | null>('average');
+const FORM_CONTROL = new FormControl<string | null>('medium');
 
 /** Works with reactive forms both ways, and follows the control's disabled state. */
 export const TestReactiveForm: Story = {
   tags: ['!dev'],
   name: 'Test · Reactive form',
   render: () => ({
-    props: { options: CONDITION, control: FORM_CONTROL },
-    template: `<app-chip groupLabel="Condition" [options]="options" [formControl]="control" />`,
+    props: { options: PRIORITY, control: FORM_CONTROL },
+    template: `<app-chip groupLabel="Priority" [options]="options" [formControl]="control" />`,
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     FORM_CONTROL.enable();
-    FORM_CONTROL.setValue('average');
-    await expect(await canvas.findByRole('radio', { name: /Average/ })).toHaveAttribute('aria-checked', 'true');
+    FORM_CONTROL.setValue('medium');
+    await expect(await canvas.findByRole('radio', { name: /Medium/ })).toHaveAttribute('aria-checked', 'true');
     // Chip → form
-    await userEvent.click(canvas.getByRole('radio', { name: 'Poor' }));
-    await expect(FORM_CONTROL.value).toBe('poor');
+    await userEvent.click(canvas.getByRole('radio', { name: 'Urgent' }));
+    await expect(FORM_CONTROL.value).toBe('urgent');
     await expect(FORM_CONTROL.touched).toBe(true);
     // Form → chips
-    FORM_CONTROL.setValue('good');
-    await expect(await canvas.findByRole('radio', { name: 'Good', checked: true })).toBeInTheDocument();
+    FORM_CONTROL.setValue('low');
+    await expect(await canvas.findByRole('radio', { name: 'Low', checked: true })).toBeInTheDocument();
     // Disabling the control disables every chip.
     FORM_CONTROL.disable();
     await new Promise((r) => setTimeout(r, 50));
@@ -442,14 +653,14 @@ export const TestLongLabel: Story = {
   tags: ['!dev'],
   name: 'Test · Long label',
   render: () => ({
-    template: `<div style="width: 200px"><app-chip label="Recently renovated kitchen and both bathrooms" /></div>`,
+    template: `<div style="width: 200px"><app-chip label="Needs a follow-up call before the end of the week" /></div>`,
   }),
   play: async ({ canvasElement }) => {
     const chip = within(canvasElement).getByRole('button');
     const label = chip.querySelector('.chip-label') as HTMLElement;
     await expect(chip.getBoundingClientRect().width).toBeLessThanOrEqual(200);
     await expect(label.scrollWidth).toBeGreaterThan(label.clientWidth);
-    await expect(chip).toHaveAttribute('title', 'Recently renovated kitchen and both bathrooms');
+    await expect(chip).toHaveAttribute('title', 'Needs a follow-up call before the end of the week');
   },
 };
 
@@ -458,27 +669,22 @@ export const TestLongLabel: Story = {
 // Modifiers: one detail each, with clean code (docs only).
 
 const SOURCES: ChipOption[] = [
-  { label: '3 · photos', value: 'photos' },
-  { label: '2 · records', value: 'records', icon: 'records' },
+  { label: 'Photos', value: 'photos', icon: 'camera' },
+  { label: 'Documents', value: 'documents', icon: 'records' },
 ];
 
-/** Source icon: the option says where the answer came from. */
+/** Icon: the option shows what kind it is. */
 export const ModifierSource: Story = {
   tags: ['!dev'],
-  args: { options: SOURCES, groupLabel: 'Bathrooms', value: 'photos' },
+  args: { options: SOURCES, groupLabel: 'File type', value: 'photos' },
 };
 
-const SUGGESTED: ChipOption[] = [
-  { label: 'Good', value: 'good' },
-  { label: 'Average', value: 'average', suggested: true },
-  { label: 'Fair', value: 'fair' },
-  { label: 'Poor', value: 'poor' },
-];
+const SUGGESTED: ChipOption[] = PRIORITY;
 
 /** AI suggested: the option the AI picked carries a sparkle. */
 export const ModifierSuggested: Story = {
   tags: ['!dev'],
-  args: { options: SUGGESTED, groupLabel: 'Interior condition', value: 'average' },
+  args: { options: SUGGESTED, groupLabel: 'Priority', value: 'medium' },
 };
 
 // Content: Do / Don't examples (docs only).
@@ -490,7 +696,7 @@ const YES_NO: ChipOption[] = [
 
 export const DoShortLabels: Story = {
   tags: ['!dev'],
-  render: () => ({ props: { options: CONDITION }, template: `<app-chip groupLabel="Interior condition" [options]="options" value="average" />` }),
+  render: () => ({ props: { options: PRIORITY }, template: `<app-chip groupLabel="Priority" [options]="options" value="medium" />` }),
 };
 
 export const DontLongLabels: Story = {
@@ -498,12 +704,12 @@ export const DontLongLabels: Story = {
   render: () => ({
     props: {
       options: [
-        { label: 'The interior is in good condition', value: 'good' },
-        { label: 'It looks about average to me', value: 'average' },
-        { label: 'Poor, needs work', value: 'poor' },
+        { label: 'Not urgent, it can wait', value: 'low' },
+        { label: 'Somewhat urgent, this week', value: 'medium' },
+        { label: 'Very urgent, needs attention today', value: 'urgent' },
       ],
     },
-    template: `<div style="max-width: 300px; margin: 0 auto"><app-chip groupLabel="Interior condition" [options]="options" value="average" /></div>`,
+    template: `<div style="max-width: 300px; margin: 0 auto"><app-chip groupLabel="Priority" [options]="options" value="medium" /></div>`,
   }),
 };
 
@@ -511,7 +717,7 @@ export const DoQuestionAsLabel: Story = {
   tags: ['!dev'],
   render: () => ({
     props: { options: YES_NO },
-    template: `<div data-align="start" style="max-width: 300px; margin: 0 auto"><p id="sign-q" class="fw-semibold mb-2">Is there a for-sale sign?</p><app-chip labelledBy="sign-q" [options]="options" value="no" /></div>`,
+    template: `<div data-align="start" style="max-width: 300px; margin: 0 auto"><p id="repeat-q" class="fw-semibold mb-2">Does this repeat every week?</p><app-chip labelledBy="repeat-q" [options]="options" value="no" /></div>`,
   }),
 };
 
@@ -520,30 +726,30 @@ export const DontQuestionInChips: Story = {
   render: () => ({
     props: {
       options: [
-        { label: 'For-sale sign: yes', value: 'yes' },
-        { label: 'For-sale sign: no', value: 'no' },
+        { label: 'Repeats weekly: yes', value: 'yes' },
+        { label: 'Repeats weekly: no', value: 'no' },
       ],
     },
-    template: `<app-chip groupLabel="For-sale sign" [options]="options" value="no" />`,
+    template: `<app-chip groupLabel="Repeats weekly" [options]="options" value="no" />`,
   }),
 };
 
 export const DoOneSuggestion: Story = {
   tags: ['!dev'],
-  render: () => ({ props: { options: CONDITION }, template: `<app-chip groupLabel="Interior condition" [options]="options" value="average" />` }),
+  render: () => ({ props: { options: PRIORITY }, template: `<app-chip groupLabel="Priority" [options]="options" value="medium" />` }),
 };
 
 export const DontManySuggestions: Story = {
   tags: ['!dev'],
   render: () => ({
-    props: { options: CONDITION.map((o) => ({ ...o, suggested: true })) },
-    template: `<app-chip groupLabel="Interior condition" [options]="options" value="average" />`,
+    props: { options: PRIORITY.map((o) => ({ ...o, suggested: true })) },
+    template: `<app-chip groupLabel="Priority" [options]="options" value="medium" />`,
   }),
 };
 
 export const DoAnswers: Story = {
   tags: ['!dev'],
-  render: () => ({ props: { options: AREA }, template: `<app-chip groupLabel="Area" [options]="options" value="suburban" />` }),
+  render: () => ({ props: { options: WORK_MODE }, template: `<app-chip groupLabel="Work mode" [options]="options" value="hybrid" />` }),
 };
 
 export const DontActions: Story = {
@@ -560,13 +766,13 @@ export const DontActions: Story = {
   }),
 };
 
-/** Sizes are 24 / 32 / 40px, and on mobile every size gets a 44px tap area with no overlap. */
+/** Sizes are 24 / 32 / 40px on every device; on phones the type is larger and tap areas meet across the 8px gap. */
 export const TestSizes: Story = {
   tags: ['!dev'],
   name: 'Test · Sizes',
   globals: { viewport: { value: 'exosMobile', isRotated: false } },
   render: () => ({
-    props: { options: ADVERSE },
+    props: { options: TEAMS },
     template: `
 <div style="width: 343px">
   <app-chip id="sm" size="sm" type="multi" groupLabel="Small" [options]="options" />
@@ -580,11 +786,12 @@ export const TestSizes: Story = {
       for (const chip of chips) await expect(Math.round(chip.getBoundingClientRect().height)).toBe(height);
       // The group's size reaches every chip.
       await expect(chips.every((c) => (id === 'md' ? !/chip-(sm|lg)/.test(c.className) : c.classList.contains(`chip-${id}`)))).toBe(true);
-      // Below md, tap areas are 44px and rows sit exactly 44px apart, so they touch but don't overlap.
+      // Phones: chips sit 8px apart and each tap area reaches 4px into the gap, so areas meet without overlapping.
       if (window.innerWidth < 672) {
-        await expect(parseFloat(getComputedStyle(chips[0], '::after').height)).toBe(44);
+        await expect(parseFloat(getComputedStyle(chips[0], '::after').height)).toBe(height + 8);
         const tops = [...new Set(chips.map((c) => Math.round(c.getBoundingClientRect().top)))];
-        if (tops.length > 1) await expect(tops[1] - tops[0]).toBeGreaterThanOrEqual(44);
+        if (tops.length > 1) await expect(tops[1] - tops[0]).toBe(height + 8);
+        await expect(getComputedStyle(chips[0]).fontSize).toBe(({ sm: '12px', md: '14px', lg: '16px' } as const)[id]);
       }
     }
   },
@@ -592,13 +799,13 @@ export const TestSizes: Story = {
 
 // Interaction: edge cases (docs only).
 
-const ROOMS: ChipOption[] = ['Kitchen', 'Living room', 'Dining', 'Bath 1', 'Bath 2', 'Bedroom 1', 'Bedroom 2', 'Office', 'Laundry', 'Garage', 'Basement', 'Attic'].map(
+const DEPARTMENTS: ChipOption[] = ['Design', 'Engineering', 'Marketing', 'Sales', 'Support', 'Finance', 'Legal', 'HR', 'Operations', 'Product', 'Research', 'Security'].map(
   (label) => ({ label, value: label.toLowerCase().replace(/\s+/g, '-') }),
 );
 
 export const EdgeLongLabel: Story = {
   tags: ['!dev'],
-  render: () => ({ template: `<div style="width: 180px"><app-chip label="Recently renovated kitchen and both bathrooms" /></div>` }),
+  render: () => ({ template: `<div style="width: 180px"><app-chip label="Needs a follow-up call before the end of the week" /></div>` }),
 };
 
 export const EdgeOneOption: Story = {
@@ -608,29 +815,29 @@ export const EdgeOneOption: Story = {
 
 export const EdgeTooMany: Story = {
   tags: ['!dev'],
-  render: () => ({ props: { options: ROOMS }, template: `<app-chip size="sm" groupLabel="Room" [options]="options" />` }),
+  render: () => ({ props: { options: DEPARTMENTS }, template: `<app-chip size="sm" groupLabel="Department" [options]="options" />` }),
 };
 
 // About 5 options at most on a phone.
 export const DoFewOnPhone: Story = {
   tags: ['!dev'],
-  render: () => ({ props: { options: CONDITION }, template: `<div style="width: 300px; margin: 0 auto"><app-chip groupLabel="Interior condition" [options]="options" value="average" /></div>` }),
+  render: () => ({ props: { options: PRIORITY }, template: `<div style="width: 300px; margin: 0 auto"><app-chip groupLabel="Priority" [options]="options" value="medium" /></div>` }),
 };
 
 export const DontManyOnPhone: Story = {
   tags: ['!dev'],
-  render: () => ({ props: { options: ROOMS }, template: `<div style="width: 300px; margin: 0 auto"><app-chip groupLabel="Room" [options]="options" /></div>` }),
+  render: () => ({ props: { options: DEPARTMENTS }, template: `<div style="width: 300px; margin: 0 auto"><app-chip groupLabel="Department" [options]="options" /></div>` }),
 };
 
 /** The screen reader output shown on the docs page is what the chip really exposes. */
 export const TestScreenReader: Story = {
   tags: ['!dev'],
   name: 'Test · Screen reader output',
-  args: { options: CONDITION, groupLabel: 'Interior condition', value: 'average' },
+  args: { options: PRIORITY, groupLabel: 'Priority', value: 'medium' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const group = canvas.getByRole('radiogroup', { name: 'Interior condition' });
-    const chip = within(group).getByRole('radio', { name: 'Average (AI suggested)' });
+    const group = canvas.getByRole('radiogroup', { name: 'Priority' });
+    const chip = within(group).getByRole('radio', { name: 'Medium (AI suggested)' });
     await expect(chip).toHaveAttribute('aria-checked', 'true');
     const radios = within(group).getAllByRole('radio');
     await expect(radios.indexOf(chip) + 1).toBe(2);
@@ -638,3 +845,48 @@ export const TestScreenReader: Story = {
   },
 };
 
+/** Phones: the cross is a real 24 x 24px button at every size, and the chip keeps its height. */
+export const TestMobileRemove: Story = {
+  tags: ['!dev'],
+  name: 'Test · Mobile remove target',
+  globals: { viewport: { value: 'exosMobile', isRotated: false } },
+  render: () => ({
+    template: `
+<app-chip id="sm" size="sm" variant="removable" label="Sales" />
+<app-chip id="md" variant="removable" label="Sales" />
+<app-chip id="lg" size="lg" variant="removable" label="Sales" />`,
+  }),
+  play: async ({ canvasElement }) => {
+    if (window.innerWidth >= 672) return;
+    for (const [id, height] of [['sm', 24], ['md', 32], ['lg', 40]] as const) {
+      const chip = canvasElement.querySelector<HTMLElement>(`#${id} .chip`)!;
+      const cross = chip.querySelector<HTMLElement>('.chip-remove')!.getBoundingClientRect();
+      await expect([Math.round(cross.width), Math.round(cross.height)]).toEqual([24, 24]);
+      await expect(Math.round(chip.getBoundingClientRect().height)).toBe(height);
+    }
+  },
+};
+
+/** A disabled group keeps its answers visible: picked chips stay checked (in grey) and are announced as checked. */
+export const TestDisabledPicked: Story = {
+  tags: ['!dev'],
+  name: 'Test · Disabled, picked',
+  render: () => ({
+    props: { teams: TEAMS_SHORT, priority: PRIORITY },
+    template: `
+<app-chip id="multi" type="multi" groupLabel="Teams" [options]="teams" [value]="['engineering', 'support']" [disabled]="true" />
+<app-chip id="single" groupLabel="Priority" [options]="priority" value="high" [disabled]="true" />`,
+  }),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const support = canvas.getByRole('checkbox', { name: 'Support' });
+    await expect(support).toBeDisabled();
+    await expect(support).toHaveAttribute('aria-checked', 'true');
+    await expect(support).toHaveClass('chip-picked-disabled');
+    await expect(support.querySelector('.chip-checkbox img')).not.toBeNull();
+    await expect(canvas.getByRole('checkbox', { name: 'Design' }).querySelector('.chip-checkbox img')).toBeNull();
+    const high = canvas.getByRole('radio', { name: 'High' });
+    await expect(high).toHaveAttribute('aria-checked', 'true');
+    await expect(high.querySelector('img')).not.toBeNull();
+  },
+};

@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import {
   PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
   ScreenReader, Related, TokenTable,
@@ -89,14 +89,11 @@ Add `[disabled]="true"` when the destination isn't ready, like an invoice still 
 
 ## Specs
 
-| | Web | Mobile |
-|---|---|---|
-| Colour | Link blue, darker on hover | Same |
-| Underline | 1px, 2px on hover, offset 0.18em | Same |
-| Standalone weight | Medium (500) | Medium (500) |
-| Standalone tap area | The text | At least 44px tall |
-| Focus | 2px blue outline, 2px away | Same |
-| External icon | 12px, after the text | 12px |
+Use **Small / Medium / Large** and **Mobile / Web** to see the sizes. The numbers are measured from the code.
+
+<SpecPictures of={LinkStories.SpecDrawing} />
+
+- The underline is 1px and gets thicker on hover. Keyboard focus shows a blue outline.
 
 ## Content
 
@@ -187,7 +184,3 @@ The Variants, Size and Modifiers examples above each have their code.
     { title: 'Mobile and web', text: 'Tap areas on phones', href: '/?path=/docs/foundations-mobile-and-web--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** first version: inline and standalone, sizes, external and disabled.

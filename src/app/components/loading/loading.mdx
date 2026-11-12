@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import { PageNav, DoDont, Guideline, ScreenReader, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
 import * as LoadingStories from './loading.stories';
 
@@ -92,12 +92,11 @@ Leave out `value` when you can't tell how far along it is: the bar moves without
 
 ## Specs
 
-| | Spinner | Inline loading | Progress bar |
-|---|---|---|---|
-| Size | 16 / 32 / 64px | 16px icon, 14px text | 8px track (4px small), full width |
-| Colour | Blue arc on a light grey ring | Grey text; red on error | Blue fill; green finished; red error |
-| Motion | One turn every 0.9s | Spinner, then an icon | Fill eases to each value |
-| Reduce motion | One turn every 2.4s | Same | Moving bar becomes a slow pulse |
+Use **Small / Medium / Large** and **Mobile / Web** to see the sizes. The numbers are measured from the code.
+
+<SpecPictures of={LoadingStories.SpecDrawing} />
+
+- The spinner turns once every 0.9s, and more slowly when the device asks for less motion.
 
 ## Content
 
@@ -196,7 +195,3 @@ For the inline loading in the live demo, a screen reader announces:
     { title: 'Mobile and web', text: 'Reduce motion and layout', href: '/?path=/docs/foundations-mobile-and-web--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** first version: spinner, inline loading and progress bar.

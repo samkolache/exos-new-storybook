@@ -3,6 +3,8 @@ import { expect, userEvent, within } from 'storybook/test';
 import { AnatomyComponent } from '../shared/anatomy';
 import { storySource } from '../shared/story-source';
 import { AccordionComponent, AccordionItemComponent } from './accordion';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 /** Component defaults: the code panel only prints props that differ. */
 const DEFAULTS = { multiple: true, size: 'md', chevron: 'end', headingLevel: 3 };
@@ -179,4 +181,26 @@ export const TestSingle: Story = {
     await expect(canvas.getByRole('button', { name: 'Shipping' })).toHaveAttribute('aria-expanded', 'true');
     await expect(canvas.getByRole('button', { name: 'Returns' })).toHaveAttribute('aria-expanded', 'false');
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: '.exos-accordion-item:first-child .exos-accordion-trigger', side: 'right', label: '{v} tall row' },
+  { kind: 'style', target: '.exos-accordion-item:first-child .exos-accordion-title', prop: 'font-size', side: 'top', label: '{v} title' },
+  { kind: 'size', target: '.exos-accordion-item:first-child .exos-accordion-trigger svg', side: 'top', label: '{v} arrow' },
+  { kind: 'padding', target: '.exos-accordion-item:first-child .exos-accordion-trigger', label: '{v} top and bottom', labelSides: '{v} left and right' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: true, switches: [] } },
+  args: { size: 'md' } as Story['args'],
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS },
+    template: `<app-redline [marks]="marks" [scale]="1.4" [key]="false"><div style="width: 22rem"><app-accordion [size]="size"><app-accordion-item title="Shipping"><p>Orders ship in 1 to 2 business days.</p></app-accordion-item><app-accordion-item title="Returns"><p>Return unused items within 30 days.</p></app-accordion-item></app-accordion></div></app-redline>`,
+  }),
 };

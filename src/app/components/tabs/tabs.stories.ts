@@ -3,6 +3,8 @@ import { expect, userEvent, within } from 'storybook/test';
 import { AnatomyComponent } from '../shared/anatomy';
 import { storySource } from '../shared/story-source';
 import { TabItem, TabPanelComponent, TabsComponent } from './tabs';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 const ORDER: TabItem[] = [
   { label: 'Summary', value: 'summary' },
@@ -199,4 +201,24 @@ export const TestPanels: Story = {
     await expect(panel).toHaveTextContent('Standard, arriving Nov 15 to 18.');
     await expect(panel).toHaveAccessibleName('Shipping');
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: '.exos-tab', side: 'right', label: '{v} tall' },
+  { kind: 'style', target: '.exos-tab-label', prop: 'font-size', side: 'top', label: '{v} text' },
+  { kind: 'padding', target: '.exos-tab', label: '{v} top and bottom', labelSides: '{v} left and right' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: false, switches: [] } },
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS, items: ORDER.slice(0, 3) },
+    template: `<app-redline [marks]="marks" [scale]="1.3" [key]="false"><div style="width: 22rem; max-width: calc(100vw - 7rem)"><app-tabs [items]="items" value="summary" label="Order details" /></div></app-redline>`,
+  }),
 };

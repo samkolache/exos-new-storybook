@@ -1,8 +1,8 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import {
   PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
-  ScreenReader, Related, SizeSpecs, TokenTable,
+  ScreenReader, Related, TokenTable,
 } from '../../../../.storybook/blocks/Guidelines';
 import * as TagStories from './tag.stories';
 
@@ -73,11 +73,11 @@ Colour carries the meaning, so pick it by what the tag says. Use the switch in t
 
 Use the switch in the toolbar. Only `size` changes in the code.
 
-- **Small** (`sm`, 16px): dense web tables and lists. On phones it takes the medium size, so text is never under 11px.
-- **Medium** (`md`, 20px, default): the Figma tag.
-- **Large** (`lg`, 26px): next to large text, like a page title.
+- **Small** (`sm`): dense tables and lists. 16px on web, 24px on phones.
+- **Medium** (`md`, default): most places. 20px on web, 32px on phones.
+- **Large** (`lg`): next to large text, like a page title. 26px on web, 40px on phones.
 
-Icons scale with the size.
+Icons scale with the size. Phones use a larger scale so labels stay easy to read (see Mobile and web).
 
 </DeviceVariation>
 
@@ -105,19 +105,9 @@ Add `[disabled]="true"` for things nobody needs to act on, like skipped steps. I
 
 ## Specs
 
-Read from the theme, so these values always match the code.
+Use **Small / Medium / Large** and **Mobile / Web** to see the sizes. The numbers are measured from the code.
 
-<SizeSpecs
-  element="span"
-  baseClass="exos-tag exos-tag-neutral exos-tag-text-only"
-  labelClass="exos-tag-label"
-  sample="From order"
-  sizes={[
-    { label: 'Small', className: 'exos-tag-sm' },
-    { label: 'Medium', className: '' },
-    { label: 'Large', className: 'exos-tag-lg' },
-  ]}
-/>
+<SpecPictures of={TagStories.SpecDrawing} />
 
 ## Content
 
@@ -144,18 +134,6 @@ Tags have no hover, focus or pressed states: they aren't interactive.
 
 </DeviceVariation>
 
-<DeviceVariation title="Icons" of={TagStories.IconSet} noCode>
-
-All the icons a tag can carry, from the Figma.
-
-</DeviceVariation>
-
-<DeviceVariation title="Figma source tags" of={TagStories.FigmaSourceTags} noCode>
-
-The full "Review / Source tag" set from Figma, built from these inputs.
-
-</DeviceVariation>
-
 ## Behavior
 
 ### Interaction
@@ -168,7 +146,12 @@ See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs).
 
 | | Mobile (below 672px) | Web (672px and up) |
 |---|---|---|
-| Size | Small shows as medium: text is never under 11pt | Any; small fits dense tables |
+| Height | 24 / 32 / 40px | 16 / 20 / 26px |
+| Text | 12 / 14 / 16px | 10 / 11 / 13px |
+| Padding | 4px 8px · 6px 12px · 9px 12px | 2px 7px · 3px 9px · 5px 11px |
+| Icons | 14 / 16 / 16px | 10 / 12 / 14px |
+| Corner radius | Half the height (12 / 16 / 20px), so wrapped tags stay neat | Fully round |
+| Space between tags | 6 to 8px | 4 to 8px |
 | Long labels | Wrap onto a second line | End in an ellipsis, full text on hover |
 | Placement | Under the item it labels, so it doesn't squeeze the content | Beside the item, on the same line |
 | Many tags | Wrap onto a new line | Wrap onto a new line |
@@ -228,8 +211,3 @@ Tags read these CSS variables from `.exos-theme-dcfc`. Override them there to th
     { title: 'Catalog', text: 'Every component at a glance', href: '/?path=/docs/catalog--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** long labels truncate with a tooltip on web and wrap on phones; small takes the medium size on phones (11px minimum text); darker info text for contrast.
-- **Nov 10, 2026:** first version from the Figma "Review / Source tag" set; sizes (`sm`, `md`, `lg`), AI and disabled.

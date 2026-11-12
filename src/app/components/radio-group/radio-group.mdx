@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import {
   PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
   ScreenReader, Related, TokenTable,
@@ -113,17 +113,12 @@ Add `[reverse]="true"` to put the radio at the end of the row, like a settings l
 
 ## Specs
 
-| | Web | Mobile |
-|---|---|---|
-| Radio | 16px | 16px |
-| Row height | 32px | 44px |
-| Radio to label | 8px | 8px |
-| Label | 16px / 24px | 16px / 24px |
-| Description | 14px, secondary text | 14px, secondary text |
-| Space between horizontal options | 24px | Stacked |
-| Space to the next field | 32px | 32px |
+Use **Mobile / Web** to compare devices. The numbers are measured from the code.
 
-The whole row is the tap or click target, not just the circle.
+<SpecPictures of={RadioStories.SpecDrawing} />
+
+- The whole row can be tapped or clicked, not just the circle.
+- On phones options that sit side by side on web stack under each other.
 
 ## Content
 
@@ -238,8 +233,3 @@ Works with `[formControl]`, `formControlName`, `ngModel` and `[(value)]`.
     { title: 'Input', text: 'Open answers', href: '/?path=/docs/components-forms-input--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** AI label with explanation and revert; warning and read-only states; `optional`; 44px rows on mobile; horizontal groups stack on phones; the whole row is clickable; labels wrap.
-- **Nov 10, 2026:** first version, with list and card appearances.

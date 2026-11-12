@@ -4,6 +4,8 @@ import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import { AnatomyComponent } from '../shared/anatomy';
 import { storySource } from '../shared/story-source';
 import { FileUploaderComponent, UploadFile } from './file-uploader';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 const SAMPLE: UploadFile[] = [
   { id: 'a', name: 'kitchen-01.jpg', size: 2_400_000, status: 'done' },
@@ -200,4 +202,25 @@ export const TestUpload: Story = {
     await expect(await canvas.findByRole('progressbar', { name: 'Uploading room.jpg' })).toBeInTheDocument();
     await waitFor(() => expect(canvas.getByText('Uploaded')).toBeInTheDocument(), { timeout: 4000 });
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'size', target: '.exos-dropzone', side: 'right', label: '{v} tall drop area' },
+  { kind: 'size', target: '.exos-upload-button', side: 'right', label: '{v} tall buttons' },
+  { kind: 'style', target: '.exos-dropzone-strong', prop: 'font-size', side: 'top', label: '{v} text' },
+  { kind: 'size', target: '.exos-upload-item', side: 'right', label: '{v} per file' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: false, switches: [] } },
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS, sample: SAMPLE.slice(0, 1) },
+    template: `<app-redline [marks]="marks" [scale]="1" [key]="false"><div style="width: 22rem"><app-file-uploader label="Photos" accept="image/*" [multiple]="true" [camera]="true" [files]="sample" /></div></app-redline>`,
+  }),
 };

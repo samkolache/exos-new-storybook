@@ -28,6 +28,20 @@ export class ModalComponent {
   readonly primaryLabel = input('');
   readonly primaryVariant = input<ButtonVariant>('primary');
   readonly secondaryLabel = input('');
+  /**
+   * Buttons in a footer bar, with a line above (default): for forms and content that scrolls,
+   * so the buttons stay put under it. Off: the buttons sit right under a short message, with no
+   * line, for quick decisions like "Delete photo?".
+   */
+  readonly footerBar = input(true);
+  /** A line under the header: for long or scrolling content, so the title stays apart from it. */
+  readonly headerDivider = input(false);
+  /**
+   * Where the buttons sit on the web: end (right, default) or start (left).
+   * On the left the main button comes first, so it's read first; on the right it's last.
+   * Phones always stack them full width, main button on top.
+   */
+  readonly buttonsAlign = input<'start' | 'end'>('end');
   /** Phones: sheet from the bottom (default), or full screen for forms and long content. */
   readonly mobile = input<'sheet' | 'fullscreen'>('sheet');
   /** Esc, the close button and a click outside close it. Turn off only when people must choose. */

@@ -1,5 +1,6 @@
 import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import { Variation } from '../../../../.storybook/blocks/Variation';
+import { DeviceCanvas, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import * as IconButtonStories from './icon-button.stories';
 
 <Meta of={IconButtonStories} />
@@ -48,6 +49,14 @@ Pass any [Lucide](https://lucide.dev/icons/) icon to the `icon` input. Icons ren
 The button has no visible text, so `label` is required. Screen readers announce it as the button's name, so describe the action ("Back"), not the icon ("Chevron").
 
 </Variation>
+
+## Specs
+
+Use **Mobile / Web** to compare devices. The numbers are measured from the code.
+
+<SpecPictures of={IconButtonStories.SpecDrawing} />
+
+- Always round. The label isn't shown, but screen readers read it.
 
 ## API
 

@@ -1,5 +1,6 @@
 import { Meta, Title, Subtitle, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import { Variation } from '../../../../.storybook/blocks/Variation';
+import { DeviceCanvas, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import * as DropdownStories from './dropdown.stories';
 
 <Meta of={DropdownStories} />
@@ -66,6 +67,12 @@ Each entry in `items` is one of:
 `[dark]="true"` gives the menu a dark background, for dark surfaces.
 
 </Variation>
+
+## Specs
+
+Use **Mobile / Web** to compare devices. The numbers are measured from the code.
+
+<SpecPictures of={DropdownStories.SpecDrawing} />
 
 ## API
 

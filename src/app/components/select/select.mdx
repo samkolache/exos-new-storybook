@@ -1,8 +1,8 @@
 import { Meta, Title, Subtitle, Controls } from '@storybook/addon-docs/blocks';
-import { DeviceCanvas, DeviceVariation } from '../../../../.storybook/blocks/DeviceExample';
+import { DeviceCanvas, DeviceVariation, SpecPictures } from '../../../../.storybook/blocks/DeviceExample';
 import {
   PageNav, DoDont, Guideline, SpecimenGrid, Specimen,
-  ScreenReader, Related, SizeSpecs, TokenTable,
+  ScreenReader, Related, TokenTable,
 } from '../../../../.storybook/blocks/Guidelines';
 import * as SelectStories from './select.stories';
 
@@ -125,18 +125,14 @@ Add `group` to options to list them under headings, like regions for time zones.
 
 ## Specs
 
-Read from the theme, so these values always match the code. These are the web sizes; on mobile, fields are at least 44px tall with 16px text.
+Use **Small / Medium / Large**, **Help / Error** and **Mobile / Web** to see each case. Blue shows the padding inside the field. The numbers are measured from the code.
 
-<SizeSpecs
-  element="input"
-  baseClass="form-select"
-  sample="Canada"
-  sizes={[
-    { label: 'Small', className: 'form-select-sm' },
-    { label: 'Medium', className: '' },
-    { label: 'Large', className: 'form-select-lg' },
-  ]}
-/>
+<SpecPictures of={SelectStories.SpecDrawing} />
+
+- **Label to field:** 8px on every device.
+- **Field to help or error text:** 4px on the web, 8px on phones, so the message reads as its own line under a taller field.
+- **Help text** is grey and **error text** is red, both 14px. An error shows right under the field (above any help text), and the field gets a red border.
+- Phone text is 16px or more, so the phone doesn't zoom in. Phones open their own option list.
 
 ## Content
 
@@ -184,6 +180,8 @@ Status messages lead with an icon in the field, so colour is never the only sign
 
 | | Mobile (below 672px) | Web (672px and up) |
 |---|---|---|
+| Space to help or error text | 8px | 4px |
+| Label to field | 8px | 8px |
 | Opens | The phone's own picker, at the bottom of the screen | A list under the field |
 | Height | At least 44px, at every size | 32, 40 or 48px |
 | Text | 16px, so the phone doesn't zoom in on focus | 14 to 16px, by size |
@@ -251,8 +249,3 @@ Works with `[formControl]`, `formControlName`, `ngModel` and `[(value)]`.
     { title: 'Dropdown', text: 'Menus of actions', href: '/?path=/docs/components-dropdown--docs' },
   ]}
 />
-
-### Changelog
-
-- **Nov 11, 2026:** warning and read-only states; option groups; `optional` and `hideLabel`; 32 / 40 / 48px heights, and 44px with 16px text on mobile.
-- **Nov 10, 2026:** first version.

@@ -6,6 +6,8 @@ import { AnatomyComponent } from '../shared/anatomy';
 import { storySource } from '../shared/story-source';
 import { NotificationComponent } from './notification';
 import { ToastRegionComponent, ToastService } from './toast';
+import { RedlineComponent, RedlineMark } from '../shared/redline';
+import { checkSpecPicture } from '../shared/spec-check';
 
 /** Docs only: buttons that show toasts, and the region they appear in. */
 @Component({
@@ -228,4 +230,25 @@ export const TestToasts: Story = {
     await userEvent.click(await canvas.findByRole('button', { name: 'Undo' }));
     await expect(await canvas.findByText('Order restored')).toBeInTheDocument();
   },
+};
+
+
+// Specs: the measurements drawn on a live, non-clickable example. Every number is measured from the code.
+const SPEC_MARKS: RedlineMark[] = [
+  { kind: 'padding', target: '.exos-notification', label: '{v} top and bottom', labelSides: '{v} on the left' },
+  { kind: 'size', target: '.exos-notification-icon', side: 'top', label: '{v} icon' },
+  { kind: 'style', target: '.exos-notification-title', prop: 'font-size', side: 'top', label: '{v} text' },
+  { kind: 'size', target: '.exos-notification-close', side: 'right', label: '{v} close button' },
+];
+
+export const SpecDrawing: Story = {
+  tags: ['!dev'],
+  // The docs show a saved picture of this; the test checks it still matches the code.
+  play: (context) => checkSpecPicture(context as never),
+  decorators: [moduleMetadata({ imports: [RedlineComponent] })],
+  parameters: { controls: { disable: true }, example: true, specs: { sizes: false, switches: [] } },
+  render: (args) => ({
+    props: { ...args, marks: SPEC_MARKS },
+    template: `<app-redline [marks]="marks" [scale]="1" [key]="false"><div style="width: 22rem; max-width: calc(100vw - 7rem)"><app-notification kind="warning" title="Card expires soon" message="Update it before March 1." [dismissible]="true" /></div></app-redline>`,
+  }),
 };
