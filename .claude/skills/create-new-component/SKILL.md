@@ -14,7 +14,11 @@ The system follows two outside references. Check both before deciding how a comp
 - **Apple Human Interface Guidelines (iOS)** for design principles and mobile behavior: clarity over decoration, content first, 44pt minimum touch targets, 16px text in fields (so phones don't zoom), the right keyboard / Return key / autocapitalization per field, plain direct language, and sensible defaults so people do less.
 - **IBM Carbon Design System** for web: component anatomy, sizes (sm 32 / md 40 / lg 48px), states (invalid, warning, valid, disabled, read-only), the 2x grid and breakpoints (mobile below 672px), the structure of the docs page, and writing guidance (sentence case, short labels, specific error messages).
 
-**Colors and visual style (fills, gradients, radius) come from our own DCFC tokens, not Carbon or Apple.** Carbon and Apple decide structure: sizes, padding, spacing, states and behavior. Use the spacing scale (`--exos-spacing-01`…`13`, the same steps as Carbon's `$spacing-*`), never raw px. Button (`button.mdx`) was rebuilt this way and is a second reference.
+**Colors and visual style (fills, gradients, radius) come from our own DCFC tokens, not Carbon or Apple.** Carbon and Apple decide structure: sizes, padding, spacing, states and behavior. No raw px for space or corners: use the foundations.
+- **Spacing:** `--exos-spacing-01`…`13` (Carbon's `$spacing-*` steps); `--exos-space-*` for layout that changes between phone and web.
+- **Padding:** follow `foundations/padding`: pick the height first; controls 16px sides, compact items 12px, rows 12/16px, surfaces `--exos-space-inset`. Count the 1px border (`calc(var(--exos-spacing-05) - 1px)`) and go 2px tighter beside an icon (`calc(token - 2px)`).
+- **Corner radius:** `--exos-radius-01`…`06`, `full` for controls; inner radius = outer radius − padding.
+- Only vertical padding that sets a tested height, and optical nudges (negative margins), may stay as raw values, with a comment. Button (`button.mdx`) was rebuilt this way and is a second reference.
 
 Where they disagree, use Apple HIG on mobile and Carbon on web. Every component must work on both: see `src/app/foundations/mobile-and-web/`.
 

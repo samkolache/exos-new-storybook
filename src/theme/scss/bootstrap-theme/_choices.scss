@@ -12,10 +12,10 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.375rem;
+  gap: var(--exos-spacing-03);
   float: none;
   width: auto;
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--exos-spacing-02);
   padding: 0;
   font-size: 1rem;
   font-weight: 500;
@@ -33,7 +33,7 @@
 
 // Under "Select all": indented so the parent reads as a parent.
 .exos-choice-children {
-  padding-left: 1.5rem;
+  padding-left: var(--exos-spacing-06);
 }
 
 // Side by side from tablet up. Phones always stack.
@@ -41,7 +41,7 @@
   .exos-choice-list-inline {
     flex-direction: row;
     flex-wrap: wrap;
-    column-gap: 1.5rem;
+    column-gap: var(--exos-spacing-06);
   }
 }
 
@@ -51,13 +51,13 @@
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 0.5rem;
-  padding: 0.25rem 0;
+  gap: var(--exos-spacing-03);
+  padding: var(--exos-spacing-02) 0;
 
   > .form-check-input {
     flex-shrink: 0;
     float: none;
-    margin: 0.25rem 0 0;
+    margin: var(--exos-spacing-02) 0 0;
     cursor: pointer;
   }
 
@@ -97,7 +97,7 @@
 }
 
 .exos-choice-sparkle {
-  margin-left: 0.125rem;
+  margin-left: var(--exos-spacing-01);
   vertical-align: 0.125em;
 }
 
@@ -112,7 +112,7 @@
   > .invalid-feedback,
   > .warning-feedback {
     display: flex !important;
-    gap: 0.375rem;
+    gap: var(--exos-spacing-03);
 
     &::before {
       content: "";
@@ -171,11 +171,11 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: var(--exos-spacing-01);
   height: 18px;
-  padding: 0 5px;
+  padding: 0 var(--exos-spacing-02);
   border: 1px solid var(--color-border-chip);
-  border-radius: 4px;
+  border-radius: var(--exos-radius-01);
   background-color: var(--color-background-selected);
   color: var(--color-text-tag-info);
   font-size: 11px;
@@ -224,10 +224,10 @@
   display: block;
   width: max-content;
   max-width: 16rem;
-  margin-top: 6px;
-  padding: 10px 12px;
+  margin-top: var(--exos-spacing-03);
+  padding: var(--exos-spacing-04) var(--exos-spacing-05);
   border: 1px solid var(--color-border-default);
-  border-radius: 10px;
+  border-radius: var(--exos-radius-03);
   background-color: var(--color-background-page);
   box-shadow: 0 8px 24px rgba(15, 18, 26, 0.12);
   color: var(--color-text-primary);
@@ -240,7 +240,7 @@
 // 44px rows, so every option is an easy tap; AI buttons get 44px tap areas.
 @include media-breakpoint-down(md) {
   .exos-check {
-    padding: 0.625rem 0;
+    padding: var(--exos-spacing-04) 0; // 44px rows
   }
 
   .exos-ai-label::after,
@@ -274,7 +274,7 @@
     width: 3rem;
     height: 1.5rem;
     margin-top: 0;
-    border-radius: 1.5rem;
+    border-radius: var(--exos-radius-06);
     background-image: var(--bs-form-switch-bg);
     background-position: left center;
     background-size: contain;
@@ -296,13 +296,13 @@
   .exos-switch {
     flex-direction: row-reverse;
     justify-content: space-between;
-    gap: 1rem;
-    padding: 0.375rem 0;
+    gap: var(--exos-spacing-05);
+    padding: var(--exos-spacing-03) 0;
 
     > .form-check-input {
       width: 51px;
       height: 31px;
-      border-radius: 31px;
+      border-radius: var(--exos-radius-full);
     }
   }
 }

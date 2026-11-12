@@ -186,12 +186,12 @@
 // 732:26611 (complete). Translucent pill with a count badge, label and arrow.
 
 .btn-progress {
-  --bs-btn-padding-x: 0.75rem; // 12px + 1px border = 13px
-  --bs-btn-padding-y: 0.5rem;  // 8px
+  --bs-btn-padding-x: var(--exos-spacing-04); // + 1px border
+  --bs-btn-padding-y: var(--exos-spacing-03);  // 8px
   --bs-btn-font-size: 0.75rem; // 12px
   --bs-btn-font-weight: 600;
   --bs-btn-line-height: 1rem; // 16px (Geist "normal")
-  --bs-btn-border-radius: 999px;
+  --bs-btn-border-radius: var(--exos-radius-full);
   --bs-btn-color: var(--color-text-inverse);
   --bs-btn-border-color: var(--color-border-glass);
   --bs-btn-hover-color: var(--color-text-inverse);
@@ -203,16 +203,16 @@
   height: auto;
   min-height: 0;
   max-width: none;
-  gap: 12px;
+  gap: var(--exos-spacing-04);
   backdrop-filter: blur(10px);
 
   .badge {
-    --bs-badge-padding-x: 6px;
-    --bs-badge-padding-y: 4px;
+    --bs-badge-padding-x: calc(var(--exos-spacing-03) - 2px);
+    --bs-badge-padding-y: var(--exos-spacing-02);
     --bs-badge-font-size: 0.625rem; // 10px
     --bs-badge-font-weight: 500;
     --bs-badge-color: var(--color-text-inverse);
-    --bs-badge-border-radius: 10px;
+    --bs-badge-border-radius: var(--exos-radius-full);
     line-height: 13px; // Geist "normal" at 10px
     background-color: var(--btn-progress-badge-bg);
   }
@@ -248,7 +248,7 @@
   --btn-progress-badge-bg: var(--color-fill-glass);
 
   .badge {
-    --bs-badge-padding-x: 5px;
+    --bs-badge-padding-x: calc(var(--exos-spacing-03) - 3px);
   }
 }
 

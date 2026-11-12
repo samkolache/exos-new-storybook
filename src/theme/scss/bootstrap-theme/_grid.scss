@@ -19,6 +19,10 @@
     --exos-spacing-#{$step}: #{$value};
   }
 
+  @each $step, $value in $exos-radius {
+    --exos-radius-#{$step}: #{$value};
+  }
+
   // Layout spacing: phone values, then web values from md.
   @each $name, $steps in $exos-layout-spacing {
     --exos-space-#{$name}: #{exos-spacing(nth($steps, 1))};

@@ -56,8 +56,26 @@ $exos-layout-spacing: (
   "related":      ("03", "03"),  // between closely related things, like an icon and its text: 8
 ) !default;
 
+// Corner radius scale. Same on phone and web. "full" makes a pill (or a circle on a square).
+$exos-radius: (
+  "01": 4px,    // small marks: focus rings, progress bars, code
+  "02": 8px,    // small parts inside a surface: menu items, thumbnails
+  "03": 12px,   // small surfaces: toasts, tooltips, small cards
+  "04": 16px,   // surfaces: cards, menus, popovers
+  "05": 20px,   // large surfaces: large cards, panels
+  "06": 24px,   // the largest surfaces: modals, sheets
+  "full": 999px, // controls: buttons, chips, tags, segmented controls; circles
+) !default;
+
 // Smallest tap target on touch screens (44px).
 $exos-touch-target-min: 44px !default;
+
+@function exos-radius($step) {
+  @if not map-has-key($exos-radius, $step) {
+    @error "Unknown radius step `#{$step}`.";
+  }
+  @return map-get($exos-radius, $step);
+}
 
 @function exos-spacing($step) {
   @if not map-has-key($exos-spacing, $step) {

@@ -11,9 +11,9 @@
   display: inline-flex;
   align-items: center;
   max-width: 100%;
-  gap: 4px;
-  padding: 3px 9px 3px 7px;
-  border-radius: 999px;
+  gap: var(--exos-spacing-02);
+  padding: calc(var(--exos-spacing-02) - 1px) calc(var(--exos-spacing-04) - 1px) calc(var(--exos-spacing-02) - 1px) calc(var(--exos-spacing-04) - 3px); // inside the 1px border; 2px tighter beside the icon
+  border-radius: var(--exos-radius-full);
   background-color: var(--color-background-tag-neutral);
   font-family: "Geist", var(--bs-body-font-family);
   font-size: 11px;
@@ -29,7 +29,7 @@
 
   // No icon: even padding.
   &.exos-tag-text-only {
-    padding-left: 9px;
+    padding-left: calc(var(--exos-spacing-04) - 1px);
   }
 }
 
@@ -42,24 +42,24 @@
 
 // Sizes. md is the Figma tag; sm and lg scale around it.
 .exos-tag-sm {
-  gap: 3px;
-  padding: 2px 7px 2px 5px;
+  gap: var(--exos-spacing-02);
+  padding: var(--exos-spacing-01) calc(var(--exos-spacing-03) - 1px) var(--exos-spacing-01) calc(var(--exos-spacing-03) - 3px);
   font-size: 10px;
   line-height: 12px;
 
   &.exos-tag-text-only {
-    padding-left: 7px;
+    padding-left: calc(var(--exos-spacing-03) - 1px);
   }
 }
 
 .exos-tag-lg {
-  gap: 5px;
-  padding: 5px 11px 5px 9px;
+  gap: var(--exos-spacing-02);
+  padding: 5px calc(var(--exos-spacing-04) - 1px) 5px calc(var(--exos-spacing-04) - 3px); // 5px sets the 32px height
   font-size: 13px;
   line-height: 16px;
 
   &.exos-tag-text-only {
-    padding-left: 11px;
+    padding-left: calc(var(--exos-spacing-04) - 1px);
   }
 }
 
@@ -98,9 +98,9 @@
 // Long labels wrap instead of truncating: touch screens have no hover to show the tooltip.
 @include media-breakpoint-down(md) {
   .exos-tag {
-    gap: 6px;
-    padding: 6px 12px 6px 10px;
-    border-radius: 16px;
+    gap: var(--exos-spacing-02);
+    padding: 6px var(--exos-spacing-04) 6px calc(var(--exos-spacing-04) - 2px); // 6px sets the height
+    border-radius: var(--exos-radius-04);
     font-size: 14px;
     line-height: 20px;
     white-space: normal;
@@ -112,14 +112,14 @@
     }
 
     &.exos-tag-text-only {
-      padding-left: 12px;
+      padding-left: var(--exos-spacing-04);
     }
   }
 
   .exos-tag-sm {
-    gap: 4px;
-    padding: 4px 8px 4px 6px;
-    border-radius: 12px;
+    gap: var(--exos-spacing-02);
+    padding: var(--exos-spacing-02) var(--exos-spacing-03) var(--exos-spacing-02) calc(var(--exos-spacing-03) - 2px);
+    border-radius: var(--exos-radius-03);
     font-size: 12px;
     line-height: 16px;
 
@@ -129,19 +129,19 @@
     }
 
     &.exos-tag-text-only {
-      padding-left: 8px;
+      padding-left: var(--exos-spacing-03);
     }
   }
 
   .exos-tag-lg {
-    gap: 6px;
-    padding: 9px 12px 9px 10px;
-    border-radius: 20px;
+    gap: var(--exos-spacing-02);
+    padding: 9px var(--exos-spacing-04) 9px calc(var(--exos-spacing-04) - 2px); // 9px sets the height
+    border-radius: var(--exos-radius-05);
     font-size: 16px;
     line-height: 22px;
 
     &.exos-tag-text-only {
-      padding-left: 12px;
+      padding-left: var(--exos-spacing-04);
     }
   }
 

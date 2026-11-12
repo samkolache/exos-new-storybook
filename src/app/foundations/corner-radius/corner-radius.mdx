@@ -1,0 +1,81 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, Related, TokenTable } from '../../../../.storybook/blocks/Guidelines';
+import * as Stories from './corner-radius.stories';
+
+<Meta of={Stories} />
+
+<PageNav />
+
+# Corner radius
+
+One scale for every rounded corner in Exos. **Controls are pills, and surfaces get rounder as they get bigger.** The radius is the same on phones and the web.
+
+## The scale
+
+<DeviceCanvas of={Stories.Scale} defaultDevice="web" noCode />
+
+## Which to use
+
+| Token | Size | Use it for |
+|---|---|---|
+| `--exos-radius-01` | 4px | Small marks: focus rings, progress bars, inline code |
+| `--exos-radius-02` | 8px | Parts inside a surface: menu items, thumbnails, list rows |
+| `--exos-radius-03` | 12px | Small surfaces: toasts, tooltips, small cards |
+| `--exos-radius-04` | 16px | Surfaces: cards, menus, popovers |
+| `--exos-radius-05` | 20px | Large surfaces: large cards, panels |
+| `--exos-radius-06` | 24px | The largest surfaces: modals, sheets |
+| `--exos-radius-full` | Full | Controls: buttons, chips, tags, segmented controls. Circles on square items like icon buttons and avatars |
+
+Text fields keep their own radius by size (10, 14 and 16px), set in the theme with the field.
+
+## Nested corners
+
+When a rounded item sits inside a rounded surface, **inner radius = outer radius − the space between them**. The curves then run parallel, as on iOS. A 16px menu with 8px of padding holds 8px items.
+
+Pills are the exception: a pill inside a pill stays a pill, like the thumb in a segmented control.
+
+## Usage
+
+```css
+.photo-card {
+  border-radius: var(--exos-radius-04); /* 16px */
+}
+```
+
+In SCSS, use `exos-radius("04")`.
+
+## Do and don't
+
+<DoDont>
+  <Guideline type="do" of={Stories.DoNested}>make inner corners smaller by the space between.</Guideline>
+  <Guideline type="dont" of={Stories.DontNested}>use the same radius inside and out.</Guideline>
+  <Guideline type="do" of={Stories.DoPillControls}>make every control in a row a pill.</Guideline>
+  <Guideline type="dont" of={Stories.DontSquareControls}>mix pill and square controls.</Guideline>
+</DoDont>
+
+## Tokens
+
+Read live from the theme:
+
+<TokenTable
+  tokens={[
+    { name: '--exos-radius-01', use: 'Small marks' },
+    { name: '--exos-radius-02', use: 'Parts inside a surface' },
+    { name: '--exos-radius-03', use: 'Small surfaces' },
+    { name: '--exos-radius-04', use: 'Surfaces' },
+    { name: '--exos-radius-05', use: 'Large surfaces' },
+    { name: '--exos-radius-06', use: 'Modals and sheets' },
+    { name: '--exos-radius-full', use: 'Controls and circles' },
+  ]}
+/>
+
+## Related
+
+<Related
+  items={[
+    { title: 'Spacing', text: 'The space that sets nested corners', href: '/?path=/docs/foundations-spacing--docs' },
+    { title: 'Button', text: 'Pill controls', href: '/?path=/docs/components-button--docs' },
+    { title: 'Segmented control', text: 'A pill inside a pill', href: '/?path=/docs/components-segmented-control--docs' },
+  ]}
+/>

@@ -14,8 +14,8 @@
 
 // Pill: fully rounded (pcr-demo detail field).
 .form-field-pill {
-  border-radius: 50rem;
-  padding-left: 1.25rem;
+  border-radius: var(--exos-radius-full);
+  padding-left: var(--exos-spacing-05);
 }
 
 // Native select still showing its placeholder option reads like an input placeholder.
@@ -74,7 +74,7 @@
   right: 0.5rem;
   z-index: 4;
   display: flex;
-  gap: 0.125rem;
+  gap: var(--exos-spacing-01);
   transform: translateY(-50%);
 }
 
@@ -98,7 +98,7 @@
   }
 
   .form-control-wrap-sm & {
-    padding: 0.25rem;
+    padding: var(--exos-spacing-02);
   }
 }
 
@@ -113,7 +113,7 @@ textarea.form-control {
 
   // Pill corners don't suit several lines.
   &.form-field-pill {
-    border-radius: 20px;
+    border-radius: var(--exos-radius-05);
   }
 }
 
@@ -125,7 +125,7 @@ textarea.form-control {
 // Help text on the left, character count on the right.
 .form-field-footer {
   display: flex;
-  gap: 1rem;
+  gap: var(--exos-spacing-05);
   align-items: flex-start;
 }
 
@@ -139,11 +139,11 @@ textarea.form-control {
 .radio-card-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--exos-spacing-03);
 
   // Phones: about 12px between bordered controls.
   @include media-breakpoint-down(md) {
-    gap: 0.75rem;
+    gap: var(--exos-spacing-04);
   }
 
   &.radio-card-group-inline {
@@ -159,10 +159,10 @@ textarea.form-control {
 .radio-card {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.9375rem 1rem;
+  gap: var(--exos-spacing-04);
+  padding: 0.9375rem var(--exos-spacing-05);
   border: 1.5px solid var(--color-border-default);
-  border-radius: 20px;
+  border-radius: var(--exos-radius-05);
   background-color: var(--color-background-page);
   box-shadow: 0 4px 20px rgba(48, 36, 120, 0.04);
   cursor: pointer;
@@ -171,7 +171,7 @@ textarea.form-control {
   .form-check-input {
     float: none;
     flex-shrink: 0;
-    margin: 0.125rem 0 0;
+    margin: var(--exos-spacing-01) 0 0;
   }
 
   &:hover:not(.disabled) {
@@ -223,7 +223,7 @@ textarea.form-control {
 
 // "(optional)" after a label: quieter than the label itself.
 .form-label-optional {
-  margin-left: 0.25rem;
+  margin-left: var(--exos-spacing-02);
   font-weight: 400;
   color: var(--color-text-secondary);
 }
@@ -255,7 +255,7 @@ textarea.form-control.is-warning {
 }
 
 .warning-feedback {
-  margin-top: 0.25rem;
+  margin-top: var(--exos-spacing-02);
   font-size: 0.875em;
   color: var(--color-text-attention);
 }
@@ -293,7 +293,7 @@ input.form-control-lg,
   .invalid-feedback,
   .valid-feedback,
   .warning-feedback {
-    margin-top: 0.5rem;
+    margin-top: var(--exos-spacing-03);
   }
 
   input.form-control,

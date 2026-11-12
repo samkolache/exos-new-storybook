@@ -6,10 +6,10 @@
   display: inline-flex;
   align-items: center;
   max-width: 100%;
-  gap: 6px;
-  padding: 7px 12px;
+  gap: var(--exos-spacing-03);
+  padding: calc(var(--exos-spacing-03) - 1px) var(--exos-spacing-04);
   border: 1px solid var(--color-border-chip);
-  border-radius: 999px;
+  border-radius: var(--exos-radius-full);
   background-color: var(--color-background-page);
   font-family: "Geist", var(--bs-body-font-family);
   font-size: 13px;
@@ -76,7 +76,7 @@
 
 // Removable: the cross sits close to the edge, inside the chip's height.
 .chip-removable {
-  padding-right: 6px;
+  padding-right: calc(var(--exos-spacing-03) - 2px); // the × has its own space
   cursor: default;
 }
 
@@ -132,33 +132,33 @@
 }
 
 .chip-multi {
-  padding-left: 10px;
+  padding-left: calc(var(--exos-spacing-04) - 2px); // 2px tighter beside the checkbox
 }
 
 // Sizes. md is the Figma chip (32px); sm and lg scale around it.
 .chip-sm {
-  gap: 4px;
-  padding: 3px 10px;
+  gap: var(--exos-spacing-02);
+  padding: calc(var(--exos-spacing-02) - 1px) calc(var(--exos-spacing-04) - 2px); // optical: 2px tighter beside the icon
   font-size: 12px;
   line-height: 16px;
 
-  &.chip-multi { padding-left: 8px; }
-  &.chip-removable { padding-right: 4px; }
+  &.chip-multi { padding-left: var(--exos-spacing-03); }
+  &.chip-removable { padding-right: var(--exos-spacing-02); }
   > img { width: 10px; height: 10px; }
   .chip-remove { width: 16px; height: 16px; margin: 0 0 0 -2px; }
   .chip-remove > svg { width: 10px; height: 10px; }
-  .chip-checkbox { width: 12px; height: 12px; border-radius: 3px; }
+  .chip-checkbox { width: 12px; height: 12px; border-radius: var(--exos-radius-01); }
   .chip-checkbox > img { width: 10px; height: 10px; }
 }
 
 .chip-lg {
-  gap: 8px;
-  padding: 11px 16px;
+  gap: var(--exos-spacing-03);
+  padding: calc(var(--exos-spacing-04) - 1px) var(--exos-spacing-05);
   font-size: 14px;
   line-height: 16px;
 
-  &.chip-multi { padding-left: 14px; }
-  &.chip-removable { padding-right: 8px; }
+  &.chip-multi { padding-left: calc(var(--exos-spacing-05) - 2px); }
+  &.chip-removable { padding-right: var(--exos-spacing-03); }
   > img { width: 14px; height: 14px; }
   .chip-remove { width: 24px; height: 24px; margin: -4px 0 -4px -2px; }
   .chip-remove > svg { width: 14px; height: 14px; }
@@ -173,7 +173,7 @@
   width: 14px;
   height: 14px;
   border: 1.2px solid var(--color-border-checkbox);
-  border-radius: 4px;
+  border-radius: var(--exos-radius-01);
   background-color: var(--color-background-page);
   overflow: hidden;
 
@@ -203,7 +203,7 @@
 .chip-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--exos-spacing-03);
 }
 
 // Phones (below md): a larger, touch-friendly scale on a 4px grid. Heights stay 24 / 32 / 40px.
@@ -214,14 +214,14 @@
 // Long labels wrap instead of truncating: touch screens have no hover to show the tooltip.
 @include media-breakpoint-down(md) {
   .chip-group {
-    gap: 8px;
+    gap: var(--exos-spacing-03);
   }
 
   .chip {
     position: relative;
-    gap: 6px;
-    padding: 5px 12px;
-    border-radius: 16px;
+    gap: var(--exos-spacing-03);
+    padding: 5px var(--exos-spacing-04);
+    border-radius: var(--exos-radius-04);
     font-size: 14px;
     line-height: 20px;
     text-align: left;
@@ -231,34 +231,34 @@
     .chip-checkbox { width: 16px; height: 16px; }
     .chip-checkbox > img { width: 14px; height: 14px; }
 
-    &.chip-multi { padding-left: 10px; }
-    &.chip-removable { padding-right: 6px; }
+    &.chip-multi { padding-left: calc(var(--exos-spacing-04) - 2px); }
+    &.chip-removable { padding-right: calc(var(--exos-spacing-03) - 2px); }
   }
 
   .chip-sm {
-    gap: 4px;
-    padding: 3px 8px;
-    border-radius: 12px;
+    gap: var(--exos-spacing-02);
+    padding: calc(var(--exos-spacing-02) - 1px) var(--exos-spacing-03);
+    border-radius: var(--exos-radius-03);
     font-size: 12px;
     line-height: 16px;
 
     > .chip-icon { width: 14px; height: 14px; }
-    .chip-checkbox { width: 14px; height: 14px; border-radius: 4px; }
+    .chip-checkbox { width: 14px; height: 14px; border-radius: var(--exos-radius-01); }
     .chip-checkbox > img { width: 12px; height: 12px; }
 
-    &.chip-multi { padding-left: 6px; }
-    &.chip-removable { padding-right: 2px; }
+    &.chip-multi { padding-left: calc(var(--exos-spacing-03) - 2px); }
+    &.chip-removable { padding-right: var(--exos-spacing-01); }
   }
 
   .chip-lg {
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 20px;
+    gap: var(--exos-spacing-03);
+    padding: var(--exos-spacing-03) var(--exos-spacing-04);
+    border-radius: var(--exos-radius-05);
     font-size: 16px;
     line-height: 22px;
 
-    &.chip-multi { padding-left: 10px; }
-    &.chip-removable { padding-right: 6px; }
+    &.chip-multi { padding-left: calc(var(--exos-spacing-04) - 2px); }
+    &.chip-removable { padding-right: calc(var(--exos-spacing-03) - 2px); }
   }
 
   .chip-label {

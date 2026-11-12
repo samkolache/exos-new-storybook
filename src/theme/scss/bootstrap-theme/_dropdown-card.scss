@@ -6,13 +6,13 @@
   font-family: "Geist", var(--bs-body-font-family);
   display: flex;
   flex-direction: column;
-  padding: 16px 0;
-  border-radius: 20px;
+  padding: var(--exos-spacing-05) 0;
+  border-radius: var(--exos-radius-05);
   background-color: var(--color-background-page);
   filter: drop-shadow(0 10px 14px rgba(15, 18, 26, 0.1));
 
   &.expanded {
-    padding-bottom: 12px;
+    padding-bottom: var(--exos-spacing-04);
   }
 }
 
@@ -27,9 +27,9 @@
   display: flex;
   flex: 1 1 auto;
   align-items: center;
-  gap: 12px;
+  gap: var(--exos-spacing-04);
   min-width: 0;
-  padding: 0 16px;
+  padding: 0 var(--exos-spacing-05);
   border: 0;
   background: none;
   color: inherit;
@@ -38,7 +38,7 @@
   &:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
-    border-radius: 8px;
+    border-radius: var(--exos-radius-02);
   }
 
   > img {
@@ -51,7 +51,7 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--exos-spacing-01);
   min-width: 0;
 
   .dropdown-card.has-action.expanded & {
@@ -70,7 +70,7 @@
 .dropdown-card-summary {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--exos-spacing-03);
   font-size: 12px;
   line-height: 16px;
   color: var(--color-text-placeholder);
@@ -117,18 +117,18 @@
 .dropdown-card-body {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--exos-spacing-04);
   min-height: 0;
   overflow: hidden;
 
   .dropdown-card.expanded & {
-    padding-top: 12px;
+    padding-top: var(--exos-spacing-04);
   }
 }
 
 .dropdown-card-list {
   margin: 0;
-  padding: 0 16px;
+  padding: 0 var(--exos-spacing-05);
   list-style: none;
   font-size: 14px;
   line-height: 18px;
@@ -137,8 +137,8 @@
 .dropdown-card-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 0;
+  gap: var(--exos-spacing-04);
+  padding: var(--exos-spacing-04) 0;
   border-bottom: 1px solid var(--color-border-divider);
 
   .dropdown-card-list.before-question > &:last-child {
@@ -163,15 +163,15 @@
 .dropdown-card-question {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 10px 16px;
+  gap: var(--exos-spacing-04);
+  padding: var(--exos-spacing-04) var(--exos-spacing-05);
   background-color: var(--surface-attention-zone);
 }
 
 .dropdown-card-question-main {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: var(--exos-spacing-03);
 }
 
 .dropdown-card-question-icon {
@@ -181,7 +181,7 @@
   justify-content: center;
   width: 22px;
   height: 22px;
-  border-radius: 11px;
+  border-radius: var(--exos-radius-full);
   background-color: var(--color-background-attention);
 }
 
@@ -189,7 +189,7 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--exos-spacing-03);
   min-width: 0;
 }
 
@@ -211,7 +211,7 @@
 .dropdown-card-confirm-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--exos-spacing-03);
 }
 
 .dropdown-card-confirm-prompt {
@@ -226,9 +226,9 @@
 .dropdown-card-confirm {
   flex-shrink: 0;
   height: 34px;
-  padding: 0 14px;
+  padding: 0 var(--exos-spacing-05);
   border: 0;
-  border-radius: 17px;
+  border-radius: var(--exos-radius-full);
   background-image: linear-gradient(to bottom, #3a3f4a, #1c1f26);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
   font-size: 13px;
@@ -255,8 +255,8 @@
 .dropdown-card-edit {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 16px 12px;
+  gap: var(--exos-spacing-03);
+  padding: var(--exos-spacing-04) var(--exos-spacing-05);
 }
 
 .dropdown-card-edit-input {
@@ -285,6 +285,6 @@
   &:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: var(--exos-radius-01);
   }
 }

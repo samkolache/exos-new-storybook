@@ -10,7 +10,7 @@ $exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
-  border-radius: 2px;
+  border-radius: var(--exos-radius-01);
 
   &:hover {
     color: var(--color-text-link-hover);
@@ -55,12 +55,12 @@ $exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
 
 .exos-notification {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--exos-spacing-04);
   align-items: flex-start;
-  padding: 0.875rem 0.75rem 0.875rem 1rem;
+  padding: var(--exos-spacing-05) var(--exos-spacing-04) var(--exos-spacing-05) var(--exos-spacing-05);
   border: 1px solid transparent;
   border-left-width: 4px;
-  border-radius: 10px;
+  border-radius: var(--exos-radius-03);
   color: var(--color-text-heading);
 
   p {
@@ -83,7 +83,7 @@ $exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
 .exos-notification-icon {
   display: flex;
   flex-shrink: 0;
-  margin-top: 1px;
+  margin-top: 1px; // optical
 }
 
 .exos-notification-body {
@@ -102,7 +102,7 @@ $exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
 }
 
 .exos-notification-action {
-  margin-top: 0.375rem;
+  margin-top: var(--exos-spacing-03);
   padding: 0;
   border: 0;
   background: none;
@@ -153,7 +153,7 @@ $exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
   z-index: 1090;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--exos-spacing-03);
   width: min(24rem, calc(100vw - 2rem));
   pointer-events: none;
 
@@ -184,7 +184,7 @@ $exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
   max-height: calc(100dvh - 4rem);
   padding: 0;
   border: 0;
-  border-radius: 16px;
+  border-radius: var(--exos-radius-04);
   background: var(--color-background-page);
   color: var(--color-text-primary);
   box-shadow: 0 24px 64px rgba(15, 18, 26, 0.24);
@@ -223,10 +223,10 @@ $exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
 
 .exos-modal-header {
   display: flex;
-  gap: 1rem;
+  gap: var(--exos-spacing-05);
   align-items: flex-start;
   justify-content: space-between;
-  padding: 1.25rem 1.25rem 0.5rem 1.5rem;
+  padding: var(--exos-spacing-06) var(--exos-spacing-05) var(--exos-spacing-03) var(--exos-spacing-06);
 }
 
 .exos-modal-title {
@@ -238,7 +238,7 @@ $exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
 }
 
 .exos-modal-subtitle {
-  margin: 0.125rem 0 0;
+  margin: var(--exos-spacing-01) 0 0;
   font-size: 0.875rem;
   color: var(--color-text-secondary);
 }
@@ -270,7 +270,7 @@ $exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
 .exos-modal-body {
   flex: 1;
   min-height: 0;
-  padding: 0.5rem 1.5rem 1.5rem;
+  padding: var(--exos-spacing-03) var(--exos-spacing-06) var(--exos-spacing-06);
   overflow-y: auto;
   line-height: 1.5;
 
@@ -279,18 +279,18 @@ $exos-ease: cubic-bezier(0.2, 0, 0.38, 0.9);
 
 .exos-modal-footer {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--exos-spacing-04);
   justify-content: flex-end;
-  padding: 1rem 1.5rem 1.5rem;
+  padding: var(--exos-spacing-05) var(--exos-spacing-06) var(--exos-spacing-06);
   border-top: 1px solid var(--color-border-divider);
 }
 
 // Header divider: a line under the header, with equal space above and below it.
 .exos-modal-header-divider {
-  padding-bottom: 1rem;
+  padding-bottom: var(--exos-spacing-05);
   border-bottom: 1px solid var(--color-border-divider);
 
-  + .exos-modal-body { padding-top: 1rem; }
+  + .exos-modal-body { padding-top: var(--exos-spacing-05); }
 }
 
 // Buttons on the left: the main button first (row-reverse of the DOM order), so it's read first.
@@ -319,8 +319,8 @@ html.exos-modal-open {
   left: 0;
   z-index: 1080;
   max-width: 15rem;
-  padding: 0.375rem 0.625rem;
-  border-radius: 6px;
+  padding: var(--exos-spacing-03) var(--exos-spacing-04);
+  border-radius: var(--exos-radius-02);
   background-color: var(--color-background-inverse, #0f121a);
   color: #fff;
   font-size: 0.8125rem;
@@ -392,7 +392,7 @@ html.exos-modal-open {
   &:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
-    border-radius: 2px;
+    border-radius: var(--exos-radius-01);
   }
 }
 
@@ -444,10 +444,10 @@ html.exos-modal-open {
   display: block;
   width: max-content;
   max-width: 18rem;
-  margin-top: 6px;
-  padding: 0.75rem 0.875rem;
+  margin-top: var(--exos-spacing-03);
+  padding: var(--exos-spacing-04) var(--exos-spacing-05);
   border: 1px solid var(--color-border-default);
-  border-radius: 10px;
+  border-radius: var(--exos-radius-03);
   background-color: var(--color-background-page);
   box-shadow: 0 8px 24px rgba(15, 18, 26, 0.12);
   color: var(--color-text-primary);
@@ -462,7 +462,7 @@ html.exos-modal-open {
 .exos-spinner {
   display: inline-flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--exos-spacing-03);
   align-items: center;
   color: var(--color-text-secondary);
   font-size: 0.875rem;
@@ -513,7 +513,7 @@ html.exos-modal-open {
 
 .exos-inline-loading {
   display: inline-flex;
-  gap: 0.5rem;
+  gap: var(--exos-spacing-03);
   align-items: center;
   font-size: 0.875rem;
   color: var(--color-text-secondary);
@@ -530,10 +530,10 @@ html.exos-modal-open {
 
 .exos-progress-head {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--exos-spacing-03);
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--exos-spacing-03);
   font-size: 0.875rem;
 
   > app-status-icon { display: inline-flex; }
@@ -545,7 +545,7 @@ html.exos-modal-open {
 .exos-progress-track {
   position: relative;
   height: 8px;
-  border-radius: 8px;
+  border-radius: var(--exos-radius-02);
   background-color: var(--color-border-divider);
   overflow: hidden;
 
@@ -574,7 +574,7 @@ html.exos-modal-open {
 }
 
 .exos-progress-helper {
-  margin: 0.375rem 0 0;
+  margin: var(--exos-spacing-03) 0 0;
   font-size: 0.8125rem;
   color: var(--color-text-secondary);
 
@@ -646,7 +646,7 @@ html.exos-modal-open {
     max-width: none;
     max-height: 90dvh;
     margin: auto 0 0;
-    border-radius: 16px 16px 0 0;
+    border-radius: var(--exos-radius-04) var(--exos-radius-04) 0 0;
     padding-bottom: env(safe-area-inset-bottom);
 
     &[open] { animation-name: exos-sheet-in; }
@@ -658,15 +658,15 @@ html.exos-modal-open {
     border-radius: 0;
   }
 
-  .exos-modal-header { padding: 1rem 1rem 0.5rem 1.25rem; }
-  .exos-modal-header-divider { padding-bottom: 0.75rem; }
-  .exos-modal-header-divider + .exos-modal-body { padding-top: 0.75rem; }
-  .exos-modal-body { padding: 0.5rem 1.25rem 1.25rem; }
+  .exos-modal-header { padding: var(--exos-spacing-05) var(--exos-spacing-05) var(--exos-spacing-03) var(--exos-spacing-05); }
+  .exos-modal-header-divider { padding-bottom: var(--exos-spacing-04); }
+  .exos-modal-header-divider + .exos-modal-body { padding-top: var(--exos-spacing-04); }
+  .exos-modal-body { padding: var(--exos-spacing-03) var(--exos-spacing-05) var(--exos-spacing-05); }
 
   .exos-modal-footer {
     flex-direction: column-reverse;
-    gap: 0.5rem;
-    padding: 0.75rem 1.25rem 1.25rem;
+    gap: var(--exos-spacing-03);
+    padding: var(--exos-spacing-04) var(--exos-spacing-05) var(--exos-spacing-05);
 
     &.exos-modal-footer-plain { padding-top: 0; }
     // Phones stack the buttons the same way whichever side they're on.
