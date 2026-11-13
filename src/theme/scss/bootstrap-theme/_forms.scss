@@ -260,14 +260,29 @@ textarea.form-control.is-warning {
   color: var(--color-text-attention);
 }
 
-// Exact heights on every screen. Padding alone lands a pixel short where the browser
-// rounds the 1.5px border down to 1px.
+// Field heights and padding from the control tokens, so they switch on phones:
+// 24px line + padding (1px border included) above and below. Web 32 / 40 / 48px, phones 44 / 48 / 48px.
+// Multi-line text areas keep rounded corners, not a pill.
 input.form-control,
-.form-select { min-height: 2.5rem; }
+.form-select {
+  min-height: var(--exos-control-height-md);
+  padding-top: calc(var(--exos-control-padding-y-md) - 1px);
+  padding-bottom: calc(var(--exos-control-padding-y-md) - 1px);
+  line-height: var(--exos-control-line-height);
+}
 input.form-control-sm,
-.form-select-sm { min-height: 2rem; }
+.form-select-sm {
+  min-height: var(--exos-control-height-sm);
+  padding-top: calc(var(--exos-control-padding-y-sm) - 1px);
+  padding-bottom: calc(var(--exos-control-padding-y-sm) - 1px);
+}
 input.form-control-lg,
-.form-select-lg { min-height: 3rem; }
+.form-select-lg {
+  min-height: var(--exos-control-height-lg);
+  padding-top: calc(var(--exos-control-padding-y-lg) - 1px);
+  padding-bottom: calc(var(--exos-control-padding-y-lg) - 1px);
+}
+textarea.form-control { border-radius: var(--exos-radius-04); }
 
 // Hover belongs to devices with a pointer; on touch it sticks after a tap.
 @media (hover: none) {
@@ -279,7 +294,7 @@ input.form-control-lg,
 
 // Mobile (below md):
 // - 16px text at every size, so phone browsers don't zoom the page when a field gets focus.
-// - Fields are at least 44px tall, and the clear / show password buttons get 44px tap areas.
+// - Fields are 48px tall (44px small), from the control tokens; clear / show password buttons get 44px tap areas.
 // Tablet and web keep the 32 / 40 / 48px sizes.
 @include media-breakpoint-down(md) {
   .form-control,
@@ -288,17 +303,12 @@ input.form-control-lg,
   }
 
   // Phones: 8px between a field and its help or error text (4px on the web), so the message
-  // reads as its own line and isn't crowded against a 44px field.
+  // reads as its own line under a taller field.
   .form-text,
   .invalid-feedback,
   .valid-feedback,
   .warning-feedback {
     margin-top: var(--exos-spacing-03);
-  }
-
-  input.form-control,
-  .form-select {
-    min-height: var(--exos-touch-target-min, 44px);
   }
 
   .form-control-actions {

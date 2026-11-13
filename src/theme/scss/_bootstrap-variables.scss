@@ -42,19 +42,22 @@ $link-color:      dcfc-color("text-link");
 $border-color:    dcfc-color("border-default");
 $secondary-color: dcfc-color("text-secondary");
 
-// Forms: pcr-demo fields (14px corners, 1.5px border, blue focus).
+// Forms: pill fields, 1px border, blue focus. Sizes come from the control tokens (_layout.scss).
+// The values here are the web sizes; bootstrap-theme/_forms.scss switches them on phones.
 $focus-ring-blue: rgba(dcfc-color("border-focus"), 0.2);
 
-$input-border-width:        1.5px;
+$input-border-width:        1px;
 $input-border-color:        dcfc-color("border-default");
-$input-border-radius:       14px;
-$input-border-radius-sm:    10px;
-$input-border-radius-lg:    16px;
-$input-padding-x:           1rem;
-// Field heights: sm 32px, md 40px, lg 48px (1.5px borders included).
-$input-padding-y:           0.40625rem; // 24px line + 13px + 3px = 40px
-$input-padding-y-sm:        0.25rem;    // 21px line + 8px + 3px = 32px
-$input-padding-y-lg:        0.65625rem; // 24px line + 21px + 3px = 48px
+$input-border-radius:       999px; // a pill, like buttons
+$input-border-radius-sm:    999px;
+$input-border-radius-lg:    999px;
+$input-padding-x:           0.9375rem;  // 15px + 1px border = 16px
+// Field heights: 24px line + padding (border included): sm 32 (4) · md 40 (8) · lg 48 (12).
+$input-padding-y:           0.4375rem;  // 7px + 1px border = 8px
+$input-padding-y-sm:        0.1875rem;  // 3px + 1px border = 4px
+$input-padding-y-lg:        0.6875rem;  // 11px + 1px border = 12px
+$input-line-height:         1.5;        // 24px at 16px text
+$input-font-size-sm:        0.875rem;   // 14px on the web; 16px on phones
 $input-font-size-lg:        1rem;       // lg is taller, not louder
 $input-placeholder-color:   dcfc-color("text-placeholder");
 $input-focus-border-color:  dcfc-color("border-focus");

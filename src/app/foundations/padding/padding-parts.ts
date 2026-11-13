@@ -41,9 +41,11 @@ type Spec = { h: number; top: number; right: number; bottom: number; left: numbe
     .pp-name span, .pp-values dt { font-size: var(--exos-type-caption-size); line-height: var(--exos-type-caption-line-height);
       letter-spacing: var(--exos-type-caption-tracking); color: var(--color-text-label); font-weight: 400; }
     .pp-stage { padding: var(--exos-spacing-07) var(--exos-spacing-05); border-radius: var(--exos-radius-03); background: var(--color-background-subtle); }
-    .pp-center { display: flex; justify-content: center; align-items: center; min-height: 5rem; }
-    .pp-zoom { position: relative; transform: scale(1.5); }
-    .pp-sample { display: inline-block; max-width: 18rem; }
+    .pp-center { display: flex; justify-content: center; align-items: center; min-height: 5rem; padding: 0 var(--exos-spacing-07); }
+    /* Enlarged up to 1.5x; measure() lowers it so a wide part (a notification) never spills out of its box. */
+    .pp-zoom { position: relative; max-width: 100%; transform: scale(var(--pp-scale, 1.5)); }
+    /* Never wider than its box: a wide part (a notification) narrows and wraps, like it does in a narrow column. */
+    .pp-sample { display: inline-block; max-width: min(18rem, 100%); }
     .pp-values { display: grid; grid-template-columns: repeat(3, auto); gap: var(--exos-spacing-04); margin: 0; }
     .pp-values dd { margin: 0; font-weight: 600; color: var(--color-text-heading); font-variant-numeric: tabular-nums; }
     @media (max-width: 671.98px) {
@@ -81,6 +83,17 @@ export class PaddingPartsComponent {
   private measure(): void {
     const n = (v: string) => parseFloat(v) || 0;
     const boxes = [...this.host.nativeElement.querySelectorAll<HTMLElement>('.pp-sample')];
+    // Fit each part in its box: 1.5x when there's room, less when the part is wide, never above 1.5.
+    // The box grows to the enlarged height, so nothing overlaps the rows above and below.
+    const big = !window.matchMedia('(max-width: 671.98px)').matches;
+    for (const box of boxes) {
+      const zoom = box.closest<HTMLElement>('.pp-zoom')!;
+      const center = box.closest<HTMLElement>('.pp-center')!;
+      const room = center.clientWidth - 64; // the box, less room for the labels on each side
+      const scale = big ? Math.max(1, Math.min(1.5, room / box.offsetWidth)) : 1;
+      zoom.style.setProperty('--pp-scale', String(Math.round(scale * 100) / 100));
+      center.style.minHeight = `${Math.max(80, box.offsetHeight * scale + 48)}px`;
+    }
     this.specs.set(
       boxes.map((box) => {
         const el = paddedElement(box);

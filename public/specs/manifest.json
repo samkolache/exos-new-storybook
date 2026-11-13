@@ -65,17 +65,17 @@
     "labels": [
       "48px tall",
       "14px text",
-      "14px top and bottom",
+      "11px top and bottom",
       "15px left and right"
     ]
   },
   "components-button--spec-drawing/mobile--size-md": {
     "w": 347,
-    "h": 194,
+    "h": 202,
     "labels": [
-      "44px tall",
+      "48px tall",
       "14px text",
-      "10px top and bottom",
+      "11px top and bottom",
       "15px left and right"
     ]
   },
@@ -85,7 +85,7 @@
     "labels": [
       "44px tall",
       "14px text",
-      "6px top and bottom",
+      "9px top and bottom",
       "15px left and right"
     ]
   },
@@ -95,7 +95,7 @@
     "labels": [
       "48px tall",
       "14px text",
-      "14px top and bottom",
+      "11px top and bottom",
       "15px left and right"
     ]
   },
@@ -105,7 +105,7 @@
     "labels": [
       "40px tall",
       "14px text",
-      "10px top and bottom",
+      "7px top and bottom",
       "15px left and right"
     ]
   },
@@ -115,30 +115,30 @@
     "labels": [
       "32px tall",
       "14px text",
-      "6px top and bottom",
+      "3px top and bottom",
       "15px left and right"
     ]
   },
   "components-chip--spec-drawing/mobile--size-lg": {
-    "w": 347,
-    "h": 198,
+    "w": 346,
+    "h": 199,
     "labels": [
       "40px tall",
       "16px text",
       "8px apart",
       "8px top and bottom",
-      "12px left and right"
+      "11px left and right"
     ]
   },
   "components-chip--spec-drawing/mobile--size-md": {
-    "w": 347,
-    "h": 189,
+    "w": 346,
+    "h": 190,
     "labels": [
       "32px tall",
       "14px text",
       "8px apart",
       "5px top and bottom",
-      "12px left and right"
+      "11px left and right"
     ]
   },
   "components-chip--spec-drawing/mobile--size-sm": {
@@ -149,40 +149,40 @@
       "12px text",
       "8px apart",
       "3px top and bottom",
-      "8px left and right"
+      "7px left and right"
     ]
   },
   "components-chip--spec-drawing/web--size-lg": {
-    "w": 464,
+    "w": 457,
     "h": 214,
     "labels": [
       "40px tall",
       "14px text",
       "8px apart",
       "11px top and bottom",
-      "16px left and right"
+      "15px left and right"
     ]
   },
   "components-chip--spec-drawing/web--size-md": {
-    "w": 424,
+    "w": 416,
     "h": 198,
     "labels": [
       "32px tall",
       "13px text",
       "8px apart",
       "7px top and bottom",
-      "12px left and right"
+      "11px left and right"
     ]
   },
   "components-chip--spec-drawing/web--size-sm": {
-    "w": 398,
+    "w": 374,
     "h": 182,
     "labels": [
       "24px tall",
       "12px text",
       "8px apart",
       "3px top and bottom",
-      "10px left and right"
+      "7px left and right"
     ]
   },
   "components-dropdown--spec-drawing/mobile--default": {
@@ -225,9 +225,9 @@
   },
   "components-forms-date-picker--spec-drawing/mobile--note-error_size-lg": {
     "w": 341,
-    "h": 263,
+    "h": 264,
     "labels": [
-      "47px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
@@ -239,16 +239,16 @@
   },
   "components-forms-date-picker--spec-drawing/mobile--note-error_size-md": {
     "w": 341,
-    "h": 260,
+    "h": 264,
     "labels": [
-      "44px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
       "8px to error",
       "14px error text, red",
-      "7px top and bottom",
-      "16px left and right"
+      "11px top and bottom",
+      "15px left and right"
     ]
   },
   "components-forms-date-picker--spec-drawing/mobile--note-error_size-sm": {
@@ -261,15 +261,15 @@
       "8px label to field",
       "8px to error",
       "14px error text, red",
-      "4px top and bottom",
+      "9px top and bottom",
       "8px left and right"
     ]
   },
   "components-forms-date-picker--spec-drawing/mobile--note-help_size-lg": {
     "w": 341,
-    "h": 284,
+    "h": 285,
     "labels": [
-      "47px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
@@ -281,16 +281,16 @@
   },
   "components-forms-date-picker--spec-drawing/mobile--note-help_size-md": {
     "w": 341,
-    "h": 281,
+    "h": 285,
     "labels": [
-      "44px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
       "8px to help text",
       "14px help text, grey",
-      "7px top and bottom",
-      "16px left and right"
+      "11px top and bottom",
+      "15px left and right"
     ]
   },
   "components-forms-date-picker--spec-drawing/mobile--note-help_size-sm": {
@@ -303,7 +303,7 @@
       "8px label to field",
       "8px to help text",
       "14px help text, grey",
-      "4px top and bottom",
+      "9px top and bottom",
       "8px left and right"
     ]
   },
@@ -322,7 +322,7 @@
     ]
   },
   "components-forms-date-picker--spec-drawing/web--note-error_size-md": {
-    "w": 582,
+    "w": 583,
     "h": 261,
     "labels": [
       "40px tall",
@@ -332,7 +332,7 @@
       "4px to error",
       "14px error text, red",
       "7px top and bottom",
-      "16px left and right"
+      "15px left and right"
     ]
   },
   "components-forms-date-picker--spec-drawing/web--note-error_size-sm": {
@@ -345,7 +345,7 @@
       "8px label to field",
       "4px to error",
       "14px error text, red",
-      "4px top and bottom",
+      "3px top and bottom",
       "8px left and right"
     ]
   },
@@ -364,7 +364,7 @@
     ]
   },
   "components-forms-date-picker--spec-drawing/web--note-help_size-md": {
-    "w": 582,
+    "w": 583,
     "h": 261,
     "labels": [
       "40px tall",
@@ -374,7 +374,7 @@
       "4px to help text",
       "14px help text, grey",
       "7px top and bottom",
-      "16px left and right"
+      "15px left and right"
     ]
   },
   "components-forms-date-picker--spec-drawing/web--note-help_size-sm": {
@@ -387,15 +387,15 @@
       "8px label to field",
       "4px to help text",
       "14px help text, grey",
-      "4px top and bottom",
+      "3px top and bottom",
       "8px left and right"
     ]
   },
   "components-forms-file-uploader--spec-drawing/mobile--default": {
     "w": 375,
-    "h": 222,
+    "h": 230,
     "labels": [
-      "44px tall buttons",
+      "48px tall buttons",
       "54px per file"
     ]
   },
@@ -410,9 +410,9 @@
   },
   "components-forms-input--spec-drawing/mobile--note-error_size-lg": {
     "w": 341,
-    "h": 263,
+    "h": 264,
     "labels": [
-      "47px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
@@ -424,16 +424,16 @@
   },
   "components-forms-input--spec-drawing/mobile--note-error_size-md": {
     "w": 341,
-    "h": 260,
+    "h": 264,
     "labels": [
-      "44px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
       "8px to error",
       "14px error text, red",
-      "7px top and bottom",
-      "16px left and right"
+      "11px top and bottom",
+      "15px left and right"
     ]
   },
   "components-forms-input--spec-drawing/mobile--note-error_size-sm": {
@@ -446,15 +446,15 @@
       "8px label to field",
       "8px to error",
       "14px error text, red",
-      "4px top and bottom",
+      "9px top and bottom",
       "8px left and right"
     ]
   },
   "components-forms-input--spec-drawing/mobile--note-help_size-lg": {
     "w": 341,
-    "h": 263,
+    "h": 264,
     "labels": [
-      "47px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
@@ -466,16 +466,16 @@
   },
   "components-forms-input--spec-drawing/mobile--note-help_size-md": {
     "w": 341,
-    "h": 260,
+    "h": 264,
     "labels": [
-      "44px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
       "8px to help text",
       "14px help text, grey",
-      "7px top and bottom",
-      "16px left and right"
+      "11px top and bottom",
+      "15px left and right"
     ]
   },
   "components-forms-input--spec-drawing/mobile--note-help_size-sm": {
@@ -488,7 +488,7 @@
       "8px label to field",
       "8px to help text",
       "14px help text, grey",
-      "4px top and bottom",
+      "9px top and bottom",
       "8px left and right"
     ]
   },
@@ -507,7 +507,7 @@
     ]
   },
   "components-forms-input--spec-drawing/web--note-error_size-md": {
-    "w": 582,
+    "w": 583,
     "h": 261,
     "labels": [
       "40px tall",
@@ -517,7 +517,7 @@
       "4px to error",
       "14px error text, red",
       "7px top and bottom",
-      "16px left and right"
+      "15px left and right"
     ]
   },
   "components-forms-input--spec-drawing/web--note-error_size-sm": {
@@ -530,7 +530,7 @@
       "8px label to field",
       "4px to error",
       "14px error text, red",
-      "4px top and bottom",
+      "3px top and bottom",
       "8px left and right"
     ]
   },
@@ -549,7 +549,7 @@
     ]
   },
   "components-forms-input--spec-drawing/web--note-help_size-md": {
-    "w": 582,
+    "w": 583,
     "h": 261,
     "labels": [
       "40px tall",
@@ -559,7 +559,7 @@
       "4px to help text",
       "14px help text, grey",
       "7px top and bottom",
-      "16px left and right"
+      "15px left and right"
     ]
   },
   "components-forms-input--spec-drawing/web--note-help_size-sm": {
@@ -572,15 +572,15 @@
       "8px label to field",
       "4px to help text",
       "14px help text, grey",
-      "4px top and bottom",
+      "3px top and bottom",
       "8px left and right"
     ]
   },
   "components-forms-number-input--spec-drawing/mobile--note-error_size-lg": {
     "w": 346,
-    "h": 284,
+    "h": 285,
     "labels": [
-      "47px tall",
+      "48px tall",
       "16px text",
       "44px wide button",
       "8px label to field",
@@ -591,6 +591,20 @@
     ]
   },
   "components-forms-number-input--spec-drawing/mobile--note-error_size-md": {
+    "w": 346,
+    "h": 285,
+    "labels": [
+      "48px tall",
+      "16px text",
+      "44px wide button",
+      "8px label to field",
+      "8px to error",
+      "14px error text, red",
+      "11px top and bottom",
+      "15px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/mobile--note-error_size-sm": {
     "w": 348,
     "h": 281,
     "labels": [
@@ -600,29 +614,15 @@
       "8px label to field",
       "8px to error",
       "14px error text, red",
-      "7px top and bottom",
-      "16px on the left"
-    ]
-  },
-  "components-forms-number-input--spec-drawing/mobile--note-error_size-sm": {
-    "w": 349,
-    "h": 281,
-    "labels": [
-      "44px tall",
-      "16px text",
-      "44px wide button",
-      "8px label to field",
-      "8px to error",
-      "14px error text, red",
-      "4px top and bottom",
+      "9px top and bottom",
       "8px on the left"
     ]
   },
   "components-forms-number-input--spec-drawing/mobile--note-help_size-lg": {
     "w": 346,
-    "h": 263,
+    "h": 264,
     "labels": [
-      "47px tall",
+      "48px tall",
       "16px text",
       "44px wide button",
       "8px label to field",
@@ -633,6 +633,20 @@
     ]
   },
   "components-forms-number-input--spec-drawing/mobile--note-help_size-md": {
+    "w": 346,
+    "h": 264,
+    "labels": [
+      "48px tall",
+      "16px text",
+      "44px wide button",
+      "8px label to field",
+      "8px to help text",
+      "14px help text, grey",
+      "11px top and bottom",
+      "15px on the left"
+    ]
+  },
+  "components-forms-number-input--spec-drawing/mobile--note-help_size-sm": {
     "w": 348,
     "h": 260,
     "labels": [
@@ -642,21 +656,7 @@
       "8px label to field",
       "8px to help text",
       "14px help text, grey",
-      "7px top and bottom",
-      "16px on the left"
-    ]
-  },
-  "components-forms-number-input--spec-drawing/mobile--note-help_size-sm": {
-    "w": 349,
-    "h": 260,
-    "labels": [
-      "44px tall",
-      "16px text",
-      "44px wide button",
-      "8px label to field",
-      "8px to help text",
-      "14px help text, grey",
-      "4px top and bottom",
+      "9px top and bottom",
       "8px on the left"
     ]
   },
@@ -675,7 +675,7 @@
     ]
   },
   "components-forms-number-input--spec-drawing/web--note-error_size-md": {
-    "w": 575,
+    "w": 576,
     "h": 235,
     "labels": [
       "40px tall",
@@ -685,7 +685,7 @@
       "4px to error",
       "14px error text, red",
       "7px top and bottom",
-      "16px on the left"
+      "15px on the left"
     ]
   },
   "components-forms-number-input--spec-drawing/web--note-error_size-sm": {
@@ -698,7 +698,7 @@
       "8px label to field",
       "4px to error",
       "14px error text, red",
-      "4px top and bottom",
+      "3px top and bottom",
       "8px on the left"
     ]
   },
@@ -717,7 +717,7 @@
     ]
   },
   "components-forms-number-input--spec-drawing/web--note-help_size-md": {
-    "w": 575,
+    "w": 576,
     "h": 235,
     "labels": [
       "40px tall",
@@ -727,7 +727,7 @@
       "4px to help text",
       "14px help text, grey",
       "7px top and bottom",
-      "16px on the left"
+      "15px on the left"
     ]
   },
   "components-forms-number-input--spec-drawing/web--note-help_size-sm": {
@@ -740,7 +740,7 @@
       "8px label to field",
       "4px to help text",
       "14px help text, grey",
-      "4px top and bottom",
+      "3px top and bottom",
       "8px on the left"
     ]
   },
@@ -765,10 +765,10 @@
     ]
   },
   "components-forms-select--spec-drawing/mobile--note-error_size-lg": {
-    "w": 346,
-    "h": 263,
+    "w": 345,
+    "h": 264,
     "labels": [
-      "47px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
@@ -779,21 +779,21 @@
     ]
   },
   "components-forms-select--spec-drawing/mobile--note-error_size-md": {
-    "w": 346,
-    "h": 260,
+    "w": 345,
+    "h": 264,
     "labels": [
-      "44px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
       "8px to error",
       "14px error text, red",
-      "7px top and bottom",
-      "16px on the left"
+      "11px top and bottom",
+      "15px on the left"
     ]
   },
   "components-forms-select--spec-drawing/mobile--note-error_size-sm": {
-    "w": 349,
+    "w": 348,
     "h": 260,
     "labels": [
       "44px tall",
@@ -802,15 +802,15 @@
       "8px label to field",
       "8px to error",
       "14px error text, red",
-      "4px top and bottom",
+      "9px top and bottom",
       "8px on the left"
     ]
   },
   "components-forms-select--spec-drawing/mobile--note-help_size-lg": {
     "w": 344,
-    "h": 263,
+    "h": 264,
     "labels": [
-      "47px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
@@ -822,16 +822,16 @@
   },
   "components-forms-select--spec-drawing/mobile--note-help_size-md": {
     "w": 344,
-    "h": 260,
+    "h": 264,
     "labels": [
-      "44px tall",
+      "48px tall",
       "16px text",
       "16px label",
       "8px label to field",
       "8px to help text",
       "14px help text, grey",
-      "7px top and bottom",
-      "16px on the left"
+      "11px top and bottom",
+      "15px on the left"
     ]
   },
   "components-forms-select--spec-drawing/mobile--note-help_size-sm": {
@@ -844,7 +844,7 @@
       "8px label to field",
       "8px to help text",
       "14px help text, grey",
-      "4px top and bottom",
+      "9px top and bottom",
       "8px on the left"
     ]
   },
@@ -863,7 +863,7 @@
     ]
   },
   "components-forms-select--spec-drawing/web--note-error_size-md": {
-    "w": 575,
+    "w": 576,
     "h": 261,
     "labels": [
       "40px tall",
@@ -873,7 +873,7 @@
       "4px to error",
       "14px error text, red",
       "7px top and bottom",
-      "16px on the left"
+      "15px on the left"
     ]
   },
   "components-forms-select--spec-drawing/web--note-error_size-sm": {
@@ -886,7 +886,7 @@
       "8px label to field",
       "4px to error",
       "14px error text, red",
-      "4px top and bottom",
+      "3px top and bottom",
       "8px on the left"
     ]
   },
@@ -905,7 +905,7 @@
     ]
   },
   "components-forms-select--spec-drawing/web--note-help_size-md": {
-    "w": 575,
+    "w": 576,
     "h": 261,
     "labels": [
       "40px tall",
@@ -915,7 +915,7 @@
       "4px to help text",
       "14px help text, grey",
       "7px top and bottom",
-      "16px on the left"
+      "15px on the left"
     ]
   },
   "components-forms-select--spec-drawing/web--note-help_size-sm": {
@@ -928,7 +928,7 @@
       "8px label to field",
       "4px to help text",
       "14px help text, grey",
-      "4px top and bottom",
+      "3px top and bottom",
       "8px on the left"
     ]
   },
@@ -1361,25 +1361,25 @@
     ]
   },
   "components-notification--spec-drawing/mobile--default": {
-    "w": 353,
-    "h": 183,
+    "w": 357,
+    "h": 181,
     "labels": [
       "20px icon",
       "14px text",
       "28px close button",
-      "16px top and bottom",
-      "16px on the left"
+      "15px top and bottom",
+      "12px on the left"
     ]
   },
   "components-notification--spec-drawing/web--default": {
-    "w": 523,
-    "h": 183,
+    "w": 525,
+    "h": 181,
     "labels": [
       "20px icon",
       "14px text",
       "28px close button",
-      "16px top and bottom",
-      "16px on the left"
+      "15px top and bottom",
+      "12px on the left"
     ]
   },
   "components-progressbutton--spec-drawing/mobile--default": {
@@ -1428,7 +1428,7 @@
     "labels": [
       "40px tall",
       "16px text",
-      "9px top and bottom",
+      "8px top and bottom",
       "12px left and right"
     ]
   },
@@ -1438,7 +1438,7 @@
     "labels": [
       "32px tall",
       "14px text",
-      "6px top and bottom",
+      "4px top and bottom",
       "12px left and right"
     ]
   },
@@ -1453,33 +1453,33 @@
     ]
   },
   "components-tag--spec-drawing/web--size-lg": {
-    "w": 330,
+    "w": 335,
     "h": 160,
     "labels": [
       "26px tall",
       "13px text",
-      "5px top and bottom",
-      "11px left and right"
+      "4px top and bottom",
+      "12px left and right"
     ]
   },
   "components-tag--spec-drawing/web--size-md": {
-    "w": 311,
+    "w": 315,
     "h": 156,
     "labels": [
       "20px tall",
       "11px text",
-      "3px top and bottom",
-      "11px left and right"
+      "4px top and bottom",
+      "12px left and right"
     ]
   },
   "components-tag--spec-drawing/web--size-sm": {
-    "w": 285,
+    "w": 289,
     "h": 156,
     "labels": [
       "16px tall",
       "10px text",
       "2px top and bottom",
-      "7px left and right"
+      "8px left and right"
     ]
   },
   "components-tooltip--spec-drawing/mobile--default": {

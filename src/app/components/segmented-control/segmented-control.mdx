@@ -83,7 +83,7 @@ Use the switch in the toolbar. Only `size` changes in the code.
 - **Medium** (`md`, 40px, default): most screens. Lines up with medium inputs and buttons.
 - **Large** (`lg`, 48px, 16px text): over photos and media, like a gallery.
 
-Every size has a 4px track and 16px of padding on each side of a segment. On phones every segment is at least **44px** tall and the control is full width. Switch the toolbar to Mobile to see it.
+Every size has a 4px track and 16px of padding on each side of a segment. On phones the control is **48px** tall (**44px** small) and full width. Switch the toolbar to Mobile to see it.
 
 </DeviceVariation>
 
@@ -111,7 +111,7 @@ Add `disabled: true` to an item with nothing to show yet, like a floor plan that
 
 ## Specs
 
-Read from the theme, so these values always match the code. These are the web sizes; on phones, segments are at least 44px tall. Each segment also has 16px of padding on each side and 8px between its label and count.
+Read from the theme, so these values always match the code. These are the web sizes; on phones the control is 44 / 48 / 48px tall. Each segment also has 16px of padding on each side and 8px between its label and count.
 
 <SizeSpecs
   element="span"
@@ -178,7 +178,7 @@ See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs) for the rules
 | | Mobile (below 672px) | Web (672px and up) |
 |---|---|---|
 | Width | Full width | As wide as its segments, or full width with `fullWidth` |
-| Height | Segments at least 44px | 32, 40 or 48px |
+| Height | 44 / 48 / 48px | 32 / 40 / 48px |
 | Segments | Equal widths | Equal widths |
 | Hover | None | Text darkens; contrast segments fill grey |
 

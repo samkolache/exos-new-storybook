@@ -2,24 +2,24 @@
 // Drives Bootstrap .btn through its --bs-btn-* variables; colors from var(--color-*) only.
 // Hover/active currently mirror the resting state (interaction states to be specced).
 //
-// Sizes: .btn-sm 32px · .btn (md) 40px · .btn-lg 48px, 16px ($spacing-05) side padding,
-//   14px label. On phones every size is at least 44px tall.
+// Sizes from the control tokens: web .btn-sm 32px · .btn (md) 40px · .btn-lg 48px;
+//   phones 44 / 48 / 48px. 16px side padding (border included), 14px label.
 // Heights are minimums: long labels wrap onto a second line instead of being cut off.
 
 .btn,
 .btn-sm,
 .btn-lg {
-  // Padding-y = (height - 18px line - 2px border) / 2, so one line is exactly the height.
-  --exos-btn-height: 2.5rem; // 40px
+  // Padding-y = (height - 24px line - 2px border) / 2: web 4 / 8 / 12px, phones 10 / 12 / 12px with the border.
+  --exos-btn-height: var(--exos-control-height-md); // 40px web, 48px phones
   --bs-btn-padding-x: calc(var(--exos-spacing-05, 16px) - 1px); // 16px with the border
-  --bs-btn-padding-y: calc((var(--exos-btn-height) - 1.125rem - 2px) / 2);
+  --bs-btn-padding-y: calc((var(--exos-btn-height) - var(--exos-control-line-height) - 2px) / 2);
   --bs-btn-font-size: 0.875rem; // 14px
-  --bs-btn-line-height: 1.125rem; // 18px
+  --bs-btn-line-height: var(--exos-control-line-height); // 24px, like fields
   --bs-btn-border-radius: calc(var(--exos-btn-height) / 2); // pill at one line
 }
 
-.btn-sm { --exos-btn-height: 2rem; }  // 32px
-.btn-lg { --exos-btn-height: 3rem; }  // 48px
+.btn-sm { --exos-btn-height: var(--exos-control-height-sm); } // 32px web, 44px phones
+.btn-lg { --exos-btn-height: var(--exos-control-height-lg); } // 48px
 
 .btn {
   --bs-btn-font-weight: 700;
@@ -265,12 +265,8 @@
 
 .btn-set-end { justify-content: flex-end; }
 
-// Phones (below md): 44px minimum tap target at every size.
+// Phones (below md): heights already come from the control tokens (44 / 48 / 48px).
 @include media-breakpoint-down(md) {
-  .btn:not(.btn-icon):not(.btn-progress) {
-    min-height: max(var(--exos-btn-height), var(--exos-touch-target-min, 44px));
-    --bs-btn-border-radius: calc(max(var(--exos-btn-height), var(--exos-touch-target-min, 44px)) / 2);
-  }
 
   .btn-set {
     flex-direction: column-reverse;

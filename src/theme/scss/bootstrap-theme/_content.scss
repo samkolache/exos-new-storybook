@@ -60,7 +60,7 @@
   &::-webkit-scrollbar { display: none; }
 
   .exos-tab {
-    height: 2.5rem;
+    height: var(--exos-control-height-md); // 40px web, 48px phones
     padding: 0 var(--exos-spacing-05);
 
     &::after {
@@ -85,7 +85,8 @@
 // ── Segmented control ──────────────────────────────────────────────────────
 // Switch between 2–5 views of the same content.
 // Segments share the width equally; a thumb slides under the picked one.
-// Height (track): sm 32 / md 40 / lg 48px on web, 4px track padding, 16px side padding per segment.
+// Height (track) from the control tokens: web 32 / 40 / 48px, phones 44 / 48 / 48px.
+// 4px track padding, 16px side padding per segment.
 
 .exos-segmented-host {
   display: inline-block;
@@ -95,7 +96,7 @@
 }
 
 .exos-segmented {
-  --exos-segmented-height: 2.5rem;
+  --exos-segmented-height: var(--exos-control-height-md);
   --exos-segmented-pad: var(--exos-spacing-02, 4px);
   --exos-segmented-font: 0.875rem; // 14px
 
@@ -116,8 +117,8 @@
   &.exos-segmented-full { display: grid; width: 100%; }
 }
 
-.exos-segmented-sm { --exos-segmented-height: 2rem; }
-.exos-segmented-lg { --exos-segmented-height: 3rem; --exos-segmented-font: 1rem; }
+.exos-segmented-sm { --exos-segmented-height: var(--exos-control-height-sm); }
+.exos-segmented-lg { --exos-segmented-height: var(--exos-control-height-lg); --exos-segmented-font: 1rem; }
 
 // Contrast (default): white track, dark pick. Stands out over photos and busy screens.
 .exos-segmented-contrast {
@@ -530,8 +531,7 @@
 
 // ── Mobile (below md) ──────────────────────────────────────────────────────
 @include media-breakpoint-down(md) {
-  // Line tabs: 48px tall, scroll sideways when they don't fit.
-  .exos-tabs-line .exos-tab { height: 3rem; }
+  // Line tabs scroll sideways when they don't fit (48px tall, from the control tokens).
 
   // Segmented control: full width, segments at least 44px tall .
   .exos-segmented-host {
@@ -544,7 +544,6 @@
     width: 100%;
   }
 
-  .exos-segment { min-height: var(--exos-touch-target-min, 44px); }
 
   // Accordion rows: at least 44px at every size.
   .exos-accordion .exos-accordion-trigger { min-height: var(--exos-touch-target-min, 44px); }

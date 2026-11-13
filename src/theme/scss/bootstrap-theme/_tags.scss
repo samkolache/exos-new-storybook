@@ -12,13 +12,14 @@
   align-items: center;
   max-width: 100%;
   gap: var(--exos-spacing-02);
-  padding: calc(var(--exos-spacing-02) - 1px) calc(var(--exos-spacing-04) - 1px) calc(var(--exos-spacing-02) - 1px) calc(var(--exos-spacing-04) - 3px); // inside the 1px border; 2px tighter beside the icon
+  // 4px top and bottom + 12px line = 20px tall; 12px sides (no border), 2px tighter beside the icon.
+  padding: var(--exos-spacing-02) var(--exos-spacing-04) var(--exos-spacing-02) calc(var(--exos-spacing-04) - 2px);
   border-radius: var(--exos-radius-full);
   background-color: var(--color-background-tag-neutral);
   font-family: "Geist", var(--bs-body-font-family);
   font-size: 11px;
   font-weight: 500;
-  line-height: 14px;
+  line-height: 12px;
   color: var(--color-text-tag-neutral);
   white-space: nowrap;
   vertical-align: middle;
@@ -29,7 +30,7 @@
 
   // No icon: even padding.
   &.exos-tag-text-only {
-    padding-left: calc(var(--exos-spacing-04) - 1px);
+    padding-left: var(--exos-spacing-04);
   }
 }
 
@@ -43,23 +44,24 @@
 // Sizes. md is the Figma tag; sm and lg scale around it.
 .exos-tag-sm {
   gap: var(--exos-spacing-02);
-  padding: var(--exos-spacing-01) calc(var(--exos-spacing-03) - 1px) var(--exos-spacing-01) calc(var(--exos-spacing-03) - 3px);
+  padding: var(--exos-spacing-01) var(--exos-spacing-03) var(--exos-spacing-01) calc(var(--exos-spacing-03) - 2px); // 8px sides
   font-size: 10px;
   line-height: 12px;
 
   &.exos-tag-text-only {
-    padding-left: calc(var(--exos-spacing-03) - 1px);
+    padding-left: var(--exos-spacing-03);
   }
 }
 
 .exos-tag-lg {
   gap: var(--exos-spacing-02);
-  padding: 5px calc(var(--exos-spacing-04) - 1px) 5px calc(var(--exos-spacing-04) - 3px); // 5px sets the 32px height
+  // 4px + 18px line + 4px = 26px tall.
+  padding: var(--exos-spacing-02) var(--exos-spacing-04) var(--exos-spacing-02) calc(var(--exos-spacing-04) - 2px);
   font-size: 13px;
-  line-height: 16px;
+  line-height: 18px;
 
   &.exos-tag-text-only {
-    padding-left: calc(var(--exos-spacing-04) - 1px);
+    padding-left: var(--exos-spacing-04);
   }
 }
 
@@ -92,17 +94,17 @@
 
 // Phones (below md): a larger, touch-friendly scale on a 4px grid.
 //   sm 24px · 12/16 type · 4px 8px padding · 14px icons · 12px radius
-//   md 32px · 14/20 type · 6px 12px padding · 16px icons · 16px radius
-//   lg 40px · 16/22 type · 9px 12px padding · 16px icons · 20px radius
+//   md 32px · 14/24 type · 4px 12px padding · 16px icons · 16px radius
+//   lg 40px · 16/24 type · 8px 12px padding · 16px icons · 20px radius
 // Radius is half the height, so one-line tags are pills and wrapped ones stay neat.
 // Long labels wrap instead of truncating: touch screens have no hover to show the tooltip.
 @include media-breakpoint-down(md) {
   .exos-tag {
     gap: var(--exos-spacing-02);
-    padding: 6px var(--exos-spacing-04) 6px calc(var(--exos-spacing-04) - 2px); // 6px sets the height
+    padding: var(--exos-spacing-02) var(--exos-spacing-04) var(--exos-spacing-02) calc(var(--exos-spacing-04) - 2px); // 4 + 24 + 4 = 32px
     border-radius: var(--exos-radius-04);
     font-size: 14px;
-    line-height: 20px;
+    line-height: 24px;
     white-space: normal;
 
     // Icons are drawn for a 12px slot; scale them to the phone size, keeping their shape.
@@ -135,10 +137,10 @@
 
   .exos-tag-lg {
     gap: var(--exos-spacing-02);
-    padding: 9px var(--exos-spacing-04) 9px calc(var(--exos-spacing-04) - 2px); // 9px sets the height
+    padding: var(--exos-spacing-03) var(--exos-spacing-04) var(--exos-spacing-03) calc(var(--exos-spacing-04) - 2px); // 8 + 24 + 8 = 40px
     border-radius: var(--exos-radius-05);
     font-size: 16px;
-    line-height: 22px;
+    line-height: 24px;
 
     &.exos-tag-text-only {
       padding-left: var(--exos-spacing-04);

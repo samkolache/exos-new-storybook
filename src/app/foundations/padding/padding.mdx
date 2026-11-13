@@ -13,7 +13,7 @@ Padding is the space inside a part, between its edge and its content. It uses th
 
 ## Live demo
 
-Every part, with a red line for the padding on each side and its size in px. Measured from the theme, so it always matches the code. Switch to Mobile: heights grow to 44px, and the side padding stays the same.
+Every part, with a red line for the padding on each side and its size in px. Measured from the theme, so it always matches the code. Switch to Mobile: controls grow to 48px (44px when small) with 12px top and bottom, and the side padding stays the same.
 
 <DeviceCanvas of={Stories.Measured} defaultDevice="web" noCode />
 
@@ -21,20 +21,52 @@ Every part, with a red line for the padding on each side and its size in px. Mea
 
 | Part | Top and bottom | Sides | Examples |
 |---|---|---|---|
-| **Controls** | Set by the height (32, 40 or 48px) | 16px (`05`) | Buttons, inputs, segments, tabs |
-| **Compact items** | Set by the height | 12px (`04`), 8px (`03`) when small | Chips, tags, badges |
+| **Controls** | Height minus the 24px line, halved: 4, 8 or 12px on web; 10 or 12px on phones (see below) | 16px (`05`) | Buttons, inputs, selects |
+| **Segments and tabs** | None: the text is centred in a set height | 16px (`05`) | Segmented controls, tabs |
+| **Compact items** | Set by the height | 12px (`04`); 8px (`03`) small; 16px (`05`) large chips | Chips, tags, badges |
 | **Rows** | 12px (`04`) | 16px (`05`) | Menu items, list rows, upload items, card rows |
 | **Small surfaces** | 8 to 16px | 12 to 16px | Tooltips (8 / 12), notifications and toggletips (16) |
 | **Surfaces** | `--exos-space-inset`: 16px on phones, 24px on web | Same | Cards, panels |
 | **Modals** | 24px on web, 16px on phones | Same | Modals and sheets |
 
-Between an icon and its text: **8px** (`03`), or 4px (`02`) in small items like tags.
+Between an icon and its text: **8px** (`03`), 4px (`02`) in small items like tags, or 12px (`04`) in notifications.
+
+## Control sizes
+
+Every control is **one 24px line of text plus the padding above and below it**, with the border counted as padding. So every value is a whole pixel, and a button, a field and a segmented control of the same size line up.
+
+| Size | Web (672px and up) | Phones (below 672px) |
+|---|---|---|
+| **Small** (`sm`) | 32px = 4 + 24 + 4 | 44px = 10 + 24 + 10 |
+| **Medium** (`md`, default) | 40px = 8 + 24 + 8 | 48px = 12 + 24 + 12 |
+| **Large** (`lg`) | 48px = 12 + 24 + 12 | 48px = 12 + 24 + 12 |
+
+| | Web | Phones | Why |
+|---|---|---|---|
+| **Sides** | 16px | 16px | Keeps text clear of the rounded ends |
+| **Text in fields** | 16px | 16px or more | Phone browsers zoom into fields with smaller text |
+| **Corners** | Fully round (a pill) | Fully round | The same shape on every screen; text areas keep 16px corners |
+| **Tap or click area** | The control | At least 44px, 48px by default | Easy to hit with a thumb |
+
+Use the tokens, not fixed numbers, so controls switch on phones by themselves:
+
+```css
+.my-control {
+  min-height: var(--exos-control-height-md);                     /* 40px web, 48px phones */
+  padding: calc(var(--exos-control-padding-y-md) - 1px)          /* 8px web, 12px phones, with a 1px border */
+           calc(var(--exos-control-padding-x) - 1px);            /* 16px */
+  line-height: var(--exos-control-line-height);                  /* 24px */
+  border-radius: var(--exos-radius-full);
+}
+```
+
+Also `--exos-control-height-sm`, `-lg` and `--exos-control-padding-y-sm`, `-lg`.
 
 ### Details
 
-- **Borders count as padding.** A button with a 1px border has 15px of padding, so its text sits 16px from the edge: `calc(var(--exos-spacing-05) - 1px)`.
+- **Borders count as padding.** A button or field with a 1px border has 15px of padding, so its text sits 16px from the edge: `calc(var(--exos-spacing-05) - 1px)`. Borders are always whole pixels (1px), so no padding ends in half a pixel.
 - **2px tighter beside an icon.** Icons carry their own space, so the side with an icon gets `calc(token - 2px)` to look even.
-- **Phones: the 44px tap target wins.** Controls grow to at least 44px tall; their side padding doesn't change.
+- **Phones: taller controls.** Controls are 48px tall (44px when small, the smallest tap target); the extra height is padding above and below, and the side padding doesn't change.
 - **Never smaller than the scale.** If text feels cramped, use a bigger size, not custom padding.
 
 ## In use

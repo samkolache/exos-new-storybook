@@ -69,6 +69,24 @@ $exos-radius: (
   "full": 999px, // controls: buttons, chips, tags, segmented controls; circles
 ) !default;
 
+// Controls: buttons, fields, segmented controls and tabs.
+// Height = one 24px line of text + the padding above and below it (the border counts as padding),
+// so every value is a whole pixel:
+//              web           phone
+//   sm   32 = 4 + 24 + 4    44 = 10 + 24 + 10   (44px: the smallest tap target)
+//   md   40 = 8 + 24 + 8    48 = 12 + 24 + 12   (48px: easy to hit with a thumb)
+//   lg   48 = 12 + 24 + 12  48 = 12 + 24 + 12
+// Sides: 16px on both, border included. Text: 16px in fields on phones, so the page doesn't zoom.
+// Corners: fully round (a pill) on both.
+$exos-control-heights: (
+  //       web   phone
+  "sm": (32px, 44px),
+  "md": (40px, 48px),
+  "lg": (48px, 48px),
+) !default;
+$exos-control-line-height: 24px !default;
+$exos-control-padding-x: 16px !default;
+
 // Smallest tap target on touch screens (44px).
 $exos-touch-target-min: 44px !default;
 

@@ -89,7 +89,7 @@ Use the switch in the toolbar. Only `size` changes in the code.
 - **Medium** (`md`, 40px): next to medium inputs, so they line up.
 - **Large** (`lg`, 48px, default): most actions, like form and modal buttons.
 
-Every size has 16px of padding on each side and a 14px label. On phones every size is at least **44px** tall, so it's easy to tap. Switch the toolbar to Mobile to see it.
+Every size has 16px of padding on each side and a 14px label. On phones buttons are **48px** tall (**44px** small), so they're easy to tap. Switch the toolbar to Mobile to see it.
 
 </DeviceVariation>
 
@@ -120,7 +120,7 @@ Put 2 or 3 related buttons in a `<div class="btn-set">`:
 
 ## Specs
 
-Use **Mobile / Web** to compare devices. The numbers are measured from the code. On phones, buttons are at least 44px tall.
+Use **Mobile / Web** to compare devices. The numbers are measured from the code. On phones, buttons are 44 / 48 / 48px tall.
 
 <SpecPictures of={ButtonStories.SpecDrawing} />
 
@@ -168,7 +168,7 @@ See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs) for the rules
 
 | | Mobile (below 672px) | Web (672px and up) |
 |---|---|---|
-| Height | At least 44px, at every size | 32, 40 or 48px |
+| Height | 44 / 48 / 48px (small / medium / large) | 32 / 40 / 48px |
 | Button sets | Stacked, full width, primary on top | In a row, 16px apart, primary on the right |
 | Width | Full width in a set | Fits the label, up to 320px |
 | Hover | None | Pointer cursor |
@@ -189,7 +189,7 @@ For the button in the playground, a screen reader reads:
 - **Native `<button>`,** so <kbd>Enter</kbd>, <kbd>Space</kbd> and focus work with no extra code.
 - **The label is the name.** Don't add an `aria-label` that says something different from what's on screen.
 - **Disabled buttons** use the native `disabled`, so they're skipped by <kbd>Tab</kbd> and announced as dimmed.
-- **Tap targets** are at least 44 × 44px on phones.
+- **Tap targets** are at least 44 × 44px on phones, and 48px tall for medium and large buttons.
 - **Checked automatically:** every button story runs an accessibility scan in the tests.
 
 ## Code

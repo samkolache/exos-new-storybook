@@ -23,6 +23,21 @@
     --exos-radius-#{$step}: #{$value};
   }
 
+  // Controls: phone values, then web values from md. Padding-y = (height - 24px line) / 2.
+  --exos-control-line-height: #{$exos-control-line-height};
+  --exos-control-padding-x: #{$exos-control-padding-x};
+  @each $size, $heights in $exos-control-heights {
+    --exos-control-height-#{$size}: #{nth($heights, 2)};
+    --exos-control-padding-y-#{$size}: #{(nth($heights, 2) - $exos-control-line-height) * 0.5};
+  }
+
+  @include media-breakpoint-up(md, $exos-breakpoints) {
+    @each $size, $heights in $exos-control-heights {
+      --exos-control-height-#{$size}: #{nth($heights, 1)};
+      --exos-control-padding-y-#{$size}: #{(nth($heights, 1) - $exos-control-line-height) * 0.5};
+    }
+  }
+
   // Layout spacing: phone values, then web values from md.
   @each $name, $steps in $exos-layout-spacing {
     --exos-space-#{$name}: #{exos-spacing(nth($steps, 1))};
