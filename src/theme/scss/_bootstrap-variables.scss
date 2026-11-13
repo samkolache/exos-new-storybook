@@ -16,10 +16,25 @@ $danger:    dcfc-color("status-danger");
 $grid-breakpoints:    $exos-breakpoints;
 $enable-grid-classes: false;
 
-// Typography: Geist body, Raleway headings (h3 and smaller go back to Geist in bootstrap-theme/_typography).
+// Typography: Geist body; Raleway for display and h1 (bootstrap-theme/_typography sets each heading from its style).
 $font-family-sans-serif: $dcfc-font-body;
 $headings-font-family:   $dcfc-font-heading;
 $display-font-family:    $dcfc-font-heading;
+$font-family-monospace:  $dcfc-font-mono;
+
+// Type styles (tokens/_typography.scss). Headings follow $exos-heading-styles.
+$font-size-base:       exos-type("body-l", size);
+$line-height-base:     exos-type("body-l", line);
+$small-font-size:      0.875em; // 14px in body text
+$h1-font-size:         exos-type(map-get($exos-heading-styles, 1), size);
+$h2-font-size:         exos-type(map-get($exos-heading-styles, 2), size);
+$h3-font-size:         exos-type(map-get($exos-heading-styles, 3), size);
+$h4-font-size:         exos-type(map-get($exos-heading-styles, 4), size);
+$h5-font-size:         exos-type(map-get($exos-heading-styles, 5), size);
+$h6-font-size:         exos-type(map-get($exos-heading-styles, 6), size);
+$headings-font-weight: 600;
+$headings-line-height: 1.25;
+$enable-rfs:           false; // fixed sizes from the type styles, not fluid
 
 $body-color:     dcfc-color("text-primary");
 $body-bg:         dcfc-color("background-page");

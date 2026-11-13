@@ -3,18 +3,29 @@ import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular-vit
 import { expect } from 'storybook/test';
 import { ButtonComponent } from '../../components/button/button';
 
-type Row = { label: string; code: string; html: string };
+type Row = { label: string; code: string; html: string; use: string };
 
-/** Every text style, largest first. The HTML is plain Bootstrap: the theme does the rest. */
+/** Every type style, largest first, with what it's for. The HTML is plain Bootstrap plus one class. */
 const ROWS: Row[] = [
-  { label: 'Heading 1', code: '<h1>, .h1', html: '<h1 class="mb-0">Your claims</h1>' },
-  { label: 'Heading 2', code: '<h2>, .h2', html: '<h2 class="mb-0">Open claims</h2>' },
-  { label: 'Heading 3', code: '<h3>, .h3', html: '<h3 class="mb-0">Claim 4821</h3>' },
-  { label: 'Heading 4', code: '<h4>, .h4', html: '<h4 class="mb-0">Documents</h4>' },
-  { label: 'Heading 5', code: '<h5>, .h5', html: '<h5 class="mb-0">Delivery address</h5>' },
-  { label: 'Heading 6', code: '<h6>, .h6', html: '<h6 class="mb-0">Last updated</h6>' },
-  { label: 'Body', code: '<p>', html: '<p class="mb-0">We review most claims within two working days.</p>' },
-  { label: 'Small', code: '<small>, .small', html: '<p class="small mb-0">Updated 2 days ago</p>' },
+  { label: 'Display L', code: '.exos-display-l', html: '<p class="exos-display-l mb-0">Plan your week</p>', use: 'Hero headline. One per view' },
+  { label: 'Display M', code: '.exos-display-m', html: '<p class="exos-display-m mb-0">Transfer sent</p>', use: 'Summary and success titles' },
+  { label: 'Display S', code: '.exos-display-s', html: '<p class="exos-display-s mb-0">Cash forecast</p>', use: 'Section hero on large screens' },
+  { label: 'Heading L', code: '<h1>, .exos-heading-l', html: '<h1 class="mb-0">Invoices</h1>', use: 'Page title. Smallest Raleway' },
+  { label: 'Heading M', code: '<h2>, .exos-heading-m', html: '<h2 class="mb-0">This week</h2>', use: 'Section and sheet titles' },
+  { label: 'Heading S', code: '<h3>–<h6>, .exos-heading-s', html: '<h3 class="mb-0">Trip to Kyoto</h3>', use: 'Card and list titles' },
+  { label: 'Number L', code: '.exos-number-l', html: '<p class="exos-number-l mb-0">$12,480.32</p>', use: 'Balances, hero figures' },
+  { label: 'Number M', code: '.exos-number-m', html: '<p class="exos-number-m mb-0">$48,210</p>', use: 'KPI values' },
+  { label: 'Number S', code: '.exos-number-s', html: '<p class="exos-number-s mb-0">64%</p>', use: 'Totals, inline figures' },
+  { label: 'Body L', code: '<p>, .exos-body-l', html: '<p class="mb-0">Two clients usually pay late. Send reminders today to stay on track this month.</p>', use: 'Page text, lead paragraphs' },
+  { label: 'Body M', code: '.exos-body-m, .small', html: '<p class="exos-body-m mb-0">Arrives today by 5 PM.</p>', use: 'Dense UI text' },
+  { label: 'Body S', code: '.exos-body-s', html: '<p class="exos-body-s mb-0">Card expired. Update and retry.</p>', use: 'Card descriptions, helper text' },
+  { label: 'Caption', code: '.exos-caption', html: '<p class="exos-caption mb-0">Nov 18 · Studio rental</p>', use: 'Metadata, timestamps' },
+  { label: 'Label L', code: '.exos-label-l', html: '<p class="exos-label-l mb-0">Confirm transfer</p>', use: 'Primary buttons' },
+  { label: 'Label M', code: '.exos-label-m', html: '<p class="exos-label-m mb-0">Request</p>', use: 'Secondary buttons, list items' },
+  { label: 'Label S', code: '.exos-label-s', html: '<p class="exos-label-s mb-0">View all invoices</p>', use: 'Chips, links, small buttons' },
+  { label: 'Eyebrow M', code: '.exos-eyebrow-m', html: '<p class="exos-eyebrow-m mb-0">Total balance</p>', use: 'Section eyebrows' },
+  { label: 'Eyebrow S', code: '.exos-eyebrow-s', html: '<p class="exos-eyebrow-s mb-0">Draft</p>', use: 'Badges, tags' },
+  { label: 'Code', code: '.exos-code', html: '<p class="exos-code mb-0">INV-1042</p>', use: 'IDs, reference numbers' },
 ];
 
 const STYLES = [
@@ -38,6 +49,7 @@ const STYLES = [
           <b>{{ row.label }}</b>
           <code>{{ row.code }}</code>
           <span data-spec>{{ specs()[i] }}</span>
+          <span>{{ row.use }}</span>
         </div>
         <div data-sample [innerHTML]="row.html"></div>
       </div>
@@ -59,13 +71,14 @@ class TypeScaleComponent {
           samples.map((el) => {
             const cs = getComputedStyle(el);
             const family = cs.fontFamily.split(',')[0].replace(/["']/g, '').trim();
-            return `${family} · ${px(cs.fontSize)} / ${px(cs.lineHeight)} · ${cs.fontWeight}`;
+            const ls = cs.letterSpacing === 'normal' ? '0' : px(cs.letterSpacing);
+            return `${family} · ${px(cs.fontSize)} / ${px(cs.lineHeight)} · ${cs.fontWeight} · ${ls}`;
           }),
         );
       };
       read();
-      // h1–h4 scale with the screen width, so re-measure on resize.
-      window.addEventListener('resize', read);
+      // Re-measure once the web fonts have loaded.
+      document.fonts?.ready.then(read);
     });
   }
 }
@@ -80,84 +93,108 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-/** A page with every level in use: Raleway for the page and section titles, Geist below. */
+/** A Raleway headline anchors the view; Geist does the work. */
 export const InUse: Story = {
   render: () => ({
     styles: STYLES,
     template: `
-<div style="display: flex; flex-direction: column; gap: var(--exos-space-section)">
-  <header>
-    <h1>Your claims</h1>
-    <p class="mb-0">Track your claims and send us anything we ask for.</p>
-  </header>
-  <section style="display: flex; flex-direction: column; gap: var(--exos-space-group)">
-    <h2 class="mb-0">Open claims</h2>
-    <div class="ty-card">
-      <h3>Claim 4821</h3>
-      <p>Water damage to the kitchen ceiling. We need a photo of the damage to carry on.</p>
-      <p class="small text-body-secondary">Updated 2 days ago</p>
-      <app-button label="Add a photo" />
-    </div>
-  </section>
+<div class="ty-card" style="display: flex; flex-direction: column; gap: var(--exos-spacing-05); max-width: 26rem">
+  <div>
+    <p class="exos-eyebrow-m mb-1" style="color: var(--color-text-secondary)">Total balance</p>
+    <p class="exos-number-l mb-0">$12,480.32</p>
+  </div>
+  <div>
+    <h1 class="exos-display-m mb-1">Plan your week</h1>
+    <p class="exos-body-m mb-0" style="color: var(--color-text-secondary)">Three inspections today. First at 9:30 AM, 12 minutes away.</p>
+  </div>
+  <div>
+    <h2 class="exos-heading-s mb-1">Up next</h2>
+    <p class="exos-body-s mb-1" style="color: var(--color-text-secondary)">1418 Birch Ct · Exterior and interior</p>
+    <p class="exos-code mb-0">INV-1042</p>
+  </div>
+  <app-button label="Start inspection" />
 </div>`,
   }),
 };
 
-/** The full scale, measured live. */
+/** Every style, measured live. */
 export const Scale: Story = {
   render: () => ({ template: `<app-type-scale />` }),
 };
 
+/** Raleway's weights: Bold by default; SemiBold and Medium for calmer or longer headlines. */
+export const RalewayWeights: Story = {
+  render: () => ({
+    template: `
+<div style="display: flex; flex-direction: column; gap: var(--exos-spacing-04)">
+  <p class="exos-display-l mb-0">Plan your week <span class="exos-caption" style="color: var(--color-text-secondary)">Bold · default</span></p>
+  <p class="exos-display-l exos-type-semibold mb-0">Plan your week <span class="exos-caption" style="color: var(--color-text-secondary)">SemiBold · calmer, longer lines</span></p>
+  <p class="exos-display-l exos-type-medium mb-0">Plan your week <span class="exos-caption" style="color: var(--color-text-secondary)">Medium · editorial, quiet</span></p>
+</div>`,
+  }),
+};
+
 // Do / Don't
 
-export const DoHeadingFont: Story = {
+export const DoOneRaleway: Story = {
   render: () => ({ template: `
 <div style="width: 18rem; margin: 0 auto">
-  <h2>Open claims</h2>
-  <h3 class="h5">Claim 4821</h3>
-  <p class="mb-0">Water damage to the kitchen ceiling.</p>
+  <h1 class="mb-2">Invoices</h1>
+  <h2 class="exos-heading-s mb-1">Overdue</h2>
+  <p class="exos-body-m mb-0">Two clients usually pay late.</p>
 </div>` }),
 };
-export const DontHeadingFont: Story = {
+export const DontSmallRaleway: Story = {
   render: () => ({ template: `
-<div style="width: 18rem; margin: 0 auto; font-family: var(--font-heading)">
-  <h2>Open claims</h2>
-  <h3 class="h5" style="font-family: var(--font-heading)">Claim 4821</h3>
-  <p class="mb-0">Water damage to the kitchen ceiling.</p>
+<div style="width: 18rem; margin: 0 auto">
+  <h1 class="mb-2">Invoices</h1>
+  <h2 class="exos-heading-s mb-1" style="font-family: var(--font-heading)">Overdue</h2>
+  <button type="button" class="btn btn-primary" style="font-family: var(--font-heading)">Send reminder</button>
 </div>` }),
 };
 export const DoLevels: Story = {
   render: () => ({ template: `
-<div style="width: 19rem; max-width: 100%; margin: 0 auto"><pre class="mb-0 small"><code>&lt;h1&gt;Your claims&lt;/h1&gt;
-&lt;h2 class="h5"&gt;Delivery&lt;/h2&gt;</code></pre></div>` }),
+<div style="width: 19rem; max-width: 100%; margin: 0 auto"><pre class="mb-0 small"><code>&lt;h1&gt;Invoices&lt;/h1&gt;
+&lt;h2 class="exos-heading-s"&gt;Overdue&lt;/h2&gt;</code></pre></div>` }),
 };
 export const DontLevels: Story = {
   render: () => ({ template: `
-<div style="width: 19rem; max-width: 100%; margin: 0 auto"><pre class="mb-0 small"><code>&lt;h1&gt;Your claims&lt;/h1&gt;
-&lt;h5&gt;Delivery&lt;/h5&gt;</code></pre></div>` }),
+<div style="width: 19rem; max-width: 100%; margin: 0 auto"><pre class="mb-0 small"><code>&lt;h1&gt;Invoices&lt;/h1&gt;
+&lt;h5&gt;Overdue&lt;/h5&gt;</code></pre></div>` }),
 };
-export const DoSentenceCase: Story = {
-  render: () => ({ template: `<div style="width: 18rem; margin: 0 auto"><h2 class="mb-0">Open claims</h2></div>` }),
+export const DoEyebrowCaps: Story = {
+  render: () => ({ template: `<div style="width: 18rem; margin: 0 auto"><p class="exos-eyebrow-m mb-1" style="color: var(--color-text-secondary)">Total balance</p><h2 class="mb-0">This week</h2></div>` }),
 };
-export const DontTitleCase: Story = {
-  render: () => ({ template: `<div style="width: 18rem; margin: 0 auto"><h2 class="mb-0 text-uppercase">Open Claims</h2></div>` }),
+export const DontCaps: Story = {
+  render: () => ({ template: `<div style="width: 18rem; margin: 0 auto"><h2 class="mb-0 text-uppercase">This Week</h2></div>` }),
+};
+export const DoStyles: Story = {
+  render: () => ({ template: `<div style="width: 19rem; max-width: 100%; margin: 0 auto"><pre class="mb-0 small"><code>&lt;p class="exos-body-s"&gt;…&lt;/p&gt;</code></pre></div>` }),
+};
+export const DontByHand: Story = {
+  render: () => ({ template: `<div style="width: 19rem; max-width: 100%; margin: 0 auto"><pre class="mb-0 small"><code>font-size: 13px;
+line-height: 1.3;
+letter-spacing: 0.4px;</code></pre></div>` }),
 };
 
-/** h1 and h2 are Raleway; h3 and below, and body text, are Geist. The class wins over the tag. */
+/** h1 and display styles are Raleway; h2 and below, body, labels and numbers are Geist; eyebrows and code are Geist Mono. */
 export const TestFonts: Story = {
-  name: 'Test · Heading fonts',
+  name: 'Test · Type families',
   render: () => ({
-    template: `<h1>One</h1><h2>Two</h2><h3>Three</h3><h4>Four</h4><h2 class="h5">Two as five</h2><h3 class="h2">Three as two</h3><p>Body</p>`,
+    template: `<h1>One</h1><h2>Two</h2><h3>Three</h3><p class="exos-display-l">Display</p><h3 class="exos-heading-l">Three as L</h3><h1 class="h3">One as S</h1><p>Body</p><p class="exos-number-m">48</p><p class="exos-eyebrow-m">Eyebrow</p><p class="exos-code">INV-1</p>`,
   }),
   play: async ({ canvasElement }) => {
     const font = (selector: string) =>
       getComputedStyle(canvasElement.querySelector(selector)!).fontFamily.split(',')[0].replace(/["']/g, '').trim();
-    await expect(font('h1')).toBe('Raleway');
-    await expect(font('h2:not(.h5)')).toBe('Raleway');
-    await expect(font('h3:not(.h2)')).toBe('Geist');
-    await expect(font('h4')).toBe('Geist');
-    await expect(font('h3.h2')).toBe('Raleway');
-    await expect(font('h2.h5')).toBe('Geist');
-    await expect(font('p')).toBe('Geist');
+    await expect(font('h1:not(.h3)')).toBe('Raleway');
+    await expect(font('h2')).toBe('Geist');
+    await expect(font('h3:not(.exos-heading-l)')).toBe('Geist');
+    await expect(font('.exos-display-l')).toBe('Raleway');
+    await expect(font('h3.exos-heading-l')).toBe('Raleway');
+    await expect(font('h1.h3')).toBe('Geist');
+    await expect(font('p:not([class])')).toBe('Geist');
+    await expect(font('.exos-number-m')).toBe('Geist');
+    await expect(font('.exos-eyebrow-m')).toBe('Geist Mono');
+    await expect(font('.exos-code')).toBe('Geist Mono');
   },
 };

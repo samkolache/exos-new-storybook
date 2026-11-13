@@ -223,7 +223,7 @@ export const TestSizes: Story = {
     for (const [id, web] of [['sm', 32], ['md', 40], ['lg', 48]] as const) {
       const button = canvasElement.querySelector<HTMLElement>(`#${id} button`)!;
       await expect(Math.round(button.getBoundingClientRect().height)).toBe(mobile ? Math.max(web, 44) : web);
-      await expect(getComputedStyle(button).paddingLeft).toBe('15px'); // + 1px border = Carbon's 16px
+      await expect(getComputedStyle(button).paddingLeft).toBe('15px'); // + 1px border = 16px
     }
   },
 };

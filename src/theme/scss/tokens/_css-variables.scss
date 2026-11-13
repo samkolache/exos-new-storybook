@@ -5,12 +5,34 @@
   @each $name, $value in $dcfc-primitives {
     --primitive-#{$name}: #{$value};
   }
-  @each $name, $primitive in $dcfc-colors {
+  // Semantic: light values.
+  @each $name, $values in $dcfc-semantic {
+    --color-#{$name}: var(--primitive-#{nth($values, 1)});
+  }
+  @each $name, $primitive in $dcfc-extended {
     --color-#{$name}: var(--primitive-#{$primitive});
+  }
+  @each $name, $token in $dcfc-component-colors {
+    --color-#{$name}: #{dcfc-color-ref($token)};
+  }
+  @each $name, $token in $dcfc-colors {
+    --color-#{$name}: #{dcfc-color-ref($token)};
   }
   @each $name, $value in $dcfc-surfaces {
     --surface-#{$name}: #{$value};
   }
   --font-heading: #{$dcfc-font-heading};
   --font-body: #{$dcfc-font-body};
+}
+
+// Semantic: dark values, where Figma defines one. Component and alias tokens
+// point at these by var(), so they follow. Set on the themed element itself:
+//   <div class="exos-theme-dcfc" data-bs-theme="dark">
+@at-root .exos-theme-dcfc[data-bs-theme="dark"],
+[data-bs-theme="dark"] .exos-theme-dcfc {
+  @each $name, $values in $dcfc-semantic {
+    @if length($values) > 1 {
+      --color-#{$name}: var(--primitive-#{nth($values, 2)});
+    }
+  }
 }

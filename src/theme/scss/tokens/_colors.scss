@@ -1,91 +1,277 @@
-// Layer 2: semantic names → primitives (by name).
+// Layers 2–4: semantic, component and extended tokens.
 //
-// TODO: PLACEHOLDER. Replace with
-// Exos.DesignSystem/src/ExosThemeDCFC/src/scss/tokens/_colors.scss.
+// Source: Figma "Sams Vibe", Color system v2 (node 758:21648).
+// Each layer only references the one above it:
+//   primitive (blue-60) → semantic (brand-accent-strong) → component (button-accent-bg)
+// Designers and components work in semantic and component tokens; primitives are
+// never applied directly.
 
+// Layer 2: semantic. Named by role, never by colour. (light, dark) primitive names.
+// Tokens with one value have no dark value in Figma yet; they keep the light value.
+$dcfc-semantic: (
+  // Surface: 60–70% of a screen
+  "surface-page":     ("slate-10",   "slate-100"),  // app background
+  "surface-card":     ("base-white", "slate-90"),   // cards, sheets, inputs
+  "surface-raised":   ("base-white", "slate-80"),   // popovers, menus
+  "surface-subtle":   ("slate-20",   "slate-100"),  // insets, tracks, hover
+  "surface-tint":     ("blue-10",    "blue-90"),    // brand-tinted panels, small
+  "surface-selected": ("blue-20",    "blue-80"),    // selected rows, items
+  "surface-inverse":  ("slate-90",   "slate-10"),   // tooltips, snackbars
+  "surface-glass":    ("white-a72",  "white-a8"),   // floating chrome only: tab bar, search
+
+  // Text and icons: Ink, 20–25% of a screen
+  "text-primary":     ("slate-90",   "slate-10"),   // headlines, body, icons
+  "text-secondary":   ("slate-60",   "slate-40"),   // supporting text, meta
+  "text-placeholder": ("slate-50",   "slate-50"),   // placeholder, disabled
+  "text-link":        ("blue-60",    "blue-30"),    // links (AA on white)
+  "text-on-color":    ("base-white", "base-white"), // text on filled colour
+
+  // Border: hairlines, not counted in coverage
+  "border-subtle":    ("slate-20",   "white-a8"),   // card edges, dividers
+  "border-default":   ("slate-30",   "white-a15"),  // inputs, outlined buttons
+  "border-strong":    ("slate-50",   "slate-60"),   // emphasis, dark-mode edges
+
+  // Brand: Ink 20–25 · Blue 5–10 · Support ≤4 · Spark ≤1
+  "brand-primary":       ("slate-90", "slate-10"),  // Ink: wordmark, primary
+  "brand-accent":        ("blue-50",  "blue-40"),   // Blue: marks, icons, data
+  "brand-accent-strong": ("blue-60",  "blue-30"),   // Blue: text, filled buttons
+  "brand-support":       ("lime-50",  "lime-40"),   // Lime: progress, small tiles
+  "brand-spark":         ("amber-50", "amber-40"),  // Amber: one spark
+
+  // Action: Ink is the only primary
+  "action-primary":          ("slate-90",  "slate-10"), // primary button
+  "action-primary-hover":    ("slate-80",  "slate-20"),
+  "action-primary-pressed":  ("slate-100", "slate-30"),
+  "action-primary-disabled": ("slate-30",  "slate-70"),
+  "action-selected-bg":      ("blue-10",   "blue-90"),  // selected option bg
+  "action-selected-border":  ("blue-50",   "blue-40"),  // selected option border
+  "action-focus-border":     ("blue-60",   "blue-30"),
+  "action-danger":           ("red-60",    "red-40"),   // destructive
+  // Referenced by Figma's component tokens (no dark value yet):
+  "action-on-primary":            ("base-white"),
+  "action-primary-start":         ("slate-70"),  // primary button gradient
+  "action-primary-end":           ("slate-80"),
+  "action-primary-hover-start":   ("slate-60"),
+  "action-primary-hover-end":     ("slate-70"),
+  "action-primary-pressed-start": ("slate-80"),
+  "action-primary-pressed-end":   ("slate-90"),
+  "action-primary-edge":          ("white-a28"),
+  "action-primary-highlight":     ("white-a30"),
+  "action-link":                  ("blue-60"),
+  "action-link-hover":            ("blue-70"),
+  "action-secondary-hover":       ("blue-10"),
+  "action-focus-ring":            ("blue-50-a40"),
+
+  // Feedback: system, not brand. 0–5%, only when a state exists.
+  "feedback-positive-solid":  ("green-50", "green-40"), // success dot, icon
+  "feedback-positive-bg":     ("green-10", "green-90"), // success chip bg
+  "feedback-attention-solid": ("amber-50", "amber-40"), // attention dot, icon
+  "feedback-attention-bg":    ("amber-10", "amber-90"), // attention chip bg
+  "feedback-negative-solid":  ("red-60",   "red-40"),   // error dot, icon
+  "feedback-negative-bg":     ("red-10",   "red-90"),   // error chip bg
+  "feedback-info-solid":      ("blue-50",  "blue-40"),  // info dot (shares Blue)
+  "feedback-ai-solid":        ("blue-50",  "blue-40"),  // AI marker
+  // Referenced by Figma's badge tokens (no dark value yet):
+  "feedback-positive-text":   ("green-70"),
+  "feedback-attention-text":  ("amber-70"),
+  "feedback-negative-text":   ("red-70"),
+  "feedback-neutral-bg":      ("slate-10"),
+  "feedback-neutral-text":    ("slate-70"),
+  "feedback-info-text":       ("blue-70"),  // Exos addition: info tag text, AA on blue-10
+) !default;
+
+// Layer 4: extended. Charts, illustration and the approved gradients.
+// Never for buttons, nav or text. Max one gradient per view; Ink text on all.
+$dcfc-extended: (
+  "chart-category-1": "blue-50",
+  "gradient-blue-strong-start":  "blue-10",  // Brand hero: hero, onboarding, AI summary
+  "gradient-blue-strong-end":    "blue-30",
+  "gradient-blue-soft-start":    "blue-10",  // Brand soft: avatars, small tiles
+  "gradient-blue-soft-end":      "blue-20",
+  "gradient-lime-strong-start":  "amber-10", // Support hero: goal, progress, celebration
+  "gradient-lime-strong-end":    "lime-30",
+  "gradient-blend-soft-start":   "lime-10",  // Fresh blend: condition and summary tiles
+  "gradient-blend-soft-end":     "amber-10",
+  "gradient-amber-soft-start":   "amber-10", // Spark soft: one warm chip or tile
+  "gradient-amber-soft-end":     "amber-20",
+  "gradient-coral-soft-start":   "amber-10", // Gentle setback: missed items, redo; not errors
+  "gradient-coral-soft-end":     "red-20",
+  "gradient-slate-soft-start":   "slate-10", // Calm: loading, empty, quiet
+  "gradient-slate-soft-end":     "slate-20",
+) !default;
+
+// Layer 3: component. Decisions locked per component, each pointing at a semantic
+// (or extended) token, so every mode follows.
+$dcfc-component-colors: (
+  "button-primary-bg":          "action-primary",
+  "button-primary-bg-hover":    "action-primary-hover",
+  "button-primary-bg-pressed":  "action-primary-pressed",
+  "button-primary-bg-disabled": "action-primary-disabled",
+  "button-primary-text":        "action-on-primary",
+  "button-primary-start":         "action-primary-start",
+  "button-primary-end":           "action-primary-end",
+  "button-primary-hover-start":   "action-primary-hover-start",
+  "button-primary-hover-end":     "action-primary-hover-end",
+  "button-primary-pressed-start": "action-primary-pressed-start",
+  "button-primary-pressed-end":   "action-primary-pressed-end",
+  "button-primary-edge":          "action-primary-edge",
+  "button-secondary-bg":        "surface-card",
+  "button-secondary-bg-hover":  "surface-subtle",
+  "button-secondary-border":    "border-default",
+  "button-secondary-text":      "text-primary",
+  "button-danger-bg":           "action-danger",
+  "button-danger-text":         "text-on-color",
+  "button-accent-bg":           "brand-accent-strong",
+  "button-text-text":           "brand-accent-strong",
+  "button-text-text-hover":     "action-link-hover",
+  "button-text-bg-hover":       "action-secondary-hover",
+  "link-text":                  "action-link",
+  "link-text-hover":            "action-link-hover",
+  "input-bg":                   "surface-card",
+  "input-border":               "border-default",
+  "input-border-focus":         "action-focus-border",
+  "input-focus-ring":           "action-focus-ring",
+  "input-text":                 "text-primary",
+  "input-placeholder":          "text-placeholder",
+  "card-bg":                    "surface-card",
+  "card-border":                "border-subtle",
+  "card-hero-start":            "gradient-blue-strong-start",
+  "card-hero-end":              "gradient-blue-strong-end",
+  "card-support-start":         "gradient-lime-strong-start",
+  "card-support-end":           "gradient-lime-strong-end",
+  "nav-bg":                     "surface-card",
+  "nav-item-text":              "text-secondary",
+  "nav-item-active-bg":         "surface-subtle",
+  "nav-item-active-text":       "text-primary",
+  "chip-bg":                    "surface-card",
+  "chip-border":                "border-default",
+  "chip-text":                  "text-primary",
+  "chip-selected-bg":           "action-selected-bg",
+  "chip-selected-border":       "action-selected-border",
+  "badge-success-bg":           "feedback-positive-bg",
+  "badge-success-text":         "feedback-positive-text",
+  "badge-warning-bg":           "feedback-attention-bg",
+  "badge-warning-text":         "feedback-attention-text",
+  "badge-danger-bg":            "feedback-negative-bg",
+  "badge-danger-text":          "feedback-negative-text",
+  "badge-neutral-bg":           "feedback-neutral-bg",
+  "badge-neutral-text":         "feedback-neutral-text",
+  "progress-track":             "surface-subtle",
+  "progress-fill":              "brand-accent",
+  "chart-highlight":            "brand-accent",
+  "chart-base":                 "surface-subtle",
+  "tab-bar-bg":                 "surface-glass",
+  "tab-bar-item-active":        "action-primary",
+  "avatar-start":               "gradient-blue-soft-start",
+  "avatar-end":                 "gradient-blue-soft-end",
+) !default;
+
+// Names the existing components use, pointing at the tokens above (or, for
+// effects with no semantic token, at a primitive). Migrate components to the
+// semantic and component names over time, then delete these.
 $dcfc-colors: (
-  "text-primary":      "ink-900",
-  "text-secondary":    "grey-600",
-  "text-inverse":      "white",
-  "text-inverse-secondary": "white-a75", // counts and secondary text on dark fills
-  "text-neutral":      "grey-800",
-  "text-disabled":     "grey-400",
-  "icon-default":      "ink-1000",
-  "text-link":         "blue-600",
-  "text-placeholder":  "grey-500",
-  "text-heading":      "ink-975",
-  "text-label":        "slate-600",
-  "text-attention":    "orange-800",
-  "text-selected":     "grey-900",
-  "text-tag":          "grey-800",
-  "text-tag-neutral":  "ink-800",
-  "text-tag-attention": "orange-700",
-  "text-tag-info":     "blue-700",
-  "action-primary":    "ink-900",
-  "action-primary-end": "ink-950",
-  "action-secondary":  "blue-500",
-  "action-neutral":    "white",
-  "action-destructive": "red-600",
-  "action-disabled":   "grey-200",
-  "status-info":       "blue-500",
-  "status-warning":    "orange-500",
-  "status-success":    "green-500",
-  "text-success":      "green-700",
-  "status-danger":     "red-500",
-  "text-danger":       "red-700",
-  "text-link-hover":   "blue-700",
-  "status-pending":          "blue-500-a75",
-  "status-pending-subtle":   "blue-500-a15",
-  "status-progress":         "yellow-700",
-  "status-progress-subtle":  "yellow-300-a15",
-  "status-complete":         "green-600",
-  "status-complete-border":  "green-500-a40",
-  "background-page":   "white",
-  "background-subtle": "grey-100",
-  "background-glass":  "white-a75",
-  "fill-glass":        "white-a35",
+  // Text
+  "text-heading":           "text-primary",
+  "text-label":             "text-secondary",
+  "text-disabled":          "text-placeholder",
+  "text-inverse":           "text-on-color",
+  "text-inverse-secondary": "white-a75",
+  "text-neutral":           "button-secondary-text",
+  "icon-default":           "text-primary",
+  "text-link-hover":        "action-link-hover",
+  "text-selected":          "chip-text",
+  "text-attention":         "feedback-attention-text",
+  "text-success":           "feedback-positive-text",
+  "text-danger":            "feedback-negative-text",
+  "text-tag":               "feedback-info-text", // blue-60 on blue-10 is 4.3:1; blue-70 is 6.6:1
+  "text-tag-neutral":       "badge-neutral-text",
+  "text-tag-attention":     "badge-warning-text",
+  "text-tag-info":          "feedback-info-text",
+
+  // Action
+  "action-secondary":       "brand-accent",
+  "action-neutral":         "button-secondary-bg",
+  "action-destructive":     "button-danger-bg",
+  "action-disabled":        "action-primary-disabled",
+  "control-selected":       "action-selected-border",
+
+  // Status
+  "status-info":            "feedback-info-solid",
+  "status-warning":         "feedback-attention-solid",
+  "status-success":         "feedback-positive-solid",
+  "status-danger":          "feedback-negative-solid",
+  "status-pending":         "blue-50-a75",
+  "status-pending-subtle":  "blue-50-a15",
+  "status-progress":        "yellow-50",
+  "status-progress-subtle": "yellow-30-a15",
+  "status-complete":        "green-70",   // white 12px text: green-50 is 2.9:1, green-60 4.4:1, green-70 passes
+  "status-complete-border": "green-50-a40",
+
+  // Background
+  "background-page":          "surface-card",
+  "background-subtle":        "surface-subtle",
+  "background-glass":         "surface-glass",
+  "fill-glass":               "white-a35",
   "background-glass-inverse": "white-a20",
-  "background-field":  "grey-50",
-  "background-selected": "blue-50",
-  "background-attention": "orange-50",
-  "background-disabled": "grey-75",
-  "background-tag-neutral": "grey-110",
-  "background-tag-info": "blue-25",
-  "background-info":   "blue-25",
-  "background-success": "green-50",
-  "background-warning": "orange-50",
-  "background-danger": "red-50",
-  "background-inverse": "ink-975",
-  "border-default":    "grey-300",
-  "border-subtle":     "grey-a15",
+  "background-field":         "input-bg",
+  "background-selected":      "action-selected-bg",
+  "background-attention":     "feedback-attention-bg",
+  "background-disabled":      "surface-page",
+  "background-tag-neutral":   "badge-neutral-bg",
+  "background-tag-info":      "surface-tint",
+  "background-info":          "surface-tint",
+  "background-success":       "feedback-positive-bg",
+  "background-warning":       "feedback-attention-bg",
+  "background-danger":        "feedback-negative-bg",
+  "background-inverse":       "surface-inverse",
+
+  // Border
+  "border-focus":          "action-focus-border",
+  "border-divider":        "border-subtle",
+  "border-chip":           "chip-border",
+  "border-checkbox":       "border-strong",
+  "border-disabled":       "border-subtle",
+  "border-glass-subtle":   "slate-50-a15",
   "border-inverse-subtle": "white-a28",
-  "highlight-inset":   "white-a30",
-  "border-glass":      "white-a40",
-  "border-glass-strong": "white-a90",
-  "border-glass-inverse": "white-a35",
-  "shadow-elevated":   "violet-900-a08",
-  "border-focus":      "blue-500",
-  "border-divider":    "grey-200",
-  "border-control":    "grey-250",
-  "border-chip":       "grey-150",
-  "border-checkbox":   "grey-350",
-  "border-disabled":   "grey-125",
-  "status-attention":  "orange-500",
-  "control-selected":  "blue-500",
-  "chart-1":           "violet-400",
+  "border-glass":          "white-a40",
+  "border-glass-strong":   "white-a90",
+  "border-glass-inverse":  "white-a35",
+  "highlight-inset":       "action-primary-highlight",
+  "shadow-elevated":       "slate-90-a08",
 ) !default;
 
-// Translucent values that have no primitive.
+// Overlay and state layers, all from Ink (slate-90).
 $dcfc-surfaces: (
-  "overlay":  rgba(58, 63, 74, 0.5),
-  "hover":    rgba(58, 63, 74, 0.08),
-  "pressed":  rgba(58, 63, 74, 0.16),
-  "attention-zone": rgba(255, 242, 228, 0.33), // from Figma PCR (question block)
+  "overlay":  rgba(15, 18, 26, 0.5),  // alpha/slate-50
+  "hover":    rgba(15, 18, 26, 0.08),
+  "pressed":  rgba(15, 18, 26, 0.16),
+  "attention-zone": rgba(255, 238, 219, 0.33), // amber-10 at 33%
 ) !default;
 
+// The light value of any token, as a colour: follows alias → component → semantic/extended → primitive.
 @function dcfc-color($name) {
-  @if not map-has-key($dcfc-colors, $name) {
-    @error "Unknown DCFC color `#{$name}`.";
+  @if map-has-key($dcfc-colors, $name) {
+    @return dcfc-color(map-get($dcfc-colors, $name));
   }
-  @return dcfc-primitive(map-get($dcfc-colors, $name));
+  @if map-has-key($dcfc-component-colors, $name) {
+    @return dcfc-color(map-get($dcfc-component-colors, $name));
+  }
+  @if map-has-key($dcfc-semantic, $name) {
+    @return dcfc-primitive(nth(map-get($dcfc-semantic, $name), 1));
+  }
+  @if map-has-key($dcfc-extended, $name) {
+    @return dcfc-primitive(map-get($dcfc-extended, $name));
+  }
+  @if map-has-key($dcfc-primitives, $name) {
+    @return dcfc-primitive($name);
+  }
+  @error "Unknown DCFC color `#{$name}`.";
+}
+
+// CSS reference for a token: another --color-* if it is a token, else its --primitive-*.
+@function dcfc-color-ref($name) {
+  @if map-has-key($dcfc-primitives, $name) {
+    @return var(--primitive-#{$name});
+  }
+  @return var(--color-#{$name});
 }

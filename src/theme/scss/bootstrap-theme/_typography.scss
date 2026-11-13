@@ -1,9 +1,81 @@
-// Headings: Bootstrap gives every heading $headings-font-family (Raleway).
-// Only h1 and h2 keep it; from h3 down, headings use the body font (Geist).
+// Type styles as CSS variables and classes. Tokens live in tokens/_typography.scss.
+//
+// Each style is exposed on .exos-theme-dcfc as:
+//   --exos-type-<style>-size, -line-height, -tracking, -weight
+// and as a class: .exos-display-l, .exos-heading-m, .exos-body-s, .exos-label-m,
+// .exos-number-l, .exos-eyebrow-m, .exos-code, .exos-caption …
 
-h3, .h3,
-h4, .h4,
-h5, .h5,
-h6, .h6 {
-  font-family: var(--bs-body-font-family); // global, so it also works outside .exos-theme-dcfc
+@at-root .exos-theme-dcfc {
+  --font-mono: #{$dcfc-font-mono};
+  --exos-measure: #{$exos-measure};
+  --exos-type-min-size: #{exos-rem($exos-type-min-size)};
+
+  @each $style, $_ in $exos-type {
+    --exos-type-#{$style}-size: #{exos-type($style, size)};
+    --exos-type-#{$style}-line-height: #{exos-type($style, line)};
+    --exos-type-#{$style}-tracking: #{exos-type($style, tracking)};
+    --exos-type-#{$style}-weight: #{exos-type($style, weight)};
+  }
+}
+
+// Sets a whole style. Values are inlined as fallbacks, so it also works outside .exos-theme-dcfc.
+@mixin exos-type($style) {
+  $entry: map-get($exos-type, $style);
+  $family: map-get($entry, family);
+  @if $family == heading {
+    font-family: $dcfc-font-heading;
+  } @else if $family == mono {
+    font-family: $dcfc-font-mono;
+  } @else {
+    font-family: $dcfc-font-body;
+  }
+  font-size: var(--exos-type-#{$style}-size, #{exos-type($style, size)});
+  line-height: var(--exos-type-#{$style}-line-height, #{exos-type($style, line)});
+  letter-spacing: var(--exos-type-#{$style}-tracking, #{exos-type($style, tracking)});
+  font-weight: var(--exos-type-#{$style}-weight, #{exos-type($style, weight)});
+  @if map-get($entry, numeric) {
+    font-variant-numeric: map-get($entry, numeric);
+  }
+  @if map-get($entry, case) {
+    text-transform: map-get($entry, case);
+  }
+}
+
+// HTML headings: h1 page title (Raleway), h2 section, h3–h6 card and list titles (Geist).
+@each $level, $style in $exos-heading-styles {
+  h#{$level}, .h#{$level} {
+    @include exos-type($style);
+  }
+}
+
+// A class per style. Later in the file than the headings, so <h2 class="exos-display-m"> works.
+@each $style, $_ in $exos-type {
+  .exos-#{$style} {
+    @include exos-type($style);
+  }
+}
+
+// Calmer Raleway: SemiBold or Medium for longer or quieter display and heading-l text.
+.exos-type-semibold { font-weight: 600; }
+.exos-type-medium { font-weight: 500; }
+
+// Bootstrap's .small is Body M.
+.small {
+  @include exos-type("body-m");
+}
+
+// Numbers that line up in tables, totals and timers.
+.exos-tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+// Keeps paragraphs to a readable line length.
+.exos-measure {
+  max-width: var(--exos-measure, #{$exos-measure});
+}
+
+// Smoother text rendering.
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

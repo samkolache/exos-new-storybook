@@ -27,13 +27,15 @@ $exos-grid-max-width: 1584px !default;
 // Narrow grid, for reading and forms: lines stay a comfortable length.
 $exos-grid-narrow-max-width: 960px !default;
 
-// Spacing scale (8px base with 2px and 4px steps).
+// Spacing scale (8px base with 2px and 4px steps). "05a" (18px) sits between
+// 16 and 24, for list rows and grouped-list insets.
 $exos-spacing: (
   "01": 2px,
   "02": 4px,
   "03": 8px,
   "04": 12px,
   "05": 16px,
+  "05a": 18px,
   "06": 24px,
   "07": 32px,
   "08": 40px,

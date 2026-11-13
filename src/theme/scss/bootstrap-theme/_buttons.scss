@@ -2,8 +2,7 @@
 // Drives Bootstrap .btn through its --bs-btn-* variables; colors from var(--color-*) only.
 // Hover/active currently mirror the resting state (interaction states to be specced).
 //
-// Structure follows IBM Carbon (sizes, padding, spacing); touch sizes follow Apple HIG:
-//   .btn-sm 32px · .btn (md) 40px · .btn-lg 48px, 16px ($spacing-05) side padding,
+// Sizes: .btn-sm 32px · .btn (md) 40px · .btn-lg 48px, 16px ($spacing-05) side padding,
 //   14px label. On phones every size is at least 44px tall.
 // Heights are minimums: long labels wrap onto a second line instead of being cut off.
 
@@ -36,7 +35,7 @@
   justify-content: center;
   gap: var(--exos-spacing-03, 8px); // icon to label
   min-height: var(--exos-btn-height);
-  max-width: 20rem; // Carbon: buttons never grow past 320px
+  max-width: 20rem; // buttons never grow past 320px
   text-wrap: balance;
 }
 
@@ -62,14 +61,14 @@
 .btn-secondary {
   --bs-btn-color: var(--color-text-neutral);
   --bs-btn-bg: var(--color-action-neutral);
-  --bs-btn-border-color: var(--color-border-subtle);
+  --bs-btn-border-color: var(--color-border-glass-subtle);
   --bs-btn-font-weight: 600;
   --bs-btn-hover-color: var(--color-text-neutral);
   --bs-btn-hover-bg: var(--color-action-neutral);
-  --bs-btn-hover-border-color: var(--color-border-subtle);
+  --bs-btn-hover-border-color: var(--color-border-glass-subtle);
   --bs-btn-active-color: var(--color-text-neutral);
   --bs-btn-active-bg: var(--color-action-neutral);
-  --bs-btn-active-border-color: var(--color-border-subtle);
+  --bs-btn-active-border-color: var(--color-border-glass-subtle);
 }
 
 .btn-danger {
@@ -253,7 +252,7 @@
 }
 
 // ---------------------------------------------------------------------------
-// Button set: 2 or 3 related actions. Carbon: 16px between buttons, same size,
+// Button set: 2 or 3 related actions. 16px between buttons, same size,
 // primary on the outside (last in the markup, so it sits on the right).
 // Phones: buttons stack full width with the primary on top, in thumb reach.
 
@@ -266,7 +265,7 @@
 
 .btn-set-end { justify-content: flex-end; }
 
-// Phones (below md): 44px minimum tap target at every size (Apple HIG).
+// Phones (below md): 44px minimum tap target at every size.
 @include media-breakpoint-down(md) {
   .btn:not(.btn-icon):not(.btn-progress) {
     min-height: max(var(--exos-btn-height), var(--exos-touch-target-min, 44px));

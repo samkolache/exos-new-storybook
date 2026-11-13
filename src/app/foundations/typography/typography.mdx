@@ -9,101 +9,174 @@ import * as Stories from './typography.stories';
 
 # Typography
 
-Exos uses two typefaces. **Raleway** is for page and section titles (h1 and h2). **Geist** is for everything else, including h3 and smaller headings.
+**Raleway for the big moments. Geist for everything else.** Raleway carries the brand voice in a few large headlines; Geist carries reading, UI and numbers; Geist Mono carries eyebrows and codes.
+
+Source: Figma "Sams Vibe", Typography · Final, with three changes for the web (see [Changes from Figma](#changes-from-figma)).
 
 ## Live demo
 
-A page that uses every level. Switch between Mobile and Web: the large headings scale down on phones, but body text stays at 16px.
+A Raleway headline anchors the view; Geist does the work. Sizes are the same on phones and the web.
 
 <DeviceCanvas of={Stories.InUse} webOf={Stories.InUse} defaultDevice="mobile" noCode />
 
-## Typefaces
+## Families
 
-| Typeface | Used for | Why |
+Three families, one job each.
+
+| Family | Used for | Weights |
 |---|---|---|
-| **Raleway** | `h1`, `h2`, `.h1`, `.h2` | Gives page and section titles their own voice. Only used at large sizes, where it reads well. |
-| **Geist** | `h3`–`h6`, body, labels, buttons, fields | Clear at small sizes, so it works for text, labels and data. |
+| **Raleway** | Display and Heading L only. 24px and up | Medium 500 · SemiBold 600 · **Bold 700 (default)** |
+| **Geist** | Headings M and S, body, labels, numbers | Regular 400 · Medium 500 · SemiBold 600 |
+| **Geist Mono** | Eyebrows and codes. Uppercase eyebrows only | Medium 500 |
 
-**The switch is at h3.** Anything smaller than a section title is part of the content, so it's set in the same typeface as the content.
+## Type styles
 
-The font follows the **look**, not the tag: `<h2 class="h5">` is set in Geist, because it looks like an h5.
+Each style is a class, measured live from the theme. HTML headings use them too: `<h1>` is Heading L, `<h2>` is Heading M, and `<h3>`–`<h6>` are Heading S. Display styles are classes only, for the one hero per view.
 
-## Type scale
+<DeviceCanvas of={Stories.Scale} defaultDevice="web" noCode />
 
-Read from the theme, so these values always match the code. Switch between Mobile and Web to see the sizes change.
-
-<DeviceCanvas of={Stories.Scale} webOf={Stories.Scale} defaultDevice="web" noCode />
-
-### Mobile and web
-
-See [Mobile and web](?path=/docs/foundations-mobile-and-web--docs) for the rules every component follows.
-
-| | Mobile (below 672px) | Web (672px and up) |
+| Style | Spec | Use |
 |---|---|---|
-| h1–h4 | Smaller, and scale with the screen width | Scale up to full size at 1200px |
-| h5, h6 | Same size | Same size |
-| Body | 16px, which also stops phones zooming in on fields | 16px |
-| Small | 14px | 14px |
+| Display L | Raleway Bold 34 / 40 · −2% | Hero headline. One per view |
+| Display M | Raleway Bold 32 / 40 · −2% | Summary and success titles |
+| Display S | Raleway Bold 30 / 36 · −1.5% | Section hero on large screens |
+| Heading L | Raleway Bold 24 / 32 · −1% | Page title. Smallest Raleway |
+| Heading M | Geist SemiBold 20 / 28 · −0.5% | Section, sheet titles |
+| Heading S | Geist SemiBold 15 / 20 · 0 | Card and list titles |
+| Number L | Geist SemiBold 34 / 40 · −2% · tabular | Balances, hero figures |
+| Number M | Geist SemiBold 24 / 32 · −1.5% · tabular | KPI values |
+| Number S | Geist SemiBold 20 / 28 · −1% · tabular | Totals, inline figures |
+| Body L | Geist Regular 16 / 24 · 0 | Page text, lead paragraphs |
+| Body M | Geist Regular 14 / 20 · 0 | Dense UI text |
+| Body S | Geist Regular 13 / 20 · 0 | Card descriptions, helper text |
+| Caption | Geist Regular 12 / 16 · +1% | Metadata, timestamps |
+| Label L | Geist SemiBold 16 / 20 · 0 | Primary buttons |
+| Label M | Geist SemiBold 15 / 20 · 0 | Secondary buttons, list items |
+| Label S | Geist SemiBold 12 / 16 · +0.5% | Chips, links, small buttons |
+| Eyebrow M | Geist Mono Medium 11 / 16 · +8% · uppercase | Section eyebrows |
+| Eyebrow S | Geist Mono Medium 11 / 12 · +8% · uppercase | Badges, tags |
+| Code | Geist Mono Medium 14 / 20 · 0 · uppercase | IDs, reference numbers |
 
-## Content
+Size / line height in px (set in rem); letter spacing as a percentage of the size (set in em).
 
-- **Sentence case** for every heading: "Open claims", not "Open Claims".
-- **Keep headings short,** ideally one line on a phone. Put the detail in the text below.
-- **No full stop** at the end of a heading.
-- **Don't set text in capitals** for emphasis: it's harder to read.
+### Changes from Figma
+
+| Style | Figma | Exos | Why |
+|---|---|---|---|
+| Body L | 15 / 24 | **16 / 24** | 16px is the web standard for reading, and text in a field under 16px makes phones zoom in when it gets focus |
+| Display M | 32 / 36 | **32 / 40** | 36 is 1.13×: when a headline wraps, the two lines nearly touch |
+| Eyebrow S | 10 / 12 | **11 / 12** | 11px is the smallest text that stays readable, and capitals at 10px blur together |
+
+Everything else matches Figma.
+
+## Line height and letter spacing
+
+Line height sits on the 4px grid and tightens as size grows. Letter spacing goes negative as size grows, and positive for small and uppercase text.
+
+| Tier | Sizes | Line height | Letter spacing | Why |
+|---|---|---|---|---|
+| Display (Raleway) | 30–34 | 1.18–1.25× | −1.5% to −2% | Large type looks loose; tighten it so it holds as one shape |
+| Heading L (Raleway) | 24 | 1.33× | −1% | Still large; a slight pull-in keeps Raleway compact |
+| Heading M/S (Geist) | 15–20 | 1.33–1.4× | −0.5% to 0 | Neutral at reading sizes |
+| Numbers (Geist) | 20–34 | 1.18–1.4× | −1% to −2% | Tabular figures, tight so values read as one unit |
+| Body (Geist) | 13–16 | 1.43–1.54× | 0 | Room between lines for comfortable reading |
+| Caption, Label S | 12 | 1.33× | +0.5% to +1% | Small text needs a little air to stay legible |
+| Labels L/M | 15–16 | 1.25–1.33× | 0 | Single line; a tight box keeps buttons compact |
+| Eyebrow (Geist Mono, uppercase) | 11 | 1.1–1.45× | +8% | Capitals crowd; open them up |
+
+- **Line heights are unitless in the CSS,** so they grow with the text when people make it bigger.
+- **Letter spacing is in em, not px.** Figma stores it in px (−0.68px at 34px); em is the same percentage and scales with the text.
+
+## Weight
+
+| Where | Weight | Why |
+|---|---|---|
+| Body text | **400** | Never lighter: thin strokes break up at small sizes and on low-quality screens |
+| Emphasis inside a sentence | **500** | 600 and up pulls the eye too hard at 13–16px |
+| Headings M and S, labels, numbers | **600** | Small headings need weight to stand apart from 400 body text at nearly the same size |
+| Raleway display and Heading L | **700 by default** | The brand voice. Large type carries the hierarchy, so a calmer weight also works |
+| Eyebrows and code | **500** | Capitals are already loud; the extra spacing does the work |
+
+Raleway has two calmer weights for display and Heading L. Add `.exos-type-semibold` for calmer or longer headlines, or `.exos-type-medium` for quiet, editorial ones.
+
+<DeviceCanvas of={Stories.RalewayWeights} defaultDevice="web" noCode />
+
+Best practices:
+
+- **Two or three weights per family.** Hierarchy reads best when weights are at least 200 apart, like 400 and 600. Steps of 100 look like mistakes.
+- **Never use Raleway Light, Regular or Black, or any Geist weight above SemiBold.**
+- **Light text on a dark fill looks heavier,** so it can drop one step, for example on a dark button.
+- **Only the weights above are loaded.** A weight that isn't loaded is faked by the browser and looks smudged. Raleway ExtraBold (800) is in Figma for marketing heroes only; it isn't loaded in the product.
+
+## Rules
 
 <DoDont>
-  <Guideline type="do" of={Stories.DoHeadingFont}>use Raleway only for h1 and h2. Everything below is Geist.</Guideline>
-  <Guideline type="dont" of={Stories.DontHeadingFont}>set small headings or body text in Raleway.</Guideline>
-  <Guideline type="do" of={Stories.DoLevels}>pick the tag for the structure, and the class for the size.</Guideline>
+  <Guideline type="do" of={Stories.DoOneRaleway}>keep one Raleway headline per area; the rest of the hierarchy is Geist.</Guideline>
+  <Guideline type="dont" of={Stories.DontSmallRaleway}>use Raleway below 24px, or in buttons, labels, tables or body text.</Guideline>
+  <Guideline type="do" of={Stories.DoLevels}>pick the tag for the structure, and the class for the look.</Guideline>
   <Guideline type="dont" of={Stories.DontLevels}>skip heading levels to get a smaller size.</Guideline>
-  <Guideline type="do" of={Stories.DoSentenceCase}>write headings in sentence case.</Guideline>
-  <Guideline type="dont" of={Stories.DontTitleCase}>use Title Case or capitals.</Guideline>
+  <Guideline type="do" of={Stories.DoEyebrowCaps}>use capitals only in eyebrows and codes.</Guideline>
+  <Guideline type="dont" of={Stories.DontCaps}>set headings, buttons or labels in capitals or Title Case.</Guideline>
+  <Guideline type="do" of={Stories.DoStyles}>always apply a type style.</Guideline>
+  <Guideline type="dont" of={Stories.DontByHand}>set size, line height or letter spacing by hand.</Guideline>
 </DoDont>
+
+- **Sentence case** for headings, buttons and labels: "Open claims", not "Open Claims".
+- **Don't mix Raleway and Geist in the same line.**
+- **Body text is 13px or more,** with 45–75 characters a line. Add `.exos-measure` (66ch) to long paragraphs.
+- **Keep headings short,** ideally one line on a phone, with no full stop.
+- **Use a Number style for figures,** so digits line up and don't jump when they change.
 
 ## Accessibility
 
-- **Headings follow the page structure.** One `h1` per page, then `h2`, `h3` and so on, without skipping levels. Screen reader users jump from heading to heading, so the levels are how they find their way. Use the `.h1`–`.h6` classes to change the size.
-- **Sizes are in rem,** so text gets bigger when people change their browser or phone text size.
-- **Body text is 16px** and never smaller than 14px (`small`).
-- **Contrast:** keep text at 4.5:1 or more against its background, and large headings at 3:1 or more (WCAG AA). The `--color-text-*` tokens are for text; don't use the lighter status or border colours.
-- **No light weights:** the lightest weight is 400, so thin strokes don't disappear on low-quality screens.
-- **Checked automatically:** every typography story runs an accessibility scan in the tests, and a test checks which headings use which font.
+- **Headings follow the page structure.** One `h1` per page, then `h2`, `h3` and so on, without skipping levels. Screen reader users jump from heading to heading. Use the `.exos-*` classes to change how a heading looks.
+- **Sizes are in rem,** so text grows when people change their browser or phone text size.
+- **Body text is 16px for reading and in fields,** and never under 13px. 11px is only for eyebrows, badges and tags.
+- **Contrast:** text reaches 4.5:1 against its background, and large headings 3:1 or more (WCAG AA). Use the text colour tokens (see [Colors](?path=/docs/foundations-colors--docs)).
+- **Checked automatically:** every typography story runs an accessibility scan, and a test checks which styles use which family.
 
 ## Code
 
 ### Usage
 
-Use plain HTML and Bootstrap classes. The theme sets the font.
+Use plain HTML and Bootstrap, plus a type class where the tag's default isn't the right look.
 
 ```html
-<h1>Your claims</h1>            <!-- Raleway -->
-<h2>Open claims</h2>            <!-- Raleway -->
-<h3>Claim 4821</h3>             <!-- Geist -->
-<h2 class="h5">Delivery</h2>    <!-- An h2 for structure that looks like an h5: Geist -->
-<p class="small">Updated 2 days ago</p>
+<p class="exos-eyebrow-m">Total balance</p>
+<p class="exos-number-l">$12,480.32</p>
+<h1 class="exos-display-m">Plan your week</h1>   <!-- the one hero: Raleway -->
+<h2>This week</h2>                                <!-- Heading M: Geist -->
+<h3>Trip to Kyoto</h3>                            <!-- Heading S: Geist -->
+<p class="exos-body-s">Card expired. Update and retry.</p>
+<p class="exos-code">INV-1042</p>
 ```
 
-In component styles, use the tokens instead of naming a font:
+In component SCSS, `@include exos-type("label-m")` sets the family, size, line height, letter spacing, weight and case at once. In plain CSS, use the variables:
 
 ```css
-.summary-title {
-  font-family: var(--font-heading);
+.photo-caption {
+  font-size: var(--exos-type-caption-size);
+  line-height: var(--exos-type-caption-line-height);
+  letter-spacing: var(--exos-type-caption-tracking);
 }
 ```
 
 ### Theming
 
-Typography reads these CSS variables. The `--font-*` variables are on `.exos-theme-dcfc`, and Bootstrap's `--bs-*` variables are on `:root`.
+Every style has four variables on `.exos-theme-dcfc`: `--exos-type-<style>-size`, `-line-height`, `-tracking` and `-weight`, with `<style>` one of `display-l`, `display-m`, `display-s`, `heading-l`, `heading-m`, `heading-s`, `number-l`, `number-m`, `number-s`, `body-l`, `body-m`, `body-s`, `caption`, `label-l`, `label-m`, `label-s`, `eyebrow-m`, `eyebrow-s` or `code`.
 
 <TokenTable
   tokens={[
-    { name: '--font-heading', use: 'h1 and h2 (Raleway)' },
-    { name: '--font-body', use: 'Everything else (Geist)' },
-    { name: '--bs-body-font-family', use: 'Body font, set from --font-body' },
-    { name: '--bs-body-font-size', use: 'Body text size' },
-    { name: '--bs-body-line-height', use: 'Body line height' },
-    { name: '--bs-body-color', use: 'Text colour' },
+    { name: '--font-heading', use: 'Raleway: display and Heading L' },
+    { name: '--font-body', use: 'Geist: everything else' },
+    { name: '--font-mono', use: 'Geist Mono: eyebrows and code' },
+    { name: '--exos-type-display-l-size', use: 'Display L size: 34px' },
+    { name: '--exos-type-heading-l-size', use: 'Heading L size: 24px' },
+    { name: '--exos-type-body-l-size', use: 'Body L size: 16px' },
+    { name: '--exos-type-body-m-size', use: 'Body M size: 14px' },
+    { name: '--exos-type-caption-size', use: 'Caption size: 12px' },
+    { name: '--exos-type-min-size', use: 'Smallest text anywhere: 11px' },
+    { name: '--exos-measure', use: 'Readable line length: 66ch' },
   ]}
 />
 
@@ -111,12 +184,14 @@ Typography reads these CSS variables. The `--font-*` variables are on `.exos-the
 
 <Related
   items={[
+    { title: 'Colors', text: 'Text colours and contrast', href: '/?path=/docs/foundations-colors--docs' },
     { title: 'Spacing', text: 'Space between headings and text', href: '/?path=/docs/foundations-spacing--docs' },
-    { title: 'Mobile and web', text: 'Everything that changes at 672px', href: '/?path=/docs/foundations-mobile-and-web--docs' },
     { title: 'Grid', text: 'Columns, margins and line length', href: '/?path=/docs/foundations-grid--docs' },
   ]}
 />
 
 ### Changelog
 
+- **Nov 13, 2026:** type styles by role from Figma Typography · Final: Display, Heading, Number, Body, Caption, Label, Eyebrow and Code. `h1` is Heading L (Raleway); `h2` and below are Geist. Added Geist Mono. Raleway is Bold by default, with SemiBold and Medium options. Sizes are the same on phones and the web. Three changes from Figma: Body L 16px, Display M 40px line height, Eyebrow S 11px.
+- **Nov 12, 2026:** type scale with line height, letter spacing and weight per style, with phone and web sizes.
 - **Nov 12, 2026:** first version. Raleway for h1 and h2, Geist for h3 and everything below.

@@ -22,7 +22,7 @@ export function buttonClasses(variant: ButtonVariant, ghost = false, size: Butto
 }
 
 /**
- * Button: Bootstrap .btn with the Exos styles. Sizes and spacing follow IBM Carbon.
+ * Button: Bootstrap .btn with the Exos styles.
  *
  *   <app-button label="Save changes" (clicked)="save()" />
  *   <app-button variant="secondary" label="Cancel" />

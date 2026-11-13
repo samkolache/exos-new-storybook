@@ -19,7 +19,6 @@ export type SegmentedSize = 'sm' | 'md' | 'lg';
 
 /**
  * Segmented control: switch between 2 to 5 views of the same content, one at a time.
- * Like iOS's segmented control and Carbon's content switcher.
  *
  *   <app-segmented-control label="Photos" [items]="sections" [(value)]="section" />
  *   <app-segmented-control label="Range" appearance="subtle" size="sm" [items]="ranges" [(value)]="range" />

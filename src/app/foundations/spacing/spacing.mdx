@@ -9,11 +9,11 @@ import * as Stories from './spacing.stories';
 
 # Spacing
 
-One scale for all space in Exos, on an 8px base with 2px and 4px steps for small details. Space shows what belongs together: **related things sit close, separate groups sit apart.**
+One scale for all space in Exos, on an 8px base with 2px and 4px steps for small details. Steps run `01` to `13`, plus **18px (`05a`)** between 16 and 24. Space shows what belongs together: **related things sit close, separate groups sit apart.**
 
 ## Live demo
 
-The shaded areas are the space. Switch between Mobile and Web: sections, card padding and the space between buttons change by themselves, because they use the layout spacing tokens below.
+Each line shows a space and its size in px. Switch between Mobile and Web: sections, card padding and the space between buttons change by themselves, because they use the layout spacing tokens below.
 
 <DeviceCanvas of={Stories.InUse} webOf={Stories.InUse} defaultDevice="mobile" noCode />
 
@@ -38,6 +38,12 @@ Why they differ:
 
 Page margins and the space between columns come from the [Grid](?path=/docs/foundations-grid--docs): 16px on phones, 24px on tablets, 32px on the web.
 
+## Padding by part
+
+Every part, with a line for the padding on each side and its size in px. Switch between Mobile and Web: on phones, controls grow to at least 44px tall, and their side padding stays the same. The rules behind these values are on [Padding](?path=/docs/foundations-padding--docs).
+
+<DeviceCanvas of={Stories.PaddingByPart} defaultDevice="mobile" noCode />
+
 ## The scale
 
 <DeviceCanvas of={Stories.Scale} defaultDevice="web" noCode />
@@ -51,6 +57,7 @@ Every value as a CSS variable on `.exos-theme-dcfc`, read live from the theme:
     { name: '--exos-spacing-03', use: 'Icon to text; related items' },
     { name: '--exos-spacing-04', use: 'Between controls on phones' },
     { name: '--exos-spacing-05', use: 'Card padding on phones; page margin on phones' },
+    { name: '--exos-spacing-05a', use: 'Between 16 and 24: list rows and grouped-list insets on phones' },
     { name: '--exos-spacing-06', use: 'Between fields; card padding on web' },
     { name: '--exos-spacing-07', use: 'Between sections on phones; page margin on web' },
     { name: '--exos-spacing-08', use: 'Large gaps' },
@@ -104,6 +111,7 @@ They don't change between phone and web; the `--exos-space-*` tokens do.
 
 <Related
   items={[
+    { title: 'Padding', text: 'The space inside each part', href: '/?path=/docs/foundations-padding--docs' },
     { title: 'Grid', text: 'Columns, margins and gutters', href: '/?path=/docs/foundations-grid--docs' },
     { title: 'Mobile and web', text: 'Everything that changes at 672px', href: '/?path=/docs/foundations-mobile-and-web--docs' },
   ]}

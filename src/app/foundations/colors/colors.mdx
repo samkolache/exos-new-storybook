@@ -1,0 +1,255 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DeviceCanvas } from '../../../../.storybook/blocks/DeviceExample';
+import { PageNav, DoDont, Guideline, Related } from '../../../../.storybook/blocks/Guidelines';
+import * as Stories from './colors.stories';
+
+<Meta of={Stories} />
+
+<PageNav />
+
+# Colors
+
+Colour, by layer. **Primitives hold values. Semantic tokens hold meaning. Component tokens hold decisions. The extended palette holds data and illustration.** Designers and components work in semantic and component tokens; primitives are never applied directly.
+
+Source: Figma "Sams Vibe", Color system v2, shown in Bright mode.
+
+## Live demo
+
+Everything here uses semantic and component tokens only. Switch between Mobile and Web: the colours stay the same, so text and status read the same way on every screen.
+
+<DeviceCanvas of={Stories.InUse} webOf={Stories.InUse} defaultDevice="mobile" noCode />
+
+## Four layers
+
+Each layer only references the one above it. Change a primitive once, and every token and component follows.
+
+<DeviceCanvas of={Stories.Layers} defaultDevice="web" noCode />
+
+| Layer | Holds | Example | Who uses it |
+|---|---|---|---|
+| **Primitive** | Raw ramps, 10–100 | `--primitive-blue-60` | Only the token files |
+| **Semantic** | Meaning, with a light and a dark value | `--color-brand-accent-strong` | Designers first; components |
+| **Component** | Decisions per component | `--color-button-accent-bg` | Components |
+| **Extended** | Data viz, illustration, gradients | `--color-chart-category-1` | Charts, illustration, one hero surface |
+
+Example chain: `blue-60` → `brand-accent-strong` → `button-accent-bg`. A designer picks `button-accent-bg`; nobody picks `blue-60`.
+
+## Roles and screen coverage
+
+How much of a screen each role may cover at one time. Budgets are per view, measured by area, and text counts toward Ink. Brand roles come first; feedback is system colour, not brand, and only appears when a state exists.
+
+<DeviceCanvas of={Stories.Coverage} defaultDevice="web" noCode />
+
+| Role | Tokens | Use | Coverage |
+|---|---|---|---|
+| **Paper** | `surface-page`, `surface-card` | Page, cards, space | 60–70% |
+| **Ink** | `brand-primary`, `text-primary` | Wordmark, headlines, text, primary actions | 20–25% |
+| **Blue** | `brand-accent`, `brand-accent-strong` | Brand marks, links, focus, highlights, one hero | 5–10% |
+| **Support** | `brand-support` (lime), yellow | Progress, small tiles, one highlight | 4% or less |
+| **Spark** | `brand-spark` (amber) | One small spark per view | 1% or less |
+| **Feedback** (system, not brand) | `feedback-*` | Success, attention, error, info. Only when a state exists: dots, chips, inline text | 0–5% |
+
+A typical product screen is about **Paper 64, Ink 24, Blue 8**. Marketing and onboarding may raise Blue to about 20% (the hero gradient); product screens stay at or under 10%.
+
+## Primitives
+
+Nine families, ten steps each, generated in OKLCH. Values only: no meaning, never applied directly. Each is a CSS variable on `.exos-theme-dcfc`, read live from the theme.
+
+**Two modes, Grounded and Bright.** Grounded keeps the same names with lower chroma. The code uses Bright; switch the Primitives mode on a Figma frame to compare.
+
+What each step is for:
+
+| Step | Use | Step | Use |
+|---|---|---|---|
+| **10** | Tinted backgrounds | **60** | Text, links, filled buttons |
+| **20** | Hover, selected backgrounds | **70** | Pressed, text on tint |
+| **30** | Tinted borders, gradients | **80** | Dark surfaces |
+| **40** | Dark-mode accents | **90** | Ink, dark text |
+| **50** | Base: marks, icons, data | **100** | Deepest dark |
+
+### Brand
+
+<DeviceCanvas of={Stories.PaletteBrand} defaultDevice="web" noCode />
+
+### Support and spark
+
+<DeviceCanvas of={Stories.PaletteSupport} defaultDevice="web" noCode />
+
+### Feedback
+
+Green is for success only, red for danger only.
+
+<DeviceCanvas of={Stories.PaletteFeedback} defaultDevice="web" noCode />
+
+### Imagery
+
+Gray is for imagery only. Every UI grey comes from Slate.
+
+<DeviceCanvas of={Stories.PaletteImagery} defaultDevice="web" noCode />
+
+### Base and alpha
+
+White, black and overlays.
+
+<DeviceCanvas of={Stories.PaletteBase} defaultDevice="web" noCode />
+
+## Semantic tokens
+
+Named by role, never by colour. Each has a light and a dark value. This is the layer to reach for first.
+
+### Surface
+
+60–70% of a screen.
+
+<DeviceCanvas of={Stories.SemanticSurface} defaultDevice="web" noCode />
+
+### Text and icons
+
+Ink: 20–25% of a screen.
+
+<DeviceCanvas of={Stories.SemanticText} defaultDevice="web" noCode />
+
+### Border
+
+Hairlines; not counted in coverage.
+
+<DeviceCanvas of={Stories.SemanticBorder} defaultDevice="web" noCode />
+
+### Brand
+
+Ink 20–25 · Blue 5–10 · Support 4 or less · Spark 1 or less.
+
+<DeviceCanvas of={Stories.SemanticBrand} defaultDevice="web" noCode />
+
+### Action
+
+Ink is the only primary.
+
+<DeviceCanvas of={Stories.SemanticAction} defaultDevice="web" noCode />
+
+### Feedback
+
+0–5% of a screen, only when a state exists.
+
+<DeviceCanvas of={Stories.SemanticFeedback} defaultDevice="web" noCode />
+
+Figma's component tokens also point at a few semantic tokens that have no dark value yet: `action-on-primary`, the primary button gradient stops (`action-primary-start`, `-end`, `-hover-start`, `-hover-end`, `-pressed-start`, `-pressed-end`), `action-primary-edge`, `action-primary-highlight`, `action-link`, `action-link-hover`, `action-secondary-hover`, `action-focus-ring`, and the badge text and neutral tokens (`feedback-positive-text`, `feedback-attention-text`, `feedback-negative-text`, `feedback-neutral-bg`, `feedback-neutral-text`). They keep their light value in dark mode until Figma defines one. `feedback-info-text` (blue 70) is an Exos addition for info tag text.
+
+## Component tokens
+
+Decisions locked per component. Each points to a semantic token, so light, dark, Grounded and Bright all follow.
+
+- **Buttons are pills** (shape: `radius/button` → full; see [Corner radius](?path=/docs/foundations-corner-radius--docs)).
+- **The primary button uses a subtle Ink gradient** with the Button/Primary material: a 1px white inner highlight on top, a hard dark drop shadow and a soft blue glow below.
+- **Blue appears only as a text button, never filled.** Ink is the only filled primary.
+
+<DeviceCanvas of={Stories.ComponentTokens} defaultDevice="web" noCode />
+
+## Extended palette
+
+Colours outside the UI chrome: charts, illustration and approved gradient surfaces. Use them only inside a chart, an illustration or a single hero surface; never for buttons, nav or text.
+
+### Approved gradient surfaces
+
+The only gradients in the system: seven, each a start and an end token. **Ink text on all. At most one per view.** Support hero and Gentle setback are meaning cards: use them only when a state exists.
+
+<DeviceCanvas of={Stories.Gradients} defaultDevice="web" noCode />
+
+## Usage
+
+```css
+.order-summary {
+  color: var(--color-text-primary);
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+}
+
+.order-summary__note {
+  color: var(--color-text-secondary);
+}
+```
+
+In SCSS, use `dcfc-color("text-primary")`. Bootstrap's `primary`, `success`, `warning`, `danger` and `info` come from the same tokens, so `btn-primary` or `text-danger` match the components.
+
+To add a colour: put the raw value in `tokens/_primitives.scss`, give it a role in `$dcfc-semantic` (or a component decision in `$dcfc-component-colors`) in `tokens/_colors.scss`, then use the `--color-*` token.
+
+### Dark mode
+
+Every semantic token with a dark value switches when the themed element has `data-bs-theme="dark"`. Component tokens follow because they point at semantic tokens.
+
+```html
+<div class="exos-theme-dcfc" data-bs-theme="dark">…</div>
+```
+
+The tokens are ready; the components haven't been checked in dark mode yet.
+
+### Older names
+
+Components still use some names from before this system. Each now points at a v2 token, so the colours match; move components to the v2 names as you touch them.
+
+| Older name | Use instead |
+|---|---|
+| `text-heading`, `icon-default` | `text-primary` |
+| `text-label` | `text-secondary` |
+| `text-disabled` | `text-placeholder` |
+| `text-inverse` | `text-on-color` |
+| `text-link-hover` | `action-link-hover` |
+| `text-success`, `text-danger`, `text-attention` | `feedback-positive-text`, `feedback-negative-text`, `feedback-attention-text` |
+| `text-tag-*`, `background-tag-*` | `badge-*`, `feedback-info-text`, `surface-tint` |
+| `status-success`, `status-warning`, `status-danger`, `status-info` | `feedback-*-solid` |
+| `background-page` | `surface-card` |
+| `background-subtle` | `surface-subtle` |
+| `background-selected` | `action-selected-bg` |
+| `background-success`, `-warning`, `-danger`, `-info` | `feedback-*-bg`, `surface-tint` |
+| `background-inverse` | `surface-inverse` |
+| `border-divider`, `border-disabled` | `border-subtle` |
+| `border-focus` | `action-focus-border` |
+| `control-selected` | `action-selected-border` |
+| `action-destructive` | `button-danger-bg` |
+
+Glass and progress-button effects (`border-glass-*`, `background-glass-inverse`, `status-pending`, `status-progress`, `status-complete`, `shadow-elevated`) have no Figma token; they stay as named primitives with alpha.
+
+## Do and don't
+
+<DoDont>
+  <Guideline type="do" of={Stories.DoSemantic}>use semantic and component tokens.</Guideline>
+  <Guideline type="dont" of={Stories.DontRawValues}>use hex values or primitives in components. They don't follow modes.</Guideline>
+  <Guideline type="do" of={Stories.DoInkPrimary}>make Ink the only filled primary; Blue is a text button.</Guideline>
+  <Guideline type="dont" of={Stories.DontBlueFilled}>fill a button with Blue.</Guideline>
+  <Guideline type="do" of={Stories.DoColorAndText}>pair colour with an icon and words.</Guideline>
+  <Guideline type="dont" of={Stories.DontColorOnly}>use colour as the only signal. Some people can't see the difference.</Guideline>
+</DoDont>
+
+More rules from the system:
+
+- **Stay inside the coverage budgets.** Blue 10% or less on product screens; one spark per view.
+- **Feedback only when a state exists.** Green is never decoration, and red is never emphasis.
+- **Slate for every UI grey.** Gray is for imagery.
+- **At most one gradient per view,** with Ink text on it.
+
+## Accessibility
+
+- **Text contrast:** every text token reaches 4.5:1 on the background it's meant for (WCAG AA). A test checks this on every run.
+- **Darker steps for small text on colour:** the "complete" progress button uses green 70 under its white 12px text (green 50 is 2.9:1, green 60 is 4.4:1), and blue tag text uses blue 70 on blue 10 (blue 60 is 4.3:1).
+- **Placeholder text is 3:1** (`text-placeholder`, slate 50 on white). That's fine for placeholders and disabled text, which have no contrast minimum, but never use it for text people need to read.
+- **Feedback dots and icons** in amber and green are under 3:1 on white, so they always sit next to words.
+- **Colour is never the only signal.** Errors, warnings and success also show an icon and a message.
+
+Contrast in the current theme, read live:
+
+<DeviceCanvas of={Stories.TestContrast} defaultDevice="web" noCode />
+
+## Related
+
+<Related
+  items={[
+    { title: 'Typography', text: 'Text sizes and contrast', href: '/?path=/docs/foundations-typography--docs' },
+    { title: 'Button', text: 'Ink primary and the button material', href: '/?path=/docs/components-button--docs' },
+    { title: 'Tag', text: 'Badge colours in use', href: '/?path=/docs/components-tag--docs' },
+  ]}
+/>
+
+### Changelog
+
+- **Nov 13, 2026:** Color system v2 from Figma. New ramps (Blue, Slate, Lime, Yellow, Amber, Green, Red, Gray) replace the earlier palette; Indigo, Purple, Apricot, Orange, Pink and Cream are removed. Added the semantic layer with light and dark values, component tokens, the extended palette and gradients, coverage budgets, and the older-name table. Removed unused tokens: `brand-secondary-green`, `brand-secondary-indigo`, `background-cream`, `chart-1`, `border-control`, `status-attention`.
+- **Nov 12, 2026:** first version. Palette and semantic tokens from the Figma Color page.

@@ -1,65 +1,136 @@
-// Layer 1: raw colors. Never used directly by components.
+// Layer 1: primitives. Raw values only: no meaning, never used by components.
 //
-// TODO: PLACEHOLDER. Replace this file with
-// Exos.DesignSystem/src/ExosThemeDCFC/src/scss/tokens/_primitives.scss.
-// Only the values marked "from setup doc" are confirmed; the token names
-// below may not match PwC's names.
+// Source: Figma "Sams Vibe", Color system v2 (node 758:21648), Bright mode.
+// Nine families, ten steps each, generated in OKLCH. Names are the Figma
+// variable names in kebab-case: `blue/60` -> "blue-60".
+//
+// What each step is for:
+//   10 tinted backgrounds · 20 hover, selected bg · 30 tinted borders, gradients
+//   40 dark-mode accents · 50 base: marks, icons, data · 60 text, links, filled buttons
+//   70 pressed, text on tint · 80 dark surfaces · 90 ink, dark text · 100 deepest dark
 
 $dcfc-primitives: (
-  "ink-900":    #3A3F4A, // from setup doc (btn-primary)
-  "ink-950":    #1C1F26, // Figma: button primary gradient end
-  "ink-975":    #0F121A, // from Figma PCR (headings, values)
-  "ink-1000":   #0F1219, // Figma: icon button glyph
-  "ink-800":    #3A4150, // from Figma tag (neutral text)
-  "blue-700":   #2160D4, // info tag text: blue-600 darkened to pass 4.5:1 on blue-25
-  "blue-600":   #2F6FE4, // from setup doc
-  "blue-500":   #438AF5, // from setup doc (action blue / info)
-  "blue-500-a15": rgba(67, 138, 245, 0.15), // Figma: progress button pending bg
-  "blue-500-a75": rgba(67, 138, 245, 0.75), // Figma: progress button pending badge
-  "blue-50":    #EDF5FF, // from pcr-demo (selected row)
-  "blue-25":    #EEF3FB, // from Figma tag (waiting fill)
-  "orange-500": #F28C28, // from setup doc (attention / warning)
-  "orange-800": #8A5200, // from Figma PCR (attention text)
-  "orange-700": #9A5B00, // from Figma tag (attention text)
-  "orange-50":  #FFF1DC, // from Figma PCR (attention icon well)
-  "yellow-300-a15": rgba(255, 216, 77, 0.15), // Figma: progress button in-progress bg
-  "yellow-700": #B38626, // Figma: yellow-50, progress button in-progress badge
-  "violet-400": #8B6CF0,
-  "violet-900-a08": rgba(48, 36, 120, 0.08), // Figma: icon button shadow
-  "green-50":   #E9F7EF, // success notification fill
-  "green-700":  #1A7F49, // valid message text: green-500 darkened to pass 4.5:1 on white
-  "green-500":  #1E9E5A,
-  "green-500-a40": rgba(39, 178, 112, 0.40), // Figma: progress button complete border
-  "green-600":  #1E9E6A, // Figma: progress button complete bg
-  "red-50":     #FDECEC, // error notification fill
-  "red-700":    #B42318, // error text on red-50 (5.8:1)
-  "red-500":    #D93B3B,
-  "red-600":    #D1453A, // Figma: button destructive (#D2463B), one step darker for 4.5:1 with white text
-  "grey-50":    #F4F6FA, // from pcr-demo (filled field well)
-  "grey-75":    #F6F8FB, // from Figma chip (disabled fill)
-  "grey-100":   #F5F6F8,
-  "grey-110":   #F2F4F8, // from Figma tag (neutral fill)
-  "grey-125":   #EEF1F6, // from Figma chip (disabled border)
-  "grey-150":   #DCE3EE, // from Figma chip (border)
-  "grey-200":   #E6EAF1, // Figma: button disabled bg, PCR row dividers
-  "grey-250":   #D5DBE5, // from Figma PCR (chip border)
-  "grey-300":   #D5D8DE,
-  "grey-350":   #B8C2D3, // from Figma chip (checkbox border)
-  "grey-400":   #98A1B2, // Figma: button disabled text, chip disabled text
-  "grey-500":   #8C95A6, // from pcr-demo (placeholder)
-  "grey-600":   #6B7280,
-  "slate-600":  #5B6475, // from Figma PCR (row labels, icons)
-  "grey-800":   #3A3A3A, // Figma: gray-80
-  "grey-900":   #262626, // from Figma chip (selected text, gray-90)
-  "white":      #FFFFFF,
-  "white-a20":  rgba(255, 255, 255, 0.20), // Figma: icon button glass bg
-  "white-a28":  rgba(255, 255, 255, 0.28), // Figma: button primary border
-  "white-a30":  rgba(255, 255, 255, 0.30), // Figma: button primary inner highlight
-  "white-a35":  rgba(255, 255, 255, 0.35), // Figma: progress button complete badge
-  "white-a40":  rgba(255, 255, 255, 0.40), // Figma: progress button border
-  "white-a75":  rgba(255, 255, 255, 0.75), // Figma: icon button bg
-  "white-a90":  rgba(255, 255, 255, 0.90), // Figma: icon button border
-  "grey-a15":   rgba(172, 172, 172, 0.15), // Figma: button secondary border
+  // Blue: brand accent
+  "blue-10":  #E5F0FF,
+  "blue-20":  #B3D4FF,
+  "blue-30":  #85BAFF,
+  "blue-40":  #62A6FF,
+  "blue-50":  #3D86FF,
+  "blue-60":  #2B67EE,
+  "blue-70":  #1E4BB8,
+  "blue-80":  #163288,
+  "blue-90":  #10205C,
+  "blue-100": #0A1335,
+
+  // Slate: neutral and ink. All UI greys come from here.
+  "slate-10":  #F4F6FA,
+  "slate-20":  #E6EAF1,
+  "slate-30":  #D5DBE5,
+  "slate-40":  #B8C2D3,
+  "slate-50":  #8C95A6,
+  "slate-60":  #5B6475,
+  "slate-70":  #3A3F4A,
+  "slate-80":  #1C1F26,
+  "slate-90":  #0F121A,
+  "slate-100": #0A0C14,
+
+  // Lime: support
+  "lime-10":  #ECFACF,
+  "lime-20":  #D7F7A4,
+  "lime-30":  #B9E16D,
+  "lime-40":  #9EC845,
+  "lime-50":  #84AB2A,
+  "lime-60":  #668615,
+  "lime-70":  #4A6109,
+  "lime-80":  #304105,
+  "lime-90":  #1E2A02,
+  "lime-100": #111903,
+
+  // Yellow: support (warm)
+  "yellow-10":  #FFF6C2,
+  "yellow-20":  #FFE985,
+  "yellow-30":  #FFD84D,
+  "yellow-40":  #F5C426,
+  "yellow-50":  #D9A70A,
+  "yellow-60":  #A67F02,
+  "yellow-70":  #785B01,
+  "yellow-80":  #4F3D01,
+  "yellow-90":  #322600,
+  "yellow-100": #1D1501,
+
+  // Amber: spark and attention
+  "amber-10":  #FFEEDB,
+  "amber-20":  #FFD49C,
+  "amber-30":  #FFAE5C,
+  "amber-40":  #FF9E3D,
+  "amber-50":  #FF8A12,
+  "amber-60":  #DB7005,
+  "amber-70":  #A35A00,
+  "amber-80":  #6E3F01,
+  "amber-90":  #4B2A01,
+  "amber-100": #2C1902,
+
+  // Green: success only
+  "green-10":  #DAFAE0,
+  "green-20":  #B5F2BA,
+  "green-30":  #74DE98,
+  "green-40":  #4CC96A,
+  "green-50":  #1FAE3C,
+  "green-60":  #058C2D,
+  "green-70":  #016524,
+  "green-80":  #02431B,
+  "green-90":  #012D12,
+  "green-100": #031A0B,
+
+  // Red: danger only
+  "red-10":  #FFEBEA,
+  "red-20":  #FFCACA,
+  "red-30":  #FF9F9D,
+  "red-40":  #FF8280,
+  "red-50":  #FA5A57,
+  "red-60":  #D93436,
+  "red-70":  #A11E24,
+  "red-80":  #730E16,
+  "red-90":  #4D0A0F,
+  "red-100": #2C0A0C,
+
+  // Gray: imagery only. UI uses Slate.
+  "gray-10":  #F4F4F4,
+  "gray-20":  #E0E0E0,
+  "gray-30":  #C7C7C7,
+  "gray-40":  #A9A9A9,
+  "gray-50":  #8D8D8D,
+  "gray-60":  #6F6F6F,
+  "gray-70":  #515151,
+  "gray-80":  #3A3A3A,
+  "gray-90":  #262626,
+  "gray-100": #151515,
+
+  // Base
+  "base-white": #FFFFFF,
+  "base-black": #000000,
+
+  // Alpha (Figma alpha/*)
+  "white-a72": rgba(255, 255, 255, 0.72), // alpha/white-72: glass
+  "white-a8":  rgba(255, 255, 255, 0.08), // dark-mode glass and subtle border
+  "white-a15": rgba(255, 255, 255, 0.15), // dark-mode default border
+  "slate-90-a50": rgba(15, 18, 26, 0.50), // alpha/slate-50: overlays
+  "blue-50-a40":  rgba(61, 134, 255, 0.40), // alpha/blue-40: focus ring
+
+  // Alpha used by the button material and glass controls (Figma component effects)
+  "white-a20": rgba(255, 255, 255, 0.20), // icon button glass bg
+  "white-a28": rgba(255, 255, 255, 0.28), // button/primary/edge
+  "white-a30": rgba(255, 255, 255, 0.30), // action/primary-highlight
+  "white-a35": rgba(255, 255, 255, 0.35), // progress button complete badge
+  "white-a40": rgba(255, 255, 255, 0.40), // progress button border
+  "white-a75": rgba(255, 255, 255, 0.75), // counts on dark fills
+  "white-a90": rgba(255, 255, 255, 0.90), // icon button border
+  "slate-50-a15":   rgba(140, 149, 166, 0.15), // glass button border
+  "slate-90-a08":   rgba(15, 18, 26, 0.08),    // raised shadow
+  "blue-50-a15":    rgba(61, 134, 255, 0.15),  // progress button pending bg
+  "blue-50-a75":    rgba(61, 134, 255, 0.75),  // progress button pending badge
+  "yellow-30-a15":  rgba(255, 216, 77, 0.15),  // progress button in-progress bg
+  "green-50-a40":   rgba(31, 174, 60, 0.40),   // progress button complete border
 ) !default;
 
 @function dcfc-primitive($name) {

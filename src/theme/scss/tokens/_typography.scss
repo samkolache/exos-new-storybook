@@ -1,7 +1,86 @@
-// Typography tokens: font families.
+// Typography tokens: families and the type styles.
 //
-// Raleway for the big headings (display, h1, h2); Geist for everything else,
-// including h3–h6. Both are loaded from Google Fonts (index.html, preview-head.html).
+// Source: Figma "Sams Vibe", Typography · Final (node 758:20825), with a few
+// changes for the web (marked "Exos"). Raleway for the big moments, Geist for
+// everything else, Geist Mono for eyebrows and codes. All three load from
+// Google Fonts (index.html, preview-head.html).
 
 $dcfc-font-heading: "Raleway", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 $dcfc-font-body:    "Geist", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$dcfc-font-mono:    "Geist Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace !default;
+
+// Type styles. Size and line height in px (line heights on the 4px grid),
+// tracking in em (Figma stores px; em scales with the text), weight, family,
+// and uppercase where the style is set in capitals.
+//
+// Line height tightens as size grows; tracking goes negative as size grows and
+// positive for small and uppercase text.
+$exos-type: (
+  // Display: Raleway, hero moments. One per view.
+  "display-l": (size: 34px, line: 40px, tracking: -0.02em,  weight: 700, family: heading), // hero headline
+  "display-m": (size: 32px, line: 40px, tracking: -0.02em,  weight: 700, family: heading), // summary and success titles. Exos: 40 (Figma 36) so two lines don't touch
+  "display-s": (size: 30px, line: 36px, tracking: -0.015em, weight: 700, family: heading), // section hero on large screens
+
+  // Headings
+  "heading-l": (size: 24px, line: 32px, tracking: -0.01em,  weight: 700, family: heading), // page title. Smallest Raleway
+  "heading-m": (size: 20px, line: 28px, tracking: -0.005em, weight: 600, family: body),    // section, sheet titles
+  "heading-s": (size: 15px, line: 20px, tracking: 0,        weight: 600, family: body),    // card and list titles
+
+  // Numbers: Geist with tabular figures, tight so values read as one unit
+  "number-l":  (size: 34px, line: 40px, tracking: -0.02em,  weight: 600, family: body, numeric: tabular-nums), // balances, hero figures
+  "number-m":  (size: 24px, line: 32px, tracking: -0.015em, weight: 600, family: body, numeric: tabular-nums), // KPI values
+  "number-s":  (size: 20px, line: 28px, tracking: -0.01em,  weight: 600, family: body, numeric: tabular-nums), // totals, inline figures
+
+  // Body
+  "body-l":    (size: 16px, line: 24px, tracking: 0,        weight: 400, family: body), // page text, lead paragraphs. Exos: 16 (Figma 15) for the web and fields
+  "body-m":    (size: 14px, line: 20px, tracking: 0,        weight: 400, family: body), // dense UI text
+  "body-s":    (size: 13px, line: 20px, tracking: 0,        weight: 400, family: body), // card descriptions, helper text. Smallest body
+  "caption":   (size: 12px, line: 16px, tracking: 0.01em,   weight: 400, family: body), // metadata, timestamps
+
+  // Labels: single line; a tight box keeps buttons compact
+  "label-l":   (size: 16px, line: 20px, tracking: 0,        weight: 600, family: body), // primary buttons
+  "label-m":   (size: 15px, line: 20px, tracking: 0,        weight: 600, family: body), // secondary buttons, list items
+  "label-s":   (size: 12px, line: 16px, tracking: 0.005em,  weight: 600, family: body), // chips, links, small buttons
+
+  // Geist Mono, uppercase: capitals crowd, so open them up
+  "eyebrow-m": (size: 11px, line: 16px, tracking: 0.08em,   weight: 500, family: mono, case: uppercase), // section eyebrows
+  "eyebrow-s": (size: 11px, line: 12px, tracking: 0.08em,   weight: 500, family: mono, case: uppercase), // badges, tags. Exos: 11 (Figma 10), the smallest text anywhere
+  "code":      (size: 14px, line: 20px, tracking: 0,        weight: 500, family: mono, case: uppercase), // IDs, reference numbers
+) !default;
+
+// HTML headings use the styles above, so plain markup looks right: h1 is the
+// page title, h2 a section, h3 and below card and list titles. Display styles
+// are classes only (.exos-display-l), for the one hero per view.
+$exos-heading-styles: (
+  1: "heading-l",
+  2: "heading-m",
+  3: "heading-s",
+  4: "heading-s",
+  5: "heading-s",
+  6: "heading-s",
+) !default;
+
+// Smallest text anywhere (eyebrow-s). Body text never goes under 13px.
+$exos-type-min-size: 11px !default;
+
+// Comfortable line length for reading (45–75 characters).
+$exos-measure: 66ch !default;
+
+@function exos-rem($px) {
+  @return calc($px / 16px) * 1rem;
+}
+
+// One property of a type style: size (rem), line (unitless ratio), tracking, weight.
+@function exos-type($style, $prop) {
+  $entry: map-get($exos-type, $style);
+  @if not $entry {
+    @error "Unknown type style `#{$style}`.";
+  }
+  @if $prop == size {
+    @return exos-rem(map-get($entry, size));
+  }
+  @if $prop == line {
+    @return calc(map-get($entry, line) / map-get($entry, size));
+  }
+  @return map-get($entry, $prop);
+}

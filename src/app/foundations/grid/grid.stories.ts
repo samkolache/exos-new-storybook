@@ -6,13 +6,13 @@ const DEMO_STYLES = [
   `
   .demo-label { font-size: 13px; color: var(--color-text-secondary, #5B6475); margin-bottom: 12px; }
   .demo-cell {
-    background: var(--primitive-blue-50, #EDF5FF);
-    border: 1px dashed var(--primitive-blue-500, #438AF5);
+    background: var(--color-background-selected, #EDF5FF);
+    border: 1px dashed var(--color-border-focus, #438AF5);
     border-radius: 8px;
     padding: 12px 8px;
     font-size: 12px;
     text-align: center;
-    color: var(--primitive-ink-900, #3A3F4A);
+    color: var(--color-text-primary, #262626);
   }
   .demo-block { min-height: 96px; display: flex; align-items: center; justify-content: center; }
   `,

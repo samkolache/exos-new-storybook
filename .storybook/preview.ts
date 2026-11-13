@@ -12,7 +12,7 @@ const preview: Preview = {
     // Sidebar: Welcome and Catalog first, then the components.
     options: {
       storySort: {
-        order: ['Welcome', 'Catalog', 'Foundations', ['Grid', 'Spacing', 'Padding', 'Corner radius', 'Typography', 'Mobile and web', '*'], 'Components', ['Button', 'IconButton', 'ProgressButton', 'Dropdown', 'Link', 'Tabs', 'Segmented control', 'Accordion', 'Forms', ['Input', 'Select', 'Number Input', 'Date Picker', 'Radio Group', 'Checkbox', 'File Uploader', '*'], 'Chip', 'Tag', 'Notification', 'Modal', 'Tooltip', 'Loading', '*'], 'Patterns', ['Forms', 'Disabled and read only', 'Empty states', 'Loading', 'Notifications', '*'], 'Examples'],
+        order: ['Welcome', 'Catalog', 'Foundations', ['Colors', 'Typography', 'Spacing', 'Padding', 'Corner radius', 'Grid', 'Mobile and web', '*'], 'Components', ['Button', 'IconButton', 'ProgressButton', 'Dropdown', 'Link', 'Tabs', 'Segmented control', 'Accordion', 'Forms', ['Input', 'Select', 'Number Input', 'Date Picker', 'Radio Group', 'Checkbox', 'File Uploader', '*'], 'Chip', 'Tag', 'Notification', 'Modal', 'Tooltip', 'Loading', '*'], 'Patterns', ['Forms', 'Disabled and read only', 'Empty states', 'Loading', 'Notifications', '*'], 'Examples'],
       },
     },
     // Viewports that match the Exos grid: one per grid (4 / 8 / 16 columns).
